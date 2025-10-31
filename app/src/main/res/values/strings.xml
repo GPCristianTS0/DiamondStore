@@ -1,0 +1,53 @@
+<resources>
+    <!--Credenciales Aplicativo-->
+    <string name="app_name">NovaShop - Tools</string>
+    <string name="developer">Cristan Tobar</string>
+    <string name="desarrollo">Desarrollado por:</string>
+    <string name="version">Version 1.0.0</string>
+
+    <!--Login-->
+    <string name="tittle_login">Ingrese Sesion:</string>
+    <string name="lbl_usuario">Usuario</string>
+    <string name="txt_usuario">Ingrese Usuario:</string>
+    <string name="lbl_password">Contraseña</string>
+    <string name="txt_password">Ingrese Contraseña</string>
+    <string name="btn_ingresar">Ingresar</string>
+    <string name="title_clientesView">Clientes</string>
+
+    <!--Menu Principal-->
+    <string name="precioPublic">Calculadora Precios</string>
+    <!--Deudas Formularo-->
+    <string name="plazolbl">Plazo:</string>
+    <string name="monto_totallbl">Monto:</string>
+    <string name="fecha_pago">Fecha Pago:</string>
+    <string name="pagos_restantelbl">Pagos Restantes:</string>
+    <string name="pagos_totaleslbl">Pagos Totales:</string>
+    <string name="id_productoslbl">Agregue Productos:</string>
+
+    <!--Precio publico-->
+    <string name="costoTotallbl">Costo General:</string>
+    <string name="costoTotalProductolbl">Costo Total \nProducto:</string>
+    <string name="ganancialbl">Ganancia %:</string>
+    <string name="costoEnviolbl">Costo De Envio:</string>
+    <string name="unidadeslbl">Unidades:</string>
+    <!--Formulario-->
+    <string name="tittleFP">Agregar Prodcuto</string>
+    <string name="nombreFP">Nombre:</string>
+    <string name="marcaFP">Marca:</string>
+    <string name="modeloFP">Seccion:</string>
+    <string name="descripcionFP">Descripcion:</string>
+    <string name="p_publicoFP">Precio Publico:</string>
+    <string name="p_netoFP">Precio Neto:</string>
+    <string name="codigoBarrasFPlabel">Codigo Barras:</string>
+    <string name="codigoBarrasFPButon">Escanear Codigo</string>
+    <!--Productos Formulario-->
+    <string name="nombreProductlbl">Nombre:</string>
+    <string name="marcalbl">Marca:</string>
+    <string name="precioPubliclbl">Precio Publico:</string>
+    <string name="precioNetolbl">Precio Neto:</string>
+    <string name="nombrelbl">Descripcion:</string>
+    <string name="unidadestxtFP">Unidades:</string>
+    <!--Venta View-->
+    <string name="totallblVentaView">Total:</string>
+    <string name="titleVentaView">Venta</string>
+</resources>

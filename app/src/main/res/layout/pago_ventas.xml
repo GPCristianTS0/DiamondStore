@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/aaaaaa"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_height="195dp"
+        android:background="@drawable/redondear_esquinas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="68dp">
+
+        <TextView
+            android:id="@+id/pagaConPVIlbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paga con:"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnaceptarPVI"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.221"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalPVIlbl"
+            app:layout_constraintVertical_bias="0.568" />
+
+        <TextView
+            android:id="@+id/totalCountPVI"
+            android:layout_width="64dp"
+            android:layout_height="24dp"
+            android:textColor="@color/black"
+            android:text="$ 1850"
+            android:textSize="18dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/btnaceptarPVI"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.454"
+            app:layout_constraintStart_toEndOf="@+id/totalPVIlbl"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.299" />
+
+        <TextView
+            android:id="@+id/totalPVIlbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:textColor="@color/black"
+            android:text="Total:"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtPagaConPVI"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.64" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtPagaConPVI"
+            android:layout_width="142dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_border"
+            android:textColor="@color/black"
+            android:hint="Ingrese monto"
+            android:inputType="number"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnaceptarPVI"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.432"
+            app:layout_constraintStart_toEndOf="@+id/pagaConPVIlbl"
+            app:layout_constraintTop_toBottomOf="@+id/totalCountPVI"
+            app:layout_constraintVertical_bias="0.514" />
+
+        <Button
+            android:id="@+id/btnaceptarPVI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aceptar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.891" />
+
+        <TextView
+            android:id="@+id/cambioPVIlbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="24dp"
+            android:text="Cambio:"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/pagaConPVIlbl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalPVIlbl"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/cambioCountPVI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="$ 100"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintStart_toEndOf="@+id/pagaConPVIlbl"
+            app:layout_constraintTop_toTopOf="@+id/txtPagaConPVI" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

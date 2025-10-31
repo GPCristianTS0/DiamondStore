@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2A2828"
+    tools:context=".Precio_Publico">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/costoGeneratxt"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_border"
+        android:hint=""
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/costoGeneralbl"
+        app:layout_constraintTop_toBottomOf="@+id/titlePrecio" />
+
+    <TextView
+        android:id="@+id/costoGeneralbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+
+        android:layout_marginTop="40dp"
+        android:text="@string/costoTotallbl"
+        android:textColor="#FFFFFF"
+        android:textSize="19dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titlePrecio" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/costoProductotxt"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:hint=""
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/costoProductolbl"
+        app:layout_constraintTop_toBottomOf="@+id/costoGeneratxt" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/gananciatxt"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
+        android:hint=""
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/ganancialbl"
+        app:layout_constraintTop_toBottomOf="@+id/costoEnviotxt" />
+
+    <TextView
+        android:id="@+id/precioFinallbl"
+        android:layout_width="118dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="36dp"
+        android:text="Precio Final:"
+        android:textColor="@color/white"
+        android:textSize="19dp"
+        app:layout_constraintEnd_toStartOf="@+id/precioFinal2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sacarBtn" />
+
+    <Button
+        android:id="@+id/sacarBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:onClick="onClicke"
+        android:text="Generar Precio"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unidadestxt"
+        app:layout_constraintVertical_bias="0.154" />
+
+    <TextView
+        android:id="@+id/ganancialbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+
+        android:layout_marginTop="44dp"
+        android:text="@string/ganancialbl"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/costoEnviolbl" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/costoEnviotxt"
+        android:layout_width="100dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
+        android:hint=""
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/costoEnviolbl"
+        app:layout_constraintTop_toBottomOf="@+id/costoProductotxt" />
+
+    <TextView
+        android:id="@+id/costoEnviolbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+
+        android:layout_marginTop="28dp"
+        android:text="@string/costoEnviolbl"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/costoProductolbl" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/unidadestxt"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:hint=""
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/unidadeslbl"
+        app:layout_constraintTop_toBottomOf="@+id/gananciatxt" />
+
+    <TextView
+        android:id="@+id/precioFinal2"
+        android:layout_width="84dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="68dp"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="19dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sacarBtn" />
+
+    <TextView
+        android:id="@+id/unidadeslbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/unidadeslbl"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ganancialbl" />
+
+    <TextView
+        android:id="@+id/costoProductolbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/costoTotalProductolbl"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/costoGeneralbl" />
+
+    <TextView
+        android:id="@+id/titlePrecio"
+        android:layout_width="170dp"
+        android:layout_height="39dp"
+        android:text="Precio Publico"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.061" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
