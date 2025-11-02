@@ -28,6 +28,7 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
     public void createTable(String name) {
         SQLiteDatabase db = getReadableDatabase();
         String sql = "create table IF NOT EXISTS "+name.toLowerCase()+" (" +
+                "rutaImagen TEXT," +
                 "id TEXT PRIMARY KEY, " +
                 "nombre TEXT," +
                 "marca TEXT," +
@@ -49,6 +50,7 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
         SQLiteDatabase db = getReadableDatabase();
         createTable(producto.getSeccion());
         String sql = "insert into "+producto.getSeccion().toLowerCase()+" ( "+producto.toColumns()+") VALUES ('" +
+                producto.getRutaImagen()+"','"+
                 producto.getId()+"','"+
                 producto.getNombre()+"','"+
                 producto.getMarca()+"',"+
@@ -90,16 +92,17 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
             String sql = "SELECT * FROM " + seccion.toLowerCase() + " WHERE id='" + id+"'";
             try (Cursor cursor = db.rawQuery(sql, null)) {
                 if (cursor.moveToFirst()) {
-                    producto.setId(cursor.getString(0));
-                    producto.setNombre(cursor.getString(1));
-                    producto.setMarca(cursor.getString(2));
+                    producto.setRutaImagen(cursor.getString(0));
+                    producto.setId(cursor.getString(1));
+                    producto.setNombre(cursor.getString(2));
+                    producto.setMarca(cursor.getString(3));
                     producto.setSeccion(seccion);
-                    producto.setPrecioPublico(cursor.getInt(3));
-                    producto.setPrecioNeto(cursor.getInt(4));
-                    producto.setDescripcion(cursor.getString(5));
-                    producto.setVendidos(cursor.getInt(6));
-                    producto.setStock(cursor.getInt(7));
-                    producto.setUltimoPedido(cursor.getString(8));
+                    producto.setPrecioPublico(cursor.getInt(4));
+                    producto.setPrecioNeto(cursor.getInt(5));
+                    producto.setDescripcion(cursor.getString(6));
+                    producto.setVendidos(cursor.getInt(7));
+                    producto.setStock(cursor.getInt(8));
+                    producto.setUltimoPedido(cursor.getString(9));
                     return producto;
                 }
             } catch (Exception e) {
@@ -119,14 +122,17 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
             try (Cursor cursor = db.rawQuery(sql, null)) {
                 if (cursor.moveToNext()) {
                     Productos producto = new Productos();
-                    producto.setId(cursor.getString(0));
-                    producto.setNombre(cursor.getString(1));
-                    producto.setMarca(cursor.getString(2));
+                    producto.setRutaImagen(cursor.getString(0));
+                    producto.setId(cursor.getString(1));
+                    producto.setNombre(cursor.getString(2));
+                    producto.setMarca(cursor.getString(3));
                     producto.setSeccion(seccion);
                     producto.setPrecioPublico(cursor.getInt(4));
                     producto.setPrecioNeto(cursor.getInt(5));
-                    producto.setStock(cursor.getInt(7));
-                    producto.setUltimoPedido(cursor.getString(8));
+                    producto.setDescripcion(cursor.getString(6));
+                    producto.setVendidos(cursor.getInt(7));
+                    producto.setStock(cursor.getInt(8));
+                    producto.setUltimoPedido(cursor.getString(9));
                     return producto;
                 }
             } catch (Exception e) {
@@ -147,16 +153,17 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
             try (Cursor cursor = db.rawQuery(sql, null)) {
                 while(cursor.moveToNext()) {
                     Productos producto = new Productos();
-                    producto.setId(cursor.getString(0));
-                    producto.setNombre(cursor.getString(1));
-                    producto.setMarca(cursor.getString(2));
+                    producto.setRutaImagen(cursor.getString(0));
+                    producto.setId(cursor.getString(1));
+                    producto.setNombre(cursor.getString(2));
+                    producto.setMarca(cursor.getString(3));
                     producto.setSeccion(seccion);
-                    producto.setPrecioPublico(cursor.getInt(3));
-                    producto.setPrecioNeto(cursor.getInt(4));
-                    producto.setDescripcion(cursor.getString(5));
-                    producto.setVendidos(cursor.getInt(6));
-                    producto.setStock(cursor.getInt(7));
-                    producto.setUltimoPedido(cursor.getString(8));
+                    producto.setPrecioPublico(cursor.getInt(4));
+                    producto.setPrecioNeto(cursor.getInt(5));
+                    producto.setDescripcion(cursor.getString(6));
+                    producto.setVendidos(cursor.getInt(7));
+                    producto.setStock(cursor.getInt(8));
+                    producto.setUltimoPedido(cursor.getString(9));
                     Log.e("Clover_App", producto.toString());
                     productos.add(producto);
                 }

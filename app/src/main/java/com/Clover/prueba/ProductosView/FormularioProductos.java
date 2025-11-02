@@ -1,5 +1,9 @@
 package com.Clover.prueba.ProductosView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,12 +12,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -33,7 +40,7 @@ import Tools.EscanerCodeBar;
 
 public class FormularioProductos extends AppCompatActivity {
     private String codigo;
-    private ControllerProducto controllerProducto = new ProductoDB(this, "Productos.db", null, 1);
+    private ControllerProducto controllerProducto ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +50,7 @@ public class FormularioProductos extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        controllerProducto = new ProductoDB(this, "Productos.db", null, 1);
         Button escanearBtn = findViewById(R.id.escanearButton);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -94,6 +102,7 @@ public class FormularioProductos extends AppCompatActivity {
             t.setText("");
             Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();
         }else {
+            Toast.makeText(this, t.getText().toString(), Toast.LENGTH_SHORT).show();
             productos.setId(t.getText().toString());
             t = findViewById(R.id.nombertxt);
             productos.setNombre(t.getText().toString().trim());
@@ -117,5 +126,36 @@ public class FormularioProductos extends AppCompatActivity {
             Intent intent = new Intent(FormularioProductos.this, ProductosView.class);
             startActivity(intent);
         }
+    }
+    ActivityResultLauncher<Intent> launcherActivityGalery;
+
+    private String rutaGuardada; // Aquí guardaremos la ruta del archivo
+    ImageView imageView ;
+    //Funcion para agregar imagen
+    public void addImage(View v){
+
+        launcherActivityGalery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Uri selectedImageUri = result.getData().getData();
+
+                    // 🔹 2. Mostrar la imagen en pantalla
+                    imageView.setImageURI(selectedImageUri);
+
+                    // 🔹 3. Guardarla en el almacenamiento interno
+                    //rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
+
+                    if (rutaGuardada != null) {
+                        Toast.makeText(this, "Imagen guardada en: " + rutaGuardada, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Error al guardar la imagen", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        );
+    }
+
+    private String guardarImagenEnPrivado(Uri selectedImageUri) {
+        return null;
     }
 }

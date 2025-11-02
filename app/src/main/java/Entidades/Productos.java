@@ -1,6 +1,7 @@
 package Entidades;
 
 public class Productos {
+    private String rutaImagen;
     private String id;
     private String nombre;
     private String marca;
@@ -15,7 +16,8 @@ public class Productos {
     public Productos() {
     }
 
-    public Productos(String id, String nombre, String marca, String seccion, int precioPublico, int precioNeto, String descripcion, int vendidos, int stock, String ultimoPedido) {
+    public Productos(String rutaImagen, String id, String nombre, String marca, String seccion, int precioPublico, int precioNeto, String descripcion, int vendidos, int stock, String ultimoPedido) {
+        this.rutaImagen = rutaImagen;
         this.id = id;
         this.nombre = nombre;
         this.marca = marca;
@@ -26,6 +28,14 @@ public class Productos {
         this.vendidos = vendidos;
         this.stock = stock;
         this.ultimoPedido = ultimoPedido;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
     }
 
     public String getId() {
@@ -109,13 +119,14 @@ public class Productos {
     }
 
     public String toColumns(){
-        return "id,nombre,marca,precioPublico,precioNeto,descripcion,vendidos,stock,ultimo_Pedido";
+        return "rutaImagen,id,nombre,marca,precioPublico,precioNeto,descripcion,vendidos,stock,ultimo_Pedido";
     }
 
     @Override
     public String toString() {
         return "Productos{" +
-                "id=" + id +
+                "rutaImagen='" + rutaImagen + '\'' +
+                ", id='" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", marca='" + marca + '\'' +
                 ", seccion='" + seccion + '\'' +
@@ -124,7 +135,7 @@ public class Productos {
                 ", descripcion='" + descripcion + '\'' +
                 ", vendidos=" + vendidos +
                 ", stock=" + stock +
-                ", ultimoPedido=" + ultimoPedido +
+                ", ultimoPedido='" + ultimoPedido + '\'' +
                 '}';
     }
 }

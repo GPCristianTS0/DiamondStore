@@ -30,14 +30,17 @@
         app:layout_constraintVertical_bias="0.529" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/imagenFP"
         android:layout_width="111dp"
         android:layout_height="98dp"
         android:layout_marginStart="48dp"
+        android:clickable="true"
+        android:onClick="addImage"
+        android:focusable="true"
         android:layout_marginTop="44dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_nuevo" />
+        app:srcCompat="@drawable/agregar_imgaen" />
 
     <TextView
         android:id="@+id/tittlelbl"
@@ -47,7 +50,7 @@
         android:text="@string/tittleFP"
         app:layout_constraintBottom_toTopOf="@+id/nombertxt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintStart_toEndOf="@+id/imagenFP"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -59,7 +62,7 @@
         android:text="@string/nombreFP"
         app:layout_constraintBottom_toTopOf="@+id/nombertxt"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/imagenFP"
         app:layout_constraintVertical_bias="0.56" />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -70,7 +73,7 @@
         android:layout_marginTop="60dp"
         android:background="@drawable/button_border"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        app:layout_constraintTop_toBottomOf="@+id/imagenFP" />
 
     <TextView
         android:id="@+id/marcalbl"
@@ -214,7 +217,6 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_border"
-        android:onClick=""
         android:text="@string/codigoBarrasFPlabel"
         android:textColor="@color/white"
         android:textColorLink="@color/white"
