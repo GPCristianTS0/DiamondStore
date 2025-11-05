@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -29,6 +30,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -41,6 +46,8 @@ import Tools.EscanerCodeBar;
 public class FormularioProductos extends AppCompatActivity {
     private String codigo;
     private ControllerProducto controllerProducto ;
+    private ImageView imagenView;//Para las imagenes
+    private Uri selectedImageUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +71,15 @@ public class FormularioProductos extends AppCompatActivity {
             }
         });
 
-
+        //Sccion de agregar imagen
+        imagenView = findViewById(R.id.imagenFP);
+        addImage();
+        imagenView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirGaleria();
+            }
+        });
     }
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
@@ -123,6 +138,11 @@ public class FormularioProductos extends AppCompatActivity {
             productos.setUltimoPedido(fechaHoy);
             controllerProducto.addProducto(productos);
             Toast.makeText(this, "Producto Agregado", Toast.LENGTH_SHORT).show();
+            rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
+            if (rutaGuardada == null)
+                Toast.makeText(this, "Error al guardar la imagen", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "Imagen guardada en " + rutaGuardada, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(FormularioProductos.this, ProductosView.class);
             startActivity(intent);
         }
@@ -130,32 +150,52 @@ public class FormularioProductos extends AppCompatActivity {
     ActivityResultLauncher<Intent> launcherActivityGalery;
 
     private String rutaGuardada; // Aquí guardaremos la ruta del archivo
-    ImageView imageView ;
-    //Funcion para agregar imagen
-    public void addImage(View v){
 
+    //Funcion para agregar imagen
+    public void addImage(){
+        // 🔹 1. Crear el launcher
         launcherActivityGalery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Uri selectedImageUri = result.getData().getData();
+                    selectedImageUri = result.getData().getData();
 
                     // 🔹 2. Mostrar la imagen en pantalla
-                    imageView.setImageURI(selectedImageUri);
-
-                    // 🔹 3. Guardarla en el almacenamiento interno
-                    //rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
-
-                    if (rutaGuardada != null) {
-                        Toast.makeText(this, "Imagen guardada en: " + rutaGuardada, Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(this, "Error al guardar la imagen", Toast.LENGTH_SHORT).show();
-                    }
+                    imagenView.setImageURI(selectedImageUri);
                 }
             }
         );
     }
 
-    private String guardarImagenEnPrivado(Uri selectedImageUri) {
-        return null;
+    private void abrirGaleria() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        launcherActivityGalery.launch(intent);
+    }
+    private String guardarImagenEnPrivado(Uri uriImagen) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(uriImagen);
+
+            // Nombre único del archivo
+            String nombreArchivo = "img_" + System.currentTimeMillis() + ".jpg";
+            File archivo = new File(getFilesDir(), nombreArchivo);
+
+            FileOutputStream outputStream = new FileOutputStream(archivo);
+
+            byte[] buffer = new byte[1024];
+            int bytesLeidos;
+            while ((bytesLeidos = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesLeidos);
+            }
+
+            inputStream.close();
+            outputStream.close();
+
+            // 🔹 Retornar la ruta del archivo guardado
+            return archivo.getAbsolutePath();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -35,12 +35,11 @@
         android:layout_height="98dp"
         android:layout_marginStart="48dp"
         android:clickable="true"
-        android:onClick="addImage"
         android:focusable="true"
         android:layout_marginTop="44dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/agregar_imgaen" />
+        android:background="@drawable/agregar_imgaen" />
 
     <TextView
         android:id="@+id/tittlelbl"
