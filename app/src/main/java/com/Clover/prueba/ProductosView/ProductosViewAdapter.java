@@ -1,12 +1,16 @@
 package com.Clover.prueba.ProductosView;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
@@ -40,18 +44,14 @@ public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdap
     @Override
     public void onBindViewHolder(@NonNull ProductosViewAdapter.ViewHolder holder, int position) {
         Productos producto = productos.get(position);
+        holder.imagen.setImageURI(Uri.parse(producto.getRutaImagen()));
         holder.txtNombre.setText(producto.getNombre());
         holder.txtMarca.setText(producto.getMarca());
         holder.txtSeccion.setText(producto.getSeccion());
-        holder.txtDescripcion.setText(producto.getDescripcion());
-        holder.txtVendidos.setText(String.valueOf(producto.getVendidos()));
-        holder.txtUnidades.setText(String.valueOf(producto.getStock()));
-        String b = "$ " + producto.getPrecioNeto();
-        holder.txtPrecioNeto.setText(b);
         String a = "$ "+producto.getPrecioPublico();
         holder.txtPrecio.setText(a);
         holder.txtCodigo.setText(producto.getId());
-        holder.btn.setOnClickListener(v -> {
+        holder.c.setOnClickListener(v -> {
             if (listener != null) {
                 listener.OnClickEditProduct(producto, holder.getAdapterPosition());
             }
@@ -64,21 +64,18 @@ public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtPrecio, txtCodigo, txtNombre, txtMarca, txtSeccion, txtDescripcion, txtVendidos, txtUnidades,txtPrecioNeto;
-        Button btn;
-
+        TextView txtPrecio, txtCodigo, txtNombre, txtMarca, txtSeccion;
+        ConstraintLayout c;
+        ImageView imagen;
         public ViewHolder(View itemView) {
             super(itemView);
-            btn = itemView.findViewById(R.id.edit);
+            imagen = itemView.findViewById(R.id.imageItemProducto);
             txtNombre = itemView.findViewById(R.id.nombretxt);
             txtPrecio = itemView.findViewById(R.id.preciotxt);
             txtMarca = itemView.findViewById(R.id.marcaItemProducto);
             txtSeccion = itemView.findViewById(R.id.secciontxt);
-            txtDescripcion = itemView.findViewById(R.id.descripcionItemProducto);
-            txtVendidos = itemView.findViewById(R.id.vendidosCountItemProducto);
-            txtUnidades = itemView.findViewById(R.id.cantidadtxt);
+            c = itemView.findViewById(R.id.itemproductos);
             txtCodigo = itemView.findViewById(R.id.codigoBarralbl);
-            txtPrecioNeto = itemView.findViewById(R.id.precioNetoCountItemProducto);
         }
     }
 }

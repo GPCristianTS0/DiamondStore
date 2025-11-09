@@ -229,7 +229,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="184dp"
         android:background="@drawable/button_border"
-        android:onClick="addProductView"
         android:text="Agregar"
         android:textColor="@color/white"
         android:textColorLink="@color/white"

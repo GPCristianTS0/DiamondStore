@@ -5,6 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:background="@color/white"
     tools:context=".ProductosView.ProductosView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,7 +14,7 @@
         android:layout_width="136dp"
         android:layout_height="59dp"
         android:layout_gravity="center"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="48dp"
         android:background="@drawable/button_border"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,6 +26,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0"
+            android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.695"
@@ -49,6 +52,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:text="Vendidos"
+            android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.769"
             app:layout_constraintStart_toEndOf="@+id/vendidosImagelbl"
@@ -74,6 +78,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerProductosView"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
@@ -81,28 +86,30 @@
 
     <Button
         android:id="@+id/button11"
-        android:layout_width="176dp"
-        android:layout_height="52dp"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
         android:background="@drawable/button_border"
         android:onClick="onClickAddProduct"
-        android:text="Agregar Producto"
-        android:textColor="@color/white"
+        android:text="Agregar"
+        android:textColor="@color/black"
+        android:padding="0dp"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vendidosLayoutB"
-        app:layout_constraintVertical_bias="0.003" />
+        app:layout_constraintVertical_bias="0.008" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/button"
         android:layout_width="140dp"
         android:layout_height="59dp"
         android:layout_gravity="center"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/button_border"
         app:layout_constraintEnd_toStartOf="@+id/unidadesLayout"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -112,6 +119,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0"
+            android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.71"
@@ -136,6 +144,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:text="Productos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.971"
@@ -146,13 +155,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/stockLayoutB"
-        android:layout_width="136dp"
+        android:layout_width="140dp"
         android:layout_height="59dp"
         android:layout_gravity="center"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/button_border"
         app:layout_constraintEnd_toStartOf="@+id/vendidosLayoutB"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button">
 
@@ -162,6 +171,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0"
+            android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.679"
@@ -187,6 +197,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="3dp"
             android:text="Stock Bajo"
+            android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.777"
             app:layout_constraintStart_toEndOf="@+id/stockImagelbl"
@@ -199,7 +210,7 @@
         android:layout_width="136dp"
         android:layout_height="59dp"
         android:layout_gravity="center"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="48dp"
         android:background="@drawable/button_border"
         app:layout_constraintEnd_toEndOf="parent"
@@ -211,6 +222,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0"
+            android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.71"
@@ -235,6 +247,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:text="Unidades"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.971"
@@ -247,21 +260,38 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="104dp"
+        android:layout_marginTop="16dp"
         android:text="Inventario"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
-        app:layout_constraintHorizontal_bias="0.514"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/textInputEditText"
+        android:layout_width="155dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/button_border"
+        android:hint="hint"
+        android:textColor="#000035"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toStartOf="@+id/button11"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/vendidosLayoutB"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="66dp"
+        android:layout_height="35dp"
+        android:textColor="@color/black"
+        android:layout_marginStart="32dp"
+        android:gravity="center"
+        android:text="Buscar:"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_nuevo" />
+        app:layout_constraintTop_toBottomOf="@+id/stockLayoutB" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

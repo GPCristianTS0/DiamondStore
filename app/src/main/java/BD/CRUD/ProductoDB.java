@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import BD.Controller.ControllerProducto;
@@ -75,7 +76,6 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
         try (Cursor cursor = db.rawQuery(sql, null)) {
             while (cursor.moveToNext()){
                 secciones.add(cursor.getString(0));
-                Log.e("Clover_App", "Seccion: "+cursor.getString(0)+"\n");
             }
         } catch (Exception e) {
             Log.e("Clover_App", "En getSecciones: "+e.getMessage());
@@ -148,7 +148,6 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
         ArrayList<String> secciones = getSecciones();
         ArrayList<Productos> productos = new ArrayList<>();
         for (String seccion: secciones) {
-            Log.e("Clover_App", seccion+" Prueba");
             String sql = "SELECT * FROM " + seccion.toLowerCase();
             try (Cursor cursor = db.rawQuery(sql, null)) {
                 while(cursor.moveToNext()) {
@@ -164,7 +163,6 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
                     producto.setVendidos(cursor.getInt(7));
                     producto.setStock(cursor.getInt(8));
                     producto.setUltimoPedido(cursor.getString(9));
-                    Log.e("Clover_App", producto.toString());
                     productos.add(producto);
                 }
             } catch (Exception e) {
@@ -183,7 +181,22 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
 
     @Override
     public void updateProducto(Productos old, Productos newProducto) {
-
+        String sql = "UPDATE "+old.getSeccion().toLowerCase()+" SET rutaImagen='"+newProducto.getRutaImagen()+"', " +
+                "nombre='"+newProducto.getNombre()+"', " +
+                "marca='"+newProducto.getMarca()+"',"+
+                "precioPublico="+newProducto.getPrecioPublico()+","+
+                "precioNeto="+newProducto.getPrecioNeto()+","+
+                "descripcion='"+newProducto.getDescripcion()+"',"+
+                "vendidos="+newProducto.getVendidos()+","+
+                "stock="+newProducto.getStock()+","+
+                "ultimo_pedido='"+newProducto.getUltimoPedido()+"' " +
+                " WHERE id='"+old.getId()+"'";
+        SQLiteDatabase db = getReadableDatabase();
+        db.execSQL(sql);
+        if (!newProducto.getRutaImagen().equals(old.getRutaImagen())){
+            File archivo = new File(old.getRutaImagen());
+            boolean f = archivo.delete();
+        }
     }
 
     @Override
