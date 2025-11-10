@@ -60,6 +60,7 @@ public class ProductosView extends AppCompatActivity {
                 Intent intent = new Intent(ProductosView.this, FormularioProductos.class);
                 intent.putExtra("producto", producto);
                 startActivity(intent);
+                finish();
             }
         });
         recyclerView.setAdapter(adapter);

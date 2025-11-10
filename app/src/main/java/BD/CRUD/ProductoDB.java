@@ -174,9 +174,13 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
 
     @Override
     public void deleteProducto(Productos producto) {
-        SQLiteDatabase db = getReadableDatabase();
-        String sql = "DELETE * FROM "+producto.getSeccion().toLowerCase()+" WHERE id="+producto.getId();
-        db.execSQL(sql);
+        String sql = "DELETE FROM "+producto.getSeccion().toLowerCase()+" WHERE id='"+producto.getId()+"'";
+        Log.e("Clover_App", "deleteProducto: "+sql);
+        try(SQLiteDatabase db = getReadableDatabase()) {
+            db.execSQL(sql);
+        }catch (SQLException e){
+            Log.e("Clover_App", "Error en eliminar producto: "+ e.getMessage());
+        }
     }
 
     @Override
@@ -196,12 +200,15 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
         if (!newProducto.getRutaImagen().equals(old.getRutaImagen())){
             File archivo = new File(old.getRutaImagen());
             boolean f = archivo.delete();
+
         }
     }
 
     @Override
     public void updateStock(int unidades, Productos producto) {
-
+        String sql = "UPDATE "+producto.getSeccion()+" SET stock="+unidades+" WHERE id='"+producto.getId()+"'";
+        SQLiteDatabase db = getReadableDatabase();
+        db.execSQL(sql);
     }
 
     @Override

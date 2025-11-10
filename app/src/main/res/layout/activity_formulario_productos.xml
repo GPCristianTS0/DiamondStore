@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="#141414"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductosView.FormularioProductos">
@@ -12,9 +12,10 @@
         android:id="@+id/unidadestxt"
         android:layout_width="134dp"
         android:layout_height="49dp"
-        android:layout_marginStart="180dp"
+        android:layout_marginStart="196dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/button_border"
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p_netotxt" />
 
@@ -22,12 +23,13 @@
         android:id="@+id/unidadeslbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
+        android:layout_marginStart="196dp"
         android:text="@string/unidadestxtFP"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/unidadestxt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p_netotxt"
-        app:layout_constraintVertical_bias="0.529" />
+        app:layout_constraintVertical_bias="0.588" />
 
     <ImageView
         android:id="@+id/imagenFP"
@@ -59,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:text="@string/nombreFP"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/nombertxt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagenFP"
@@ -71,6 +74,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/button_border"
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagenFP" />
 
@@ -80,6 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:text="@string/marcaFP"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/marcatxt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nombertxt"
@@ -92,6 +97,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/button_border"
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nombertxt" />
 
@@ -101,6 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="108dp"
         android:text="@string/modeloFP"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/modelotxt"
         app:layout_constraintStart_toEndOf="@+id/marcalbl"
         app:layout_constraintTop_toBottomOf="@+id/nombertxt"
@@ -113,6 +120,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/button_border"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/marcatxt"
@@ -124,6 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:text="@string/descripcionFP"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/descripciontxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.127"
@@ -142,6 +151,7 @@
         android:hint=""
         android:inputType="textMultiLine"
         android:minLines="4"
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/modelotxt" />
 
@@ -151,6 +161,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:text="@string/p_publicoFP"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/p_publicotxt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descripciontxt"
@@ -163,6 +174,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/button_border"
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descripciontxt" />
 
@@ -173,6 +185,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="8dp"
         android:text="@string/p_netoFP"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/p_netotxt"
         app:layout_constraintStart_toEndOf="@+id/p_publicolbl"
         app:layout_constraintTop_toBottomOf="@+id/descripciontxt"
@@ -185,6 +198,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/button_border"
+        android:textColor="#000000"
         app:layout_constraintStart_toEndOf="@+id/p_publicotxt"
         app:layout_constraintTop_toBottomOf="@+id/descripciontxt" />
 
@@ -194,6 +208,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:text="@string/codigoBarrasFPlabel"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/codeBartxt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p_publicotxt"
@@ -206,6 +221,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/button_border"
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p_publicotxt" />
 
@@ -216,8 +232,9 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_border"
+        android:backgroundTint="@color/white"
         android:text="@string/codigoBarrasFPlabel"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textColorLink="@color/white"
         android:textSize="10dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -230,11 +247,21 @@
         android:layout_marginTop="184dp"
         android:background="@drawable/button_border"
         android:text="Agregar"
-        android:textColor="@color/white"
         android:textColorLink="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p_netotxt" />
+
+    <Button
+        android:id="@+id/eliminarBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:layout_marginTop="16dp"
+        android:text="Eliminar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toEndOf="@+id/escanearButton"
+        app:layout_constraintTop_toBottomOf="@+id/unidadestxt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

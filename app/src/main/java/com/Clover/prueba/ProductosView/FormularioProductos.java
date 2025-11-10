@@ -1,9 +1,14 @@
 package com.Clover.prueba.ProductosView;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -25,6 +30,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.window.OnBackInvokedDispatcher;
 
 
 import com.Clover.prueba.R;
@@ -72,6 +78,15 @@ public class FormularioProductos extends AppCompatActivity {
                 addProductView(v);
             }
         });
+        //Boton Eliminar
+        Button btnDelete = findViewById(R.id.eliminarBtn);
+        btnDelete.setVisibility(INVISIBLE);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteProduct();
+            }
+        });
 
         //Escanner de codigo de barras
         controllerProducto = new ProductoDB(this, "Productos.db", null, 1);
@@ -102,6 +117,7 @@ public class FormularioProductos extends AppCompatActivity {
         Productos producto = (Productos) getIntent().getSerializableExtra("producto");
         if (producto!=null){
             rellenarEspacios(producto);
+            btnDelete.setVisibility(VISIBLE);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,6 +125,15 @@ public class FormularioProductos extends AppCompatActivity {
                 }
             });
         }
+        //Sobreescritura del regreso
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(FormularioProductos.this, ProductosView.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     //Rellenar Espacios para modificar productos
     private void rellenarEspacios(Productos producto) {
@@ -117,6 +142,7 @@ public class FormularioProductos extends AppCompatActivity {
         t = findViewById(R.id.marcatxt);
         t.setText(producto.getMarca());
         t = findViewById(R.id.modelotxt);
+        t.setEnabled(false);
         t.setText(producto.getSeccion());
         t = findViewById(R.id.p_publicotxt);
         t.setText(String.valueOf(producto.getPrecioPublico()));
@@ -272,6 +298,15 @@ public class FormularioProductos extends AppCompatActivity {
             return null;
         }
     }
+    //Elimiinar Producto Funcion
+    private void deleteProduct(){
+        Productos producto = getProductoOfInputs();
+        controllerProducto.deleteProducto(producto);
+        Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(FormularioProductos.this, ProductosView.class);
+        startActivity(intent);
+        finish();
+    }
     //Pasa a un producto todos los inputs del formulario
     private Productos getProductoOfInputs(){
         Productos productos = new Productos();
@@ -294,4 +329,5 @@ public class FormularioProductos extends AppCompatActivity {
         productos.setStock(Integer.parseInt(t.getText().toString()));
         return productos;
     }
+
 }
