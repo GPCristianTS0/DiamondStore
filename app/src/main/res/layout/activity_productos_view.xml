@@ -9,63 +9,13 @@
     android:background="@color/white"
     tools:context=".ProductosView.ProductosView">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/vendidosLayoutB"
-        android:layout_width="136dp"
-        android:layout_height="59dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="48dp"
-        android:background="@drawable/button_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unidadesLayout">
-
-        <TextView
-            android:id="@+id/vendidosTotalContador"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.695"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/vendidosImagelbl"
-            android:layout_width="34dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.137"
-            app:srcCompat="@drawable/vendidos_icon" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="63dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="Vendidos"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.769"
-            app:layout_constraintStart_toEndOf="@+id/vendidosImagelbl"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="364dp"
         android:layout_height="472dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="64dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button11">
 
@@ -88,173 +38,17 @@
         android:id="@+id/button11"
         android:layout_width="80dp"
         android:layout_height="35dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_border"
         android:onClick="onClickAddProduct"
+        android:padding="0dp"
         android:text="Agregar"
         android:textColor="@color/black"
-        android:padding="0dp"
         android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vendidosLayoutB"
-        app:layout_constraintVertical_bias="0.008" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/button"
-        android:layout_width="140dp"
-        android:layout_height="59dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/button_border"
-        app:layout_constraintEnd_toStartOf="@+id/unidadesLayout"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/productosTotalContador"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.71"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.137"
-            app:srcCompat="@drawable/product_icon" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="66dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/black"
-            android:text="Productos"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.971"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/stockLayoutB"
-        android:layout_width="140dp"
-        android:layout_height="59dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_border"
-        app:layout_constraintEnd_toStartOf="@+id/vendidosLayoutB"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
-
-        <TextView
-            android:id="@+id/stockTotalContador"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.679"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/stockImagelbl"
-            android:layout_width="34dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.137"
-            app:srcCompat="@drawable/stock_bajo" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="72dp"
-            android:layout_height="23dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="3dp"
-            android:text="Stock Bajo"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.777"
-            app:layout_constraintStart_toEndOf="@+id/stockImagelbl"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/unidadesLayout"
-        android:layout_width="136dp"
-        android:layout_height="59dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="48dp"
-        android:background="@drawable/button_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/unidadesTotalContador"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.71"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/unidadesLayoutlbl"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.137"
-            app:srcCompat="@drawable/unidades_icon" />
-
-        <TextView
-            android:id="@+id/unidadesLayoutlbl"
-            android:layout_width="66dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/black"
-            android:text="Unidades"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.971"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toEndOf="@+id/textInputEditText"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView6"
@@ -272,26 +66,31 @@
         android:id="@+id/textInputEditText"
         android:layout_width="155dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_border"
         android:hint="hint"
         android:textColor="#000035"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toStartOf="@+id/button11"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/vendidosLayoutB"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="66dp"
         android:layout_height="35dp"
-        android:textColor="@color/black"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="Buscar:"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stockLayoutB" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        tools:layout_editor_absoluteX="129dp"
+        tools:layout_editor_absoluteY="92dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

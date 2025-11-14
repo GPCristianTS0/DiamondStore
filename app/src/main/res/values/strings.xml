@@ -1,6 +1,6 @@
 <resources>
     <!--Credenciales Aplicativo-->
-    <string name="app_name">NovaShop - Tools</string>
+    <string name="app_name">DiamondMarket</string>
     <string name="developer">Cristan Tobar</string>
     <string name="desarrollo">Desarrollado por:</string>
     <string name="version">Version 1.0.0</string>

@@ -223,7 +223,7 @@ public class FormularioProductos extends AppCompatActivity {
             productos.setUltimoPedido(fechaHoy);
             rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
             productos.setRutaImagen(rutaGuardada);
-            //controllerProducto.addProducto(productos);
+            controllerProducto.addProducto(productos);
             Toast.makeText(this, "Producto Agregado", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(FormularioProductos.this, ProductosView.class);
             startActivity(intent);

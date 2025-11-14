@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -46,11 +49,6 @@ public class ProductosView extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerProductosView);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         ArrayList<Productos> productos = controller.getProductos();
-        TextView co = findViewById(R.id.productosTotalContador);
-        numeroProductos = productos.size();
-        co.setText(String.valueOf(numeroProductos));
-        TextView un = findViewById(R.id.unidadesTotalContador);
-        un.setText(String.valueOf(getUnidades(productos)));
 
 
 
@@ -74,6 +72,27 @@ public class ProductosView extends AppCompatActivity {
         }
         return unidades;
     }
+    //Spinner
+    private void rellenarSpinner(){
+        Spinner spiner = findViewById(R.id.spinner);
+        ArrayList<String> secciones = controller.getSecciones();
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, secciones);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spiner.setAdapter(adapter1);
+
+        spiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    //Spinner cuando se selecciona una seccion
 
     //Funcion boton Agregar producto
     public void onClickAddProduct(View v){

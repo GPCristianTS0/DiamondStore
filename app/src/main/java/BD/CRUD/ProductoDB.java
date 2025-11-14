@@ -69,7 +69,7 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
             Log.e("Clover_App", "Error en agregar producto: "+ e.getMessage());
         }
     }
-    private ArrayList<String> getSecciones() {
+    public ArrayList<String> getSecciones() {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<String> secciones = new ArrayList<>();
         String sql ="SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'android_%'";
@@ -203,6 +203,7 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
 
         }
     }
+
 
     @Override
     public void updateStock(int unidades, Productos producto) {

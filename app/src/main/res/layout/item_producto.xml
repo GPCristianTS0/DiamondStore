@@ -11,7 +11,7 @@
     android:layout_marginRight="2dp"
     android:layout_marginBottom="3dp"
     android:background="@drawable/redondear_esquinas"
-    android:backgroundTint="#E7ECFF">
+    android:backgroundTint="#E7E7E7">
 
         <TextView
             android:id="@+id/nombretxt"

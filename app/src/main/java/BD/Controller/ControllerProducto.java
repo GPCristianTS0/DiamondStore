@@ -10,6 +10,7 @@ public interface ControllerProducto {
     public void addProducto(Productos producto);
     public Productos getProductoCode(String id);
     public Productos getProducto(String nombre);
+    public ArrayList<String> getSecciones();
     public ArrayList<Productos> getProductos();
     public void deleteProducto(Productos producto);
     public void updateProducto(Productos old, Productos newProducto);
