@@ -4,17 +4,14 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.VentasViews.VentasViewAdapter;
 
 import java.util.List;
 
@@ -37,14 +34,17 @@ public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdap
     @Override
     public ProductosViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_producto, parent, false);
+                .inflate(R.layout.producto_item_producto, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductosViewAdapter.ViewHolder holder, int position) {
         Productos producto = productos.get(position);
-        holder.imagen.setImageURI(Uri.parse(producto.getRutaImagen()));
+        if (producto.getRutaImagen()!=null)
+            holder.imagen.setImageURI(Uri.parse(producto.getRutaImagen()));
+        else
+            holder.imagen.setImageResource(R.drawable.agregar_imgaen);
         holder.txtNombre.setText(producto.getNombre());
         holder.txtMarca.setText(producto.getMarca());
         holder.txtSeccion.setText(producto.getSeccion());

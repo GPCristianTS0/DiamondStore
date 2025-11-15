@@ -1,6 +1,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Productos implements Serializable {
     private String rutaImagen;
@@ -123,7 +124,20 @@ public class Productos implements Serializable {
     public String toColumns(){
         return "rutaImagen,id,nombre,marca,precioPublico,precioNeto,descripcion,vendidos,stock,ultimo_Pedido";
     }
-
+    public static ArrayList<String> getArrayColumn(){
+        ArrayList<String> array = new ArrayList<>();
+        array.add("rutaImagen");
+        array.add("id");
+        array.add("nombre");
+        array.add("marca");
+        array.add("precioPublico");
+        array.add("precioNeto");
+        array.add("descripcion");
+        array.add("vendidos");
+        array.add("stock");
+        array.add("ultimo_Pedido");
+        return array;
+    }
     @Override
     public String toString() {
         return "Productos{" +

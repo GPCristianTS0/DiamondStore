@@ -63,7 +63,7 @@ public class MenuPrincipal extends AppCompatActivity {
     //Rellenado de datos de los productos
     private void rellenarDatos(){
         ControllerProducto controller = new ProductoDB(this, "Productos.db", null, 1);
-        ArrayList<Productos> productos = controller.getProductos();
+        ArrayList<Productos> productos = controller.getProductos("" ,"");
         for (Productos producto : productos) {
             contadorUnidades += producto.getStock();
             if (producto.getStock() < 3) {

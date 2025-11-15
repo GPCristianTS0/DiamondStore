@@ -114,41 +114,48 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
     }
 
     @Override
-    public Productos getProducto(String nombre) {
-        ArrayList<String> secciones = getSecciones();
+    public ArrayList<Productos> getProductos(String seccion, String columnaObtencion, String busqueda) {
         SQLiteDatabase db = getReadableDatabase();
-        for (String seccion: secciones) {
-            String sql = "SELECT * FROM " + seccion + " WHERE nombre=" + nombre;
-            try (Cursor cursor = db.rawQuery(sql, null)) {
-                if (cursor.moveToNext()) {
-                    Productos producto = new Productos();
-                    producto.setRutaImagen(cursor.getString(0));
-                    producto.setId(cursor.getString(1));
-                    producto.setNombre(cursor.getString(2));
-                    producto.setMarca(cursor.getString(3));
-                    producto.setSeccion(seccion);
-                    producto.setPrecioPublico(cursor.getInt(4));
-                    producto.setPrecioNeto(cursor.getInt(5));
-                    producto.setDescripcion(cursor.getString(6));
-                    producto.setVendidos(cursor.getInt(7));
-                    producto.setStock(cursor.getInt(8));
-                    producto.setUltimoPedido(cursor.getString(9));
-                    return producto;
-                }
-            } catch (Exception e) {
-                Log.e("Clover_App", "En getProducto: "+e.getMessage());
+        ArrayList<Productos> productos = new ArrayList<>();
+        String sql;
+        if (busqueda.isEmpty()){
+            sql = "SELECT * FROM " + seccion;
+        }else
+            sql = "SELECT * FROM " + seccion + " WHERE "+columnaObtencion+" LIKE '%" + busqueda+"%'";
+        Log.e("Clover_App", sql);
+        try (Cursor cursor = db.rawQuery(sql, null)) {
+            while (cursor.moveToNext()) {
+                Productos producto = new Productos();
+                producto.setRutaImagen(cursor.getString(0));
+                producto.setId(cursor.getString(1));
+                producto.setNombre(cursor.getString(2));
+                producto.setMarca(cursor.getString(3));
+                producto.setSeccion(seccion);
+                producto.setPrecioPublico(cursor.getInt(4));
+                producto.setPrecioNeto(cursor.getInt(5));
+                producto.setDescripcion(cursor.getString(6));
+                producto.setVendidos(cursor.getInt(7));
+                producto.setStock(cursor.getInt(8));
+                producto.setUltimoPedido(cursor.getString(9));
+                productos.add(producto);
             }
+        } catch (Exception e) {
+            Log.e("Clover_App", "En getProducto: "+e.getMessage());
         }
-        return null;
+        return productos;
     }
 
     @Override
-    public ArrayList<Productos> getProductos() {
+    public ArrayList<Productos> getProductos(String columnaObtencion, String busqueda) {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<String> secciones = getSecciones();
         ArrayList<Productos> productos = new ArrayList<>();
+        String sql;
         for (String seccion: secciones) {
-            String sql = "SELECT * FROM " + seccion.toLowerCase();
+            if(busqueda.isEmpty())
+                sql = "SELECT * FROM " + seccion.toLowerCase();
+            else
+                sql = "SELECT * FROM " + seccion.toLowerCase() + " WHERE "+columnaObtencion+" LIKE '%" + busqueda+"%'";
             try (Cursor cursor = db.rawQuery(sql, null)) {
                 while(cursor.moveToNext()) {
                     Productos producto = new Productos();

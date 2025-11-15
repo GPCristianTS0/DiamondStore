@@ -1,6 +1,5 @@
 package com.Clover.prueba.VentasViews;
 
-import android.location.GnssAntennaInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Entidades.Productos;
@@ -33,7 +31,7 @@ public class VentasViewAdapter extends RecyclerView.Adapter<VentasViewAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.articulos_items_venta, parent, false);
+                .inflate(R.layout.ventas_items_ventaview, parent, false);
         return new ViewHolder(view);
     }
 

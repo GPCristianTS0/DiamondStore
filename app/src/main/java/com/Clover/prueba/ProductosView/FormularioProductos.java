@@ -5,10 +5,7 @@ import static android.view.View.VISIBLE;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -30,15 +27,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.window.OnBackInvokedDispatcher;
 
 
 import com.Clover.prueba.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,7 +58,7 @@ public class FormularioProductos extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_formulario_productos);
+        setContentView(R.layout.productos_formulario_activity);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -129,8 +123,6 @@ public class FormularioProductos extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Intent intent = new Intent(FormularioProductos.this, ProductosView.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -180,6 +172,7 @@ public class FormularioProductos extends AppCompatActivity {
         Log.e("Clover_App", "productoNew: "+productoNew.toString());
         controllerProducto.updateProducto(productoOld, productoNew);
         Toast.makeText(this, "Producto Actualizado", Toast.LENGTH_SHORT).show();
+        finish();
     }
     //Escaner de codigo de barras
     @Override
@@ -211,22 +204,21 @@ public class FormularioProductos extends AppCompatActivity {
 
     //Funcion Boton agregar
     public void addProductView(View v){
-
         TextInputEditText t = findViewById(R.id.codeBartxt);
         Productos productos = controllerProducto.getProductoCode(t.getText().toString().trim());
         if (productos.getId().equals(t.getText().toString())) {
             t.setText("");
             Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();
         }else {
+            if (selectedImageUri!=null){
+                rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
+                productos.setRutaImagen(rutaGuardada);
+            }
             productos = getProductoOfInputs();
             String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
             productos.setUltimoPedido(fechaHoy);
-            rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
-            productos.setRutaImagen(rutaGuardada);
             controllerProducto.addProducto(productos);
             Toast.makeText(this, "Producto Agregado", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(FormularioProductos.this, ProductosView.class);
-            startActivity(intent);
             finish();
         }
     }
