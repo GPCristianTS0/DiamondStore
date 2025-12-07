@@ -254,6 +254,7 @@
         app:strokeWidth="3dp"
         app:strokeColor="#000000"
         app:backgroundTint="@android:color/transparent"
+        android:onClick="onClickHistorialVentas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"

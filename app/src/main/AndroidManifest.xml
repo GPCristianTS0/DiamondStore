@@ -17,7 +17,13 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logotipo_diamondsystems"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Prueba" >
+        android:theme="@style/Theme.Prueba">
+        <activity
+            android:name=".HistorialVentas.historialventas_detalleventa"
+            android:exported="false" />
+        <activity
+            android:name=".HistorialVentas.historial_ventasView"
+            android:exported="false" />
         <activity
             android:name=".VentasViews.VentaView"
             android:exported="false" />

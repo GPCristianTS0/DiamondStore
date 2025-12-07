@@ -182,7 +182,6 @@ public class ProductoDB extends SQLiteOpenHelper implements ControllerProducto {
     @Override
     public void deleteProducto(Productos producto) {
         String sql = "DELETE FROM "+producto.getSeccion().toLowerCase()+" WHERE id='"+producto.getId()+"'";
-        Log.e("Clover_App", "deleteProducto: "+sql);
         try(SQLiteDatabase db = getReadableDatabase()) {
             db.execSQL(sql);
         }catch (SQLException e){

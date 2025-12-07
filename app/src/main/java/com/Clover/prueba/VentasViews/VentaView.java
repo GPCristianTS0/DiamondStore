@@ -27,17 +27,24 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import BD.CRUD.ProductoDB;
+import BD.CRUD.VentasDB;
 import BD.Controller.ControllerProducto;
+import BD.Controller.ControllerVentas;
+import Entidades.DetalleVenta;
 import Entidades.Productos;
+import Entidades.Ventas;
 import Tools.EscanerCodeBar;
 
 public class VentaView extends AppCompatActivity {
     private ArrayList<Productos> productos = new ArrayList<>();
     private VentasViewAdapter adapter ;
-
+    private ControllerVentas controllerVentas = new VentasDB( this, "historial_ventas.db", null, 1);
     TextView noArticulosCount ;
     TextView totallbl;
     private int total;
@@ -179,12 +186,49 @@ public class VentaView extends AppCompatActivity {
         frament.setVentaConfirmada(new DialogFragmentVentas.ventaConfirmada(){
             @Override
             public void ventaConfirmada() {
+                Ventas venta = new Ventas();
+                venta.setId_cliente(0);
+                venta.setMonto(total);
+                venta.setTotal_piezas(productos.size());
+                venta.setTipo_pago("Efectivo");
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm", new Locale("es", "ES"));
+                String fecha = LocalDateTime.now().format(format);
+                venta.setFecha_hora(fecha);
+                controllerVentas.addVenta(venta);
+                ArrayList<Ventas> ventas = controllerVentas.getVentas();
+                if (!ventas.isEmpty()) {
+                    venta = ventas.get(ventas.size() - 1);
+                }
+
+                ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
+                for (Productos producto : productos) {
+                    boolean encontrado = false;
+
+                    for (DetalleVenta detalleVenta : detalleVentas){
+                        if (detalleVenta.getId_producto().equals(producto.getId())){
+                            detalleVenta.setCantidad(detalleVenta.getCantidad()+1);
+                            encontrado = true;
+                            break;
+                        }
+                    }
+
+                    if (encontrado){
+                        DetalleVenta detallevVenta = new DetalleVenta();
+                        detallevVenta.setId_venta(venta.getId_venta());
+                        detallevVenta.setId_producto(producto.getId());
+                        detallevVenta.setCantidad(1);
+                        detallevVenta.setPrecio(producto.getPrecioPublico());
+                        detalleVentas.add(detallevVenta);
+                        encontrado = false;
+                    }
+                }
+                controllerVentas.addDetalleVenta(detalleVentas);
+
                 productos.clear();
                 adapter.notifyDataSetChanged();
                 noArticulosCount.setText(0+"");
                 totallbl.setText(0+"");
                 total = 0;
-                Toast.makeText(VentaView.this, "Venta confirmada", Toast.LENGTH_SHORT).show();
             }
         });
 

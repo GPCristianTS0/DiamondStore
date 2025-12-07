@@ -14,4 +14,7 @@ public class EscanerCodeBar {
         integrator.setCaptureActivity(CaptureAct.class); // Muy importante
         integrator.initiateScan();
     }
+    public void createCodeBar(String codigo) {
+
+    }
 }
