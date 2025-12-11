@@ -192,14 +192,9 @@ public class VentaView extends AppCompatActivity {
                 venta.setMonto(total);
                 venta.setTotal_piezas(productos.size());
                 venta.setTipo_pago("Efectivo");
-                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm", new Locale("es", "ES"));
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault());
                 String fecha = LocalDateTime.now().format(format);
                 venta.setFecha_hora(fecha);
-                //controllerVentas.addVenta(venta);
-                ArrayList<Ventas> ventas = controllerVentas.getVentas();
-                if (!ventas.isEmpty()) {
-                    venta = ventas.get(ventas.size() - 1);
-                }
 
                 ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
                 for (Productos producto : productos) {
@@ -223,13 +218,12 @@ public class VentaView extends AppCompatActivity {
                     }
                 }
                 Log.e("Clover_App", detalleVentas.toString());
-                controllerVentas.addDetalleVenta(detalleVentas);
-
+                controllerVentas.addVenta(venta, detalleVentas);
                 productos.clear();
-                adapter.notifyDataSetChanged();
                 noArticulosCount.setText(0+"");
                 totallbl.setText(0+"");
                 total = 0;
+                adapter.notifyDataSetChanged();
             }
         });
 

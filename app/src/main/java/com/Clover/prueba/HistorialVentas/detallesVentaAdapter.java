@@ -21,11 +21,13 @@ import Entidades.Productos;
 
 public class detallesVentaAdapter extends RecyclerView.Adapter<detallesVentaAdapter.ViewHolder> {
     private ArrayList<DetalleVenta> detallesVentas;
+
     private Context context;
+    ControllerProducto controllerProducto;
     public detallesVentaAdapter(Context context, ArrayList<DetalleVenta> detallesVentas) {
-        controllerProducto = new ProductoDAO( context);
         this.context = context;
         this.detallesVentas = detallesVentas;
+        controllerProducto  = new ProductoDAO(context);
     }
 
 
@@ -37,13 +39,11 @@ public class detallesVentaAdapter extends RecyclerView.Adapter<detallesVentaAdap
         return new detallesVentaAdapter.ViewHolder(view);
     }
 
-    ControllerProducto controllerProducto ;
     @Override
     public void onBindViewHolder(@NonNull detallesVentaAdapter.ViewHolder holder, int position) {
         DetalleVenta detalleVenta = detallesVentas.get(position);
         Log.e("Clover_App", detalleVenta.getId_producto());
-        Productos producto = controllerProducto.getProductoCode(detalleVenta.getId_producto());
-        holder.nombreProducto.setText(producto.getNombre());
+        //holder.nombreProducto.setText();
         holder.piezas.setText(String.valueOf(detalleVenta.getCantidad()));
         holder.precio.setText(String.valueOf("$ "+detalleVenta.getPrecio()));
         Log.e("Clover_App", "onBindViewHolder: "+detalleVenta.toString());

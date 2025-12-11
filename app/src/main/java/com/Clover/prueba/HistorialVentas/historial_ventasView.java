@@ -36,7 +36,7 @@ import Entidades.Ventas;
 public class historial_ventasView extends AppCompatActivity {
 
     private ControllerVentas controllerVentas = new VentasDAO(this);
-    private Spinner spinner ;
+    String mes, year, busqueda;
     private Spinner spinner2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class historial_ventasView extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        spinner = findViewById(R.id.spinner3);
+
         rellenospiner();
         //Listener textfield busqueda
         TextInputEditText busquedaInput = findViewById(R.id.busquedaInputo);
@@ -65,15 +65,12 @@ public class historial_ventasView extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                busqueda(s.toString());
+                busqueda = s.toString();
+                ArrayList<Ventas> ventas = controllerVentas.getVentas(mes,year,busqueda);
+                rellenarScroll(ventas);
             }
         });
 
-    }
-    //funcion busqueda textField
-    private void busqueda(String busqueda){
-        ArrayList<Ventas> ventas = controllerVentas.getVentas(spinner.getSelectedItem().toString().toLowerCase(),spinner2.getSelectedItem().toString(),busqueda);
-        rellenarScroll(ventas);
     }
 
     //relleno de scroll con las ventas
@@ -98,6 +95,7 @@ public class historial_ventasView extends AppCompatActivity {
 
     //relleno de spinners
     private void rellenospiner(){
+        Spinner spinner = findViewById(R.id.spinner3);
         String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
         ArrayList<String> mesese = new ArrayList<>(Arrays.asList(meses));
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.productos_spiner_item, mesese);
@@ -111,7 +109,8 @@ public class historial_ventasView extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList<Ventas> ventas = controllerVentas.getVentas(mesese.get(position).toLowerCase(),LocalDateTime.now().getYear()+"","");
+                mes = String.format("%02d", position+1);
+                ArrayList<Ventas> ventas = controllerVentas.getVentas(mes,year,"");
                 rellenarScroll(ventas);
             }
 
@@ -127,9 +126,18 @@ public class historial_ventasView extends AppCompatActivity {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(adapter1);
         spinner2.setSelection(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
+        year = anios.get(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                rellenarScroll(controllerVentas.getVentas(mes,year,""));
+            }
 
-        Log.e("Clover_App", "onCreate: "+anios);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
     }
     private String capitalizar(String string){
         return string.substring(0, 1).toUpperCase()+string.substring(1);

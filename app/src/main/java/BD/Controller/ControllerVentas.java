@@ -14,5 +14,5 @@ public interface ControllerVentas {
     public ArrayList<Ventas> getVentas();
     public ArrayList<Ventas> getVentas(String mes, String year, String busqueda);
     public ArrayList<DetalleVenta> getDetalleVentas(int idVenta); //Obtiene el detalle de la venta por el id de la venta "Folio"
-
+    public ArrayList<String> getAnios();
 }
