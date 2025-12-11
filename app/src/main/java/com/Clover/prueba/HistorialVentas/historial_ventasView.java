@@ -29,14 +29,13 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 
-import BD.CRUD.VentasDB;
+import BD.DAOs.VentasDAO;
 import BD.Controller.ControllerVentas;
-import Entidades.Productos;
 import Entidades.Ventas;
 
 public class historial_ventasView extends AppCompatActivity {
 
-    private ControllerVentas controllerVentas = new VentasDB(this, "historial_ventas.db", null, 1);
+    private ControllerVentas controllerVentas = new VentasDAO(this);
     private Spinner spinner ;
     private Spinner spinner2;
     @Override

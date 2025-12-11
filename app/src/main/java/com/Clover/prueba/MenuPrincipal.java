@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -18,10 +17,9 @@ import com.Clover.prueba.ProductosView.ProductosView;
 import com.Clover.prueba.VentasViews.VentaView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
-import BD.CRUD.ProductoDB;
-import BD.CRUD.VentasDB;
+import BD.DAOs.ProductoDAO;
+import BD.DAOs.VentasDAO;
 import BD.Controller.ControllerProducto;
 import BD.Controller.ControllerVentas;
 import Entidades.Productos;
@@ -38,8 +36,7 @@ public class MenuPrincipal extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ControllerVentas controllerVentas = new VentasDB(this, "historial_ventas.db", null, 1);
-        controllerVentas.createTable();
+        ControllerProducto controllerProducto = new ProductoDAO(this);
         rellenarDatos();
     }
     //Accion boton de clientes
@@ -74,8 +71,8 @@ public class MenuPrincipal extends AppCompatActivity {
           int contadorVentas;
           int contadorUnidades=0;
           int contadorStockBajos=0;
-          ControllerProducto controller = new ProductoDB(this, "Productos.db", null, 1);
-          ArrayList<Productos> productos = controller.getProductos("" ,"");
+          ControllerProducto controller = new ProductoDAO(this);
+          ArrayList<Productos> productos = new ArrayList<>();;
           for (Productos producto : productos) {
               contadorUnidades += producto.getStock();
               if (producto.getStock() < 3) {

@@ -1,4 +1,4 @@
-package BD.CRUD;
+package BD.DAOs;
 
 import android.content.Context;
 import android.database.Cursor;

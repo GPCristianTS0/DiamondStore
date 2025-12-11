@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -32,8 +33,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import BD.CRUD.ProductoDB;
-import BD.CRUD.VentasDB;
+import BD.DAOs.ProductoDAO;
+import BD.DAOs.VentasDAO;
 import BD.Controller.ControllerProducto;
 import BD.Controller.ControllerVentas;
 import Entidades.DetalleVenta;
@@ -44,7 +45,7 @@ import Tools.EscanerCodeBar;
 public class VentaView extends AppCompatActivity {
     private ArrayList<Productos> productos = new ArrayList<>();
     private VentasViewAdapter adapter ;
-    private ControllerVentas controllerVentas = new VentasDB( this, "historial_ventas.db", null, 1);
+    private ControllerVentas controllerVentas = new VentasDAO(this);
     TextView noArticulosCount ;
     TextView totallbl;
     private int total;
@@ -106,7 +107,7 @@ public class VentaView extends AppCompatActivity {
         escaner.inicializarEscaner(VentaView.this);
     }
     private void agregarAlCarrito(String codigo){
-        ControllerProducto controller = new ProductoDB(this, "Productos.db", null, 1);
+        ControllerProducto controller = new ProductoDAO(this);
         if (!verificarCodigo(codigo)) {
             Toast.makeText(this, "Articulo no registrado", Toast.LENGTH_SHORT).show();
             return;
@@ -150,7 +151,7 @@ public class VentaView extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
     private boolean verificarCodigo(String codigo) {
-        ControllerProducto controller = new ProductoDB(this, "Productos.db", null, 1);
+        ControllerProducto controller = new ProductoDAO(this);
         Productos productos = controller.getProductoCode(codigo);
         return productos.getId().equals(codigo);
     }
@@ -194,7 +195,7 @@ public class VentaView extends AppCompatActivity {
                 DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm", new Locale("es", "ES"));
                 String fecha = LocalDateTime.now().format(format);
                 venta.setFecha_hora(fecha);
-                controllerVentas.addVenta(venta);
+                //controllerVentas.addVenta(venta);
                 ArrayList<Ventas> ventas = controllerVentas.getVentas();
                 if (!ventas.isEmpty()) {
                     venta = ventas.get(ventas.size() - 1);
@@ -212,16 +213,16 @@ public class VentaView extends AppCompatActivity {
                         }
                     }
 
-                    if (encontrado){
+                    if (!encontrado){
                         DetalleVenta detallevVenta = new DetalleVenta();
                         detallevVenta.setId_venta(venta.getId_venta());
                         detallevVenta.setId_producto(producto.getId());
                         detallevVenta.setCantidad(1);
                         detallevVenta.setPrecio(producto.getPrecioPublico());
                         detalleVentas.add(detallevVenta);
-                        encontrado = false;
                     }
                 }
+                Log.e("Clover_App", detalleVentas.toString());
                 controllerVentas.addDetalleVenta(detalleVentas);
 
                 productos.clear();

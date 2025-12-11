@@ -1,7 +1,6 @@
 package com.Clover.prueba.HistorialVentas;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -9,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
 
@@ -16,9 +17,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-import BD.CRUD.VentasDB;
+import BD.DAOs.VentasDAO;
 import BD.Controller.ControllerVentas;
-import Entidades.DetalleVenta;
 import Entidades.Ventas;
 
 public class historialventas_detalleventa extends AppCompatActivity {
@@ -34,11 +34,15 @@ public class historialventas_detalleventa extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        //controllerVentas = new VentasDB(this, "historial_ventas.db", null, 1);
+        controllerVentas = new VentasDAO(this);
+
 
         Ventas venta = (Ventas) getIntent().getSerializableExtra("venta");
-        if (venta!=null)
+        if (venta!=null){
             rellenarInformacion(venta);
+            rellenoProductosj(venta);
+        }
+
     }
     private void rellenarInformacion(Ventas venta){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm", new Locale("es", "ES"));
@@ -57,4 +61,16 @@ public class historialventas_detalleventa extends AppCompatActivity {
         totalPiezas.setText(String.valueOf(venta.getTotal_piezas()));
         idCliente.setText("0");
     }
+    //rellenar detalle venta productos
+    private void rellenoProductosj(Ventas venta){
+        detallesVentaAdapter adapter;
+        RecyclerView recyclerView;
+        recyclerView = findViewById(R.id.hvD_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new detallesVentaAdapter(this, controllerVentas.getDetalleVentas(venta.getId_venta()));
+
+        recyclerView.setAdapter(adapter);
+
+    }
+
 }

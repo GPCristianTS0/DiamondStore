@@ -21,10 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Clover.prueba.R;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import BD.CRUD.ProductoDB;
+import BD.DAOs.ProductoDAO;
 import BD.Controller.ControllerProducto;
 import Entidades.Productos;
 
@@ -34,10 +33,7 @@ public class ProductosView extends AppCompatActivity {
     private boolean all;
     private static String seccionG;
     private static String columnaObtencionG;
-    private String busquedaG;
-    private int positionSeccionSpinner;
-    private int postionColumnaSpinner;
-    private final ControllerProducto controller = new ProductoDB(this, "Productos.db", null, 1);
+    private final ControllerProducto controller = new ProductoDAO(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +70,7 @@ public class ProductosView extends AppCompatActivity {
     //Spinner secciones
     private void rellenarSpinnerSecciones(){
         spinerSeccion = findViewById(R.id.spinner);
-        ArrayList<String> secciones = controller.getSecciones();
+        ArrayList<String> secciones = controller.getSeccione();
         secciones.add(0, "Todas");
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.productos_spiner_item, secciones);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -83,18 +79,15 @@ public class ProductosView extends AppCompatActivity {
         spinerSeccion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                positionSeccionSpinner = position;
                 ArrayList<Productos> productos;
                 if (position==0){
-                    seccionG = "";
-                    productos = controller.getProductos("", "");
-                    rellenarTabla(productos);
-                }else{
-                    busquedaG = "";
                     seccionG = secciones.get(position);
-                    productos = controller.getProductos(seccionG, "", "");
-                    rellenarTabla(productos);
+                    rellenarTabla(controller.getProductos());
+                    return;
                 }
+                seccionG = secciones.get(position);
+                productos = controller.buscarProductosPor(secciones.get(position), columnaObtencionG, "");
+                rellenarTabla(productos);
             }
 
             @Override
@@ -106,17 +99,16 @@ public class ProductosView extends AppCompatActivity {
     //rellenar Spinner columnas
     private void rellenarSpinnerColumnas(){
         spinerColumnas = findViewById(R.id.spinner2);
-        ArrayList<String> columnas = Productos.getArrayColumn();
-        columnas.remove(0);
+        String[] columnas = {"Codigo Barras","Nombre", "Marca","seccion", "Precio Publico", "Precio Neto", "Descripcion", "Vendidos", "Stock", "Ultimo Pedido"};
+        ArrayList<String> columnasBD = Productos.getArrayColumn();
+        columnasBD.remove(0);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.productos_spiner_item, columnas);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinerColumnas.setAdapter(adapter2);
-        spinerColumnas.setSelection(1);
         spinerColumnas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                columnaObtencionG = columnas.get(position);
-                postionColumnaSpinner = position;
+                columnaObtencionG = columnasBD.get(position);
             }
 
             @Override
@@ -126,6 +118,7 @@ public class ProductosView extends AppCompatActivity {
         });
     }
     //Funcion Inpur Busqueda
+    String busquedaIn = "";
     private void inputBusqueda(){
         TextInputEditText t = findViewById(R.id.textInputEditText);
         t.addTextChangedListener(new TextWatcher() {
@@ -141,9 +134,8 @@ public class ProductosView extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.e("Clover_App", "onTextChanged: "+seccionG+" "+columnaObtencionG+" "+s.toString());
-                ArrayList<Productos> productos = controller.getProductos(seccionG, columnaObtencionG, s.toString());
-                rellenarTabla(productos);
+                busquedaIn = s.toString();
+                rellenarTabla(controller.buscarProductosPor(seccionG, columnaObtencionG, s.toString()));
             }
 
             ;
@@ -160,13 +152,7 @@ public class ProductosView extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (all){
-            ArrayList<Productos> productos = controller.getProductos("", "");
-            rellenarTabla(productos);
-            all = false;
-        }
-        spinerSeccion.setSelection(positionSeccionSpinner);
-        Log.e("Clover_App", "onResume: "+positionSeccionSpinner);
-
+        Log.e("Clover_App", "onResume: "+busquedaIn);
+        rellenarTabla(controller.buscarProductosPor(seccionG, columnaObtencionG, busquedaIn));
     }
 }

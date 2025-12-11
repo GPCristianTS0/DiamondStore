@@ -16,6 +16,8 @@ public class Productos implements Serializable {
     private int stock;
     private String ultimoPedido;
 
+    private int id_seccion;
+
     public Productos() {
     }
 
@@ -127,9 +129,10 @@ public class Productos implements Serializable {
     public static ArrayList<String> getArrayColumn(){
         ArrayList<String> array = new ArrayList<>();
         array.add("rutaImagen");
-        array.add("id");
-        array.add("nombre");
+        array.add("id_producto");
+        array.add("nombre_producto");
         array.add("marca");
+        array.add("seccion");
         array.add("precioPublico");
         array.add("precioNeto");
         array.add("descripcion");

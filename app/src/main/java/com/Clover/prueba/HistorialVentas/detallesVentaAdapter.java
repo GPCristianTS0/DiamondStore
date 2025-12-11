@@ -1,5 +1,6 @@
 package com.Clover.prueba.HistorialVentas;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +14,17 @@ import com.Clover.prueba.R;
 
 import java.util.ArrayList;
 
-import BD.CRUD.ProductoDB;
+import BD.DAOs.ProductoDAO;
 import BD.Controller.ControllerProducto;
 import Entidades.DetalleVenta;
 import Entidades.Productos;
 
 public class detallesVentaAdapter extends RecyclerView.Adapter<detallesVentaAdapter.ViewHolder> {
     private ArrayList<DetalleVenta> detallesVentas;
-    public detallesVentaAdapter(ArrayList<DetalleVenta> detallesVentas) {
+    private Context context;
+    public detallesVentaAdapter(Context context, ArrayList<DetalleVenta> detallesVentas) {
+        controllerProducto = new ProductoDAO( context);
+        this.context = context;
         this.detallesVentas = detallesVentas;
     }
 
@@ -33,10 +37,11 @@ public class detallesVentaAdapter extends RecyclerView.Adapter<detallesVentaAdap
         return new detallesVentaAdapter.ViewHolder(view);
     }
 
+    ControllerProducto controllerProducto ;
     @Override
     public void onBindViewHolder(@NonNull detallesVentaAdapter.ViewHolder holder, int position) {
-        ControllerProducto controllerProducto = new ProductoDB( null, "Productos.db", null, 1);
         DetalleVenta detalleVenta = detallesVentas.get(position);
+        Log.e("Clover_App", detalleVenta.getId_producto());
         Productos producto = controllerProducto.getProductoCode(detalleVenta.getId_producto());
         holder.nombreProducto.setText(producto.getNombre());
         holder.piezas.setText(String.valueOf(detalleVenta.getCantidad()));

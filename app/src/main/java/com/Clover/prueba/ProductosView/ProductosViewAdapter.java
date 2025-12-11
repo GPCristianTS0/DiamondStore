@@ -40,20 +40,20 @@ public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdap
 
     @Override
     public void onBindViewHolder(@NonNull ProductosViewAdapter.ViewHolder holder, int position) {
-        Productos producto = productos.get(position);
-        if (producto.getRutaImagen()!=null)
-            holder.imagen.setImageURI(Uri.parse(producto.getRutaImagen()));
+        Productos productod = productos.get(position);
+        if (productod.getRutaImagen()!=null)
+            holder.imagen.setImageURI(Uri.parse(productod.getRutaImagen()));
         else
             holder.imagen.setImageResource(R.drawable.agregar_imgaen);
-        holder.txtNombre.setText(producto.getNombre());
-        holder.txtMarca.setText(producto.getMarca());
-        holder.txtSeccion.setText(producto.getSeccion());
-        String a = "$ "+producto.getPrecioPublico();
+        holder.txtNombre.setText(productod.getNombre());
+        holder.txtMarca.setText(productod.getMarca());
+        holder.txtSeccion.setText(productod.getSeccion());
+        String a = "$ "+productod.getPrecioPublico();
         holder.txtPrecio.setText(a);
-        holder.txtCodigo.setText(producto.getId());
+        holder.txtCodigo.setText(productod.getId());
         holder.c.setOnClickListener(v -> {
             if (listener != null) {
-                listener.OnClickEditProduct(producto, holder.getAdapterPosition());
+                listener.OnClickEditProduct(productod, holder.getAdapterPosition());
             }
         });
     }

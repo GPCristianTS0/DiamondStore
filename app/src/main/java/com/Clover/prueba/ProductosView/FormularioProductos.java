@@ -42,7 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import BD.CRUD.ProductoDB;
+import BD.DAOs.ProductoDAO;
 import BD.Controller.ControllerProducto;
 import Entidades.Productos;
 import Tools.EscanerCodeBar;
@@ -50,7 +50,7 @@ import Tools.EscanerCodeBar;
 public class FormularioProductos extends AppCompatActivity {
     private boolean addOrEdit;
     private String codigo;
-    private ControllerProducto controllerProducto ;
+    private ControllerProducto controllerProducto = new ProductoDAO(this);;
     private ImageView imagenView;//Para las imagenes
     private Uri selectedImageUri;
     private Button btn;
@@ -83,7 +83,6 @@ public class FormularioProductos extends AppCompatActivity {
         });
 
         //Escanner de codigo de barras
-        controllerProducto = new ProductoDB(this, "Productos.db", null, 1);
         Button escanearBtn = findViewById(R.id.escanearButton);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -145,8 +144,11 @@ public class FormularioProductos extends AppCompatActivity {
         t = findViewById(R.id.unidadestxt);
         t.setText(String.valueOf(producto.getStock()));
         ImageView imagen = findViewById(R.id.imagenFP);
-        imagen.setImageURI(Uri.parse(producto.getRutaImagen()));
-        rutaGuardada = producto.getRutaImagen();
+        if (producto.getRutaImagen()!=null) {
+            imagen.setImageURI(Uri.parse(producto.getRutaImagen()));
+            rutaGuardada = producto.getRutaImagen();
+        }else
+            imagen.setImageResource(R.drawable.agregar_imgaen);
         t = findViewById(R.id.codeBartxt);
         t.setText(producto.getId());
         this.codigo = producto.getId();
@@ -162,10 +164,8 @@ public class FormularioProductos extends AppCompatActivity {
     private void actualizarProducto(Productos productoOld) {
         Productos productoNew = getProductoOfInputs();
         productoNew.setUltimoPedido(productoOld.getUltimoPedido());
-        if (selectedImageUri!=null){
+        if (selectedImageUri!=null) {
             rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
-            productoNew.setRutaImagen(rutaGuardada);
-        }else{
             productoNew.setRutaImagen(rutaGuardada);
         }
         Log.e("Clover_App", "productoOld: "+productoOld.toString());
@@ -205,22 +205,23 @@ public class FormularioProductos extends AppCompatActivity {
     //Funcion Boton agregar
     public void addProductView(View v){
         TextInputEditText t = findViewById(R.id.codeBartxt);
-        Productos productos = controllerProducto.getProductoCode(t.getText().toString().trim());
-        if (productos.getId().equals(t.getText().toString())) {
+        Productos productos = new Productos();
+        Log.e("Clover_App", "addProductView: "+String.valueOf(t.getText()));
+        if (productos.getId()!=null){
             t.setText("");
             Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();
-        }else {
-            if (selectedImageUri!=null){
-                rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
-                productos.setRutaImagen(rutaGuardada);
-            }
-            productos = getProductoOfInputs();
-            String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-            productos.setUltimoPedido(fechaHoy);
-            controllerProducto.addProducto(productos);
-            Toast.makeText(this, "Producto Agregado", Toast.LENGTH_SHORT).show();
-            finish();
+            return;
         }
+        if (selectedImageUri != null) {
+            rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
+        }
+        productos = getProductoOfInputs();
+        String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        productos.setRutaImagen(rutaGuardada);
+        productos.setUltimoPedido(fechaHoy);
+        controllerProducto.addProducto(productos);
+        Toast.makeText(this, "Producto Agregado", Toast.LENGTH_SHORT).show();
+        finish();
     }
     ActivityResultLauncher<Intent> launcherActivityGalery;
 

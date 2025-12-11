@@ -1,4 +1,4 @@
-package BD.CRUD;
+package BD.DAOs;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import BD.Controller.ControllerDeuda;
-import Entidades.Clientes;
 import Entidades.Deuda;
 
 public class DeudaDB extends SQLiteOpenHelper implements ControllerDeuda {
