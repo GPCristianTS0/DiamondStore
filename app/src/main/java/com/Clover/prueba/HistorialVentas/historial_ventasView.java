@@ -122,11 +122,15 @@ public class historial_ventasView extends AppCompatActivity {
         //Relleno de spinner año
         spinner2 = findViewById(R.id.spinner4);
         ArrayList<String> anios = controllerVentas.getAnios();
+        if (!anios.isEmpty()){
+            spinner2.setSelection(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
+            year = anios.get(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
+        }else
+            anios.add(LocalDateTime.now().getYear()+"");
         adapter1 = new ArrayAdapter<>(this, R.layout.productos_spiner_item, anios);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(adapter1);
-        spinner2.setSelection(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
-        year = anios.get(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
+        spinner2.setSelection(0);
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -1,5 +1,6 @@
 package com.Clover.prueba.VentasViews;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,20 @@ import com.Clover.prueba.R;
 
 import java.util.List;
 
+import Entidades.DetalleVenta;
 import Entidades.Productos;
 
 public class VentasViewAdapter extends RecyclerView.Adapter<VentasViewAdapter.ViewHolder> {
 
-    private List<Productos> listaProductos;
+    private List<DetalleVenta> listaProductos;
     private OnItemClickListener listener;
 
 
     public interface OnItemClickListener {
-        void onEliminarClick(Productos producto, int position);
+        void onEliminarClick(DetalleVenta producto, int position);
     }
 
-    public VentasViewAdapter(List<Productos> listaProductos, OnItemClickListener listener) {
+    public VentasViewAdapter(List<DetalleVenta> listaProductos, OnItemClickListener listener) {
         this.listaProductos = listaProductos;
         this.listener = listener;
     }
@@ -37,14 +39,15 @@ public class VentasViewAdapter extends RecyclerView.Adapter<VentasViewAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Productos producto = listaProductos.get(position);
+        Productos producto = listaProductos.get(position).getProducto();
+        Log.e("Clover_App", "onBindViewHolder: "+listaProductos.toString() + " "+position);
         holder.txtNombre.setText(producto.getNombre());
         String a = "$ "+producto.getPrecioPublico();
         holder.txtPrecio.setText(a);
         holder.txtCodigo.setText(producto.getId());
         holder.btn.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onEliminarClick(producto, holder.getAdapterPosition());
+                listener.onEliminarClick(listaProductos.get(position), holder.getAdapterPosition());
             }
         });
     }

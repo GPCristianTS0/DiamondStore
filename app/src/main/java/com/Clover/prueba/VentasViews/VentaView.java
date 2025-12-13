@@ -43,7 +43,7 @@ import Entidades.Ventas;
 import Tools.EscanerCodeBar;
 
 public class VentaView extends AppCompatActivity {
-    private ArrayList<Productos> productos = new ArrayList<>();
+    private ArrayList<DetalleVenta> detallesVenta = new ArrayList<>();
     private VentasViewAdapter adapter ;
     private ControllerVentas controllerVentas = new VentasDAO(this);
     TextView noArticulosCount ;
@@ -108,28 +108,43 @@ public class VentaView extends AppCompatActivity {
     }
     private void agregarAlCarrito(String codigo){
         ControllerProducto controller = new ProductoDAO(this);
-        if (!verificarCodigo(codigo)) {
-            Toast.makeText(this, "Articulo no registrado", Toast.LENGTH_SHORT).show();
-            return;
-        }
         Productos producto = controller.getProductoCode(codigo);
-        productos.add(0, producto);
+        if (!comprobacionProducto(producto)) return;
+        boolean encontrado = false;
+        for (DetalleVenta detalle: detallesVenta){
+            if (detalle.getProducto().getId().equals(producto.getId())){
+                if (producto.getStock()<detalle.getCantidad()+1){
+                    Toast.makeText(this, "Articulo agotado", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    detalle.setCantidad(detalle.getCantidad()+1);
+                }
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado){
+            DetalleVenta detalleVentas = new DetalleVenta();
+            detalleVentas.setId_producto(producto.getId());
+            detalleVentas.setProducto(producto);
+            detalleVentas.setCantidad(1);
+            detalleVentas.setPrecio(producto.getPrecioPublico());
+            detallesVenta.add(0, detalleVentas);
+            adapter.notifyItemInserted(0);
+        }
+        TextInputEditText codetxt = findViewById(R.id.escanertxt);
+        codetxt.setText("");
         TextView noArticulosCount = findViewById(R.id.noArticulosCount);
         TextView totallbl = findViewById(R.id.totallbl);
         total += producto.getPrecioPublico();
-        noArticulosCount.setText(String.valueOf(productos.size()));
+        noArticulosCount.setText(String.valueOf(totalpiezas()));
         totallbl.setText(String.valueOf(total));
-        adapter.notifyItemInserted(0);
-        Toast.makeText(this, "Articulo agregado", Toast.LENGTH_SHORT).show();
-        TextInputEditText codetxt = findViewById(R.id.escanertxt);
-        codetxt.setText("");
-
     }
     //Elimina un producto del array
-    private void eliminarProducto(Productos producto) {
+    private void eliminarProducto(DetalleVenta detalleVenta) {
         // Si quieres, actualiza totales
-        total -= producto.getPrecioPublico();
-        noArticulosCount.setText(String.valueOf(productos.size()));
+        total -= detalleVenta.getProducto().getPrecioPublico();
+        noArticulosCount.setText(String.valueOf(totalpiezas()));
         totallbl.setText(String.valueOf(total));
     }
 
@@ -138,11 +153,11 @@ public class VentaView extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerProductosView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new VentasViewAdapter(productos, new VentasViewAdapter.OnItemClickListener() {
+        adapter = new VentasViewAdapter(detallesVenta, new VentasViewAdapter.OnItemClickListener() {
             @Override
-            public void onEliminarClick(Productos producto, int position) {
+            public void onEliminarClick(DetalleVenta producto, int position) {
                 // Elimina del array original también
-                productos.remove(producto);
+                detallesVenta.remove(producto);
 
                 adapter.notifyItemRemoved(position);
                 eliminarProducto(producto);
@@ -150,10 +165,18 @@ public class VentaView extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
     }
-    private boolean verificarCodigo(String codigo) {
+    private boolean comprobacionProducto(Productos producto) {
         ControllerProducto controller = new ProductoDAO(this);
-        Productos productos = controller.getProductoCode(codigo);
-        return productos.getId().equals(codigo);
+        if (producto.getId() == null) {
+            Toast.makeText(this, "Articulo no registrado", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (producto.getStock()==0) {
+            Toast.makeText(this, "Articulo agotado", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -190,42 +213,28 @@ public class VentaView extends AppCompatActivity {
                 Ventas venta = new Ventas();
                 venta.setId_cliente(0);
                 venta.setMonto(total);
-                venta.setTotal_piezas(productos.size());
+                venta.setTotal_piezas(totalpiezas());
                 venta.setTipo_pago("Efectivo");
                 DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault());
                 String fecha = LocalDateTime.now().format(format);
                 venta.setFecha_hora(fecha);
-
-                ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
-                for (Productos producto : productos) {
-                    boolean encontrado = false;
-
-                    for (DetalleVenta detalleVenta : detalleVentas){
-                        if (detalleVenta.getId_producto().equals(producto.getId())){
-                            detalleVenta.setCantidad(detalleVenta.getCantidad()+1);
-                            encontrado = true;
-                            break;
-                        }
-                    }
-
-                    if (!encontrado){
-                        DetalleVenta detallevVenta = new DetalleVenta();
-                        detallevVenta.setId_venta(venta.getId_venta());
-                        detallevVenta.setId_producto(producto.getId());
-                        detallevVenta.setCantidad(1);
-                        detallevVenta.setPrecio(producto.getPrecioPublico());
-                        detalleVentas.add(detallevVenta);
-                    }
-                }
-                Log.e("Clover_App", detalleVentas.toString());
-                controllerVentas.addVenta(venta, detalleVentas);
-                productos.clear();
-                noArticulosCount.setText(0+"");
-                totallbl.setText(0+"");
+                //Agregar venta
+                controllerVentas.addVenta(venta, detallesVenta);
+                //Limpiar carrito
+                detallesVenta.clear();
+                noArticulosCount.setText(String.valueOf(0));
+                totallbl.setText(String.valueOf(0));
                 total = 0;
                 adapter.notifyDataSetChanged();
             }
         });
 
+    }
+    private int totalpiezas(){
+        int total = 0;
+        for (DetalleVenta detalle : detallesVenta){
+            total += detalle.getCantidad();
+        }
+        return total;
     }
 }

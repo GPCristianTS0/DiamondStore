@@ -41,6 +41,7 @@ public class VentasDAO implements ControllerVentas {
             values.put("tipo_pago", venta.getTipo_pago());
             long id_venta = db.insert("ventas", null, values);
 
+            //Detalle venta insersion
             ContentValues values2 = new ContentValues();
             for (DetalleVenta detalleventaa : detalleventa) {
                 values2.put("id_venta", id_venta);
@@ -48,6 +49,7 @@ public class VentasDAO implements ControllerVentas {
                 values2.put("cantidad", detalleventaa.getCantidad());
                 values2.put("precio", detalleventaa.getPrecio());
                 db.insert("detalles_venta", null, values2);
+                Log.e("Clover_App", "addVenta: "+detalleventaa.toValues());
             }
             db.setTransactionSuccessful();
         }catch (Exception e){
@@ -56,8 +58,6 @@ public class VentasDAO implements ControllerVentas {
             db.endTransaction();
             db.close();
         }
-        Log.e("Clover_App", "addVenta: "+venta.toString());
-        Log.e("Clover_App", "addVenta: "+detalleventa.toString());
     }
     @Override
     public void deleteVenta(Ventas venta) {
@@ -115,8 +115,6 @@ public class VentasDAO implements ControllerVentas {
             sql.append("AND id_venta = ? ");
             args.add(busqueda);
         }
-        Log.e("Clover_App", sql.toString());
-        Log.e("Clover_App", args.toString());
         return db.rawQuery(sql.toString(), args.toArray(new String[0]));
     }
     @Override
@@ -139,32 +137,27 @@ public class VentasDAO implements ControllerVentas {
         Log.e("Clover_App", "getVentas: "+ventas.toString());
         return ventas;
     }
-    private String convertirFecha(String fecha) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm", new Locale("es", "ES"));
-        DateTimeFormatter formatterOut = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        LocalDateTime fechaHora = LocalDateTime.parse(fecha, formatter);
-        return fechaHora.format(formatterOut);
-    }
     @Override
     public ArrayList<DetalleVenta> getDetalleVentas(int idVenta) {
         //DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm", new Locale("es", "ES"));
         ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
         String[] args = {String.valueOf(idVenta)};
-        String sql = "SELECT dv.*, p.nombre_producto FROM detalle_venta dv INNER JOIN productos p ON dv.id_producto=p.id_producto WHERE dv.id_venta= ?";
+        String sql = "SELECT dv.*, p.nombre_producto FROM detalles_venta dv INNER JOIN productos p ON dv.id_producto=p.id_producto WHERE dv.id_venta= ?";
         try (SQLiteDatabase db = dbHelper.getWritableDatabase(); Cursor cursor = db.rawQuery(sql, args)){
             while (cursor.moveToNext()){
                 DetalleVenta detalleVenta = new DetalleVenta();
                 detalleVenta.setId_detalle(cursor.getInt(0));
                 detalleVenta.setId_venta(cursor.getInt(1));
-                detalleVenta.setId_producto(cursor.getString(6));
-                detalleVenta.setCantidad(cursor.getInt(4));
-                detalleVenta.setPrecio(cursor.getInt(5));
+                detalleVenta.setId_producto(cursor.getString(5));
+                detalleVenta.setCantidad(cursor.getInt(3));
+                detalleVenta.setPrecio(cursor.getInt(4));
                 detalleVentas.add(detalleVenta);
             }
         } catch (Exception e) {
             Log.e("Clover_App", "Error en getDetalleVentas: " + e.getMessage());
         }
         Log.e("Clover_App", "getDetalleVentas: "+detalleVentas.toString());
+        getDetalleVenta();
         return detalleVentas;
     }
 
@@ -182,7 +175,26 @@ public class VentasDAO implements ControllerVentas {
         }
         return anios;
     }
-
+    private void getDetalleVenta(){
+        String sql = "SELECT * FROM detalles_venta";
+        ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
+        try (SQLiteDatabase db = dbHelper.getWritableDatabase(); Cursor cursor = db.rawQuery(sql, null)){
+            while (cursor.moveToNext()){
+                DetalleVenta detalleVenta = new DetalleVenta();
+                detalleVenta.setId_detalle(cursor.getInt(0));
+                detalleVenta.setId_venta(cursor.getInt(1));
+                detalleVenta.setId_producto(cursor.getString(2));
+                detalleVenta.setCantidad(cursor.getInt(3));
+                detalleVenta.setPrecio(cursor.getInt(4));
+                detalleVentas.add(detalleVenta);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getDetalleVenta: " + e.getMessage());
+        }
+        for (DetalleVenta detalleVenta : detalleVentas) {
+            Log.e("Clover_App", "getDetalleVenta: " + detalleVenta.toValues());
+        }
+    }
     //Tools
     private LocalDateTime parseStringLocalDateTime(String fecha){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm", new Locale("es", "ES"));

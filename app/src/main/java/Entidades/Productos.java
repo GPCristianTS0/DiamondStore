@@ -126,7 +126,8 @@ public class Productos implements Serializable {
     public String toColumns(){
         return "rutaImagen,id,nombre,marca,precioPublico,precioNeto,descripcion,vendidos,stock,ultimo_Pedido";
     }
-    public static ArrayList<String> getArrayColumn(){
+    public static ArrayList<String>
+    getArrayColumn(){
         ArrayList<String> array = new ArrayList<>();
         array.add("rutaImagen");
         array.add("id_producto");

@@ -1,6 +1,7 @@
 package com.Clover.prueba.HistorialVentas;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -15,10 +16,12 @@ import com.Clover.prueba.R;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import BD.DAOs.VentasDAO;
 import BD.Controller.ControllerVentas;
+import Entidades.DetalleVenta;
 import Entidades.Ventas;
 
 public class historialventas_detalleventa extends AppCompatActivity {
@@ -45,7 +48,7 @@ public class historialventas_detalleventa extends AppCompatActivity {
 
     }
     private void rellenarInformacion(Ventas venta){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm", new Locale("es", "ES"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault());
         String fechaf = venta.getFecha_hora();
         LocalDateTime fechaHora = LocalDateTime.parse(fechaf, formatter);
 
@@ -67,7 +70,8 @@ public class historialventas_detalleventa extends AppCompatActivity {
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.hvD_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new detallesVentaAdapter(this, controllerVentas.getDetalleVentas(venta.getId_venta()));
+        ArrayList<DetalleVenta> detalleVentas = controllerVentas.getDetalleVentas(venta.getId_venta());
+        adapter = new detallesVentaAdapter(this, detalleVentas);
 
         recyclerView.setAdapter(adapter);
 

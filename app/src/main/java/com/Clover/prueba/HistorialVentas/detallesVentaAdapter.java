@@ -23,6 +23,7 @@ public class detallesVentaAdapter extends RecyclerView.Adapter<detallesVentaAdap
     private ArrayList<DetalleVenta> detallesVentas;
 
     private Context context;
+
     ControllerProducto controllerProducto;
     public detallesVentaAdapter(Context context, ArrayList<DetalleVenta> detallesVentas) {
         this.context = context;
@@ -42,8 +43,7 @@ public class detallesVentaAdapter extends RecyclerView.Adapter<detallesVentaAdap
     @Override
     public void onBindViewHolder(@NonNull detallesVentaAdapter.ViewHolder holder, int position) {
         DetalleVenta detalleVenta = detallesVentas.get(position);
-        Log.e("Clover_App", detalleVenta.getId_producto());
-        //holder.nombreProducto.setText();
+        holder.nombreProducto.setText(detalleVenta.getId_producto());
         holder.piezas.setText(String.valueOf(detalleVenta.getCantidad()));
         holder.precio.setText(String.valueOf("$ "+detalleVenta.getPrecio()));
         Log.e("Clover_App", "onBindViewHolder: "+detalleVenta.toString());

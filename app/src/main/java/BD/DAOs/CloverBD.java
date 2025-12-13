@@ -42,7 +42,7 @@ public class CloverBD extends SQLiteOpenHelper{
         db.execSQL("create table IF NOT EXISTS detalles_venta (" +
                 "id_detalle INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "id_venta INTEGER," +
-                "id_producto INTEGER," +
+                "id_producto TEXT," +
                 "cantidad INTEGER," +
                 "precio INTEGER)");
     }

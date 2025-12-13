@@ -7,6 +7,10 @@ public class DetalleVenta {
     private int cantidad;
     private int precio;
 
+    /// Variable para usar en agregar al carrito en ventas
+    private Productos producto;
+
+
     public DetalleVenta() {
     }
 
@@ -61,14 +65,25 @@ public class DetalleVenta {
         return "id_venta, id_producto, cantidad, precio";
     }
 
+    public Productos getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Productos producto) {
+        this.producto = producto;
+    }
+
     @Override
     public String toString() {
         return "DetalleVenta{" +
                 "id_detalle=" + id_detalle +
                 ", id_venta=" + id_venta +
-                ", id_producto=" + id_producto +
+                ", id_producto='" + id_producto + '\'' +
                 ", cantidad=" + cantidad +
-                ", precio=" + precio +
+                ", precio=" + precio  +
                 '}';
+    }
+    public String toValues(){
+        return id_venta+",'"+id_producto+"',"+cantidad+","+precio;
     }
 }
