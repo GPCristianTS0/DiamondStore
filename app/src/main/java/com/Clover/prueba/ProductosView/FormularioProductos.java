@@ -64,6 +64,11 @@ public class FormularioProductos extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Desaparecer los campos de vendidos
+        TextInputEditText vendidosTxt = findViewById(R.id.vendidosInputFP);
+        vendidosTxt.setVisibility(INVISIBLE);
+        TextView vendidostxtf = findViewById(R.id.textView17);
+        vendidostxtf.setVisibility(INVISIBLE);
         //Boton Agregar
         Button btn = findViewById(R.id.agregarBtn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +148,12 @@ public class FormularioProductos extends AppCompatActivity {
         t.setText(producto.getDescripcion());
         t = findViewById(R.id.unidadestxt);
         t.setText(String.valueOf(producto.getStock()));
+        t = findViewById(R.id.vendidosInputFP);
+        t.setText(String.valueOf(producto.getVendidos()));
+        t = findViewById(R.id.vendidosInputFP);
+        t.setVisibility(VISIBLE);
+        TextView vendidostxtf = findViewById(R.id.textView17);
+        vendidostxtf.setVisibility(VISIBLE);
         ImageView imagen = findViewById(R.id.imagenFP);
         if (producto.getRutaImagen()!=null) {
             imagen.setImageURI(Uri.parse(producto.getRutaImagen()));
@@ -190,7 +201,8 @@ public class FormularioProductos extends AppCompatActivity {
     }
     private void setCodigo(String codigo){
         TextInputEditText codigoTxt = findViewById(R.id.codeBartxt);
-        if (controllerProducto.getProductoCode(codigo).getId().equals(codigo)) {
+        Log.e("Clover_App", "setCodigo: "+codigo);
+        if (controllerProducto.getProductoCode(codigo).getId()!=null) {
             Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();
             codigoTxt.setText("");
         } else {

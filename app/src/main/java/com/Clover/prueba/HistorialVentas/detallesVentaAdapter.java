@@ -21,7 +21,6 @@ import Entidades.Productos;
 
 public class detallesVentaAdapter extends RecyclerView.Adapter<detallesVentaAdapter.ViewHolder> {
     private ArrayList<DetalleVenta> detallesVentas;
-
     private Context context;
 
     ControllerProducto controllerProducto;

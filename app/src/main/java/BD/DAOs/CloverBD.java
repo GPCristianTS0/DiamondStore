@@ -7,7 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class CloverBD extends SQLiteOpenHelper{
-    public CloverBD(@Nullable Context context) {
+    private static CloverBD instance;
+    private CloverBD(@Nullable Context context) {
         super(context, "Clover.db", null, 1);
     }
 
@@ -51,4 +52,12 @@ public class CloverBD extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    public static synchronized CloverBD getInstance(Context context) {
+        if (instance == null) {
+            instance = new CloverBD(context.getApplicationContext());
+        }
+        return instance;
+    }
+
 }

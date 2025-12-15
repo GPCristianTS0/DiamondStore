@@ -155,4 +155,10 @@ public class ProductosView extends AppCompatActivity {
         Log.e("Clover_App", "onResume: "+busquedaIn);
         rellenarTabla(controller.buscarProductosPor(seccionG, columnaObtencionG, busquedaIn));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        controller.cerrarConexion();
+    }
 }

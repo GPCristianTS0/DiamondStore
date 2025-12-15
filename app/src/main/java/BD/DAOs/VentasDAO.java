@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,14 +24,13 @@ import Entidades.Ventas;
 
 public class VentasDAO implements ControllerVentas {
 
-    private CloverBD dbHelper;
-
+    private SQLiteDatabase db;
     public VentasDAO(Context context) {
-        this.dbHelper = new CloverBD(context);
+         db = CloverBD.getInstance(context).getWritableDatabase();
     }
     @Override
     public void addVenta(Ventas venta, ArrayList<DetalleVenta> detalleventa) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
@@ -41,6 +41,11 @@ public class VentasDAO implements ControllerVentas {
             values.put("tipo_pago", venta.getTipo_pago());
             long id_venta = db.insert("ventas", null, values);
 
+            String sqlVendidos = "UPDATE productos SET vendidos = vendidos + ? WHERE id_producto = ?";
+
+            String sqlStock = "UPDATE productos SET stock = stock - ? WHERE id_producto = ? AND stock >= ?";
+
+
             //Detalle venta insersion
             ContentValues values2 = new ContentValues();
             for (DetalleVenta detalleventaa : detalleventa) {
@@ -49,8 +54,20 @@ public class VentasDAO implements ControllerVentas {
                 values2.put("cantidad", detalleventaa.getCantidad());
                 values2.put("precio", detalleventaa.getPrecio());
                 db.insert("detalles_venta", null, values2);
-                Log.e("Clover_App", "addVenta: "+detalleventaa.toValues());
+                //Actualizar stock
+                SQLiteStatement statement = db.compileStatement(sqlStock);
+                statement.bindLong(1, detalleventaa.getCantidad());
+                statement.bindString(2, detalleventaa.getId_producto());
+                statement.bindLong(3, detalleventaa.getCantidad());
+                if (statement.executeUpdateDelete()<=0) return;
+
+                //Actualizar Vendidos
+                statement = db.compileStatement(sqlVendidos);
+                statement.bindLong(1, detalleventaa.getCantidad());
+                statement.bindString(2, detalleventaa.getId_producto());
+                if(statement.executeUpdateDelete()<=0) return;
             }
+            Log.e("Clover_App", "Venta agregada");
             db.setTransactionSuccessful();
         }catch (Exception e){
             Log.e("Clover_App", "Error en agregar venta: "+ e.getMessage());
@@ -61,7 +78,6 @@ public class VentasDAO implements ControllerVentas {
     }
     @Override
     public void deleteVenta(Ventas venta) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
             String[] args = {String.valueOf(venta.getId_venta())};
@@ -81,7 +97,7 @@ public class VentasDAO implements ControllerVentas {
     public ArrayList<Ventas> getVentas() {
         ArrayList<Ventas> ventas = new ArrayList<>();
         String sql = "SELECT * FROM ventas";
-        try (SQLiteDatabase db = dbHelper.getWritableDatabase(); Cursor cursor = db.rawQuery(sql, null)){
+        try (Cursor cursor = db.rawQuery(sql, null)){
             while (cursor.moveToNext()){
                 Ventas venta = new Ventas();
                 venta.setId_venta(cursor.getInt(0));
@@ -100,7 +116,6 @@ public class VentasDAO implements ControllerVentas {
     private Cursor rawQueryGetVentas(String mes, String year, String busqueda){
         if (busqueda==null) busqueda="";
         ArrayList<String> args = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM ventas WHERE 1=1 ");
         sql.append("AND strftime('%Y', fecha_Hora) = ? ");
@@ -143,7 +158,7 @@ public class VentasDAO implements ControllerVentas {
         ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
         String[] args = {String.valueOf(idVenta)};
         String sql = "SELECT dv.*, p.nombre_producto FROM detalles_venta dv INNER JOIN productos p ON dv.id_producto=p.id_producto WHERE dv.id_venta= ?";
-        try (SQLiteDatabase db = dbHelper.getWritableDatabase(); Cursor cursor = db.rawQuery(sql, args)){
+        try ( Cursor cursor = db.rawQuery(sql, args)){
             while (cursor.moveToNext()){
                 DetalleVenta detalleVenta = new DetalleVenta();
                 detalleVenta.setId_detalle(cursor.getInt(0));
@@ -163,7 +178,6 @@ public class VentasDAO implements ControllerVentas {
 
     @Override
     public ArrayList<String> getAnios() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ArrayList<String> anios = new ArrayList<>();
         String sql = "SELECT DISTINCT strftime('%Y', fecha_Hora) FROM ventas ORDER BY strftime('%Y', fecha_Hora) DESC";
         try (Cursor cursor = db.rawQuery(sql, null)){
@@ -178,7 +192,7 @@ public class VentasDAO implements ControllerVentas {
     private void getDetalleVenta(){
         String sql = "SELECT * FROM detalles_venta";
         ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
-        try (SQLiteDatabase db = dbHelper.getWritableDatabase(); Cursor cursor = db.rawQuery(sql, null)){
+        try (Cursor cursor = db.rawQuery(sql, null)){
             while (cursor.moveToNext()){
                 DetalleVenta detalleVenta = new DetalleVenta();
                 detalleVenta.setId_detalle(cursor.getInt(0));

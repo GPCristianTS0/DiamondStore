@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,10 +20,11 @@ import Entidades.Productos;
 
 public class ProductoDAO implements ControllerProducto{
 
-    private CloverBD dbHelper;
+    private SQLiteDatabase db;
+
 
     public ProductoDAO(Context context) {
-        this.dbHelper = new CloverBD(context);
+        db = CloverBD.getInstance(context).getWritableDatabase();
     }
 
     @Override
@@ -31,7 +33,6 @@ public class ProductoDAO implements ControllerProducto{
 
     @Override
     public void addProducto(Productos producto) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         //Se comprubea si existe la seccion para tomar el id
         String sql = "SELECT id_seccion FROM secciones WHERE nombre_seccion='"+producto.getSeccion()+"'";
         long idSeccion = -1;
@@ -77,7 +78,6 @@ public class ProductoDAO implements ControllerProducto{
     }
     public String getSeccion(int id) {
         String nombre = "";
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         String sql ="SELECT nombre FROM secciones WHERE id_seccion="+id;
         try (Cursor cursor = db.rawQuery(sql, null)) {
             nombre = cursor.getString(0);
@@ -88,7 +88,6 @@ public class ProductoDAO implements ControllerProducto{
         return nombre;
     }
     public ArrayList<String> getSeccione() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ArrayList<String> secciones = new ArrayList<>();
         String sql = "SELECT nombre_seccion FROM secciones";
         try (Cursor cursor = db.rawQuery(sql, null)) {
@@ -103,7 +102,6 @@ public class ProductoDAO implements ControllerProducto{
     @Override
     public Productos getProductoCode(String id) {
         Productos producto = new Productos();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         String sql = "SELECT p.*, s.nombre_seccion FROM productos p INNER JOIN secciones s ON p.seccion=s.id_seccion WHERE p.id_producto='" + id.toLowerCase().trim()+"'";
         try (Cursor cursor = db.rawQuery(sql, null)) {
             if (cursor.moveToFirst()) {
@@ -128,7 +126,6 @@ public class ProductoDAO implements ControllerProducto{
     }
     private Cursor rawQueryGetProductos(String seccion, String columnaObtencion, String busqueda){
         if (busqueda==null) busqueda="";
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT p.*, s.nombre_seccion ");
         sql.append("FROM productos p ");
@@ -156,7 +153,6 @@ public class ProductoDAO implements ControllerProducto{
     }
     @Override
     public ArrayList<Productos> buscarProductosPor(String seccion, String columnaObtencion, String busqueda) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ArrayList<Productos> productos = new ArrayList<>();
         try (Cursor cursor = rawQueryGetProductos(seccion, columnaObtencion, busqueda)) {
             while (cursor.moveToNext()) {
@@ -182,7 +178,6 @@ public class ProductoDAO implements ControllerProducto{
 
     @Override
     public ArrayList<Productos> getProductos() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ArrayList<Productos> productos = new ArrayList<>();
         String sql = "SELECT p.*, s.nombre_seccion FROM productos p INNER JOIN secciones s ON p.seccion=s.id_seccion ORDER BY p.nombre_producto ASC";
         try (Cursor cursor = db.rawQuery(sql, null)) {
@@ -210,18 +205,19 @@ public class ProductoDAO implements ControllerProducto{
     @Override
     public void deleteProducto(Productos producto) {
         String sql = "DELETE FROM productos WHERE id_producto='"+producto.getId()+"'";
-        try(SQLiteDatabase db = dbHelper.getWritableDatabase()) {
+        try {
             db.execSQL(sql);
             File archivo = new File(producto.getRutaImagen());
             if (archivo.exists()) archivo.delete();
         }catch (SQLException e){
             Log.e("Clover_App", "Error en eliminar producto: "+ e.getMessage());
+        }finally {
+            db.close();
         }
     }
 
     @Override
     public void updateProducto(Productos old, Productos newProducto) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
             long idSeccion = -1;
@@ -274,10 +270,24 @@ public class ProductoDAO implements ControllerProducto{
 
 
     @Override
-    public void updateStock(int unidades, Productos producto) {
-        String sql = "UPDATE "+producto.getSeccion()+" SET stock="+unidades+" WHERE id='"+producto.getId()+"'";
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL(sql);
+    public boolean updateStock(int unidades, String id) {
+        String sql = "UPDATE productos SET stock= stock + ? WHERE id_producto=?";
+        try {
+            SQLiteStatement statement = db.compileStatement(sql);
+            statement.bindLong(1, unidades);
+            statement.bindString(2, id);
+            int files = statement.executeUpdateDelete();
+            if (files==0) return false;
+        } catch (SQLException e) {
+            Log.e("Clover_App", "Error en actualizar stock: "+e.getMessage());
+            return false;
+        }
+        return true;
     }
-
+    //Cerrar la base de datos
+    public void cerrarConexion() {
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
+    }
 }

@@ -2,7 +2,6 @@ package com.Clover.prueba;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,14 +13,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.HistorialVentas.historial_ventasView;
 import com.Clover.prueba.ProductosView.ProductosView;
+import com.Clover.prueba.ProductosView.productos_actualizarStock;
 import com.Clover.prueba.VentasViews.VentaView;
 
 import java.util.ArrayList;
 
 import BD.DAOs.ProductoDAO;
-import BD.DAOs.VentasDAO;
 import BD.Controller.ControllerProducto;
-import BD.Controller.ControllerVentas;
 import Entidades.Productos;
 
 public class MenuPrincipal extends AppCompatActivity {
@@ -65,6 +63,11 @@ public class MenuPrincipal extends AppCompatActivity {
         Intent intent = new Intent(MenuPrincipal.this, historial_ventasView.class);
         startActivity(intent);
     }
+    //Accion boton actualizar stock
+    public void onClickActualizarStock(View v){
+        Intent intent = new Intent(MenuPrincipal.this, productos_actualizarStock.class);
+        startActivity(intent);
+    }
     //Rellenado de datos de los productos
     private void rellenarDatos(){
           int contadorProductos;
@@ -72,10 +75,10 @@ public class MenuPrincipal extends AppCompatActivity {
           int contadorUnidades=0;
           int contadorStockBajos=0;
           ControllerProducto controller = new ProductoDAO(this);
-          ArrayList<Productos> productos = new ArrayList<>();;
+          ArrayList<Productos> productos = controller.getProductos();
           for (Productos producto : productos) {
               contadorUnidades += producto.getStock();
-              if (producto.getStock() < 3) {
+              if (producto.getStock() < 2) {
                   contadorStockBajos++;
               }
           }

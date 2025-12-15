@@ -47,6 +47,8 @@
     <string name="precioNetolbl">Precio Neto:</string>
     <string name="nombrelbl">Descripcion:</string>
     <string name="unidadestxtFP">Unidades:</string>
+    <string name="vendidosFP">Vendidos:</string>
+
     <!--Venta View-->
     <string name="totallblVentaView">Total:</string>
     <string name="titleVentaView">Venta</string>
@@ -57,4 +59,13 @@
     <string name="hv_apodoClienteT">Cliente:</string>
     <string name="hv_montoT">Monto:</string>
     <string name="hvdetalle_tittle">Detalle de Venta</string>
+
+    <!--Actualizar stock-->
+    <string name="acst_tittle">Actualizar Stock</string>
+    <string name="acst_idProducto">ID:</string>
+    <string name="acst_nombreProducto">Nombre:</string>
+    <string name="acst_stockRestante">Stock Restante:</string>
+    <string name="acst_nuevoStock">Ingrese Nuevo Stock:</string>
+    <string name="acst_btnActualizar">Actualizar</string>
+    <string name="acst_btnEscaner">Escanear</string>
 </resources>

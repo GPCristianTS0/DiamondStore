@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
         <activity
+            android:name=".ProductosView.productos_actualizarStock"
+            android:exported="false" />
+        <activity
             android:name=".HistorialVentas.historialventas_detalleventa"
             android:exported="false" />
         <activity

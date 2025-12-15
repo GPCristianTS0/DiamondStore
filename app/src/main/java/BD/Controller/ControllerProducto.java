@@ -16,5 +16,6 @@ public interface ControllerProducto {
     public ArrayList<Productos> getProductos();
     public void deleteProducto(Productos producto);
     public void updateProducto(Productos old, Productos newProducto);
-    public void updateStock(int unidades, Productos producto);
+    public boolean updateStock(int unidades, String producto);
+    public void cerrarConexion();
 }
