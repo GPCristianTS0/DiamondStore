@@ -30,10 +30,9 @@ import Entidades.Productos;
 public class ProductosView extends AppCompatActivity {
     private Spinner spinerSeccion;
     private Spinner spinerColumnas;
-    private boolean all;
     private static String seccionG;
     private static String columnaObtencionG;
-    private final ControllerProducto controller = new ProductoDAO(this);
+    private ControllerProducto controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +43,8 @@ public class ProductosView extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        all = true;
+        controller = new ProductoDAO(this);
+        seccionG = "Todas";
         rellenarSpinnerSecciones();
         rellenarSpinnerColumnas();
         inputBusqueda();
@@ -80,12 +80,12 @@ public class ProductosView extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ArrayList<Productos> productos;
+                seccionG = secciones.get(position);
+                Log.e("Clover_App", "onItemSelected: "+secciones.get(position));
                 if (position==0){
-                    seccionG = secciones.get(position);
                     rellenarTabla(controller.getProductos());
                     return;
                 }
-                seccionG = secciones.get(position);
                 productos = controller.buscarProductosPor(secciones.get(position), columnaObtencionG, "");
                 rellenarTabla(productos);
             }
@@ -152,13 +152,6 @@ public class ProductosView extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("Clover_App", "onResume: "+busquedaIn);
         rellenarTabla(controller.buscarProductosPor(seccionG, columnaObtencionG, busquedaIn));
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        controller.cerrarConexion();
     }
 }

@@ -30,6 +30,12 @@ public class ProductoDAO implements ControllerProducto{
     @Override
     public void createTabl(String name) {
     }
+    @Override
+    public int addSeccion(String nombre) {
+        ContentValues values = new ContentValues();
+        values.put("nombre_seccion", nombre);
+        return (int) db.insert("secciones", null, values);
+    }
 
     @Override
     public void addProducto(Productos producto) {
@@ -43,14 +49,6 @@ public class ProductoDAO implements ControllerProducto{
                 idSeccion = cursor.getInt(0);
             }
             cursor.close();
-            if (idSeccion==-1){
-                ContentValues values = new ContentValues();
-                values.put("nombre_seccion", producto.getSeccion());
-                idSeccion = db.insert("secciones", null, values);
-                if (idSeccion==-1){
-                    throw new Exception("Error al agregar seccion");
-                }
-            }
 
             ContentValues valuesd = new ContentValues();
             valuesd.put("rutaImagen", producto.getRutaImagen());
@@ -73,7 +71,6 @@ public class ProductoDAO implements ControllerProducto{
             Log.e("Clover_App", "Error en agregar producto: "+ e.getMessage());
         }finally {
             db.endTransaction();
-            db.close();
         }
     }
     public String getSeccion(int id) {
@@ -211,8 +208,6 @@ public class ProductoDAO implements ControllerProducto{
             if (archivo.exists()) archivo.delete();
         }catch (SQLException e){
             Log.e("Clover_App", "Error en eliminar producto: "+ e.getMessage());
-        }finally {
-            db.close();
         }
     }
 
@@ -247,7 +242,8 @@ public class ProductoDAO implements ControllerProducto{
             valuesd.put("ultimo_pedido",newProducto.getUltimoPedido());
             int filas = db.update("productos", valuesd, "id_producto=?", new String[]{old.getId()});
             db.setTransactionSuccessful();
-            if (filas>0){
+            if (filas>0 && newProducto.getRutaImagen()!=null){
+
                 if (!newProducto.getRutaImagen().equals(old.getRutaImagen())){
                     try{
                         File archivo = new File(old.getRutaImagen());
@@ -263,7 +259,6 @@ public class ProductoDAO implements ControllerProducto{
             Log.e("Clover_App", "Error en actualizar producto: "+e.getMessage());
         } finally {
             db.endTransaction();
-            db.close();
         }
 
     }
@@ -283,11 +278,5 @@ public class ProductoDAO implements ControllerProducto{
             return false;
         }
         return true;
-    }
-    //Cerrar la base de datos
-    public void cerrarConexion() {
-        if (db != null && db.isOpen()) {
-            db.close();
-        }
     }
 }

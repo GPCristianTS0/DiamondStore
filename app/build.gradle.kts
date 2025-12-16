@@ -42,6 +42,8 @@ dependencies {
     implementation("com.google.zxing:core:3.4.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
     implementation(libs.constraintlayout)
     implementation(libs.play.services.mlkit.barcode.scanning)

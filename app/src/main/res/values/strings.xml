@@ -48,6 +48,9 @@
     <string name="nombrelbl">Descripcion:</string>
     <string name="unidadestxtFP">Unidades:</string>
     <string name="vendidosFP">Vendidos:</string>
+        <!--Creacion nueva seccion fragment-->
+    <string name="nuevaSeccionlblFP">Ingrese el Nombre de la Nueva Seccion:</string>
+    <string name="btnCrearSeccionFP">Crear Seccion</string>
 
     <!--Venta View-->
     <string name="totallblVentaView">Total:</string>

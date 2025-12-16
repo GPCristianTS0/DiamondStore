@@ -73,7 +73,6 @@ public class VentasDAO implements ControllerVentas {
             Log.e("Clover_App", "Error en agregar venta: "+ e.getMessage());
         }finally {
             db.endTransaction();
-            db.close();
         }
     }
     @Override
@@ -89,7 +88,6 @@ public class VentasDAO implements ControllerVentas {
             Log.e("Clover_App", "Error en eliminar venta: "+ e.getMessage());
         }finally {
             db.endTransaction();
-            db.close();
         }
     }
 
@@ -209,6 +207,14 @@ public class VentasDAO implements ControllerVentas {
             Log.e("Clover_App", "getDetalleVenta: " + detalleVenta.toValues());
         }
     }
+    //Actualizar el codigo de barras del producto cuando se modifica
+    public void updateCodigoBarras(String codigo, String nuevoCodigo){
+        String[] args = {codigo};
+        ContentValues values = new ContentValues();
+        values.put("id_producto", nuevoCodigo);
+        db.update("detalles_venta", values, "id_producto = ?", args);
+    }
+
     //Tools
     private LocalDateTime parseStringLocalDateTime(String fecha){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm", new Locale("es", "ES"));
