@@ -21,8 +21,10 @@ public class VentasViewAdapter extends RecyclerView.Adapter<VentasViewAdapter.Vi
     private OnItemClickListener listener;
 
 
+
     public interface OnItemClickListener {
-        void onEliminarClick(DetalleVenta producto, int position);
+        void onAgregarClick(DetalleVenta producto, int position);
+        void onDisminuirClick(DetalleVenta producto, int position);
     }
 
     public VentasViewAdapter(List<DetalleVenta> listaProductos, OnItemClickListener listener) {
@@ -43,11 +45,19 @@ public class VentasViewAdapter extends RecyclerView.Adapter<VentasViewAdapter.Vi
         Log.e("Clover_App", "onBindViewHolder: "+listaProductos.toString() + " "+position);
         holder.txtNombre.setText(producto.getNombre());
         String a = "$ "+producto.getPrecioPublico();
+        holder.contadorPiezas.setText(String.valueOf(listaProductos.get(position).getCantidad()));
         holder.txtPrecio.setText(a);
         holder.txtCodigo.setText(producto.getId());
         holder.btn.setOnClickListener(v -> {
+            int posReal = holder.getBindingAdapterPosition();
             if (listener != null) {
-                listener.onEliminarClick(listaProductos.get(position), holder.getAdapterPosition());
+                listener.onAgregarClick(listaProductos.get(posReal), holder.getAdapterPosition());
+            }
+        });
+        holder.dismPiezas.setOnClickListener(v ->{
+            int posReal = holder.getBindingAdapterPosition();
+            if (listener != null ) {
+                listener.onDisminuirClick(listaProductos.get(posReal), holder.getAdapterPosition());
             }
         });
     }
@@ -58,15 +68,17 @@ public class VentasViewAdapter extends RecyclerView.Adapter<VentasViewAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtNombre, txtPrecio, txtCodigo;
-        Button btn;
+        TextView txtNombre, txtPrecio, txtCodigo, contadorPiezas;
+        Button btn, dismPiezas;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            btn = itemView.findViewById(R.id.eliminarBtn);
+            btn = itemView.findViewById(R.id.addProductoBtn);
             txtNombre = itemView.findViewById(R.id.nombreProducto);
             txtPrecio = itemView.findViewById(R.id.precioProducto);
             txtCodigo = itemView.findViewById(R.id.codeProductolbl);
+            contadorPiezas = itemView.findViewById(R.id.contadorProductosVentasView);
+            dismPiezas = itemView.findViewById(R.id.dismProductoBtn);
         }
     }
 }

@@ -46,10 +46,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import BD.Controller.ControllerVentas;
 import BD.DAOs.ProductoDAO;
 import BD.Controller.ControllerProducto;
-import BD.DAOs.VentasDAO;
 import Entidades.Productos;
 import Tools.EscanerCodeBar;
 
@@ -86,7 +84,7 @@ public class FormularioProductos extends AppCompatActivity {
             }
         });
         //Boton Eliminar
-        Button btnDelete = findViewById(R.id.eliminarBtn);
+        Button btnDelete = findViewById(R.id.addProductoBtn);
         btnDelete.setVisibility(INVISIBLE);
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,8 +187,6 @@ public class FormularioProductos extends AppCompatActivity {
         Log.e("Clover_App", "productoOld: "+productoOld.toString());
         Log.e("Clover_App", "productoNew: "+productoNew.toString());
         controllerProducto.updateProducto(productoOld, productoNew);
-        ControllerVentas controllerVenta = new VentasDAO(this);
-        controllerVenta.updateCodigoBarras(productoOld.getId(), productoNew.getId());
         Toast.makeText(this, "Producto Actualizado", Toast.LENGTH_SHORT).show();
         finish();
     }

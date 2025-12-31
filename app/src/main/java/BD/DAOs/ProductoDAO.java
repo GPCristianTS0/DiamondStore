@@ -118,7 +118,6 @@ public class ProductoDAO implements ControllerProducto{
         } catch (Exception e) {
             Log.e("Clover_App", "En getProductoCode: "+e.getMessage());
         }
-        Log.e("Clover_App", "getProductoCode: "+producto.toString());
         return producto;
     }
     private Cursor rawQueryGetProductos(String seccion, String columnaObtencion, String busqueda){

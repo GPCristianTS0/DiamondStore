@@ -42,7 +42,7 @@ public class detallesVentaAdapter extends RecyclerView.Adapter<detallesVentaAdap
     @Override
     public void onBindViewHolder(@NonNull detallesVentaAdapter.ViewHolder holder, int position) {
         DetalleVenta detalleVenta = detallesVentas.get(position);
-        holder.nombreProducto.setText(detalleVenta.getId_producto());
+        holder.nombreProducto.setText(detalleVenta.getNombre_producto());
         holder.piezas.setText(String.valueOf(detalleVenta.getCantidad()));
         holder.precio.setText(String.valueOf("$ "+detalleVenta.getPrecio()));
         Log.e("Clover_App", "onBindViewHolder: "+detalleVenta.toString());

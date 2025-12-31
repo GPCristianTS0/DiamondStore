@@ -4,6 +4,7 @@ public class DetalleVenta {
     private int id_detalle;
     private int id_venta;
     private String id_producto;
+    private String nombre_producto;
     private int cantidad;
     private int precio;
 
@@ -14,12 +15,14 @@ public class DetalleVenta {
     public DetalleVenta() {
     }
 
-    public DetalleVenta(int id_detalle, int id_venta, String id_producto, int cantidad, int precio) {
+    public DetalleVenta(int id_detalle, int id_venta, String id_producto, String nombre_producto, int cantidad, int precio, Productos producto) {
         this.id_detalle = id_detalle;
         this.id_venta = id_venta;
         this.id_producto = id_producto;
+        this.nombre_producto = nombre_producto;
         this.cantidad = cantidad;
         this.precio = precio;
+        this.producto = producto;
     }
 
     public int getId_detalle() {
@@ -44,6 +47,14 @@ public class DetalleVenta {
 
     public void setId_producto(String id_producto) {
         this.id_producto = id_producto;
+    }
+
+    public String getNombre_producto() {
+        return nombre_producto;
+    }
+
+    public void setNombre_producto(String nombre_producto) {
+        this.nombre_producto = nombre_producto;
     }
 
     public int getCantidad() {
@@ -79,10 +90,13 @@ public class DetalleVenta {
                 "id_detalle=" + id_detalle +
                 ", id_venta=" + id_venta +
                 ", id_producto='" + id_producto + '\'' +
+                ", nombre_producto='" + nombre_producto + '\'' +
                 ", cantidad=" + cantidad +
-                ", precio=" + precio  +
+                ", precio=" + precio +
+                ", producto=" + producto +
                 '}';
     }
+
     public String toValues(){
         return id_venta+",'"+id_producto+"',"+cantidad+","+precio;
     }

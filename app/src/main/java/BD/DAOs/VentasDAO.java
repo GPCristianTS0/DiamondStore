@@ -33,13 +33,13 @@ public class VentasDAO implements ControllerVentas {
 
         db.beginTransaction();
         try {
-            ContentValues values = new ContentValues();
-            values.put("id_cliente", venta.getId_cliente());
-            values.put("fecha_Hora", venta.getFecha_hora());
-            values.put("monto", venta.getMonto());
-            values.put("total_piezas", venta.getTotal_piezas());
-            values.put("tipo_pago", venta.getTipo_pago());
-            long id_venta = db.insert("ventas", null, values);
+            ContentValues valuesVentas = new ContentValues();
+            valuesVentas.put("id_cliente", venta.getId_cliente());
+            valuesVentas.put("fecha_Hora", venta.getFecha_hora());
+            valuesVentas.put("monto", venta.getMonto());
+            valuesVentas.put("total_piezas", venta.getTotal_piezas());
+            valuesVentas.put("tipo_pago", venta.getTipo_pago());
+            long id_venta = db.insert("ventas", null, valuesVentas);
 
             String sqlVendidos = "UPDATE productos SET vendidos = vendidos + ? WHERE id_producto = ?";
 
@@ -47,30 +47,34 @@ public class VentasDAO implements ControllerVentas {
 
 
             //Detalle venta insersion
-            ContentValues values2 = new ContentValues();
+            SQLiteStatement stmtStock = db.compileStatement(sqlStock);
+            SQLiteStatement stmtVendidos = db.compileStatement(sqlVendidos);
             for (DetalleVenta detalleventaa : detalleventa) {
-                values2.put("id_venta", id_venta);
-                values2.put("id_producto", detalleventaa.getId_producto());
-                values2.put("cantidad", detalleventaa.getCantidad());
-                values2.put("precio", detalleventaa.getPrecio());
-                db.insert("detalles_venta", null, values2);
+                ContentValues valuesDetalleVenta = new ContentValues();
+                valuesDetalleVenta.put("id_venta", id_venta);
+                valuesDetalleVenta.put("id_producto", detalleventaa.getId_producto());
+                valuesDetalleVenta.put("nombre_producto", detalleventaa.getNombre_producto());
+                valuesDetalleVenta.put("cantidad", detalleventaa.getCantidad());
+                valuesDetalleVenta.put("precio", detalleventaa.getPrecio());
+                db.insert("detalles_venta", null, valuesDetalleVenta);
                 //Actualizar stock
-                SQLiteStatement statement = db.compileStatement(sqlStock);
-                statement.bindLong(1, detalleventaa.getCantidad());
-                statement.bindString(2, detalleventaa.getId_producto());
-                statement.bindLong(3, detalleventaa.getCantidad());
-                if (statement.executeUpdateDelete()<=0) return;
+                stmtStock.bindLong(1, detalleventaa.getCantidad());
+                stmtStock.bindString(2, detalleventaa.getId_producto());
+                stmtStock.bindLong(3, detalleventaa.getCantidad());
+                if (stmtStock.executeUpdateDelete()<=0) throw new Exception("Error al actualizar stock");
 
                 //Actualizar Vendidos
-                statement = db.compileStatement(sqlVendidos);
-                statement.bindLong(1, detalleventaa.getCantidad());
-                statement.bindString(2, detalleventaa.getId_producto());
-                if(statement.executeUpdateDelete()<=0) return;
+                stmtVendidos.bindLong(1, detalleventaa.getCantidad());
+                stmtVendidos.bindString(2, detalleventaa.getId_producto());
+                if(stmtVendidos.executeUpdateDelete()<=0) throw new Exception("Error al actualizar vendidos");
             }
             Log.e("Clover_App", "Venta agregada");
             db.setTransactionSuccessful();
+            stmtStock.close();
+            stmtVendidos.close();
         }catch (Exception e){
             Log.e("Clover_App", "Error en agregar venta: "+ e.getMessage());
+            throw new RuntimeException(e);
         }finally {
             db.endTransaction();
         }
@@ -155,15 +159,16 @@ public class VentasDAO implements ControllerVentas {
         //DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm", new Locale("es", "ES"));
         ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
         String[] args = {String.valueOf(idVenta)};
-        String sql = "SELECT dv.*, p.nombre_producto FROM detalles_venta dv INNER JOIN productos p ON dv.id_producto=p.id_producto WHERE dv.id_venta= ?";
+        String sql = "SELECT * FROM detalles_venta WHERE id_venta= ?";
         try ( Cursor cursor = db.rawQuery(sql, args)){
             while (cursor.moveToNext()){
                 DetalleVenta detalleVenta = new DetalleVenta();
                 detalleVenta.setId_detalle(cursor.getInt(0));
                 detalleVenta.setId_venta(cursor.getInt(1));
-                detalleVenta.setId_producto(cursor.getString(5));
-                detalleVenta.setCantidad(cursor.getInt(3));
-                detalleVenta.setPrecio(cursor.getInt(4));
+                detalleVenta.setId_producto(cursor.getString(2));
+                detalleVenta.setNombre_producto(cursor.getString(3));
+                detalleVenta.setCantidad(cursor.getInt(4));
+                detalleVenta.setPrecio(cursor.getInt(5));
                 detalleVentas.add(detalleVenta);
             }
         } catch (Exception e) {
@@ -196,8 +201,9 @@ public class VentasDAO implements ControllerVentas {
                 detalleVenta.setId_detalle(cursor.getInt(0));
                 detalleVenta.setId_venta(cursor.getInt(1));
                 detalleVenta.setId_producto(cursor.getString(2));
-                detalleVenta.setCantidad(cursor.getInt(3));
-                detalleVenta.setPrecio(cursor.getInt(4));
+                detalleVenta.setNombre_producto(cursor.getString(3));
+                detalleVenta.setCantidad(cursor.getInt(4));
+                detalleVenta.setPrecio(cursor.getInt(5));
                 detalleVentas.add(detalleVenta);
             }
         } catch (Exception e) {
@@ -206,13 +212,6 @@ public class VentasDAO implements ControllerVentas {
         for (DetalleVenta detalleVenta : detalleVentas) {
             Log.e("Clover_App", "getDetalleVenta: " + detalleVenta.toValues());
         }
-    }
-    //Actualizar el codigo de barras del producto cuando se modifica
-    public void updateCodigoBarras(String codigo, String nuevoCodigo){
-        String[] args = {codigo};
-        ContentValues values = new ContentValues();
-        values.put("id_producto", nuevoCodigo);
-        db.update("detalles_venta", values, "id_producto = ?", args);
     }
 
     //Tools

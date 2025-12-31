@@ -71,15 +71,16 @@ public class MenuPrincipal extends AppCompatActivity {
     //Rellenado de datos de los productos
     private void rellenarDatos(){
           int contadorProductos;
-          int contadorVentas;
+          int contadorVentas =0;
           int contadorUnidades=0;
           int contadorStockBajos=0;
           ControllerProducto controller = new ProductoDAO(this);
           ArrayList<Productos> productos = controller.getProductos();
           for (Productos producto : productos) {
               contadorUnidades += producto.getStock();
+              contadorVentas += producto.getVendidos();
               if (producto.getStock() < 2) {
-                  contadorStockBajos++;
+                  contadorStockBajos++;z
               }
           }
           contadorProductos = productos.size();
@@ -89,6 +90,8 @@ public class MenuPrincipal extends AppCompatActivity {
           co.setText(String.valueOf(contadorUnidades));
           co = findViewById(R.id.stockTotalContador);
           co.setText(String.valueOf(contadorStockBajos));
+          co = findViewById(R.id.vendidosTotalContador);
+          co.setText(String.valueOf(contadorVentas));
     }
 
     @Override

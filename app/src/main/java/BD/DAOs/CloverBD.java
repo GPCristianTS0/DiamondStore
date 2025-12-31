@@ -44,6 +44,7 @@ public class CloverBD extends SQLiteOpenHelper{
                 "id_detalle INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "id_venta INTEGER," +
                 "id_producto TEXT," +
+                "nombre_producto TEXT," +
                 "cantidad INTEGER," +
                 "precio INTEGER)");
     }

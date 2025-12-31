@@ -126,6 +126,7 @@ public class VentaView extends AppCompatActivity {
         if (!encontrado){
             DetalleVenta detalleVentas = new DetalleVenta();
             detalleVentas.setId_producto(producto.getId());
+            detalleVentas.setNombre_producto(producto.getNombre());
             detalleVentas.setProducto(producto);
             detalleVentas.setCantidad(1);
             detalleVentas.setPrecio(producto.getPrecioPublico());
@@ -140,13 +141,8 @@ public class VentaView extends AppCompatActivity {
         noArticulosCount.setText(String.valueOf(totalpiezas()));
         totallbl.setText(String.valueOf(total));
     }
-    //Elimina un producto del array
-    private void eliminarProducto(DetalleVenta detalleVenta) {
-        // Si quieres, actualiza totales
-        total -= detalleVenta.getProducto().getPrecioPublico();
-        noArticulosCount.setText(String.valueOf(totalpiezas()));
-        totallbl.setText(String.valueOf(total));
-    }
+    //Aumenta la cantidad de un producto
+
 
     //Repinta la tabla con el recycler
     private void rellenarCarrito(){
@@ -155,12 +151,28 @@ public class VentaView extends AppCompatActivity {
 
         adapter = new VentasViewAdapter(detallesVenta, new VentasViewAdapter.OnItemClickListener() {
             @Override
-            public void onEliminarClick(DetalleVenta producto, int position) {
-                // Elimina del array original también
-                detallesVenta.remove(producto);
+            public void onAgregarClick(DetalleVenta producto, int position) {
+                Log.e("Clover_App", "onAgregarClick: "+position);
+                agregarAlCarrito(producto.getId_producto());
+                adapter.notifyItemChanged(position);
+            }
 
-                adapter.notifyItemRemoved(position);
-                eliminarProducto(producto);
+            @Override
+            public void onDisminuirClick(DetalleVenta producto, int position) {
+                Log.e("Clover_App", "onDisminuirClick: "+position);
+                if ( detallesVenta.get(position).getCantidad()>0){
+                    detallesVenta.get(position).setCantidad(detallesVenta.get(position).getCantidad()-1);
+                    adapter.notifyItemChanged(position);
+                }
+                TextView noArticulosCount = findViewById(R.id.noArticulosCount);
+                TextView totallbl = findViewById(R.id.totallbl);
+                total -= detallesVenta.get(position).getProducto().getPrecioPublico();
+                noArticulosCount.setText(String.valueOf(totalpiezas()));
+                totallbl.setText(String.valueOf(total));
+                if (detallesVenta.get(position).getCantidad()==0){
+                    detallesVenta.remove(position);
+                    adapter.notifyItemRemoved(position);
+                }
             }
         });
         recyclerView.setAdapter(adapter);

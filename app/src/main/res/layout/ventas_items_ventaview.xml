@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:id="@+id/item_venta"
@@ -10,11 +11,11 @@
         android:id="@+id/nombreProducto"
         android:layout_width="167dp"
         android:layout_height="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:text="A10s"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/precioProducto"
-        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,37 +23,58 @@
         android:id="@+id/precioProducto"
         android:layout_width="70dp"
         android:layout_height="23dp"
-        android:layout_marginEnd="60dp"
         android:gravity="center"
         android:text="$ 1210"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/eliminarBtn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.228" />
+        app:layout_constraintEnd_toStartOf="@+id/dismProductoBtn"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toEndOf="@+id/codeProductolbl"
+        app:layout_constraintTop_toBottomOf="@+id/nombreProducto"
+        app:layout_constraintVertical_bias="0.235" />
 
     <Button
-        android:id="@+id/eliminarBtn"
+        android:id="@+id/addProductoBtn"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/eliminar_icon"
-        android:text="Button"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/agregar_uno_carrito"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/dismProductoBtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="48dp"
+        android:background="@drawable/quitar_uno_carrito"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nombreProducto"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/codeProductolbl"
         android:layout_width="107dp"
-        android:layout_height="15dp"
+        android:layout_height="20dp"
         android:text="187562546865"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/eliminarBtn"
-        app:layout_constraintHorizontal_bias="0.224"
+        app:layout_constraintEnd_toStartOf="@+id/addProductoBtn"
+        app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nombreProducto"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintVertical_bias="0.35" />
+
+    <TextView
+        android:id="@+id/contadorProductosVentasView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="1"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/addProductoBtn"
+        app:layout_constraintStart_toEndOf="@+id/dismProductoBtn"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
