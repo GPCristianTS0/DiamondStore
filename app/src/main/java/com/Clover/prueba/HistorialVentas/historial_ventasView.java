@@ -35,9 +35,9 @@ import Entidades.Ventas;
 
 public class historial_ventasView extends AppCompatActivity {
 
-    private ControllerVentas controllerVentas = new VentasDAO(this);
+    private final ControllerVentas controllerVentas = new VentasDAO(this);
     String mes, year, busqueda;
-    private Spinner spinner2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +120,7 @@ public class historial_ventasView extends AppCompatActivity {
             }
         });
         //Relleno de spinner año
-        spinner2 = findViewById(R.id.spinner4);
+        Spinner spinner2 = findViewById(R.id.spinner4);
         ArrayList<String> anios = controllerVentas.getAnios();
         if (!anios.isEmpty()){
             spinner2.setSelection(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
@@ -134,6 +134,7 @@ public class historial_ventasView extends AppCompatActivity {
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                year = anios.get(position);
                 rellenarScroll(controllerVentas.getVentas(mes,year,""));
             }
 

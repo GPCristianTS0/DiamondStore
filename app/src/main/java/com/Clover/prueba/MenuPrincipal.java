@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Clover.prueba.ClientesView.clientes_principalview;
 import com.Clover.prueba.HistorialVentas.historial_ventasView;
 import com.Clover.prueba.ProductosView.ProductosView;
 import com.Clover.prueba.ProductosView.productos_actualizarStock;
@@ -39,7 +40,7 @@ public class MenuPrincipal extends AppCompatActivity {
     }
     //Accion boton de clientes
     public void onClickClientesView(View v){
-         Intent intent = new Intent(MenuPrincipal.this, ClientesPrincipal.class);
+         Intent intent = new Intent(MenuPrincipal.this, clientes_principalview.class);
          startActivity(intent);
     }
     //Accion boton de productos
@@ -80,7 +81,7 @@ public class MenuPrincipal extends AppCompatActivity {
               contadorUnidades += producto.getStock();
               contadorVentas += producto.getVendidos();
               if (producto.getStock() < 2) {
-                  contadorStockBajos++;z
+                  contadorStockBajos++;
               }
           }
           contadorProductos = productos.size();

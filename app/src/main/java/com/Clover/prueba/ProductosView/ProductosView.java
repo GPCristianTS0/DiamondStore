@@ -28,7 +28,6 @@ import BD.Controller.ControllerProducto;
 import Entidades.Productos;
 
 public class ProductosView extends AppCompatActivity {
-    private Spinner spinerSeccion;
     private Spinner spinerColumnas;
     private static String seccionG;
     private static String columnaObtencionG;
@@ -69,7 +68,7 @@ public class ProductosView extends AppCompatActivity {
     }
     //Spinner secciones
     private void rellenarSpinnerSecciones(){
-        spinerSeccion = findViewById(R.id.spinner);
+        Spinner spinerSeccion = findViewById(R.id.spinner);
         ArrayList<String> secciones = controller.getSeccione();
         secciones.add(0, "Todas");
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.productos_spiner_item, secciones);

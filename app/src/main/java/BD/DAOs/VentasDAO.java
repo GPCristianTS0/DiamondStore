@@ -68,7 +68,6 @@ public class VentasDAO implements ControllerVentas {
                 stmtVendidos.bindString(2, detalleventaa.getId_producto());
                 if(stmtVendidos.executeUpdateDelete()<=0) throw new Exception("Error al actualizar vendidos");
             }
-            Log.e("Clover_App", "Venta agregada");
             db.setTransactionSuccessful();
             stmtStock.close();
             stmtVendidos.close();
@@ -151,7 +150,6 @@ public class VentasDAO implements ControllerVentas {
         } catch (Exception e) {
             Log.e("Clover_App", "Error en getVentas Array: " + e.getMessage());
         }
-        Log.e("Clover_App", "getVentas: "+ventas.toString());
         return ventas;
     }
     @Override
@@ -174,7 +172,6 @@ public class VentasDAO implements ControllerVentas {
         } catch (Exception e) {
             Log.e("Clover_App", "Error en getDetalleVentas: " + e.getMessage());
         }
-        Log.e("Clover_App", "getDetalleVentas: "+detalleVentas.toString());
         getDetalleVenta();
         return detalleVentas;
     }
@@ -208,9 +205,6 @@ public class VentasDAO implements ControllerVentas {
             }
         } catch (Exception e) {
             Log.e("Clover_App", "Error en getDetalleVenta: " + e.getMessage());
-        }
-        for (DetalleVenta detalleVenta : detalleVentas) {
-            Log.e("Clover_App", "getDetalleVenta: " + detalleVenta.toValues());
         }
     }
 

@@ -47,6 +47,16 @@ public class CloverBD extends SQLiteOpenHelper{
                 "nombre_producto TEXT," +
                 "cantidad INTEGER," +
                 "precio INTEGER)");
+        //Tabla Clientes
+        db.execSQL("create table IF NOT EXISTS clientes (" +
+                "id_cliente INTEGER PRIMARY KEY, " +
+                " nombre TEXT," +
+                " apodo TEXT," +
+                " id_compras INTEGER," +
+                " direccion TEXT," +
+                " fecha_registro TEXT," +
+                "saldo INTEGER," +
+                "puntos INTEGER)");
     }
 
     @Override

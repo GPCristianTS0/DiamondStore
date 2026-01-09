@@ -57,11 +57,9 @@
         android:id="@+id/apodo_txField"
         android:layout_width="190dp"
         android:layout_height="43dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
         android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_txField" />
+        app:layout_constraintEnd_toEndOf="@+id/name_txField"
+        app:layout_constraintTop_toTopOf="@+id/Apodo" />
 
     <TextView
         android:id="@+id/Apodo"
@@ -72,7 +70,7 @@
         android:textSize="25dp"
         app:layout_constraintEnd_toStartOf="@+id/name_txField"
         app:layout_constraintHorizontal_bias="0.77"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/name_label"
         app:layout_constraintTop_toBottomOf="@+id/name_label" />
 
     <TextView
@@ -90,11 +88,10 @@
         android:id="@+id/imageView2"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginStart="68dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/name_label"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logotipo_diamondsystems" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/name_txField"

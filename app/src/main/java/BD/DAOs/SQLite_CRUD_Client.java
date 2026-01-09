@@ -44,10 +44,10 @@ public class SQLite_CRUD_Client extends SQLiteOpenHelper implements ControllerCl
         try (Cursor cursor = db.rawQuery(sql, null)) {
             if (cursor.moveToNext()) {
                 Clientes cliente = new Clientes();
-                cliente.setId(cursor.getInt(0));
-                cliente.setNombre(cursor.getString(1));
+                cliente.setId_cliente(cursor.getInt(0));
+                cliente.setNombre_cliente(cursor.getString(1));
                 cliente.setApodo(cursor.getString(2));
-                cliente.setId_compras(cursor.getInt(3));
+                cliente.setSaldo(cursor.getInt(3));
                 cliente.setDireccion(cursor.getString(4));
                 cliente.setTelefono(cursor.getString(5));
                 return cliente;
@@ -67,10 +67,10 @@ public class SQLite_CRUD_Client extends SQLiteOpenHelper implements ControllerCl
         try {
             if (cursor.moveToNext()) {
                 Clientes cliente = new Clientes();
-                cliente.setId(cursor.getInt(0));
-                cliente.setNombre(cursor.getString(1));
+                cliente.setId_cliente(cursor.getInt(0));
+                cliente.setNombre_cliente(cursor.getString(1));
                 cliente.setApodo(cursor.getString(2));
-                cliente.setId_compras(cursor.getInt(3));
+                cliente.setSaldo(cursor.getInt(3));
                 cliente.setDireccion(cursor.getString(4));
                 cliente.setTelefono(cursor.getString(5));
                 return cliente;
@@ -92,10 +92,10 @@ public class SQLite_CRUD_Client extends SQLiteOpenHelper implements ControllerCl
             ArrayList<Clientes> clientes = new ArrayList<>();
             while (cursor.moveToNext()) {
                 Clientes cliente = new Clientes();
-                cliente.setId(cursor.getInt(0));
-                cliente.setNombre(cursor.getString(1));
+                cliente.setId_cliente(cursor.getInt(0));
+                cliente.setNombre_cliente(cursor.getString(1));
                 cliente.setApodo(cursor.getString(2));
-                cliente.setId_compras(cursor.getInt(3));
+                cliente.setSaldo(cursor.getInt(3));
                 cliente.setDireccion(cursor.getString(4));
                 cliente.setTelefono(cursor.getString(5));
                 clientes.add(cliente);

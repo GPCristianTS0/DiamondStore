@@ -1,30 +1,31 @@
 package Entidades;
 
 public class Clientes {
-     int id;
-    private String nombre;
+     int id_cliente;
+    private String nombre_cliente;
     private String apodo;
-    private int id_compras;
     private String direccion;
     private String telefono;
+    private int puntos;
+    private int saldo;
 
     public Clientes() {
 
     }
-    public Clientes(int id, String nombre, String apodo, int id_compras, String telefono){
-        this.id = id;
-        this.nombre = nombre;
+    public Clientes(int id, String nombre, String apodo, int saldo, String telefono){
+        this.id_cliente = id;
+        this.nombre_cliente = nombre;
         this.apodo = apodo;
-        this.id_compras = id_compras;
+        this.saldo = saldo;
         this.telefono = telefono;
     }
 
-    public int getId() {
-        return id;
+    public int getId_cliente() {
+        return id_cliente;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
     }
 
     public String getApodo() {
@@ -35,20 +36,12 @@ public class Clientes {
         this.apodo = apodo;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombre_cliente() {
+        return nombre_cliente;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getId_compras() {
-        return id_compras;
-    }
-
-    public void setId_compras(int id_compras) {
-        this.id_compras = id_compras;
+    public void setNombre_cliente(String nombre_cliente) {
+        this.nombre_cliente = nombre_cliente;
     }
 
     public String getDireccion() {
@@ -67,13 +60,33 @@ public class Clientes {
         this.telefono = telefono;
     }
 
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
+    public int getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
+    }
+
+    public String[] getColumn(){
+        return new String[]{"ID", "Nombre", "Apodo", "Saldo", "Puntos"};
+    }
+
     @Override
     public String toString() {
         return "Clientes{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
+                "id=" + id_cliente +
+                ", nombre='" + nombre_cliente + '\'' +
                 ", apodo='" + apodo + '\'' +
-                ", id_compras=" + id_compras +
+                ", saldo=" + saldo +
                 ", direccion='" + direccion + '\'' +
                 ", telefono=" + telefono +
                 '}';
