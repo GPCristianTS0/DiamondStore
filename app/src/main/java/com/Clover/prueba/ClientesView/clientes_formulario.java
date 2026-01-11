@@ -2,6 +2,7 @@ package com.Clover.prueba.ClientesView;
 
 import static android.view.View.VISIBLE;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +39,13 @@ public class clientes_formulario extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        Button agregar = findViewById(R.id.CP_agregarBoton);
+        agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                agregarCleinte();
+            }
+        });
         //Cuando se edita un cliente
         Clientes cliente = (Clientes) getIntent().getSerializableExtra("cliente");
         if (cliente!=null){
@@ -53,6 +61,7 @@ public class clientes_formulario extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void actualizarCliente(Clientes cliente) {
         TextInputEditText nombre = findViewById(R.id.CP_nombreTXT);
         nombre.setText(cliente.getNombre_cliente());
@@ -96,7 +105,7 @@ public class clientes_formulario extends AppCompatActivity {
         titulo.setText("Actualizar Cliente");
     }
 
-    public void OnClickAgregarCF(View v){
+    public void agregarCleinte(){
         Clientes cliente = getClienteOfInputs();;
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMMM-yyyy", Locale.getDefault());
         String fecha = LocalDateTime.now().format(format);
@@ -113,13 +122,17 @@ public class clientes_formulario extends AppCompatActivity {
         TextInputEditText apodo = findViewById(R.id.CP_apodoTXT);
         cliente.setApodo(apodo.getText().toString());
         TextInputEditText saldo = findViewById(R.id.CP_saldoTXT);
-        cliente.setSaldo(Integer.parseInt(saldo.getText().toString()));
+        if (saldo.getVisibility() == VISIBLE) {
+            cliente.setSaldo(Integer.parseInt(saldo.getText().toString()));
+            TextInputEditText puntos = findViewById(R.id.CP_puntosTXT);
+            cliente.setPuntos(Integer.parseInt(puntos.getText().toString()));
+
+        }
         TextInputEditText direccion = findViewById(R.id.CP_direccionTXT);
         cliente.setDireccion(direccion.getText().toString());
         TextInputEditText telefono = findViewById(R.id.CP_telefonoTXT);
         cliente.setId_cliente(telefono.getText().toString());
-        TextInputEditText puntos = findViewById(R.id.CP_puntosTXT);
-        cliente.setPuntos(Integer.parseInt(puntos.getText().toString()));
+        Log.e("Clover_App", "getClienteOfInputs: "+cliente.toString());
         return cliente;
     }
 }

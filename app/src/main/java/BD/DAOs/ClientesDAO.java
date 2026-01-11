@@ -37,14 +37,53 @@ public class ClientesDAO implements ControllerClient {
         }
 
     }
-
-    @SuppressLint("Recycle")
     @Override
-    public Clientes getClient(int id) {
-        Clientes clientee = new Clientes();
-        return null;
+    public ArrayList<Clientes> getClient(String filtro, String valor, boolean deudores) {
+        ArrayList<Clientes> clientes = new ArrayList<>();
+        try {
+            Cursor cursor = rawQueryGetClientes(filtro, valor, deudores);
+            while (cursor.moveToNext()) {
+                Clientes cliente = new Clientes();
+                cliente.setId_cliente(cursor.getString(0));
+                cliente.setNombre_cliente(cursor.getString(1));
+                cliente.setApodo(cursor.getString(2));
+                cliente.setDireccion(cursor.getString(3));
+                cliente.setFecha_registro(cursor.getString(4));
+                cliente.setSaldo(cursor.getInt(5));
+                cliente.setPuntos(cursor.getInt(6));
+                clientes.add(cliente);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            Log.e("Clover_App", "getClient: "+e.getMessage());
+        }
+        return clientes;
     }
-
+    private Cursor rawQueryGetClientes(String filtro, String valor, boolean deudores){
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM clientes ");
+        ArrayList<String> arrgs = new ArrayList<>();
+        boolean all = false;
+        if (deudores) {
+            sql.append("WHERE saldo > 0 ");
+            all = true;
+        }
+        if (!valor.isEmpty()){
+            if (all)
+                sql.append("AND ");
+            else
+                sql.append("WHERE ");
+            sql.append(filtro);
+            if (filtro.equals("saldo")||filtro.equals("puntos")) {
+                sql.append(" = ? ");
+                arrgs.add(valor);
+            }else {
+                sql.append(" LIKE ? ");
+                arrgs.add("%"+valor+"%");
+            }
+        }
+        return db.rawQuery(sql.toString(), arrgs.toArray(new String[0]));
+    }
     @Override
     public Clientes getClient(String nombre) {
         Clientes clientee = new Clientes();

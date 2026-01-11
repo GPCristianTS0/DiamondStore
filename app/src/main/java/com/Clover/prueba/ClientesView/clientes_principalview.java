@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -20,9 +21,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import BD.Controller.ControllerClient;
 import BD.DAOs.ClientesDAO;
@@ -31,6 +34,8 @@ import Entidades.Productos;
 
 public class clientes_principalview extends AppCompatActivity {
     private String columnaGlobal;
+    private String busquedaGlobal = "";
+    private boolean deudoresGlobal;
     private final ControllerClient controller = new ClientesDAO(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,23 @@ public class clientes_principalview extends AppCompatActivity {
         });
         rellenarTabla(controller.getClients());
         rellenarSpinner();
+        //Funcion textField
+        inputBusqueda();
+        //Funcion chips deudores
+        ChipGroup chipGroup = findViewById(R.id.CP_chipGroupFiltros);
+        chipGroup.check(R.id.CP_chipTodos);
+        chipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup chipGroup, @NonNull List<Integer> list) {
+                if (list.get(0)==R.id.CP_chipTodos) {
+                    deudoresGlobal = false;
+                }
+                if (list.get(0)==R.id.CP_chipDeudores) {
+                    deudoresGlobal = true;
+                }
+                rellenarTabla(controller.getClient(columnaGlobal, busquedaGlobal, deudoresGlobal));
+            }
+        });
     }
     private void rellenarTabla(ArrayList<Clientes> cliente){
         ClientesPrincipalAdapter adapter;
@@ -101,7 +123,8 @@ public class clientes_principalview extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                busquedaGlobal = s.toString();
+                rellenarTabla(controller.getClient(columnaGlobal, busquedaGlobal, deudoresGlobal));
             }
         });
     }
@@ -113,6 +136,6 @@ public class clientes_principalview extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        rellenarTabla(controller.getClients());
+        rellenarTabla(controller.getClient(columnaGlobal, busquedaGlobal, deudoresGlobal));
     }
 }

@@ -6,7 +6,7 @@ import Entidades.Clientes;
 
 public interface ControllerClient {
     public boolean addClient(Clientes cliente);
-    public Clientes getClient(int id);
+    public ArrayList<Clientes> getClient(String filtro, String valor, boolean deudores);
     public Clientes getClient(String nombre);
     public ArrayList<Clientes> getClients();
     public boolean deleteClient(Clientes cliente);

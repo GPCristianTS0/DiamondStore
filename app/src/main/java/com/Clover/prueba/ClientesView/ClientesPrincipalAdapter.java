@@ -45,7 +45,6 @@ public class ClientesPrincipalAdapter extends RecyclerView.Adapter<ClientesPrinc
     @Override
     public void onBindViewHolder(@NonNull ClientesPrincipalAdapter.ViewHolder holder, int position) {
         Clientes cliente = clientes.get(position);
-        Log.i("Clover_App", "onBindViewHolder: "+cliente.toString());
         holder.CP_item_id.setText(String.valueOf(cliente.getId_cliente()));
         holder.CP_item_nombre.setText(cliente.getNombre_cliente());
         if (cliente.getSaldo()>0) {
