@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HistorialVentas.historialventas_detalleventa">
+    tools:context=".ui.historialventas.HistorialVentasDetalleVenta">
 
     <TextView
         android:id="@+id/textView15"

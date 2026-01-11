@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HistorialVentas.historial_ventasView">
+    tools:context=".ui.historialventas.HistorialVentasView">
 
     <Spinner
         android:id="@+id/spinner3"

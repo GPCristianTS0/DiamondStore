@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
 
     android:background="@color/white"
-    tools:context=".ProductosView.ProductosView">
+    tools:context=".ui.productos.ProductosView">
 
     <ScrollView
         android:id="@+id/scrollView2"

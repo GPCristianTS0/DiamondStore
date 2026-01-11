@@ -19,43 +19,43 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
         <activity
-            android:name=".ClientesView.clientes_formulario"
+            android:name=".ui.clientes.ClientesFormulario"
             android:exported="false" />
         <activity
-            android:name=".ClientesView.clientes_principalview"
+            android:name=".ui.clientes.ClientesPrincipalView"
             android:exported="false" />
         <activity
-            android:name=".ProductosView.productos_actualizarStock"
+            android:name=".ui.productos.ProductosActualizarStock"
             android:exported="false" />
         <activity
-            android:name=".HistorialVentas.historialventas_detalleventa"
+            android:name=".ui.historialventas.HistorialVentasDetalleVenta"
             android:exported="false" />
         <activity
-            android:name=".HistorialVentas.historial_ventasView"
+            android:name=".ui.historialventas.HistorialVentasView"
             android:exported="false" />
         <activity
-            android:name=".VentasViews.VentaView"
+            android:name=".ui.ventas.VentaView"
             android:exported="false" />
         <activity
             android:name=".CaptureAct"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".ProductosView.FormularioProductos"
+            android:name=".ui.productos.FormularioProductos"
             android:exported="false" />
         <activity
-            android:name=".ProductosView.ProductosView"
+            android:name=".ui.productos.ProductosView"
             android:exported="false" />
         <activity
-            android:name=".Precio_Publico"
+            android:name=".ui.home.Precio_Publico"
             android:exported="false" />
         <activity
-            android:name=".DeudaActivity"
+            android:name=".ui.deudas.DeudaActivity"
             android:exported="false" />
         <activity
             android:name=".ClientesPrincipal"
             android:exported="false" />
         <activity
-            android:name=".MenuPrincipal"
+            android:name=".ui.home.MenuPrincipal"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,10 +64,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddClient"
+            android:name=".ui.AddClient"
             android:exported="false" />
         <activity
-            android:name=".splasActivity"
+            android:name=".ui.home.SplasActivity"
             android:exported="false" />
     </application>
 

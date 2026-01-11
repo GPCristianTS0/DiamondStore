@@ -55,6 +55,12 @@
     <!--Venta View-->
     <string name="totallblVentaView">Total:</string>
     <string name="titleVentaView">Venta</string>
+    <string name="VV_noArticuloslbl">Artículos</string>
+    <string name="VV_btnPagar">Pagar</string>
+    <string name="VV_btnEscaner">Escanear</string>
+    <string name="VV_btnCliente">Agregar\nCliente</string>
+    <string name="VV_btnBuscarProducto">Buscar\nProducto</string>
+
 
     <!--Historial Ventas Item-->
     <string name="hv_idT">ID:</string>

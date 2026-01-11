@@ -1,0 +1,149 @@
+package com.Clover.prueba.ui.historialventas;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.Clover.prueba.R;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Locale;
+
+import com.Clover.prueba.data.dao.VentasDAO;
+import com.Clover.prueba.data.controller.ControllerVentas;
+import com.Clover.prueba.data.models.Ventas;
+
+public class HistorialVentasView extends AppCompatActivity {
+
+    private final ControllerVentas controllerVentas = new VentasDAO(this);
+    String mes, year, busqueda;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.historialventas_principal);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        rellenospiner();
+        //Listener textfield busqueda
+        TextInputEditText busquedaInput = findViewById(R.id.busquedaInputo);
+        busquedaInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                busqueda = s.toString();
+                ArrayList<Ventas> ventas = controllerVentas.getVentas(mes,year,busqueda);
+                rellenarScroll(ventas);
+            }
+        });
+
+    }
+
+    //relleno de scroll con las ventas
+    private void rellenarScroll(ArrayList<Ventas> ventas){
+        HistorialVentasAdapter adapter;
+        RecyclerView recyclerView;
+        recyclerView = findViewById(R.id.recyclerVentasView);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        Collections.reverse(ventas);
+
+        adapter = new HistorialVentasAdapter(ventas, new HistorialVentasAdapter.OnItemClickListener() {
+            @Override
+            public void OnClickEditProduct(Ventas venta, int position) {
+                Intent intent = new Intent(HistorialVentasView.this, HistorialVentasDetalleVenta.class);
+                intent.putExtra("venta", venta);
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    //relleno de spinners
+    private void rellenospiner(){
+        Spinner spinner = findViewById(R.id.spinner3);
+        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        ArrayList<String> mesese = new ArrayList<>(Arrays.asList(meses));
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.productos_spiner_item, mesese);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter1);
+        //Pone el spiner al mes actual
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM", new Locale("es", "ES"));
+        String fecha = LocalDateTime.now().format(format);
+        int pos = mesese.indexOf(capitalizar(fecha));
+        spinner.setSelection(pos);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mes = String.format("%02d", position+1);
+                ArrayList<Ventas> ventas = controllerVentas.getVentas(mes,year,"");
+                rellenarScroll(ventas);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //Relleno de spinner año
+        Spinner spinner2 = findViewById(R.id.spinner4);
+        ArrayList<String> anios = controllerVentas.getAnios();
+        if (!anios.isEmpty()){
+            spinner2.setSelection(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
+            year = anios.get(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
+        }else
+            anios.add(LocalDateTime.now().getYear()+"");
+        adapter1 = new ArrayAdapter<>(this, R.layout.productos_spiner_item, anios);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(adapter1);
+        spinner2.setSelection(0);
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                year = anios.get(position);
+                rellenarScroll(controllerVentas.getVentas(mes,year,""));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    private String capitalizar(String string){
+        return string.substring(0, 1).toUpperCase()+string.substring(1);
+    }
+}
