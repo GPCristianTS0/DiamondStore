@@ -1,5 +1,6 @@
 package com.Clover.prueba.ClientesView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
@@ -22,11 +24,14 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
+import BD.Controller.ControllerClient;
+import BD.DAOs.ClientesDAO;
 import Entidades.Clientes;
 import Entidades.Productos;
 
 public class clientes_principalview extends AppCompatActivity {
     private String columnaGlobal;
+    private final ControllerClient controller = new ClientesDAO(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,16 +42,23 @@ public class clientes_principalview extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        rellenarTabla(controller.getClients());
         rellenarSpinner();
     }
-    private void rellenarTabla(Clientes cliente){
+    private void rellenarTabla(ArrayList<Clientes> cliente){
         ClientesPrincipalAdapter adapter;
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.CP_recycler);
-        adapter = new ClientesPrincipalAdapter(this, new ArrayList<Clientes>());
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        adapter = new ClientesPrincipalAdapter(cliente, new ClientesPrincipalAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Clientes cliente, int position) {
+                Intent intent = new Intent( clientes_principalview.this, clientes_formulario.class);
+                intent.putExtra("cliente", cliente);
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
     private void rellenarSpinner(){
         Spinner spinerSeccion = findViewById(R.id.CP_spinnerBusqueda);
@@ -92,5 +104,15 @@ public class clientes_principalview extends AppCompatActivity {
 
             }
         });
+    }
+    public void OnClickAgregarCPButtom(View v){
+        Intent intent = new Intent(clientes_principalview.this, clientes_formulario.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        rellenarTabla(controller.getClients());
     }
 }

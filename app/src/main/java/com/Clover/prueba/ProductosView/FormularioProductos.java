@@ -184,8 +184,6 @@ public class FormularioProductos extends AppCompatActivity {
             rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
             productoNew.setRutaImagen(rutaGuardada);
         }
-        Log.e("Clover_App", "productoOld: "+productoOld.toString());
-        Log.e("Clover_App", "productoNew: "+productoNew.toString());
         controllerProducto.updateProducto(productoOld, productoNew);
         Toast.makeText(this, "Producto Actualizado", Toast.LENGTH_SHORT).show();
         finish();
@@ -220,8 +218,7 @@ public class FormularioProductos extends AppCompatActivity {
     public void addProductView(View v){
         Spinner sp = findViewById(R.id.spinnerSeccionFP);
         TextInputEditText t = findViewById(R.id.codeBartxt);
-        Productos productos = new Productos();
-        Log.e("Clover_App", "addProductView: "+String.valueOf(sp.getSelectedItem().toString()));
+        Productos productos = controllerProducto.getProductoCode(t.getText().toString());
         if (productos.getId()!=null){
             t.setText("");
             Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();

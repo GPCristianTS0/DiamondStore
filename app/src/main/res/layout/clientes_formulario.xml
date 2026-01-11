@@ -4,30 +4,200 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".ClientesView.clientes_formulario">
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/CF_nombreLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="97dp" />
+        android:text="Nombre"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/CP_nombreTXT"
+        app:layout_constraintStart_toStartOf="@+id/CP_nombreTXT" />
+
+    <Button
+        android:id="@+id/CP_agregarBoton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="OnClickAgregarCF"
+        android:text="Agregar"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/CP_puntosTXT"
+        app:layout_constraintStart_toStartOf="@+id/CP_saldoTXT"
+        app:layout_constraintTop_toBottomOf="@+id/CP_puntosTXT" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/CP_saldoTXT"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_border"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/CP_direccionTXT"
+        app:layout_constraintTop_toBottomOf="@+id/CP_direccionTXT"
+        app:layout_constraintWidth_percent="0.44" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/CP_puntosTXT"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:background="@drawable/button_border"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/CP_direccionTXT"
+        app:layout_constraintTop_toTopOf="@+id/CP_saldoTXT"
+        app:layout_constraintWidth_percent="0.44" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/CP_apodoTXT"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_border"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/CP_nombreTXT"
+        app:layout_constraintTop_toBottomOf="@+id/CP_nombreTXT"
+        app:layout_constraintWidth_percent="0.44" />
 
     <TextView
-        android:id="@+id/textView34"
+        android:id="@+id/CF_apodoLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="198dp" />
+        android:text="Apodo:"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/CP_apodoTXT"
+        app:layout_constraintStart_toStartOf="@+id/CP_apodoTXT" />
 
     <TextView
-        android:id="@+id/textView35"
+        android:id="@+id/CP_telefonoLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="289dp" />
+        android:text="Telefono:"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/CP_telefonoTXT"
+        app:layout_constraintStart_toStartOf="@+id/CP_telefonoTXT" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/CP_telefonoTXT"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:background="@drawable/button_border"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/CP_nombreTXT"
+        app:layout_constraintTop_toTopOf="@+id/CP_apodoTXT"
+        app:layout_constraintWidth_percent="0.45" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/CP_nombreTXT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/button_border"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.611"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CP_tituloLabel"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/CP_direccionTXT"
+        android:layout_width="0dp"
+        android:layout_height="99dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/button_border"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/CP_apodoTXT"
+        app:layout_constraintTop_toBottomOf="@+id/CP_apodoTXT"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <TextView
+        android:id="@+id/CP_direccionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Direccion:"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/CP_direccionTXT"
+        app:layout_constraintStart_toStartOf="@+id/CP_direccionTXT" />
+
+    <TextView
+        android:id="@+id/CP_tituloLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Agregar Cliente"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/CP_saldoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saldo:"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/CP_saldoTXT"
+        app:layout_constraintStart_toStartOf="@+id/CP_saldoTXT" />
+
+    <TextView
+        android:id="@+id/CP_puntosLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Puntos"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/CP_puntosTXT"
+        app:layout_constraintStart_toStartOf="@+id/CP_puntosTXT" />
+
+    <Button
+        android:id="@+id/CP_buttinHistorialVentas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Historial \n Ventas"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/CP_buttonEliminar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/CP_buttonEliminar"
+        app:layout_constraintTop_toTopOf="@+id/CP_buttonEliminar" />
+
+    <Button
+        android:id="@+id/CP_buttonAbonos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abonos"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/CP_buttonEliminar"
+        app:layout_constraintEnd_toStartOf="@+id/CP_buttonEliminar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/CP_buttonEliminar" />
+
+    <Button
+        android:id="@+id/CP_buttonEliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eliminar"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/CP_agregarBoton"
+        app:layout_constraintEnd_toEndOf="@+id/CP_puntosTXT"
+        app:layout_constraintStart_toStartOf="@+id/CP_saldoTXT"
+        app:layout_constraintTop_toBottomOf="@+id/CP_puntosTXT" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

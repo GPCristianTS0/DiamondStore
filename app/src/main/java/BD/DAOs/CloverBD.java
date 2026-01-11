@@ -50,9 +50,8 @@ public class CloverBD extends SQLiteOpenHelper{
         //Tabla Clientes
         db.execSQL("create table IF NOT EXISTS clientes (" +
                 "id_cliente INTEGER PRIMARY KEY, " +
-                " nombre TEXT," +
+                "nombre_cliente TEXT," +
                 " apodo TEXT," +
-                " id_compras INTEGER," +
                 " direccion TEXT," +
                 " fecha_registro TEXT," +
                 "saldo INTEGER," +

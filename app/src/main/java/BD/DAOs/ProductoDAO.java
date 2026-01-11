@@ -200,9 +200,9 @@ public class ProductoDAO implements ControllerProducto{
 
     @Override
     public void deleteProducto(Productos producto) {
-        String sql = "DELETE FROM productos WHERE id_producto='"+producto.getId()+"'";
         try {
-            db.execSQL(sql);
+            db.delete("productos", "id_producto=?", new String[]{producto.getId()});
+            //Elimina la imagen del producto"
             File archivo = new File(producto.getRutaImagen());
             if (archivo.exists()) archivo.delete();
         }catch (SQLException e){

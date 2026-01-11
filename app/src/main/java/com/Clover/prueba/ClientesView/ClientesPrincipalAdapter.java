@@ -2,12 +2,14 @@ package com.Clover.prueba.ClientesView;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
@@ -17,12 +19,17 @@ import java.util.ArrayList;
 import Entidades.Clientes;
 
 public class ClientesPrincipalAdapter extends RecyclerView.Adapter<ClientesPrincipalAdapter.ViewHolder> {
-    Context context;
-    ArrayList<Clientes> clientes;
+    private ArrayList<Clientes> clientes;
+    private OnItemClickListener listener;
 
-    public ClientesPrincipalAdapter(Context context, ArrayList<Clientes> clientes) {
-        this.context = context;
+    public interface OnItemClickListener {
+        void onItemClick(Clientes cliente, int position);
+    }
+
+
+    public ClientesPrincipalAdapter (ArrayList<Clientes> clientes, OnItemClickListener listener) {
         this.clientes = clientes;
+        this.listener = listener;
     }
 
 
@@ -38,24 +45,37 @@ public class ClientesPrincipalAdapter extends RecyclerView.Adapter<ClientesPrinc
     @Override
     public void onBindViewHolder(@NonNull ClientesPrincipalAdapter.ViewHolder holder, int position) {
         Clientes cliente = clientes.get(position);
+        Log.i("Clover_App", "onBindViewHolder: "+cliente.toString());
         holder.CP_item_id.setText(String.valueOf(cliente.getId_cliente()));
         holder.CP_item_nombre.setText(cliente.getNombre_cliente());
-        holder.CP_item_saldo.setText(String.valueOf(cliente.getSaldo()));
-        if (cliente.getSaldo() > 0) holder.CP_item_saldo.setTextColor(Color.RED);
+        if (cliente.getSaldo()>0) {
+            holder.CP_item_saldo.setText("-$" + cliente.getSaldo());
+            holder.CP_item_saldo.setTextColor(Color.parseColor("#FF0000"));
+        }else{
+            holder.CP_item_saldo.setText("$" + cliente.getSaldo());
+            holder.CP_item_saldo.setTextColor(Color.parseColor("#008000"));
+        }
+        holder.c.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(cliente, holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return clientes.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView CP_item_id, CP_item_nombre, CP_item_saldo;
+        ConstraintLayout c;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             CP_item_id = itemView.findViewById(R.id.CP_item_id);
             CP_item_nombre = itemView.findViewById(R.id.CP_item_nombre);
             CP_item_saldo = itemView.findViewById(R.id.CP_item_saldo);
+            c = itemView.findViewById(R.id.CP_item);
         }
     }
 }

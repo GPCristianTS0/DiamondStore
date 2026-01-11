@@ -1,7 +1,11 @@
 package BD.DAOs;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -15,32 +19,106 @@ public class ClientesDAO implements ControllerClient {
     }
 
     @Override
-    public void addClient(int id, String nombre, String apodo, int id_compras, String direccion, String telefono){
-        String sql = "INSERT INTO ";
+    public boolean addClient(Clientes cliente){
+        try {
+            ContentValues values = new ContentValues();
+            values.put("id_cliente", cliente.getId_cliente());
+            values.put("nombre_cliente", cliente.getNombre_cliente());
+            values.put("apodo", cliente.getApodo());
+            values.put("saldo", cliente.getSaldo());
+            values.put("direccion", cliente.getDireccion());
+            values.put("puntos", cliente.getPuntos());
+            values.put("fecha_registro", cliente.getFecha_registro());
+            long a = db.insert("clientes", null, values);
+            return a != -1;
+        }catch (Exception e){
+            Log.e("Clover_App", "addClient: "+e.getMessage());
+            return false;
+        }
+
     }
 
+    @SuppressLint("Recycle")
     @Override
     public Clientes getClient(int id) {
+        Clientes clientee = new Clientes();
         return null;
     }
 
     @Override
     public Clientes getClient(String nombre) {
-        return null;
+        Clientes clientee = new Clientes();
+        try {
+            String query = "SELECT * FROM clientes WHERE id_cliente = ?";
+            String[] args = {String.valueOf(nombre)};
+            ArrayList<Clientes> clientes = new ArrayList<>();
+            Cursor cursor = db.rawQuery(query, args);
+            if (cursor.moveToFirst()) {
+                clientee.setId_cliente(cursor.getString(0));
+                clientee.setNombre_cliente(cursor.getString(1));
+                clientee.setApodo(cursor.getString(2));
+                clientee.setDireccion(cursor.getString(3));
+                clientee.setFecha_registro(cursor.getString(4));
+                clientee.setSaldo(cursor.getInt(5));
+                clientee.setPuntos(cursor.getInt(6));
+                return clientee;
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "getClient: "+e.getMessage());
+        }
+        return clientee;
     }
 
     @Override
-    public ArrayList getClients() {
-        return null;
+    public ArrayList<Clientes> getClients() {
+        ArrayList<Clientes> clientes = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM clientes";
+            Cursor cursor = db.rawQuery(query, null);
+            while (cursor.moveToNext()){
+                Clientes cliente = new Clientes();
+                cliente.setId_cliente(cursor.getString(0));
+                cliente.setNombre_cliente(cursor.getString(1));
+                cliente.setApodo(cursor.getString(2));
+                cliente.setDireccion(cursor.getString(3));
+                cliente.setFecha_registro(cursor.getString(4));
+                cliente.setSaldo(cursor.getInt(5));
+                cliente.setPuntos(cursor.getInt(6));
+                clientes.add(cliente);
+            }
+            return clientes;
+        } catch (Exception e) {
+            Log.e("Clover_App", "getClients: "+e.getMessage());
+        }
+        return clientes;
     }
 
     @Override
-    public void deleteClient(int id) {
-
+    public boolean deleteClient(Clientes cliente) {
+        try {
+            int filas = db.delete("clientes", "id_cliente=?", new String[]{cliente.getId_cliente()});
+            if (filas!=0) return true;
+        }catch (Exception e){
+            Log.e("Clover_App", "deleteClient: "+e.getMessage());
+        }
+        return false;
     }
 
     @Override
-    public void updateClient(Clientes oldClient, Clientes newClient) {
-
+    public boolean updateClient(Clientes oldClient, Clientes newClient) {
+        try{
+            ContentValues values = new ContentValues();
+            values.put("id_cliente", newClient.getId_cliente());
+            values.put("nombre_cliente", newClient.getNombre_cliente());
+            values.put("apodo", newClient.getApodo());
+            values.put("saldo", newClient.getSaldo());
+            values.put("direccion", newClient.getDireccion());
+            values.put("puntos", newClient.getPuntos());
+            int filas = db.update("clientes", values, "id_cliente=?", new String[]{oldClient.getId_cliente()});
+            if (filas!=0) return true;
+        } catch (Exception e){
+            Log.e("Clover_App", "updateClient: "+e.getMessage());
+        }
+        return false;
     }
 }

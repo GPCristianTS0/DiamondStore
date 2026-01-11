@@ -1,30 +1,31 @@
 package Entidades;
 
-public class Clientes {
-     int id_cliente;
+import java.io.Serializable;
+
+public class Clientes implements Serializable {
+    private String id_cliente;
     private String nombre_cliente;
     private String apodo;
     private String direccion;
-    private String telefono;
     private int puntos;
     private int saldo;
+    private String fecha_registro;
 
     public Clientes() {
 
     }
-    public Clientes(int id, String nombre, String apodo, int saldo, String telefono){
+    public Clientes(String id, String nombre, String apodo, int saldo){
         this.id_cliente = id;
         this.nombre_cliente = nombre;
         this.apodo = apodo;
         this.saldo = saldo;
-        this.telefono = telefono;
     }
 
-    public int getId_cliente() {
+    public String getId_cliente() {
         return id_cliente;
     }
 
-    public void setId_cliente(int id_cliente) {
+    public void setId_cliente(String id_cliente) {
         this.id_cliente = id_cliente;
     }
 
@@ -52,14 +53,6 @@ public class Clientes {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
     public int getPuntos() {
         return puntos;
     }
@@ -76,6 +69,14 @@ public class Clientes {
         this.saldo = saldo;
     }
 
+    public String getFecha_registro() {
+        return fecha_registro;
+    }
+
+    public void setFecha_registro(String fecha_registro) {
+        this.fecha_registro = fecha_registro;
+    }
+
     public String[] getColumn(){
         return new String[]{"ID", "Nombre", "Apodo", "Saldo", "Puntos"};
     }
@@ -88,7 +89,8 @@ public class Clientes {
                 ", apodo='" + apodo + '\'' +
                 ", saldo=" + saldo +
                 ", direccion='" + direccion + '\'' +
-                ", telefono=" + telefono +
+                ", puntos=" + puntos +
+                ", fecha_registro='" + fecha_registro + '\'' +
                 '}';
     }
 }

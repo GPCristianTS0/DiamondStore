@@ -37,6 +37,8 @@ public class MenuPrincipal extends AppCompatActivity {
         });
         ControllerProducto controllerProducto = new ProductoDAO(this);
         rellenarDatos();
+
+
     }
     //Accion boton de clientes
     public void onClickClientesView(View v){

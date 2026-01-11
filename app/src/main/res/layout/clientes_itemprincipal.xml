@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#A9A9A9"
+    android:layout_marginBottom="2dp"
     android:layout_width="match_parent"
+    android:id="@+id/CP_item"
     android:layout_height="wrap_content">
 
     <TextView
