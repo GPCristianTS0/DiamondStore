@@ -23,7 +23,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.Clover.prueba.data.controller.ControllerProducto;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.models.Productos;
-import utils.EscanerCodeBar;
+import com.Clover.prueba.utils.EscanerCodeBar;
 
 public class ProductosActualizarStock extends AppCompatActivity {
     private String idProducto;

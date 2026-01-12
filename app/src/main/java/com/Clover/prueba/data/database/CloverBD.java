@@ -34,7 +34,7 @@ public class CloverBD extends SQLiteOpenHelper{
         //Tabla Ventas
         db.execSQL("create table IF NOT EXISTS ventas (" +
                 "id_venta INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "id_cliente INTEGER," +
+                "id_cliente TEXT," +
                 "fecha_Hora TEXT,"+
                 "monto INTEGER," +
                 "total_piezas INTEGER," +
@@ -62,7 +62,6 @@ public class CloverBD extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
     public static synchronized CloverBD getInstance(Context context) {
         if (instance == null) {
             instance = new CloverBD(context.getApplicationContext());

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,9 +29,10 @@ import com.Clover.prueba.data.controller.ControllerProducto;
 import com.Clover.prueba.data.models.Productos;
 
 public class ProductosView extends AppCompatActivity {
-    private static String seccionG;
-    private static String columnaObtencionG;
+    private String seccionG;
+    private String columnaObtencionG;
     private ControllerProducto controller;
+    private TextInputEditText t ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ public class ProductosView extends AppCompatActivity {
         });
         controller = new ProductoDAO(this);
         seccionG = "Todas";
+        t = findViewById(R.id.textInputEditText);
         rellenarSpinnerSecciones();
         rellenarSpinnerColumnas();
         inputBusqueda();
@@ -79,12 +82,12 @@ public class ProductosView extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ArrayList<Productos> productos;
                 seccionG = secciones.get(position);
-                Log.e("Clover_App", "onItemSelected: "+secciones.get(position));
                 if (position==0){
                     rellenarTabla(controller.getProductos());
                     return;
                 }
                 productos = controller.buscarProductosPor(secciones.get(position), columnaObtencionG, "");
+                t.setText("");
                 rellenarTabla(productos);
             }
 
@@ -107,6 +110,7 @@ public class ProductosView extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 columnaObtencionG = columnasBD.get(position);
+                t.setText("");
             }
 
             @Override
@@ -118,7 +122,6 @@ public class ProductosView extends AppCompatActivity {
     //Funcion Inpur Busqueda
     String busquedaIn = "";
     private void inputBusqueda(){
-        TextInputEditText t = findViewById(R.id.textInputEditText);
         t.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {

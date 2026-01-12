@@ -17,8 +17,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +31,7 @@ import android.widget.Toast;
 
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.utils.ImageUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -49,9 +48,10 @@ import java.util.Locale;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.controller.ControllerProducto;
 import com.Clover.prueba.data.models.Productos;
-import utils.EscanerCodeBar;
+import com.Clover.prueba.utils.EscanerCodeBar;
 
 public class FormularioProductos extends AppCompatActivity {
+    private static final String FILTRO_TODAS = "Todas";
     private boolean addOrEdit;
     private String codigo;
     private ControllerProducto controllerProducto = new ProductoDAO(this);;
@@ -59,6 +59,7 @@ public class FormularioProductos extends AppCompatActivity {
     private Uri selectedImageUri;
     private Button btn;
 
+    private TextInputEditText t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +74,7 @@ public class FormularioProductos extends AppCompatActivity {
         vendidosTxt.setVisibility(INVISIBLE);
         TextView vendidostxtf = findViewById(R.id.textView17);
         vendidostxtf.setVisibility(INVISIBLE);
+        t = findViewById(R.id.codeBartxt);
         //rellenar el spiner de secciones
         rellenarSpiner();
         //Boton Agregar
@@ -167,8 +169,7 @@ public class FormularioProductos extends AppCompatActivity {
             rutaGuardada = producto.getRutaImagen();
         }else
             imagen.setImageResource(R.drawable.agregar_imgaen);
-        t = findViewById(R.id.codeBartxt);
-        t.setText(producto.getId());
+        this.t.setText(producto.getId());
         this.codigo = producto.getId();
         Button btn = findViewById(R.id.agregarBtn);
         btn.setText("Actualizar");
@@ -203,13 +204,11 @@ public class FormularioProductos extends AppCompatActivity {
         }
     }
     private void setCodigo(String codigo){
-        TextInputEditText codigoTxt = findViewById(R.id.codeBartxt);
-        Log.e("Clover_App", "setCodigo: "+codigo);
         if (controllerProducto.getProductoCode(codigo).getId()!=null) {
             Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();
-            codigoTxt.setText("");
+            t.setText("");
         } else {
-            codigoTxt.setText(codigo);
+            t.setText(codigo);
         }
         this.codigo =codigo;
     }
@@ -217,7 +216,6 @@ public class FormularioProductos extends AppCompatActivity {
     //Funcion Boton agregar
     public void addProductView(View v){
         Spinner sp = findViewById(R.id.spinnerSeccionFP);
-        TextInputEditText t = findViewById(R.id.codeBartxt);
         Productos productos = controllerProducto.getProductoCode(t.getText().toString());
         if (productos.getId()!=null){
             t.setText("");
@@ -265,49 +263,10 @@ public class FormularioProductos extends AppCompatActivity {
         launcherActivityGalery.launch(intent);
     }
     private String guardarImagenEnPrivado(Uri uriImagen) {
-        try {
-            InputStream inputStream = getContentResolver().openInputStream(uriImagen);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-            // 🔹 Reducimos tamaño si es muy grande (por ejemplo, 800x800 máx)
-            int maxSize = 800;
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
-
-            if (width > maxSize || height > maxSize) {
-                float ratio = (float) width / height;
-                if (ratio > 1) { // Imagen horizontal
-                    width = maxSize;
-                    height = (int) (width / ratio);
-                } else { // Imagen vertical
-                    height = maxSize;
-                    width = (int) (height * ratio);
-                }
-                bitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
-            }
-
-            // 🔹 Creamos el archivo en almacenamiento privado
-            String nombreArchivo = "img_" + System.currentTimeMillis() + ".jpg";
-            File archivo = new File(getFilesDir(), nombreArchivo);
-
-            // 🔹 Escribimos el bitmap comprimido (80% calidad)
-            FileOutputStream outputStream = new FileOutputStream(archivo);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
-
-            // 🔹 Cerramos flujos
-            outputStream.close();
-            bitmap.recycle(); // Libera memoria RAM
-            inputStream.close();
-            outputStream.close();
-
-            // 🔹 Retornar la ruta del archivo guardado
-            return archivo.getAbsolutePath();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        ImageUtils utils = new ImageUtils(this);
+        return utils.guardarImagen(uriImagen);
     }
+
     //Elimiinar Producto Funcion
     private void deleteProduct(){
         Productos producto = getProductoOfInputs();

@@ -1,7 +1,6 @@
 package com.Clover.prueba.ui.historialventas;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,6 @@ public class DetallesVentaAdapter extends RecyclerView.Adapter<DetallesVentaAdap
         holder.nombreProducto.setText(detalleVenta.getNombre_producto());
         holder.piezas.setText(String.valueOf(detalleVenta.getCantidad()));
         holder.precio.setText(String.valueOf("$ "+detalleVenta.getPrecio()));
-        Log.e("Clover_App", "onBindViewHolder: "+detalleVenta.toString());
     }
 
     @Override

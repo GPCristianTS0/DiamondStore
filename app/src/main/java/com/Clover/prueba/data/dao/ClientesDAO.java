@@ -85,11 +85,11 @@ public class ClientesDAO implements ControllerClient {
         return db.rawQuery(sql.toString(), arrgs.toArray(new String[0]));
     }
     @Override
-    public Clientes getClient(String nombre) {
+    public Clientes getClient(String idCliente) {
         Clientes clientee = new Clientes();
         try {
             String query = "SELECT * FROM clientes WHERE id_cliente = ?";
-            String[] args = {String.valueOf(nombre)};
+            String[] args = {String.valueOf(idCliente)};
             ArrayList<Clientes> clientes = new ArrayList<>();
             Cursor cursor = db.rawQuery(query, args);
             if (cursor.moveToFirst()) {

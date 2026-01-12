@@ -1,7 +1,6 @@
-package utils;
+package com.Clover.prueba.utils;
 
 import android.app.Activity;
-import com.Clover.prueba.CaptureAct;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 public class EscanerCodeBar {

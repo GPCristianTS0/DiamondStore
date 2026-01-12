@@ -18,8 +18,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import com.Clover.prueba.data.controller.ControllerClient;
+import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.controller.ControllerVentas;
+import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
@@ -61,7 +64,9 @@ public class HistorialVentasDetalleVenta extends AppCompatActivity {
         hora.setText(String.valueOf(fechaHora.format(DateTimeFormatter.ofPattern("HH:mm"))));
         monto.setText(String.valueOf("$ "+venta.getMonto()));
         totalPiezas.setText(String.valueOf(venta.getTotal_piezas()));
-        idCliente.setText("0");
+        ControllerClient controller = new ClientesDAO(this);
+        Clientes cliente = controller.getClient(venta.getId_cliente());
+        idCliente.setText(cliente.getNombre_cliente());
     }
     //rellenar detalle venta productos
     private void rellenoProductosj(Ventas venta){

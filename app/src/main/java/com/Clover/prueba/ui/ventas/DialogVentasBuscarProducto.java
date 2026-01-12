@@ -28,9 +28,9 @@ import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.models.Productos;
 
 public class DialogVentasBuscarProducto extends DialogFragment {
-    private static String seccionG;
-    private static String columnaObtencionG;
-    private ControllerProducto controller = new ProductoDAO(getContext());
+    private String seccionG = "Todas";
+    private String columnaObtencionG = "Codigo Barras";
+    private ControllerProducto controller;
     public DialogVentasBuscarProducto(){
         super();
     }
@@ -39,7 +39,7 @@ public class DialogVentasBuscarProducto extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.venta_view_productolista, container, false);
-
+        controller = new ProductoDAO(getContext());
         // Aquí inicializas tu RecyclerView
         rellenarTabla(controller.getProductos(), view);
         rellenarSpinnerColumnas(view);

@@ -198,10 +198,18 @@ public class ProductoDAO implements ControllerProducto{
     @Override
     public void deleteProducto(Productos producto) {
         try {
-            db.delete("productos", "id_producto=?", new String[]{producto.getId()});
-            //Elimina la imagen del producto"
-            File archivo = new File(producto.getRutaImagen());
-            if (archivo.exists()) archivo.delete();
+            int filasAfectadas = db.delete("productos", "id_producto=?", new String[]{producto.getId()});
+
+            if (filasAfectadas > 0 && producto.getRutaImagen() != null && !producto.getRutaImagen().isEmpty()) {
+                File archivo = new File(producto.getRutaImagen());
+
+                if (archivo.exists()) {
+                    boolean borrado = archivo.delete();
+                    if (!borrado) {
+                        Log.w("Clover_App", "No se pudo borrar el archivo de imagen: " + producto.getRutaImagen());
+                    }
+                }
+            }
         }catch (SQLException e){
             Log.e("Clover_App", "Error en eliminar producto: "+ e.getMessage());
         }

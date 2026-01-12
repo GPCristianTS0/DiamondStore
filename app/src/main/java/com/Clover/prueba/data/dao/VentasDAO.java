@@ -25,7 +25,6 @@ public class VentasDAO implements ControllerVentas {
     }
     @Override
     public void addVenta(Ventas venta, ArrayList<DetalleVenta> detalleventa) {
-
         db.beginTransaction();
         try {
             ContentValues valuesVentas = new ContentValues();
@@ -97,7 +96,7 @@ public class VentasDAO implements ControllerVentas {
             while (cursor.moveToNext()){
                 Ventas venta = new Ventas();
                 venta.setId_venta(cursor.getInt(0));
-                venta.setId_cliente(cursor.getInt(1));
+                venta.setId_cliente(cursor.getString(1));
                 venta.setFecha_hora(cursor.getString(2));
                 venta.setMonto(cursor.getInt(3));
                 venta.setTotal_piezas(cursor.getInt(4));
@@ -135,7 +134,7 @@ public class VentasDAO implements ControllerVentas {
             while (cursor.moveToNext()){
                 Ventas venta = new Ventas();
                 venta.setId_venta(cursor.getInt(0));
-                venta.setId_cliente(cursor.getInt(1));
+                venta.setId_cliente(cursor.getString(1));
                 venta.setFecha_hora(cursor.getString(2));
                 venta.setMonto(cursor.getInt(3));
                 venta.setTotal_piezas(cursor.getInt(4));

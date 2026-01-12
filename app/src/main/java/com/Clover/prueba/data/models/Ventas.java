@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Ventas implements Serializable {
     private int id_venta;
-    private int id_cliente;
+    private String id_cliente;
     private String fecha_hora;
     private int monto;
     private int total_piezas;
@@ -13,7 +13,7 @@ public class Ventas implements Serializable {
     public Ventas() {
     }
 
-    public Ventas(int id_venta, int id_cliente, String fecha_hora, int monto, int total_piezas, String tipo_pago) {
+    public Ventas(int id_venta, String id_cliente, String fecha_hora, int monto, int total_piezas, String tipo_pago) {
         this.id_venta = id_venta;
         this.id_cliente = id_cliente;
         this.fecha_hora = fecha_hora;
@@ -30,11 +30,11 @@ public class Ventas implements Serializable {
         this.id_venta = id_venta;
     }
 
-    public int getId_cliente() {
+    public String getId_cliente() {
         return id_cliente;
     }
 
-    public void setId_cliente(int id_cliente) {
+    public void setId_cliente(String id_cliente) {
         this.id_cliente = id_cliente;
     }
 

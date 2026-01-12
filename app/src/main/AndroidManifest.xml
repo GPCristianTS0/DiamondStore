@@ -37,7 +37,7 @@
             android:name=".ui.ventas.VentaView"
             android:exported="false" />
         <activity
-            android:name=".CaptureAct"
+            android:name=".utils.CaptureAct"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".ui.productos.FormularioProductos"
