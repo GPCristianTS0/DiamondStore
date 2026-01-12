@@ -14,9 +14,9 @@ El módulo principal permite una gestión fluida de la venta, con cálculo autom
 
 | Gestión del Carrito | Proceso de Cobro |
 |:---:|:---:|
-| <img src="screenshots/ventas_carrito_lleno.jpg" width="300"> | <img src="screenshots/ventas_cobro.jpg" width="300"> |
+| <img src="screenshots/ventas_carrito_lleno.jpeg" width="300"> | <img src="screenshots/ventas_cobro.jpeg" width="300"> |
 | **Control de Stock y Errores** | **Búsqueda Rápida** |
-| <img src="screenshots/ventas_validacion_stock.jpg" width="300"> | <img src="screenshots/ventas_busqueda.jpg" width="300"> |
+| <img src="screenshots/ventas_validacion_stock.jpeg" width="300"> | <img src="screenshots/ventas_busqueda.jpeg" width="300"> |
 *(El sistema valida existencias y notifica al usuario si un producto está agotado)*
 
 ### Gestión de Inventario
@@ -24,7 +24,7 @@ Visualización clara de productos con soporte para imágenes y filtros dinámico
 
 | Catálogo Visual | Filtrado y Búsqueda |
 |:---:|:---:|
-| <img src="screenshots/inventario_grid.jpg" width="300"> | <img src="screenshots/inventario_filtro.jpg" width="300"> |
+| <img src="screenshots/inventario_grid.jpeg" width="300"> | <img src="screenshots/inventario_filtro.jpeg" width="300"> |
 
 ## Características Principales
 
