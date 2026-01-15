@@ -1,6 +1,7 @@
 package com.Clover.prueba.ui.home;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,19 +13,21 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.data.controller.ControllerVentas;
+import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.ui.clientes.ClientesPrincipalView;
 import com.Clover.prueba.ui.historialventas.HistorialVentasView;
 import com.Clover.prueba.ui.productos.ProductosView;
 import com.Clover.prueba.ui.productos.ProductosActualizarStock;
 import com.Clover.prueba.ui.ventas.VentaView;
 
-import java.util.ArrayList;
-
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.controller.ControllerProducto;
-import com.Clover.prueba.data.models.Productos;
 
 public class MenuPrincipal extends AppCompatActivity {
+    private ControllerVentas controllerVentas ;
+    private ControllerProducto controllerProductos ;
+    private TextView co ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +40,9 @@ public class MenuPrincipal extends AppCompatActivity {
             return insets;
         });
         ControllerProducto controllerProducto = new ProductoDAO(this);
+        controllerVentas = new VentasDAO(this);
+        controllerProductos = new ProductoDAO(this);
         rellenarDatos();
-
 
     }
     //Accion boton de clientes
@@ -74,28 +78,32 @@ public class MenuPrincipal extends AppCompatActivity {
     }
     //Rellenado de datos de los productos
     private void rellenarDatos(){
-          int contadorProductos;
-          int contadorVentas =0;
-          int contadorUnidades=0;
-          int contadorStockBajos=0;
-          ControllerProducto controller = new ProductoDAO(this);
-          ArrayList<Productos> productos = controller.getProductos();
-          for (Productos producto : productos) {
-              contadorUnidades += producto.getStock();
-              contadorVentas += producto.getVendidos();
-              if (producto.getStock() < 2) {
-                  contadorStockBajos++;
-              }
-          }
-          contadorProductos = productos.size();
-          TextView co = findViewById(R.id.productosTotalContador);
-          co.setText(String.valueOf(contadorProductos));
-          co = findViewById(R.id.unidadesTotalContador);
-          co.setText(String.valueOf(contadorUnidades));
-          co = findViewById(R.id.stockTotalContador);
-          co.setText(String.valueOf(contadorStockBajos));
-          co = findViewById(R.id.vendidosTotalContador);
-          co.setText(String.valueOf(contadorVentas));
+
+        //Contador de ganancias
+        int gananciasTotales = controllerVentas.getGanancias();
+        String ganancia = "$ "+gananciasTotales;
+        co = findViewById(R.id.unidadesTotalContador);
+        co.setText(ganancia);
+        if (gananciasTotales>0) co.setTextColor(Color.parseColor("#008000"));
+        else if (gananciasTotales<0) co.setTextColor(Color.parseColor("#FF0000"));
+
+        //Producto mas vendido
+        String productoEstrella = controllerVentas.getProductoMasVendido();
+        co = findViewById(R.id.vendidosTotalContador);
+        co.setText(String.valueOf(productoEstrella));
+
+        //contador de dinero en caja
+        int dineroEnCaja = controllerVentas.getVentasTotales();
+        co = findViewById(R.id.productosTotalContador);
+        co.setText(String.valueOf("$ "+dineroEnCaja));
+
+        //Contador de stock bajo
+        int contadorStockBajos= controllerProductos.getStockBajo();
+        co = findViewById(R.id.stockTotalContador);
+        if (contadorStockBajos>0) co.setTextColor(Color.parseColor("#FF0000"));
+        else co.setTextColor(Color.parseColor("#008000"));
+        co.setText(String.valueOf(contadorStockBajos));
+
     }
 
     @Override

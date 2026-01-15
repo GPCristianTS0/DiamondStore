@@ -55,11 +55,11 @@ public class HistorialVentasDetalleVenta extends AppCompatActivity {
         LocalDateTime fechaHora = LocalDateTime.parse(fechaf, formatter);
 
         TextView fecha,hora, monto, totalPiezas, idCliente;
-        fecha = findViewById(R.id.hvD_fechaOut);
-        hora = findViewById(R.id.hvD_horaOut);
-        monto = findViewById(R.id.hvD_TotalOut);
-        totalPiezas = findViewById(R.id.hvD_noArticulos);
-        idCliente = findViewById(R.id.hvD_apodoClienteOut);
+        fecha = findViewById(R.id.ticketL_fechaOut);
+        hora = findViewById(R.id.ticketL_horaOut);
+        monto = findViewById(R.id.ticket_TotalOut);
+        totalPiezas = findViewById(R.id.ticketL_noArticulos);
+        idCliente = findViewById(R.id.ticketL_apodoClienteOut);
         fecha.setText(String.valueOf(fechaHora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
         hora.setText(String.valueOf(fechaHora.format(DateTimeFormatter.ofPattern("HH:mm"))));
         monto.setText(String.valueOf("$ "+venta.getMonto()));

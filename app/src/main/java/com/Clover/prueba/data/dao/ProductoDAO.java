@@ -118,6 +118,11 @@ public class ProductoDAO implements ControllerProducto{
         return producto;
     }
     private Cursor rawQueryGetProductos(String seccion, String columnaObtencion, String busqueda){
+        String filtroStock = "stock";
+        String filtroVendidos = "vendidos";
+        String filtroPrecio = "precioPublico";
+        String filtroPrecioNeto= "precioNeto";
+
         if (busqueda==null) busqueda="";
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT p.*, s.nombre_seccion ");
@@ -138,10 +143,11 @@ public class ProductoDAO implements ControllerProducto{
                 sql.append("AND ");
             else
                 sql.append("WHERE ");
+            //if (columnaObtencion.equals())
             sql.append(columnaObtencion).append(" LIKE ?");
             arrgs.add("%"+busqueda+"%");
         }
-        sql.append(" ORDER BY p.nombre_producto ASC");
+        sql.append(" ORDER BY s.nombre_seccion ASC");
         return db.rawQuery(sql.toString(), arrgs.toArray(new String[0]));
     }
     @Override
@@ -282,5 +288,18 @@ public class ProductoDAO implements ControllerProducto{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int getStockBajo() {
+        String sql = "SELECT COUNT(*) FROM productos WHERE stock < 3";
+        try (Cursor cursor = db.rawQuery(sql, null)) {
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getStockBajo: "+e.getMessage());
+        }
+        return 0;
     }
 }

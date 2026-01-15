@@ -9,28 +9,16 @@
     android:background="@color/white"
     tools:context=".ui.productos.ProductosView">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="364dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerProductosView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.81"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText">
-
-        <LinearLayout
-            android:id="@+id/contenedor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerProductosView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
 
     <Button
         android:id="@+id/button11"

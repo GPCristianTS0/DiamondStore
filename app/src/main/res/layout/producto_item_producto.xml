@@ -1,93 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/itemproductos"
-    android:clickable="true"
-    android:focusable="true"
-    android:layout_width="180dp"
-    android:layout_height="110dp"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
-    android:layout_marginBottom="3dp"
-    android:background="@drawable/redondear_esquinas"
-    android:backgroundTint="#E7E7E7">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/nombretxt"
-            android:layout_width="90dp"
-            android:layout_height="20dp"
-            android:gravity="center"
-            android:text="Laptop Pavillion"
-            android:textColor="#000000"
-            android:textSize="10dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/itemproductos"
+            android:layout_width="180dp"
+            android:layout_height="110dp"
+            android:background="@drawable/redondear_esquinas"
+            android:backgroundTint="#E7E7E7"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.583"
-            app:layout_constraintStart_toEndOf="@+id/imageItemProducto"
-            app:layout_constraintTop_toBottomOf="@+id/marcaItemProducto"
-            app:layout_constraintVertical_bias="0.152" />
-
-        <TextView
-            android:id="@+id/preciotxt"
-            android:layout_width="46dp"
-            android:layout_height="21dp"
-            android:text="$ 1000"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/codigoBarralbl"
-            app:layout_constraintTop_toBottomOf="@+id/nombretxt" />
-
-        <TextView
-            android:id="@+id/codigoBarralbl"
-            android:layout_width="84dp"
-            android:layout_height="15dp"
-            android:text="1255878854555"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageItemProducto"
-            app:layout_constraintVertical_bias="0.458" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/secciontxt"
-            android:layout_width="65dp"
-            android:layout_height="13dp"
-            android:text="Maquillaje"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageItemProducto"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/nombretxt"
+                    android:layout_width="90dp"
+                    android:layout_height="20dp"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.583"
+                    app:layout_constraintStart_toEndOf="@+id/imageItemProducto"
+                    app:layout_constraintTop_toBottomOf="@+id/marcaItemProducto"
+                    app:layout_constraintVertical_bias="0.152" />
 
-        <TextView
-            android:id="@+id/marcaItemProducto"
-            android:layout_width="47dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="Samsung"
-            android:textColor="#000000"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
-            app:layout_constraintStart_toEndOf="@+id/imageItemProducto"
-            app:layout_constraintTop_toBottomOf="@+id/secciontxt" />
+                <TextView
+                    android:id="@+id/preciotxt"
+                    android:layout_width="46dp"
+                    android:layout_height="21dp"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/codigoBarralbl"
+                    app:layout_constraintTop_toBottomOf="@+id/nombretxt" />
 
-        <ImageView
-            android:id="@+id/imageItemProducto"
-            android:layout_width="66dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/agregar_imgaen" />
+                <TextView
+                    android:id="@+id/codigoBarralbl"
+                    android:layout_width="84dp"
+                    android:layout_height="15dp"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageItemProducto"
+                    app:layout_constraintVertical_bias="0.458" />
 
+                <TextView
+                    android:id="@+id/secciontxt"
+                    android:layout_width="65dp"
+                    android:layout_height="13dp"
+                    android:text="Maquillaje"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageItemProducto"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/marcaItemProducto"
+                    android:layout_width="47dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Samsung"
+                    android:textColor="#000000"
+                    android:textSize="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.6"
+                    app:layout_constraintStart_toEndOf="@+id/imageItemProducto"
+                    app:layout_constraintTop_toBottomOf="@+id/secciontxt" />
+
+                <ImageView
+                    android:id="@+id/imageItemProducto"
+                    android:layout_width="66dp"
+                    android:layout_height="59dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/agregar_imgaen" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

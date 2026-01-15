@@ -24,39 +24,26 @@
         <TextView
             android:id="@+id/vendidosTotalContador"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="18dp"
             android:gravity="center"
             android:text="0"
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.695"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/vendidosImagelbl"
-            android:layout_width="34dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.137"
-            app:srcCompat="@drawable/vendidos_icon" />
+            app:layout_constraintEnd_toEndOf="@+id/textView10"
+            app:layout_constraintStart_toStartOf="@+id/textView10"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         <TextView
             android:id="@+id/textView10"
-            android:layout_width="63dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="Vendidos"
+            android:textAlignment="center"
+            android:textSize="11sp"
+            android:text="@string/MP_vendidosTotalContador"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.769"
-            app:layout_constraintStart_toEndOf="@+id/vendidosImagelbl"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -107,7 +94,7 @@
             android:layout_height="23dp"
             android:layout_gravity="center"
             android:layout_marginTop="3dp"
-            android:text="Stock Bajo"
+            android:text="@string/MP_stockTotalContador"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.777"
@@ -135,35 +122,22 @@
             android:text="0"
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.71"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/unidadesLayoutlbl"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.137"
-            app:srcCompat="@drawable/unidades_icon" />
+            app:layout_constraintEnd_toEndOf="@+id/unidadesLayoutlbl"
+            app:layout_constraintStart_toStartOf="@+id/unidadesLayoutlbl"
+            app:layout_constraintTop_toBottomOf="@+id/unidadesLayoutlbl" />
 
         <TextView
             android:id="@+id/unidadesLayoutlbl"
-            android:layout_width="66dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="Unidades"
+            android:text="@string/MP_unidadesTotalContador"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.971"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -182,41 +156,29 @@
 
         <TextView
             android:id="@+id/productosTotalContador"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0"
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.71"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.137"
-            app:srcCompat="@drawable/product_icon" />
+            app:layout_constraintEnd_toEndOf="@+id/textView8"
+            app:layout_constraintStart_toStartOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <TextView
             android:id="@+id/textView8"
-            android:layout_width="66dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="Productos"
+            android:text="@string/MP_productosTotalContador"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.971"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.025" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -249,7 +211,7 @@
         android:layout_marginTop="40dp"
         android:allowClickWhenDisabled="true"
         android:forceDarkAllowed="false"
-        android:text="Historial Ventas"
+        android:text="@string/MP_btnHistorialVentas"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="25sp"
@@ -271,7 +233,7 @@
         android:allowClickWhenDisabled="true"
         android:forceDarkAllowed="false"
         android:onClick="onClickVentas"
-        android:text="Vender"
+        android:text="@string/MP_btnVentas"
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="25sp"
@@ -290,7 +252,7 @@
         android:layout_marginTop="40dp"
         android:allowClickWhenDisabled="true"
         android:onClick="onClickProductosView"
-        android:text="Productos"
+        android:text="@string/MP_btnProductos"
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="25sp"
@@ -312,10 +274,10 @@
         android:clickable="true"
         android:enabled="true"
         android:onClick="onClickClientesView"
-        android:text="Clientes"
+        android:text="@string/MP_btnClientes"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="25dp"
+        android:textSize="25sp"
         app:cornerRadius="10dp"
         app:strokeColor="#000000"
         app:strokeWidth="3dp"

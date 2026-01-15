@@ -7,6 +7,7 @@ public class DetalleVenta {
     private String nombre_producto;
     private int cantidad;
     private int precio;
+    private int precio_neto;
 
     /// Variable para usar en agregar al carrito en ventas
     private Productos producto;
@@ -15,13 +16,14 @@ public class DetalleVenta {
     public DetalleVenta() {
     }
 
-    public DetalleVenta(int id_detalle, int id_venta, String id_producto, String nombre_producto, int cantidad, int precio, Productos producto) {
+    public DetalleVenta(int id_detalle, int id_venta, String id_producto, String nombre_producto, int cantidad, int precio, int precio_neto, Productos producto) {
         this.id_detalle = id_detalle;
         this.id_venta = id_venta;
         this.id_producto = id_producto;
         this.nombre_producto = nombre_producto;
         this.cantidad = cantidad;
         this.precio = precio;
+        this.precio_neto = precio_neto;
         this.producto = producto;
     }
 
@@ -82,6 +84,14 @@ public class DetalleVenta {
 
     public void setProducto(Productos producto) {
         this.producto = producto;
+    }
+
+    public int getPrecio_neto() {
+        return precio_neto;
+    }
+
+    public void setPrecio_neto(int precio_neto) {
+        this.precio_neto = precio_neto;
     }
 
     @Override

@@ -13,34 +13,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/hvdetalle_tittle"
+        android:text="DiamondStore "
         android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.93"
-        app:layout_constraintWidth_percent="0.95"
         android:background="@drawable/button_border"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.87"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15">
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintWidth_percent="0.95">
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.35"
-            app:layout_constraintDimensionRatio="1:1"
             android:layout_marginTop="16dp"
             android:src="@drawable/logotipo_diamondsystems"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.3" />
 
         <TextView
             android:id="@+id/textView16"
@@ -50,7 +50,7 @@
             android:layout_marginTop="20dp"
             android:text="Fecha:"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="21sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
@@ -58,61 +58,47 @@
             android:id="@+id/ticketL_fechaOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="5dp"
             android:text="10-12-2025"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView16"
             app:layout_constraintStart_toEndOf="@+id/textView16"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toTopOf="@+id/textView16" />
 
         <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginStart="5dp"
             android:text="Hora:"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/ticketL_horaOut"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            android:textSize="21sp"
+            app:layout_constraintStart_toEndOf="@+id/ticketL_fechaOut"
+            app:layout_constraintTop_toTopOf="@+id/textView16" />
 
         <TextView
             android:id="@+id/ticketL_horaOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="44dp"
             android:text="21:23"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
-            android:text="Cliente:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView18"
+            app:layout_constraintStart_toEndOf="@+id/textView18"
+            app:layout_constraintTop_toTopOf="@+id/textView18" />
 
         <TextView
             android:id="@+id/ticketL_apodoClienteOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginTop="12dp"
             android:text="Nonis Herrera"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/textView20"
-            app:layout_constraintTop_toBottomOf="@+id/ticketL_fechaOut" />
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
         <TextView
             android:id="@+id/textView23"
@@ -124,7 +110,7 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+            app:layout_constraintTop_toBottomOf="@+id/ticketL_apodoClienteOut" />
 
         <TextView
             android:id="@+id/ticketL_noArticulos"
@@ -141,14 +127,15 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="302dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.59"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.59"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23">
+            app:layout_constraintTop_toBottomOf="@+id/textView23"
+            app:layout_constraintWidth_percent="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -157,10 +144,10 @@
 
                 <TextView
                     android:id="@+id/textView30"
-                    android:layout_width="150dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="10"
                     android:gravity=""
-                    android:layout_weight="1"
                     android:text="Nombre"
                     android:textColor="@color/black" />
 
@@ -183,48 +170,37 @@
                     android:textColor="@color/black" />
             </LinearLayout>
 
-            <ScrollView
+            <LinearLayout
+                android:id="@+id/ticketL_contenedor"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                tools:layout_editor_absoluteY="272dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/hvD_recycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </ScrollView>
+            </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView26"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total:"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/black"
-            android:textSize="21sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/ticket_TotalOut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="$ 2000"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView26"
-            app:layout_constraintStart_toEndOf="@+id/textView26"
-            app:layout_constraintTop_toTopOf="@+id/textView26" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total: $"
+        android:textColor="@color/black"
+        android:textSize="29sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+    <TextView
+        android:id="@+id/ticket_TotalOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$ 2000"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+        app:layout_constraintStart_toEndOf="@+id/textView26"
+        app:layout_constraintTop_toTopOf="@+id/textView26" />
 </androidx.constraintlayout.widget.ConstraintLayout>

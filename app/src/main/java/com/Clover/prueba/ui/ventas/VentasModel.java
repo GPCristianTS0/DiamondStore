@@ -1,9 +1,8 @@
 package com.Clover.prueba.ui.ventas;
 
 import android.content.Context;
-import android.widget.TextView;
+import android.util.Log;
 
-import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.ControllerClient;
 import com.Clover.prueba.data.controller.ControllerProducto;
 import com.Clover.prueba.data.controller.ControllerVentas;
@@ -14,6 +13,7 @@ import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.data.models.Ventas;
+import com.Clover.prueba.utils.TicketUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -84,6 +84,8 @@ public class VentasModel {
         detalleVentas.setProducto(producto);
         detalleVentas.setCantidad(1);
         detalleVentas.setPrecio(producto.getPrecioPublico());
+        detalleVentas.setPrecio_neto(producto.getPrecioNeto());
+        detalleVentas.setProducto(producto);
         detallesVenta.add(0, detalleVentas);
         recalcularTotal();
         return "insertado";
@@ -107,7 +109,7 @@ public class VentasModel {
         }
         return "resto";
     }
-    protected boolean vacio(){
+    protected boolean isVacio(){
         return detallesVenta.isEmpty();
     }
     protected void vaciarCarrito(){
@@ -115,8 +117,8 @@ public class VentasModel {
         total = 0;
         cliente = null;
     }
+    Ventas venta = new Ventas();
     protected void ventaConfirmada(String tipoPago){
-        Ventas venta = new Ventas();
         if (cliente == null) venta.setId_cliente("N/A");
         else venta.setId_cliente(cliente.getId_cliente());
         venta.setMonto(total);
@@ -127,6 +129,12 @@ public class VentasModel {
         venta.setFecha_hora(fecha);
         //Agregar venta
         controllerVentas.addVenta(venta, detallesVenta);
-
     }
+    public void compartirTicket(){
+        TicketUtils ticketUtils = new TicketUtils();
+        Log.i("Clover_App", "detallesVenta: "+detallesVenta.toString());
+        ticketUtils.generarYCompartirTicket(context, getClienteNombre(), venta, detallesVenta);
+        vaciarCarrito();
+    }
+
 }

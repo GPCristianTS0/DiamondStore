@@ -7,9 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import com.Clover.prueba.data.controller.ControllerVentas;
@@ -50,6 +52,7 @@ public class VentasDAO implements ControllerVentas {
                 valuesDetalleVenta.put("nombre_producto", detalleventaa.getNombre_producto());
                 valuesDetalleVenta.put("cantidad", detalleventaa.getCantidad());
                 valuesDetalleVenta.put("precio", detalleventaa.getPrecio());
+                valuesDetalleVenta.put("precio_neto_historial", detalleventaa.getPrecio_neto());
                 db.insert("detalles_venta", null, valuesDetalleVenta);
                 //Actualizar stock
                 stmtStock.bindLong(1, detalleventaa.getCantidad());
@@ -161,6 +164,7 @@ public class VentasDAO implements ControllerVentas {
                 detalleVenta.setNombre_producto(cursor.getString(3));
                 detalleVenta.setCantidad(cursor.getInt(4));
                 detalleVenta.setPrecio(cursor.getInt(5));
+                detalleVenta.setPrecio_neto(cursor.getInt(6));
                 detalleVentas.add(detalleVenta);
             }
         } catch (Exception e) {
@@ -183,6 +187,50 @@ public class VentasDAO implements ControllerVentas {
         }
         return anios;
     }
+
+    @Override
+    public int getGanancias() {
+        String sql = "SELECT SUM((d.precio - d.precio_neto_historial) * d.cantidad) FROM detalles_venta d" +
+                " INNER JOIN ventas v ON d.id_venta = v.id_venta WHERE v.fecha_Hora LIKE ? AND d.precio_neto_historial > 0";
+        String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        try (Cursor cursor = db.rawQuery(sql, new String[]{fechaHoy+"%"})){
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0);
+            }
+        }catch ( Exception e){
+            Log.e( "Clover_App", "Error en getGanancias: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    @Override
+    public int getVentasTotales() {
+        String sql = "SELECT SUM(monto) FROM ventas WHERE fecha_Hora LIKE ?";
+        String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        try (Cursor cursor = db.rawQuery(sql, new String[]{fechaHoy+"%"})){
+            db.rawQuery(sql, new String[]{fechaHoy+"%"});
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getVentasTotales: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    @Override
+    public String getProductoMasVendido() {
+        String sql = "SELECT nombre_producto FROM detalles_venta GROUP BY nombre_producto ORDER BY SUM(cantidad) DESC LIMIT 1";
+        try (Cursor cursor = db.rawQuery(sql, null)){
+            if (cursor.moveToFirst()) {
+                return cursor.getString(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getProductoMasVendido: " + e.getMessage());
+        }
+        return "";
+    }
+
     private void getDetalleVenta(){
         String sql = "SELECT * FROM detalles_venta";
         ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
@@ -195,6 +243,7 @@ public class VentasDAO implements ControllerVentas {
                 detalleVenta.setNombre_producto(cursor.getString(3));
                 detalleVenta.setCantidad(cursor.getInt(4));
                 detalleVenta.setPrecio(cursor.getInt(5));
+                detalleVenta.setPrecio_neto(cursor.getInt(6));
                 detalleVentas.add(detalleVenta);
             }
         } catch (Exception e) {

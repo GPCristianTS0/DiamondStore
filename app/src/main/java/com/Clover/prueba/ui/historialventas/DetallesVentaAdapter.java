@@ -54,9 +54,9 @@ public class DetallesVentaAdapter extends RecyclerView.Adapter<DetallesVentaAdap
         TextView nombreProducto, piezas, precio;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            nombreProducto = itemView.findViewById(R.id.hvD_nombreProducto);
-            piezas = itemView.findViewById(R.id.hvD_piezas);
-            precio = itemView.findViewById(R.id.hvD_precio);
+            nombreProducto = itemView.findViewById(R.id.ticketItem_nombreProducto);
+            piezas = itemView.findViewById(R.id.ticketitem_piezas);
+            precio = itemView.findViewById(R.id.ticketItem_precio);
         }
     }
 }

@@ -16,6 +16,18 @@
 
     <!--Menu Principal-->
     <string name="precioPublic">Calculadora Precios</string>
+    <string name="MP_vendidosTotalContador">Producto Mas Vendido</string>
+    <string name="MP_unidadesTotalContador">Ganancias Hoy</string>
+    <string name="MP_stockTotalContador">Stock Bajo:</string>
+    <string name="MP_productosTotalContador">Dinero en Caja</string>
+    <string name="MP_btnActualizarStock">Actualizar Stock</string>
+    <string name="MP_btnVentas">Vender</string>
+    <string name="MP_btnHistorialVentas">Historial Ventas</string>
+    <string name="MP_btnPrecioPublico">Precio Publico</string>
+    <string name="MP_btnProductos">Productos</string>
+    <string name="MP_btnClientes">Clientes</string>
+
+
     <!--Deudas Formularo-->
     <string name="plazolbl">Plazo:</string>
     <string name="monto_totallbl">Monto:</string>

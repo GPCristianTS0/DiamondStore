@@ -198,7 +198,7 @@ public class VentaView extends AppCompatActivity {
     }
     //Accion boton pagar
     public void onClickPagar(View view){
-        if (modelVentas.vacio()){
+        if (modelVentas.isVacio()){
             Toast.makeText(this, "No hay articulos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -211,21 +211,30 @@ public class VentaView extends AppCompatActivity {
             getSupportFragmentManager().popBackStack();
             fragmentContainer.setVisibility(INVISIBLE);
         });
+        frament.setTicketGenerado(new DialogFragmentVentas.ticketGenerado() {
+            @Override
+            public void ticketGenerado() {
+                modelVentas.compartirTicket();
+                //Limpiar
+                noArticulosCount.setText(String.valueOf(0));
+                totallbl.setText(String.valueOf("Total:$ 0"));
+                codetxt.setText("");
+                vi.setText("Nombre Cliente");
+            }
+        });
         frament.setVentaConfirmada(new DialogFragmentVentas.ventaConfirmada(){
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void ventaConfirmada() {
                 modelVentas.ventaConfirmada("Efectivo");
-                modelVentas.vaciarCarrito();
                 //Limpiar
                 noArticulosCount.setText(String.valueOf(0));
-                totallbl.setText(String.valueOf(0));
+                totallbl.setText(String.valueOf("Total:$ 0"));
                 codetxt.setText("");
                 vi.setText("Nombre Cliente");
                 adapter.notifyDataSetChanged();
             }
         });
-
     }
     //Funciones para el dialogFragment de los productos
     private void onClickBuscarProducto(){

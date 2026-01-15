@@ -65,6 +65,8 @@ public class DialogFragmentVentas extends DialogFragment {
         TextInputEditText editTextPagaCon = view.findViewById(R.id.txtPagaConPVI);
         Button btn = view.findViewById(R.id.btnaceptarPVI);
 
+        Button btn2 = view.findViewById(R.id.button6);
+
         textViewTotal.setText("$ "+total);
         textViewCambioLabel.setVisibility(INVISIBLE);
         textViewCambio.setVisibility(INVISIBLE);
@@ -89,17 +91,38 @@ public class DialogFragmentVentas extends DialogFragment {
                     textViewCambio.setVisibility(VISIBLE);
                     int cambio = cantidad - total;
                     textViewCambio.setText("$ "+cambio);
+                    btn2.setVisibility(VISIBLE);
+
                     pago = false;
-                }else{
+
                     if (ventaConfirmada != null) {
                         ventaConfirmada.ventaConfirmada();
                     }
+                }else{
                     dismiss();
                 }
             }
         });
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ticketGenerado != null){
+                    ticketGenerado.ticketGenerado();
+                    dismiss();
+                }
+
+            }
+        });
         return view;
     }
+    public interface ticketGenerado {
+        void ticketGenerado();
+    }
+    private ticketGenerado ticketGenerado;
+    public void setTicketGenerado(ticketGenerado ticketGenerado) {
+        this.ticketGenerado = ticketGenerado;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
