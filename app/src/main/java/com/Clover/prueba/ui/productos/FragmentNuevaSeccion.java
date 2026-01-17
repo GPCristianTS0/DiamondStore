@@ -16,7 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
-import com.Clover.prueba.data.controller.ControllerProducto;
+import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.dao.ProductoDAO;
 
 public class FragmentNuevaSeccion extends DialogFragment {
@@ -65,7 +65,7 @@ public class FragmentNuevaSeccion extends DialogFragment {
     public FragmentNuevaSeccion() {
     }
     private boolean crearSeccion(String nombre){
-        ControllerProducto controller = new ProductoDAO(getContext());
+        IProducto controller = new ProductoDAO(getContext());
         ArrayList<String> secciones = controller.getSeccione();
         for (String seccion : secciones) {
             if (seccion.equals(nombre)) return false;

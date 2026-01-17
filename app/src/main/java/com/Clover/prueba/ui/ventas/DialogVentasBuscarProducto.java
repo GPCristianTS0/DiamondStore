@@ -23,14 +23,14 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
-import com.Clover.prueba.data.controller.ControllerProducto;
+import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.models.Productos;
 
 public class DialogVentasBuscarProducto extends DialogFragment {
     private String seccionG = "Todas";
     private String columnaObtencionG = "Codigo Barras";
-    private ControllerProducto controller;
+    private IProducto controller;
     public DialogVentasBuscarProducto(){
         super();
     }
@@ -40,7 +40,6 @@ public class DialogVentasBuscarProducto extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.venta_view_productolista, container, false);
         controller = new ProductoDAO(getContext());
-        // Aquí inicializas tu RecyclerView
         rellenarTabla(controller.getProductos(), view);
         rellenarSpinnerColumnas(view);
         rellenarSpinnerSecciones(view);
@@ -56,6 +55,7 @@ public class DialogVentasBuscarProducto extends DialogFragment {
             @Override
             public void OnClickEditProduct(Productos producto, int position) {
                 onProductoSeleccionado.onProductoSeleccionado(producto);
+                getParentFragmentManager().popBackStack();
                 dismiss();
             }
         });

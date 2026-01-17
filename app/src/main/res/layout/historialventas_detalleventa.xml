@@ -37,7 +37,7 @@
             app:layout_constraintWidth_percent="0.35"
             app:layout_constraintDimensionRatio="1:1"
             android:layout_marginTop="16dp"
-            android:src="@drawable/logotipo_diamondsystems"
+            android:src="@drawable/logo_nuevo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -197,8 +197,9 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/hvD_recycler"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

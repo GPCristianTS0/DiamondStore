@@ -1,11 +1,11 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.data.dao.interfaces;
 
 import java.util.ArrayList;
 
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
-public interface ControllerVentas {
+public interface IVentas {
     public void addVenta(Ventas venta, ArrayList<DetalleVenta> detallesVenta);
 
     public void deleteVenta(Ventas venta);

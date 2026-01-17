@@ -26,7 +26,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.Clover.prueba.data.controller.ControllerClient;
+import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.models.Clientes;
 
@@ -34,7 +34,7 @@ public class ClientesPrincipalView extends AppCompatActivity {
     private String columnaGlobal;
     private String busquedaGlobal = "";
     private boolean deudoresGlobal;
-    private final ControllerClient controller = new ClientesDAO(this);
+    private final IClient controller = new ClientesDAO(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -14,18 +14,18 @@ import com.Clover.prueba.R;
 import java.util.ArrayList;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
-import com.Clover.prueba.data.controller.ControllerProducto;
+import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.models.DetalleVenta;
 
 public class DetallesVentaAdapter extends RecyclerView.Adapter<DetallesVentaAdapter.ViewHolder> {
     private ArrayList<DetalleVenta> detallesVentas;
     private Context context;
 
-    ControllerProducto controllerProducto;
+    IProducto iProducto;
     public DetallesVentaAdapter(Context context, ArrayList<DetalleVenta> detallesVentas) {
         this.context = context;
         this.detallesVentas = detallesVentas;
-        controllerProducto  = new ProductoDAO(context);
+        iProducto = new ProductoDAO(context);
     }
 
 

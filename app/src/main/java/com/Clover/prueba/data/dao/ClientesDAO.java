@@ -8,11 +8,11 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import com.Clover.prueba.data.controller.ControllerClient;
+import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.database.CloverBD;
 import com.Clover.prueba.data.models.Clientes;
 
-public class ClientesDAO implements ControllerClient {
+public class ClientesDAO implements IClient {
     private SQLiteDatabase db;
     public ClientesDAO(Context context){
         db = CloverBD.getInstance(context).getWritableDatabase();

@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,13 +23,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
-import com.Clover.prueba.data.controller.ControllerProducto;
+import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.models.Productos;
 
 public class ProductosView extends AppCompatActivity {
     private String seccionG;
     private String columnaObtencionG;
-    private ControllerProducto controller;
+    private IProducto controller;
     private TextInputEditText t ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -29,12 +29,12 @@ import java.util.Collections;
 import java.util.Locale;
 
 import com.Clover.prueba.data.dao.VentasDAO;
-import com.Clover.prueba.data.controller.ControllerVentas;
+import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.models.Ventas;
 
 public class HistorialVentasView extends AppCompatActivity {
 
-    private final ControllerVentas controllerVentas = new VentasDAO(this);
+    private final IVentas iVentas = new VentasDAO(this);
     String mes, year, busqueda;
 
     @Override
@@ -65,7 +65,7 @@ public class HistorialVentasView extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 busqueda = s.toString();
-                ArrayList<Ventas> ventas = controllerVentas.getVentas(mes,year,busqueda);
+                ArrayList<Ventas> ventas = iVentas.getVentas(mes,year,busqueda);
                 rellenarScroll(ventas);
             }
         });
@@ -109,7 +109,7 @@ public class HistorialVentasView extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mes = String.format("%02d", position+1);
-                ArrayList<Ventas> ventas = controllerVentas.getVentas(mes,year,"");
+                ArrayList<Ventas> ventas = iVentas.getVentas(mes,year,"");
                 rellenarScroll(ventas);
             }
 
@@ -120,7 +120,7 @@ public class HistorialVentasView extends AppCompatActivity {
         });
         //Relleno de spinner año
         Spinner spinner2 = findViewById(R.id.spinner4);
-        ArrayList<String> anios = controllerVentas.getAnios();
+        ArrayList<String> anios = iVentas.getAnios();
         if (!anios.isEmpty()){
             spinner2.setSelection(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
             year = anios.get(anios.indexOf(Calendar.getInstance().get(Calendar.YEAR)+""));
@@ -134,7 +134,7 @@ public class HistorialVentasView extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 year = anios.get(position);
-                rellenarScroll(controllerVentas.getVentas(mes,year,""));
+                rellenarScroll(iVentas.getVentas(mes,year,""));
             }
 
             @Override

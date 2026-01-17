@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,10 +24,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.data.controller.CorteCajaController;
+import com.Clover.prueba.data.dao.CorteCajaDAO;
+import com.Clover.prueba.data.models.CarritoDTO;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -36,7 +41,7 @@ import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.utils.EscanerCodeBar;
 
 public class VentaView extends AppCompatActivity {
-    private VentasModel modelVentas;
+    private CarritoDTO modelVentas;
     private VentasViewAdapter adapter ;
     private TextView noArticulosCount ;
     private TextView totallbl;
@@ -74,8 +79,14 @@ public class VentaView extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        modelVentas = new VentasModel(this);
+        CorteCajaController corteCajaController = new CorteCajaController(this);
+        //Abrir caja
+        if (!corteCajaController.isCorteAbierto()){
+            abrirCajaFuncion();
+        }
+        CorteCajaDAO corteCajaDAO = new CorteCajaDAO(this);
+        //corteCajaDAO.vaciarTabla();
+        modelVentas = new CarritoDTO(this);
         rellenarCarrito();
         movimientoCodigo();
         inputCliente();
@@ -132,21 +143,23 @@ public class VentaView extends AppCompatActivity {
     }
     private void agregarAlCarrito(String codigo){
         String result = modelVentas.agregarAlCarrito(codigo);
-        if (result.equals("No existe")) {
-            Toast.makeText(this, "No existe", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (result.equals("Agotado")) {
-            Toast.makeText(this, "Agotado", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(result.equals("insertado")){
-            adapter.notifyItemInserted(0);
-            RecyclerView recyclerView = findViewById(R.id.recyclerProductosView);
-            recyclerView.scrollToPosition(0);
+        switch (result) {
+            case "No existe":
+                Toast.makeText(this, "No existe", Toast.LENGTH_SHORT).show();
+                return;
+            case "Agotado":
+                Toast.makeText(this, "Agotado", Toast.LENGTH_SHORT).show();
+                return;
+            case "insertado":
+                adapter.notifyItemInserted(0);
+                RecyclerView recyclerView = findViewById(R.id.recyclerProductosView);
+                recyclerView.scrollToPosition(0);
 
-        }else
-            adapter.notifyItemChanged(Integer.parseInt(result));
+                break;
+            default:
+                adapter.notifyItemChanged(Integer.parseInt(result));
+                break;
+        }
         //Actualiza el total y el numero de articulos
         codetxt.setText("");
         noArticulosCount.setText(String.valueOf(modelVentas.totalpiezas()));
@@ -197,6 +210,7 @@ public class VentaView extends AppCompatActivity {
         }
     }
     //Accion boton pagar
+    private boolean pago = false;
     public void onClickPagar(View view){
         if (modelVentas.isVacio()){
             Toast.makeText(this, "No hay articulos", Toast.LENGTH_SHORT).show();
@@ -233,6 +247,11 @@ public class VentaView extends AppCompatActivity {
                 codetxt.setText("");
                 vi.setText("Nombre Cliente");
                 adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void vaciarCarrito() {
+                modelVentas.vaciarCarrito();
             }
         });
     }
@@ -278,5 +297,21 @@ public class VentaView extends AppCompatActivity {
             return false;
         });
 
+    }
+    //Funcion para abrir caja
+    private void abrirCajaFuncion(){
+        DialogAbrirCorte frament = new DialogAbrirCorte();
+        frament.setCancelable(false);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, frament).addToBackStack(null).commit();
+        FrameLayout fragmentContainer = findViewById(R.id.fragment_container_view_tag);
+        fragmentContainer.setVisibility(VISIBLE);
+        frament.setOnMontoConfirmado(new DialogAbrirCorte.OnMontoConfirmado() {
+            @Override
+            public void onMontoConfirmado() {
+                Log.i("Clover_App", "onMontoConfirmado: ");
+                getSupportFragmentManager().popBackStack();
+                fragmentContainer.setVisibility(INVISIBLE);
+            }
+        });
     }
 }

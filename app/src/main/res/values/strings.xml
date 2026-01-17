@@ -15,11 +15,11 @@
     <string name="title_clientesView">Clientes</string>
 
     <!--Menu Principal-->
-    <string name="precioPublic">Calculadora Precios</string>
+    <string name="precioPublic">Proveedores</string>
     <string name="MP_vendidosTotalContador">Producto Mas Vendido</string>
     <string name="MP_unidadesTotalContador">Ganancias Hoy</string>
     <string name="MP_stockTotalContador">Stock Bajo:</string>
-    <string name="MP_productosTotalContador">Dinero en Caja</string>
+    <string name="MP_productosTotalContador">Ventas Hoy</string>
     <string name="MP_btnActualizarStock">Actualizar Stock</string>
     <string name="MP_btnVentas">Vender</string>
     <string name="MP_btnHistorialVentas">Historial Ventas</string>
@@ -93,5 +93,17 @@
     <string name="cp_tittle">Clientes</string>
     <string name="cp_busquedaPor">Busqueda Por:</string>
     <string name="cp_btnAgregar">Agregar</string>
+
+    <!--Formulario Proveedor-->
+    <string name="PrF_nombre_proveedor">Nombre Empresa</string>
+    <string name="PrF_nombre_vendedor">Nombre Vendedor</string>
+    <string name="PrF_categoria">Categoria</string>
+    <string name="PrF_telefono">Telefono</string>
+    <string name="PrF_direccion">Direccion</string>
+    <string name="PrF_correo">Correo Eléctronico</string>
+    <string name="PrF_visita">Dias Visita</string>
+    <string name="PrF_observaciones">Observaciones</string>
+    <string name="PrF_diasPago">Dias Pago</string>
+
 
 </resources>

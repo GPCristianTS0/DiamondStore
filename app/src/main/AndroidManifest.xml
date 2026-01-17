@@ -10,14 +10,20 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
+        android:fullBackupContent="false"
         android:icon="@drawable/logotipo_diamondsystems"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logotipo_diamondsystems"
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
+        <activity
+            android:name=".ui.proveedores.ProveedorFormularioView"
+            android:exported="false" />
+        <activity
+            android:name=".ui.proveedores.ProveedorView"
+            android:exported="false" />
         <activity
             android:name=".ui.clientes.ClientesFormulario"
             android:exported="false" />
@@ -52,9 +58,6 @@
             android:name=".ui.deudas.DeudaActivity"
             android:exported="false" />
         <activity
-            android:name=".ClientesPrincipal"
-            android:exported="false" />
-        <activity
             android:name=".ui.home.MenuPrincipal"
             android:exported="true">
             <intent-filter>
@@ -63,9 +66,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.AddClient"
-            android:exported="false" />
         <activity
             android:name=".ui.home.SplasActivity"
             android:exported="false" />

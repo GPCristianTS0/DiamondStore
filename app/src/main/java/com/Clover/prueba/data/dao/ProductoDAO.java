@@ -11,11 +11,11 @@ import android.util.Log;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.Clover.prueba.data.controller.ControllerProducto;
+import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.database.CloverBD;
 import com.Clover.prueba.data.models.Productos;
 
-public class ProductoDAO implements ControllerProducto{
+public class ProductoDAO implements IProducto {
 
     private SQLiteDatabase db;
 

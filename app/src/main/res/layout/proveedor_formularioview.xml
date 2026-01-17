@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.proveedores.ProveedorFormularioView"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="-21dp">
+
+    <TextView
+        android:id="@+id/PrF_tuttle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar Proveedor"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/PrF_nombreProveedortxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:background="@drawable/button_border"
+        app:layout_constraintTop_toBottomOf="@id/PrF_tuttle"
+        app:layout_constraintBottom_toTopOf="@+id/PrF_nombrevendedor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/PrF_nombrevendedor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/prF_telefonotxt"
+        app:layout_constraintEnd_toEndOf="@+id/PrF_nombreProveedortxt"
+        app:layout_constraintStart_toStartOf="@+id/PrF_nombreProveedortxt"
+        app:layout_constraintTop_toBottomOf="@id/PrF_nombreProveedortxt"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="@string/PrF_nombre_proveedor"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/PrF_nombreProveedortxt"
+        app:layout_constraintStart_toStartOf="@+id/PrF_nombreProveedortxt" />
+
+    <TextView
+        android:id="@+id/textView42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/PrF_nombre_vendedor"
+        android:textColor="@color/black"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/PrF_nombrevendedor"
+        app:layout_constraintStart_toStartOf="@+id/PrF_nombrevendedor" />
+
+    <TextView
+        android:id="@+id/textView43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/PrF_direccion"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/prF_direcciontxt2"
+        app:layout_constraintStart_toStartOf="@+id/prF_direcciontxt2" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/prF_correotxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/prF_Pagptxt"
+        app:layout_constraintEnd_toEndOf="@+id/prF_direcciontxt2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/prF_direcciontxt2"
+        app:layout_constraintTop_toBottomOf="@id/prF_direcciontxt2"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/prF_telefonotxt"
+        android:layout_width="0dp"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        app:layout_constraintBottom_toTopOf="@+id/prF_direcciontxt2"
+        app:layout_constraintEnd_toEndOf="@+id/PrF_nombrevendedor"
+        app:layout_constraintTop_toBottomOf="@id/PrF_nombrevendedor"
+        app:layout_constraintWidth_percent="0.4" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/prF_visitatxt"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/button_border"
+        android:inputType="textMultiLine|textCapSentences"
+        android:minLines="3"
+        android:textColor="@color/black"
+        android:gravity="top|start"
+        app:layout_constraintBottom_toBottomOf="@+id/prF_Pagptxt"
+        app:layout_constraintStart_toStartOf="@+id/prF_correotxt"
+        app:layout_constraintTop_toTopOf="@+id/prF_Pagptxt"
+        app:layout_constraintWidth_percent="0.44"
+        app:layout_constraintHeight_percent="0.08"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/prF_Pagptxt"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textColor="@color/black"
+        android:background="@drawable/button_border"
+        android:inputType="textMultiLine|textCapSentences"
+        android:minLines="3"
+        android:gravity="top|start"
+        app:layout_constraintBottom_toTopOf="@+id/textInputEditText3"
+        app:layout_constraintEnd_toEndOf="@+id/prF_correotxt"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintTop_toBottomOf="@id/prF_correotxt"
+        app:layout_constraintWidth_percent="0.44" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/prF_direcciontxt2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textColor="@color/black"
+        android:background="@drawable/button_border"
+        android:inputType="textMultiLine|textCapSentences"
+        android:minLines="3"
+        android:gravity="top|start"
+        app:layout_constraintBottom_toTopOf="@+id/prF_correotxt"
+        app:layout_constraintEnd_toEndOf="@+id/prF_telefonotxt"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintStart_toStartOf="@+id/PrF_categoria"
+        app:layout_constraintTop_toBottomOf="@id/prF_telefonotxt"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/PrF_categoria"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:textColor="@color/black"
+        app:layout_constraintWidth_percent="0.4"
+        app:layout_constraintBottom_toBottomOf="@+id/prF_telefonotxt"
+        app:layout_constraintStart_toStartOf="@+id/PrF_nombrevendedor"
+        app:layout_constraintTop_toTopOf="@+id/prF_telefonotxt"/>
+
+    <TextView
+        android:id="@+id/textView44"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/PrF_categoria"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/PrF_categoria"
+        app:layout_constraintStart_toStartOf="@+id/PrF_categoria" />
+
+    <TextView
+        android:id="@+id/textView45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/PrF_telefono"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/prF_telefonotxt"
+        app:layout_constraintStart_toStartOf="@+id/prF_telefonotxt" />
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/PrF_correo"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/prF_correotxt"
+        app:layout_constraintStart_toStartOf="@+id/prF_correotxt" />
+
+    <TextView
+        android:id="@+id/textView47"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="@string/PrF_visita"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/prF_visitatxt"
+        app:layout_constraintStart_toStartOf="@+id/prF_visitatxt" />
+
+    <TextView
+        android:id="@+id/textView48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="@string/PrF_diasPago"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/prF_Pagptxt"
+        app:layout_constraintStart_toStartOf="@+id/prF_Pagptxt" />
+
+    <TextView
+        android:id="@+id/textView49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginBottom="5dp"
+        android:text="@string/PrF_observaciones"
+        app:layout_constraintBottom_toTopOf="@+id/textInputEditText3"
+        app:layout_constraintStart_toStartOf="@+id/textInputEditText3" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/textInputEditText3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/button_border"
+        android:inputType="textMultiLine|textCapSentences"
+        android:textColor="@color/black"
+        android:minLines="3"
+        android:gravity="top|start"
+        app:layout_constraintBottom_toTopOf="@+id/button8"
+        app:layout_constraintEnd_toEndOf="@+id/prF_Pagptxt"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintStart_toStartOf="@+id/prF_visitatxt"
+        app:layout_constraintTop_toBottomOf="@id/prF_Pagptxt"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/textInputEditText3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

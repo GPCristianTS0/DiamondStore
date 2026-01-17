@@ -22,12 +22,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-import com.Clover.prueba.data.controller.ControllerClient;
+import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.models.Clientes;
 
 public class ClientesFormulario extends AppCompatActivity {
-    ControllerClient controller = new ClientesDAO(this);
+    IClient controller = new ClientesDAO(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

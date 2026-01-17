@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginHorizontal="12dp"
+android:layout_marginVertical="6dp"
+app:cardCornerRadius="12dp"
+app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/PrVItemContener"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/PrVItem_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/redondear_esquinas"
+            android:backgroundTint="@color/black"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/PrVItem_NombreEmpresa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:text="Bimbo / Refacciones"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/btnWhatsapp"
+            app:layout_constraintStart_toEndOf="@id/PrVItem_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/PrVItem_Detalles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Abarrotes • Vendedor: Juan"
+            android:textColor="#757575"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/PrVItem_NombreEmpresa"
+            app:layout_constraintStart_toStartOf="@id/PrVItem_NombreEmpresa"
+            app:layout_constraintTop_toBottomOf="@id/PrVItem_NombreEmpresa" />
+
+        <TextView
+            android:id="@+id/PrVItem_DiaVisita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#E8F5E9"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:text="📅 Visita: Jueves"
+            android:textColor="#2E7D32"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/PrVItem_NombreEmpresa"
+            app:layout_constraintTop_toBottomOf="@id/PrVItem_Detalles" />
+
+        <ImageView
+            android:id="@+id/btnLlamar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@android:drawable/ic_menu_call"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#1976D2" />
+
+        <ImageView
+            android:id="@+id/btnWhatsapp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="12dp"
+            android:src="@android:drawable/stat_notify_chat"
+            app:layout_constraintBottom_toBottomOf="@id/btnLlamar"
+            app:layout_constraintEnd_toStartOf="@id/btnLlamar"
+            app:layout_constraintTop_toTopOf="@id/btnLlamar"
+            app:tint="#4CAF50" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

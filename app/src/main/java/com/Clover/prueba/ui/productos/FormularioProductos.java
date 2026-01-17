@@ -36,17 +36,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
-import com.Clover.prueba.data.controller.ControllerProducto;
+import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.utils.EscanerCodeBar;
 
@@ -54,7 +50,7 @@ public class FormularioProductos extends AppCompatActivity {
     private static final String FILTRO_TODAS = "Todas";
     private boolean addOrEdit;
     private String codigo;
-    private ControllerProducto controllerProducto = new ProductoDAO(this);;
+    private IProducto iProducto = new ProductoDAO(this);;
     private ImageView imagenView;//Para las imagenes
     private Uri selectedImageUri;
     private Button btn;
@@ -142,7 +138,7 @@ public class FormularioProductos extends AppCompatActivity {
     //Rellenar Espacios para modificar productos
     private void rellenarEspacios(Productos producto) {
         Spinner sp = findViewById(R.id.spinnerSeccionFP);
-        int position = controllerProducto.getSeccione().indexOf(producto.getSeccion());
+        int position = iProducto.getSeccione().indexOf(producto.getSeccion());
         sp.setSelection(position+1);
         TextInputEditText t = findViewById(R.id.nombertxt);
         t.setText(producto.getNombre());
@@ -185,7 +181,7 @@ public class FormularioProductos extends AppCompatActivity {
             rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
             productoNew.setRutaImagen(rutaGuardada);
         }
-        controllerProducto.updateProducto(productoOld, productoNew);
+        iProducto.updateProducto(productoOld, productoNew);
         Toast.makeText(this, "Producto Actualizado", Toast.LENGTH_SHORT).show();
         finish();
     }
@@ -204,7 +200,7 @@ public class FormularioProductos extends AppCompatActivity {
         }
     }
     private void setCodigo(String codigo){
-        if (controllerProducto.getProductoCode(codigo).getId()!=null) {
+        if (iProducto.getProductoCode(codigo).getId()!=null) {
             Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();
             t.setText("");
         } else {
@@ -216,7 +212,7 @@ public class FormularioProductos extends AppCompatActivity {
     //Funcion Boton agregar
     public void addProductView(View v){
         Spinner sp = findViewById(R.id.spinnerSeccionFP);
-        Productos productos = controllerProducto.getProductoCode(t.getText().toString());
+        Productos productos = iProducto.getProductoCode(t.getText().toString());
         if (productos.getId()!=null){
             t.setText("");
             Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();
@@ -234,7 +230,7 @@ public class FormularioProductos extends AppCompatActivity {
         String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         productos.setRutaImagen(rutaGuardada);
         productos.setUltimoPedido(fechaHoy);
-        controllerProducto.addProducto(productos);
+        iProducto.addProducto(productos);
         Toast.makeText(this, "Producto Agregado", Toast.LENGTH_SHORT).show();
         finish();
     }
@@ -271,7 +267,7 @@ public class FormularioProductos extends AppCompatActivity {
     private void deleteProduct(){
         Productos producto = getProductoOfInputs();
         Log.e("Clover_App", "deleteProduct: "+producto.toString());
-        controllerProducto.deleteProducto(producto);
+        iProducto.deleteProducto(producto);
         Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(FormularioProductos.this, ProductosView.class);
         startActivity(intent);
@@ -302,7 +298,7 @@ public class FormularioProductos extends AppCompatActivity {
         return productos;
     }
     private void rellenarSpiner(){
-        ArrayList<String> secciones = controllerProducto.getSeccione();
+        ArrayList<String> secciones = iProducto.getSeccione();
         secciones.add(0, "Seleccionar");
         secciones.add("Agregar Nueva");
         Spinner sp = findViewById(R.id.spinnerSeccionFP);

@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import com.Clover.prueba.data.controller.ControllerProducto;
+import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.utils.EscanerCodeBar;
@@ -54,11 +54,11 @@ public class ProductosActualizarStock extends AppCompatActivity {
             return false;
         });
     }
-    private final ControllerProducto controllerProducto = new ProductoDAO(this);
+    private final IProducto iProducto = new ProductoDAO(this);
     private Context context;
 
     private void rellenarInformacion(String codigo){
-        Productos producto = controllerProducto.getProductoCode(codigo);
+        Productos producto = iProducto.getProductoCode(codigo);
         if (producto.getId()==null){
             Toast.makeText(this, "Articulo no registrado", Toast.LENGTH_SHORT).show();
             return;
@@ -107,7 +107,7 @@ public class ProductosActualizarStock extends AppCompatActivity {
             Toast.makeText(this, "Ingrese un stock valido", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(controllerProducto.updateStock(Integer.parseInt(stock), idProducto)){
+        if(iProducto.updateStock(Integer.parseInt(stock), idProducto)){
             Toast.makeText(this, "Stock actualizado", Toast.LENGTH_SHORT).show();
             TextView nombreProductoOut = findViewById(R.id.acst_nombreProductoOut);
             TextView stockRestanteOut = findViewById(R.id.acst_stockRestanteOut);

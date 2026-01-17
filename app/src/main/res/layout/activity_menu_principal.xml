@@ -15,10 +15,10 @@
         android:layout_width="136dp"
         android:layout_height="59dp"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button_border"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/stockLayoutB"
         app:layout_constraintTop_toBottomOf="@+id/unidadesLayout">
 
         <TextView
@@ -38,10 +38,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="11sp"
             android:text="@string/MP_vendidosTotalContador"
+            android:textAlignment="center"
             android:textColor="#000000"
+            android:textSize="11sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -53,15 +53,14 @@
         android:layout_width="140dp"
         android:layout_height="59dp"
         android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="onClickActualizarStock"
+        android:background="@drawable/button_border"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/button_border"
+        android:onClick="onClickActualizarStock"
+        app:layout_constraintBottom_toBottomOf="@+id/vendidosLayoutB"
         app:layout_constraintEnd_toStartOf="@+id/vendidosLayoutB"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        app:layout_constraintTop_toTopOf="@+id/vendidosLayoutB"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/stockTotalContador"
@@ -108,11 +107,11 @@
         android:layout_width="136dp"
         android:layout_height="59dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="28dp"
         android:background="@drawable/button_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7">
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintStart_toEndOf="@id/button"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/unidadesTotalContador"
@@ -146,13 +145,11 @@
         android:layout_width="140dp"
         android:layout_height="59dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="16dp"
         android:background="@drawable/button_border"
+        app:layout_constraintBottom_toBottomOf="@+id/unidadesLayout"
         app:layout_constraintEnd_toStartOf="@+id/unidadesLayout"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7">
+        app:layout_constraintTop_toTopOf="@+id/unidadesLayout"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/productosTotalContador"
@@ -186,89 +183,84 @@
         android:id="@+id/precioPublicoBtn"
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_marginTop="40dp"
         android:allowClickWhenDisabled="true"
-        android:onClick="onClickPrecioPublico"
+        android:onClick="onClickProveedores"
         android:text="@string/precioPublic"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="25sp"
-        app:cornerRadius="10dp"
-        app:strokeWidth="3dp"
-        app:strokeColor="#000000"
         app:backgroundTint="@android:color/transparent"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/historialVentasBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/historialVentasBtn"
+        app:layout_constraintStart_toStartOf="@+id/historialVentasBtn"
+        app:layout_constraintTop_toBottomOf="@id/historialVentasBtn"
+        app:strokeColor="#000000"
+        app:strokeWidth="3dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/historialVentasBtn"
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_marginTop="40dp"
         android:allowClickWhenDisabled="true"
         android:forceDarkAllowed="false"
+        android:onClick="onClickHistorialVentas"
         android:text="@string/MP_btnHistorialVentas"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="25sp"
-        app:cornerRadius="10dp"
-        app:strokeWidth="3dp"
-        app:strokeColor="#000000"
         app:backgroundTint="@android:color/transparent"
-        android:onClick="onClickHistorialVentas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productosBtn" />
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@id/precioPublicoBtn"
+        app:layout_constraintEnd_toEndOf="@+id/productosBtn"
+        app:layout_constraintStart_toStartOf="@+id/productosBtn"
+        app:layout_constraintTop_toBottomOf="@id/productosBtn"
+        app:strokeColor="#000000"
+        app:strokeWidth="3dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/venderBtn"
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_marginTop="40dp"
         android:allowClickWhenDisabled="true"
         android:forceDarkAllowed="false"
+        android:gravity="center"
         android:onClick="onClickVentas"
         android:text="@string/MP_btnVentas"
-        android:gravity="center"
         android:textColor="#000000"
         android:textSize="25sp"
-        app:cornerRadius="10dp"
-        app:strokeWidth="3dp"
-        app:strokeColor="#000000"
         app:backgroundTint="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clientesbtn" />
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/clientesbtn"
+        app:layout_constraintStart_toStartOf="@+id/clientesbtn"
+        app:layout_constraintTop_toBottomOf="@id/clientesbtn"
+        app:layout_constraintBottom_toTopOf="@id/productosBtn"
+        app:strokeColor="#000000"
+        app:strokeWidth="3dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/productosBtn"
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_marginTop="40dp"
         android:allowClickWhenDisabled="true"
+        android:gravity="center"
         android:onClick="onClickProductosView"
         android:text="@string/MP_btnProductos"
-        android:gravity="center"
         android:textColor="#000000"
         android:textSize="25sp"
-        app:cornerRadius="10dp"
-        app:strokeWidth="3dp"
-        app:strokeColor="#000000"
         app:backgroundTint="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/venderBtn" />
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@id/historialVentasBtn"
+        app:layout_constraintEnd_toEndOf="@+id/venderBtn"
+        app:layout_constraintStart_toStartOf="@+id/venderBtn"
+        app:layout_constraintTop_toBottomOf="@id/venderBtn"
+        app:strokeColor="#000000"
+        app:strokeWidth="3dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/clientesbtn"
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_marginTop="28dp"
         android:allowClickWhenDisabled="false"
         android:backgroundTint="@null"
         android:clickable="true"
@@ -278,13 +270,15 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="25sp"
-        app:cornerRadius="10dp"
-        app:strokeColor="#000000"
-        app:strokeWidth="3dp"
         app:backgroundTint="@android:color/transparent"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@id/venderBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stockLayoutB" />
+
+        app:layout_constraintTop_toBottomOf="@+id/stockLayoutB"
+        app:strokeColor="#000000"
+        app:strokeWidth="3dp" />
 
     <TextView
         android:id="@+id/textView7"

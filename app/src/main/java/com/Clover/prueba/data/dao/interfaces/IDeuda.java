@@ -1,10 +1,10 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.data.dao.interfaces;
 
 import java.util.ArrayList;
 
 import com.Clover.prueba.data.models.Deuda;
 
-public interface ControllerDeuda {
+public interface IDeuda {
 
     public void addDeuda(int id, int id_deuda, int saldo_total, String plazo, String fecha_pago, int pagos_restantes, int pagos_totales, int monto_pago, String id_productos, int saldo_restante);
     public Deuda getDeuda(int id);

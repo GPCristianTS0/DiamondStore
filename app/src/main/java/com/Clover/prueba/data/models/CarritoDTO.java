@@ -1,18 +1,14 @@
-package com.Clover.prueba.ui.ventas;
+package com.Clover.prueba.data.models;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.Clover.prueba.data.controller.ControllerClient;
-import com.Clover.prueba.data.controller.ControllerProducto;
-import com.Clover.prueba.data.controller.ControllerVentas;
+import com.Clover.prueba.data.dao.interfaces.IClient;
+import com.Clover.prueba.data.dao.interfaces.IProducto;
+import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
-import com.Clover.prueba.data.models.Clientes;
-import com.Clover.prueba.data.models.DetalleVenta;
-import com.Clover.prueba.data.models.Productos;
-import com.Clover.prueba.data.models.Ventas;
 import com.Clover.prueba.utils.TicketUtils;
 
 import java.time.LocalDateTime;
@@ -20,17 +16,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class VentasModel {
-    private final ControllerVentas controllerVentas;
-    private final ControllerProducto controller;
+public class CarritoDTO {
+    private final IVentas iVentas;
+    private final IProducto controller;
     private final ArrayList<DetalleVenta> detallesVenta = new ArrayList<>();
     private int total;
     private Clientes cliente;
     private Context context;
 
-    public VentasModel(Context context) {
+    public CarritoDTO(Context context) {
         controller = new ProductoDAO(context);
-        controllerVentas = new VentasDAO(context);
+        iVentas = new VentasDAO(context);
         this.context = context;
     }
 
@@ -50,7 +46,7 @@ public class VentasModel {
         return total;
     }
     public boolean setCliente(String idCliente) {
-        ControllerClient controller = new ClientesDAO(context);
+        IClient controller = new ClientesDAO(context);
         cliente = controller.getClient(idCliente);
         return cliente.getId_cliente() != null;
     }
@@ -60,7 +56,7 @@ public class VentasModel {
         return cliente.getNombre_cliente();
     }
 
-    protected String agregarAlCarrito(String codigo){
+    public String agregarAlCarrito(String codigo){
         Productos producto = controller.getProductoCode(codigo);
         //Comprobacion del producto si esta agotado o no existe
         if (producto.getId() == null) return "No existe";
@@ -98,7 +94,7 @@ public class VentasModel {
         }
     }
 
-    protected String disminuirClick(int position){
+    public String disminuirClick(int position){
         //comprueba que la cantidad no sea 0
         DetalleVenta producto = detallesVenta.get(position);
         if (producto.getCantidad()>0) producto.setCantidad(producto.getCantidad()-1);
@@ -109,16 +105,16 @@ public class VentasModel {
         }
         return "resto";
     }
-    protected boolean isVacio(){
+    public boolean isVacio(){
         return detallesVenta.isEmpty();
     }
-    protected void vaciarCarrito(){
+    public void vaciarCarrito(){
         detallesVenta.clear();
         total = 0;
         cliente = null;
     }
     Ventas venta = new Ventas();
-    protected void ventaConfirmada(String tipoPago){
+    public void ventaConfirmada(String tipoPago){
         if (cliente == null) venta.setId_cliente("N/A");
         else venta.setId_cliente(cliente.getId_cliente());
         venta.setMonto(total);
@@ -128,7 +124,7 @@ public class VentasModel {
         String fecha = LocalDateTime.now().format(format);
         venta.setFecha_hora(fecha);
         //Agregar venta
-        controllerVentas.addVenta(venta, detallesVenta);
+        iVentas.addVenta(venta, detallesVenta);
     }
     public void compartirTicket(){
         TicketUtils ticketUtils = new TicketUtils();

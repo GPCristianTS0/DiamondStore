@@ -26,6 +26,7 @@ public class DialogFragmentVentas extends DialogFragment {
 
     public interface ventaConfirmada {
         void ventaConfirmada();
+        void vaciarCarrito();
     }
     public void setVentaConfirmada(ventaConfirmada ventaConfirmada) {
         this.ventaConfirmada = ventaConfirmada;
@@ -99,6 +100,8 @@ public class DialogFragmentVentas extends DialogFragment {
                         ventaConfirmada.ventaConfirmada();
                     }
                 }else{
+                    ventaConfirmada.vaciarCarrito();
+                    getParentFragmentManager().popBackStack();
                     dismiss();
                 }
             }
@@ -108,6 +111,7 @@ public class DialogFragmentVentas extends DialogFragment {
             public void onClick(View v) {
                 if (ticketGenerado != null){
                     ticketGenerado.ticketGenerado();
+                    getParentFragmentManager().popBackStack();
                     dismiss();
                 }
 

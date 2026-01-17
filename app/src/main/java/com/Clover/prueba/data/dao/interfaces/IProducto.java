@@ -1,10 +1,10 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.data.dao.interfaces;
 
 import java.util.ArrayList;
 
 import com.Clover.prueba.data.models.Productos;
 
-public interface ControllerProducto {
+public interface IProducto {
 
     public void createTabl(String name);
     public void addProducto(Productos producto);

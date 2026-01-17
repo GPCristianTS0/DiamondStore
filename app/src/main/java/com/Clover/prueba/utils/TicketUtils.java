@@ -81,7 +81,6 @@ public class TicketUtils {
 
 // ELEGIMOS EL MAYOR: Si el contenido es chico, usamos 1920. Si es grande, usamos el contenido.
         int altoFinal = Math.max(altoDelContenido, altoMinimo);
-        Log.i("Clover_App", "altoFinal: " + altoFinal + " altoDelContenido: " + altoDelContenido + " altoMinimo: " + altoMinimo);
 
         // ")
         // 4. ACOMODAR (LAYOUT): Le asignamos su tamaño final
@@ -112,7 +111,7 @@ public class TicketUtils {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("image/jpeg");
             intent.putExtra(Intent.EXTRA_STREAM, imageUri);
-            intent.putExtra(Intent.EXTRA_TEXT, "¡Gracias por tu compra en DiamondStore! 💎");
+            intent.putExtra(Intent.EXTRA_TEXT, "¡Gracias por tu compra en NovaShop! ");
 
             // ESTA ES LA CLAVE: Forzamos a que solo use WhatsApp
             intent.setPackage("com.whatsapp");

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 2);
+        super(context, "Clover.db", null, 5);
     }
 
     @Override
@@ -46,22 +46,75 @@ public class CloverBD extends SQLiteOpenHelper{
                 "id_producto TEXT," +
                 "nombre_producto TEXT," +
                 "cantidad INTEGER," +
-                "precio INTEGER)");
+                "precio INTEGER," +
+                "precio_neto_historial INTEGER)");
         //Tabla Clientes
         db.execSQL("create table IF NOT EXISTS clientes (" +
-                "id_cliente INTEGER PRIMARY KEY, " +
-                "nombre_cliente TEXT," +
+                "id_cliente TEXT PRIMARY KEY, " +
+                "nombre_cliente TEXT ," +
                 " apodo TEXT," +
                 " direccion TEXT," +
-                "fecha_registro TEXT," +
-                "saldo INTEGER," +
+                "fecha_registro TEXT, " +
+                "saldo INTEGER, " +
                 "puntos INTEGER)");
+        //Tabla Proveedores
+        db.execSQL("create table IF NOT EXISTS proveedores (" +
+                "id_proveedor INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "nombre_proveedor TEXT, " +
+                "nombre_vendedor TEXT, " +
+                "categoria TEXT, " +
+                "direccion TEXT, " +
+                "telefono TEXT, " +
+                "email TEXT, " +
+                "dias_visita TEXT, " +
+                "observaciones TEXT, " +
+                "fecha_registro TEXT, " +
+                "diasPago TEXT)");
+        //Tabla para el corte de caja
+        db.execSQL("create table IF NOT EXISTS cortes_cajas (" +
+                "id_corte INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "fecha_apertura TEXT, " +
+                "fecha_cierre TEXT, " +
+                "monto_inicial REAL, " +
+                "ventas_totales REAL, " +
+                "abonos_totales REAL, " +
+                "gastos_totales REAL, "  +
+                "dinero_en_caja REAL, " +
+                "diferencia REAL, " +
+                "estado TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(oldVersion<newVersion){
+        if(oldVersion<2){
             db.execSQL("ALTER TABLE detalles_venta ADD COLUMN precio_neto_historial INTEGER DEFAULT 0");
+        }
+        if (oldVersion<3){
+            db.execSQL("create table IF NOT EXISTS cortes_cajas (" +
+                    "id_corte INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "fecha_apertura TEXT, " +
+                    "fecha_cierre TEXT, " +
+                    "monto_inicial REAL, " +
+                    "ventas_totales REAL, " +
+                    "abonos_totales REAL, " +
+                    "gastos_totales REAL, "  +
+                    "dinero_en_caja REAL, " +
+                    "diferencia REAL, " +
+                    "estado TEXT)");
+        }
+        if (oldVersion<4){
+            db.execSQL("create table IF NOT EXISTS proveedores (" +
+                    "id_proveedor INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "nombre_proveedor TEXT, " +
+                    "nombre_vendedor TEXT, " +
+                    "categoria TEXT, " +
+                    "direccion TEXT, " +
+                    "telefono TEXT, " +
+                    "email TEXT, " +
+                    "dias_visita TEXT, " +
+                    "observaciones TEXT, " +
+                    "fecha_registro TEXT, " +
+                    "diasPago TEXT)");
         }
     }
     public static synchronized CloverBD getInstance(Context context) {

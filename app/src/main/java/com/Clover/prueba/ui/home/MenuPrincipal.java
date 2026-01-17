@@ -13,20 +13,21 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ControllerVentas;
+import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.ui.clientes.ClientesPrincipalView;
 import com.Clover.prueba.ui.historialventas.HistorialVentasView;
 import com.Clover.prueba.ui.productos.ProductosView;
 import com.Clover.prueba.ui.productos.ProductosActualizarStock;
+import com.Clover.prueba.ui.proveedores.ProveedorView;
 import com.Clover.prueba.ui.ventas.VentaView;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
-import com.Clover.prueba.data.controller.ControllerProducto;
+import com.Clover.prueba.data.dao.interfaces.IProducto;
 
 public class MenuPrincipal extends AppCompatActivity {
-    private ControllerVentas controllerVentas ;
-    private ControllerProducto controllerProductos ;
+    private IVentas iVentas;
+    private IProducto iProductos;
     private TextView co ;
 
     @Override
@@ -39,9 +40,9 @@ public class MenuPrincipal extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ControllerProducto controllerProducto = new ProductoDAO(this);
-        controllerVentas = new VentasDAO(this);
-        controllerProductos = new ProductoDAO(this);
+        IProducto iProducto = new ProductoDAO(this);
+        iVentas = new VentasDAO(this);
+        iProductos = new ProductoDAO(this);
         rellenarDatos();
 
     }
@@ -55,9 +56,9 @@ public class MenuPrincipal extends AppCompatActivity {
         Intent intent = new Intent(MenuPrincipal.this, ProductosView.class);
         startActivity(intent);
     }
-    //Accion Boton Precio Publico
-    public void onClickPrecioPublico(View v){
-        Intent intent = new Intent(MenuPrincipal.this, Precio_Publico.class);
+    //Accion Boton Proveedores
+    public void onClickProveedores(View v){
+        Intent intent = new Intent(MenuPrincipal.this, ProveedorView.class);
         startActivity(intent);
     }
     //Accion boton ventas
@@ -80,7 +81,7 @@ public class MenuPrincipal extends AppCompatActivity {
     private void rellenarDatos(){
 
         //Contador de ganancias
-        int gananciasTotales = controllerVentas.getGanancias();
+        int gananciasTotales = iVentas.getGanancias();
         String ganancia = "$ "+gananciasTotales;
         co = findViewById(R.id.unidadesTotalContador);
         co.setText(ganancia);
@@ -88,17 +89,17 @@ public class MenuPrincipal extends AppCompatActivity {
         else if (gananciasTotales<0) co.setTextColor(Color.parseColor("#FF0000"));
 
         //Producto mas vendido
-        String productoEstrella = controllerVentas.getProductoMasVendido();
+        String productoEstrella = iVentas.getProductoMasVendido();
         co = findViewById(R.id.vendidosTotalContador);
         co.setText(String.valueOf(productoEstrella));
 
         //contador de dinero en caja
-        int dineroEnCaja = controllerVentas.getVentasTotales();
+        int dineroEnCaja = iVentas.getVentasTotales();
         co = findViewById(R.id.productosTotalContador);
         co.setText(String.valueOf("$ "+dineroEnCaja));
 
         //Contador de stock bajo
-        int contadorStockBajos= controllerProductos.getStockBajo();
+        int contadorStockBajos= iProductos.getStockBajo();
         co = findViewById(R.id.stockTotalContador);
         if (contadorStockBajos>0) co.setTextColor(Color.parseColor("#FF0000"));
         else co.setTextColor(Color.parseColor("#008000"));

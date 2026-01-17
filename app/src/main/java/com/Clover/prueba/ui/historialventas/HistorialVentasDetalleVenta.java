@@ -18,16 +18,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.Clover.prueba.data.controller.ControllerClient;
+import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
-import com.Clover.prueba.data.controller.ControllerVentas;
+import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
 public class HistorialVentasDetalleVenta extends AppCompatActivity {
-    private ControllerVentas controllerVentas;
+    private IVentas iVentas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class HistorialVentasDetalleVenta extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        controllerVentas = new VentasDAO(this);
+        iVentas = new VentasDAO(this);
 
 
         Ventas venta = (Ventas) getIntent().getSerializableExtra("venta");
@@ -64,7 +64,7 @@ public class HistorialVentasDetalleVenta extends AppCompatActivity {
         hora.setText(String.valueOf(fechaHora.format(DateTimeFormatter.ofPattern("HH:mm"))));
         monto.setText(String.valueOf("$ "+venta.getMonto()));
         totalPiezas.setText(String.valueOf(venta.getTotal_piezas()));
-        ControllerClient controller = new ClientesDAO(this);
+        IClient controller = new ClientesDAO(this);
         Clientes cliente = controller.getClient(venta.getId_cliente());
         idCliente.setText(cliente.getNombre_cliente());
     }
@@ -74,7 +74,7 @@ public class HistorialVentasDetalleVenta extends AppCompatActivity {
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.hvD_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ArrayList<DetalleVenta> detalleVentas = controllerVentas.getDetalleVentas(venta.getId_venta());
+        ArrayList<DetalleVenta> detalleVentas = iVentas.getDetalleVentas(venta.getId_venta());
         adapter = new DetallesVentaAdapter(this, detalleVentas);
 
         recyclerView.setAdapter(adapter);

@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import com.Clover.prueba.data.controller.ControllerVentas;
+import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.database.CloverBD;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
-public class VentasDAO implements ControllerVentas {
+public class VentasDAO implements IVentas {
 
     private SQLiteDatabase db;
     public VentasDAO(Context context) {
@@ -208,7 +208,6 @@ public class VentasDAO implements ControllerVentas {
         String sql = "SELECT SUM(monto) FROM ventas WHERE fecha_Hora LIKE ?";
         String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         try (Cursor cursor = db.rawQuery(sql, new String[]{fechaHoy+"%"})){
-            db.rawQuery(sql, new String[]{fechaHoy+"%"});
             if (cursor.moveToFirst()) {
                 return cursor.getInt(0);
             }
