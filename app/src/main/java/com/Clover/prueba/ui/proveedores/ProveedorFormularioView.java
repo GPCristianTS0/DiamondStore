@@ -6,6 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -45,13 +46,20 @@ public class ProveedorFormularioView extends AppCompatActivity {
         if (proveedor!=null||getIntent().hasExtra("proveedor")  ) {
             Button bEliminar = findViewById(R.id.PrF_btnEliminar);
             rellenarEspacios(proveedor);
-            bEliminar.setOnClickListener(v -> {
-                if (controllerProveedores.deleteProveedor(proveedor.getId_proveedor())){
-                    finish();
-                    Toast.makeText(this, "Proveedor eliminado", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Error al eliminar proveedor", Toast.LENGTH_SHORT).show();
-                }
+            bEliminar.setOnClickListener(v -> {// Dentro del OnClickListener de tu botón eliminar
+                new AlertDialog.Builder(this)
+                        .setTitle("¿Eliminar Proveedor?")
+                        .setMessage("Esta acción no se puede deshacer. ¿Estás seguro?")
+                        .setPositiveButton("Sí, eliminar", (dialog, which) -> {
+                            if (controllerProveedores.deleteProveedor(proveedor.getId_proveedor())){
+                                finish();
+                                Toast.makeText(this, "Proveedor eliminado", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(this, "Error al eliminar proveedor", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", null) // No hace nada, solo cierra el diálogo
+                        .show();
             });
             btnAddOrEdit.setOnClickListener( v -> {
                 if (controllerProveedores.updateProveedor(proveedor, getInputedProveedor())){

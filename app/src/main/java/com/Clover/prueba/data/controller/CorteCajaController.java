@@ -32,18 +32,18 @@ public class CorteCajaController {
         double total = daoCorteCaja.getVentasTotalesCorte(corteCaja.getFecha_apertura());
         return corteCaja.getMonto_inicial() + abonos + total - gastos;
     }
-    public boolean cerrarTurno(double abonos, double gastos, double dineroEnCaja) {
+    public boolean cerrarTurno(double dineroEnCaja) {
         CorteCaja corteCaja = daoCorteCaja.getCorteActual();
         if (corteCaja == null) return false;
         String fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
         double total = daoCorteCaja.getVentasTotalesCorte(corteCaja.getFecha_apertura());
         corteCaja.setFecha_cierre(fechaHora);
         corteCaja.setVentas_totales(total);
-        corteCaja.setAbonos_totales(abonos);
-        corteCaja.setGastos_totales(gastos);
+        //corteCaja.setAbonos_totales(abonos);
+        //corteCaja.setGastos_totales(gastos);
         corteCaja.setDinero_en_caja(dineroEnCaja);
-        double esperado = corteCaja.getMonto_inicial() + abonos + total - gastos;
-        corteCaja.setDiferencia(dineroEnCaja - esperado);
+        //double esperado = corteCaja.getMonto_inicial() + abonos + total - gastos;
+        //corteCaja.setDiferencia(dineroEnCaja - esperado);
         corteCaja.setEstado(CERRADO_CONST);
         return daoCorteCaja.cerrarCorte(corteCaja);
     }

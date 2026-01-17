@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import com.Clover.prueba.data.dao.interfaces.IDeuda;
 import com.Clover.prueba.data.models.Deuda;
 
-public class DeudaDB extends SQLiteOpenHelper implements IDeuda {
+public class DeudaDAO extends SQLiteOpenHelper implements IDeuda {
     Context context;
-    public DeudaDB(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public DeudaDAO(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
         this.context = context;
     }

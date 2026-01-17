@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 5);
+        super(context, "Clover.db", null, 6);
     }
 
     @Override
@@ -82,6 +82,15 @@ public class CloverBD extends SQLiteOpenHelper{
                 "dinero_en_caja REAL, " +
                 "diferencia REAL, " +
                 "estado TEXT)");
+        //Tabla para Gastos
+        db.execSQL("create table IF NOT EXISTS gastos (" +
+                "id_gasto INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "descripcion TEXT," +
+                "monto REAL," +
+                "fecha_hora TEXT," +
+                "metodo_pago TEXT," +
+                "id_corte INTEGER," +
+                "id_proveedor INTEGER)");
     }
 
     @Override
@@ -115,6 +124,16 @@ public class CloverBD extends SQLiteOpenHelper{
                     "observaciones TEXT, " +
                     "fecha_registro TEXT, " +
                     "diasPago TEXT)");
+        }
+        if (oldVersion<6){
+            db.execSQL("create table IF NOT EXISTS gastos (" +
+                    "id_gasto INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "descripcion TEXT," +
+                    "monto REAL," +
+                    "fecha_hora TEXT," +
+                    "metodo_pago TEXT," +
+                    "id_corte INTEGER," +
+                    "id_proveedor INTEGER)");
         }
     }
     public static synchronized CloverBD getInstance(Context context) {

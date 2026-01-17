@@ -191,7 +191,7 @@
         android:textSize="25sp"
         app:backgroundTint="@android:color/transparent"
         app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gastobtn"
         app:layout_constraintEnd_toEndOf="@+id/historialVentasBtn"
         app:layout_constraintStart_toStartOf="@+id/historialVentasBtn"
         app:layout_constraintTop_toBottomOf="@id/historialVentasBtn"
@@ -220,7 +220,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/venderBtn"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
         android:allowClickWhenDisabled="true"
         android:forceDarkAllowed="false"
@@ -231,10 +231,10 @@
         android:textSize="25sp"
         app:backgroundTint="@android:color/transparent"
         app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/MP_cerrarCaja"
         app:layout_constraintEnd_toEndOf="@+id/clientesbtn"
-        app:layout_constraintStart_toStartOf="@+id/clientesbtn"
-        app:layout_constraintTop_toBottomOf="@id/clientesbtn"
-        app:layout_constraintBottom_toTopOf="@id/productosBtn"
+        app:layout_constraintTop_toTopOf="@+id/MP_cerrarCaja"
+        app:layout_constraintWidth_percent="0.5"
         app:strokeColor="#000000"
         app:strokeWidth="3dp" />
 
@@ -252,8 +252,8 @@
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@id/historialVentasBtn"
         app:layout_constraintEnd_toEndOf="@+id/venderBtn"
-        app:layout_constraintStart_toStartOf="@+id/venderBtn"
-        app:layout_constraintTop_toBottomOf="@id/venderBtn"
+        app:layout_constraintStart_toStartOf="@+id/MP_cerrarCaja"
+        app:layout_constraintTop_toBottomOf="@id/MP_cerrarCaja"
         app:strokeColor="#000000"
         app:strokeWidth="3dp" />
 
@@ -272,12 +272,12 @@
         android:textSize="25sp"
         app:backgroundTint="@android:color/transparent"
         app:cornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@id/venderBtn"
+        app:layout_constraintBottom_toTopOf="@id/MP_cerrarCaja"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@+id/stockLayoutB"
         app:strokeColor="#000000"
+
         app:strokeWidth="3dp" />
 
     <TextView
@@ -291,6 +291,74 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/gastobtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:allowClickWhenDisabled="false"
+        android:backgroundTint="@null"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="onClickGastosView"
+        android:text="@string/MP_btnGastosView"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        app:backgroundTint="@android:color/transparent"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/realizarGastoBtn"
+        app:layout_constraintStart_toStartOf="@+id/precioPublicoBtn"
+        app:layout_constraintTop_toBottomOf="@id/precioPublicoBtn"
+        app:layout_constraintWidth_percent="0.4"
+        app:strokeColor="#000000"
+        app:strokeWidth="3dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/realizarGastoBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:allowClickWhenDisabled="false"
+        android:backgroundTint="@null"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="onClickAgregarGasto"
+        android:text="@string/MP_btnRealizarGasto"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="23sp"
+        app:backgroundTint="@android:color/transparent"
+        app:cornerRadius="10dp"
+        app:layout_constraintWidth_percent="0.55"
+        app:layout_constraintBottom_toBottomOf="@+id/gastobtn"
+        app:layout_constraintEnd_toEndOf="@+id/precioPublicoBtn"
+        app:layout_constraintTop_toTopOf="@+id/gastobtn"
+        app:layout_constraintStart_toEndOf="@id/gastobtn"
+        app:strokeColor="#000000"
+        app:strokeWidth="3dp" />
+
+    <Button
+        android:id="@+id/MP_cerrarCaja"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:allowClickWhenDisabled="false"
+        android:backgroundTint="@null"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="onClickCerrarTurno"
+        android:text="@string/MP_cerrarCorte"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="21sp"
+        app:backgroundTint="@android:color/transparent"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/productosBtn"
+        app:layout_constraintStart_toStartOf="@+id/clientesbtn"
+        app:layout_constraintTop_toBottomOf="@+id/clientesbtn"
+        app:layout_constraintWidth_percent="0.42"
+        app:strokeColor="#000000"
+        app:strokeWidth="3dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

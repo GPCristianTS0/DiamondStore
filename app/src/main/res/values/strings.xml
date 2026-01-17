@@ -26,6 +26,9 @@
     <string name="MP_btnPrecioPublico">Precio Publico</string>
     <string name="MP_btnProductos">Productos</string>
     <string name="MP_btnClientes">Clientes</string>
+    <string name="MP_btnGastosView">Gastos</string>
+    <string name="MP_btnRealizarGasto">Agregar Gasto</string>
+    <string name="MP_cerrarCorte">Realizar Corte</string>
 
 
     <!--Deudas Formularo-->

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F5F5F5">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp">
+
+        <View
+            android:id="@+id/VCC_HeaderFondo"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="#1976D2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/VCC_TituloPrincipal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cierre de Turno"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/VCC_Subtitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verifica los montos antes de cerrar"
+            android:textColor="#BBDEFB"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/VCC_TituloPrincipal"
+            app:layout_constraintTop_toBottomOf="@id/VCC_TituloPrincipal" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/VCC_CardCaja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:layout_constraintTop_toBottomOf="@id/VCC_Subtitulo">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/VCC_TituloSeccionCaja"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BALANCE DE EFECTIVO"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.05"
+                    android:textColor="#757575"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/VCC_LabelFondo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fondo Inicial"
+                    android:textColor="#616161"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_TituloSeccionCaja"/>
+                <TextView
+                    android:id="@+id/VCC_ValorFondo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ $200.00"
+                    android:textStyle="bold"
+                    android:textColor="#1976D2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/VCC_LabelFondo"/>
+
+                <TextView
+                    android:id="@+id/VCC_LabelVentas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ventas (Efectivo)"
+                    android:textColor="#616161"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_LabelFondo"/>
+                <TextView
+                    android:id="@+id/VCC_ValorVentas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ $1,550.00"
+                    android:textStyle="bold"
+                    android:textColor="#388E3C"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/VCC_LabelVentas"/>
+
+                <TextView
+                    android:id="@+id/VCC_LabelAbonos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abonos / Créditos"
+                    android:textColor="#616161"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_LabelVentas"/>
+                <TextView
+                    android:id="@+id/VCC_ValorAbonos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ $250.00"
+                    android:textStyle="bold"
+                    android:textColor="#388E3C"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/VCC_LabelAbonos"/>
+
+                <TextView
+                    android:id="@+id/VCC_LabelGastos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gastos / Retiros"
+                    android:textColor="#616161"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_LabelAbonos"/>
+                <TextView
+                    android:id="@+id/VCC_ValorGastos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="- $500.00"
+                    android:textStyle="bold"
+                    android:textColor="#D32F2F"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/VCC_LabelGastos"/>
+
+                <View
+                    android:id="@+id/VCC_SeparadorResultados"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_LabelGastos"/>
+
+                <TextView
+                    android:id="@+id/VCC_LabelTotalEsperado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Debe haber en caja:"
+                    android:textSize="14sp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_SeparadorResultados"/>
+
+                <TextView
+                    android:id="@+id/VCC_ValorTotalSistema"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$1,500.00"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#212121"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/VCC_LabelTotalEsperado"
+                    app:layout_constraintBottom_toBottomOf="@id/VCC_LabelTotalEsperado"/>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/VCC_InputLayoutCaja"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    app:boxBackgroundColor="#F1F8E9"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxStrokeWidth="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_ValorTotalSistema">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/VCC_InputDineroFisico"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:textColor="#2E7D32"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/VCC_LabelDiferencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DIFERENCIA FINAL"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#9E9E9E"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_InputLayoutCaja"/>
+
+                <TextView
+                    android:id="@+id/VCC_ValorDiferencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    android:textColor="#9E9E9E"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_LabelDiferencia"/>
+
+                <TextView
+                    android:id="@+id/VCC_EstadoCaja"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Esperando conteo..."
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#9E9E9E"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_ValorDiferencia"/>
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Cuánto contaste físicamente?"
+                    app:layout_constraintBottom_toTopOf="@+id/VCC_InputLayoutCaja"
+                    app:layout_constraintStart_toStartOf="@+id/VCC_InputLayoutCaja" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/VCC_CardBanco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#F9F9F9"
+            app:layout_constraintTop_toBottomOf="@id/VCC_CardCaja">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/VCC_TituloSeccionBanco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MOVIMIENTOS DIGITALES (BANCO)"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#9E9E9E"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/VCC_LabelVentasTarjeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cobros con Tarjeta"
+                    android:textSize="13sp"
+                    android:textColor="#616161"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_TituloSeccionBanco"/>
+
+                <TextView
+                    android:id="@+id/VCC_ValorVentasTarjeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textStyle="bold"
+                    android:textColor="#424242"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/VCC_LabelVentasTarjeta"/>
+
+                <TextView
+                    android:id="@+id/VCC_LabelGastosTrans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gastos por Transferencia"
+                    android:textSize="13sp"
+                    android:textColor="#616161"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/VCC_LabelVentasTarjeta"/>
+
+                <TextView
+                    android:id="@+id/VCC_ValorGastosTrans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textStyle="bold"
+                    android:textColor="#424242"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/VCC_LabelGastosTrans"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/VCC_BtnCerrarTurno"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Confirmar y Cerrar Turno"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#263238"
+            app:cornerRadius="12dp"
+            app:icon="@android:drawable/ic_lock_power_off"
+            app:iconGravity="textStart"
+            app:layout_constraintTop_toBottomOf="@id/VCC_CardBanco"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/VCC_NotaFinal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Al cerrar, se generará el reporte final y se cerrará la sesión."
+            android:textSize="11sp"
+            android:textColor="#9E9E9E"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="32dp"
+            app:layout_constraintTop_toBottomOf="@id/VCC_BtnCerrarTurno"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

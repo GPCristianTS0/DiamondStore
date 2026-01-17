@@ -102,7 +102,7 @@ public class ProveedoresDAO implements IProveedores {
     }
 
     @Override
-    public int getProveedorId(String nombre_proveedor) {
+    public int getIdProveedor(String nombre_proveedor) {
         String sql = "SELECT id_proveedor FROM proveedores WHERE nombre_proveedor=?";
         try (Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(nombre_proveedor)})) {
             if (cursor.moveToFirst()) {

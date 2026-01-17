@@ -16,6 +16,8 @@ import com.Clover.prueba.R;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.ui.clientes.ClientesPrincipalView;
+import com.Clover.prueba.ui.gastos.GastoFormulario;
+import com.Clover.prueba.ui.gastos.GastosDialog;
 import com.Clover.prueba.ui.historialventas.HistorialVentasView;
 import com.Clover.prueba.ui.productos.ProductosView;
 import com.Clover.prueba.ui.productos.ProductosActualizarStock;
@@ -24,6 +26,7 @@ import com.Clover.prueba.ui.ventas.VentaView;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
+import com.Clover.prueba.ui.ventas.VentasCerrarCorte;
 
 public class MenuPrincipal extends AppCompatActivity {
     private IVentas iVentas;
@@ -75,6 +78,21 @@ public class MenuPrincipal extends AppCompatActivity {
     //Accion boton actualizar stock
     public void onClickActualizarStock(View v){
         Intent intent = new Intent(MenuPrincipal.this, ProductosActualizarStock.class);
+        startActivity(intent);
+    }
+    //Accion boton Gastos
+    public void onClickGastosView(View v){
+        GastosDialog dialog = new GastosDialog();
+        dialog.show(getSupportFragmentManager(), "dialog");
+    }
+    //Accion para boton Agregar Gasto
+    public void onClickAgregarGasto(View v){
+        GastoFormulario dialog = new GastoFormulario();
+        dialog.show(getSupportFragmentManager(), "dialog");
+    }
+    //Accion cerrar turno
+    public void onClickCerrarTurno(View v){
+        Intent intent = new Intent(MenuPrincipal.this, VentasCerrarCorte.class);
         startActivity(intent);
     }
     //Rellenado de datos de los productos
