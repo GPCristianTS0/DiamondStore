@@ -39,9 +39,20 @@ public class ProveedorFormularioView extends AppCompatActivity {
              }
             finish();
         });
+        //Accion Boton Eliminar
+
         Proveedor proveedor = (Proveedor) getIntent().getSerializableExtra("proveedor");
         if (proveedor!=null||getIntent().hasExtra("proveedor")  ) {
+            Button bEliminar = findViewById(R.id.PrF_btnEliminar);
             rellenarEspacios(proveedor);
+            bEliminar.setOnClickListener(v -> {
+                if (controllerProveedores.deleteProveedor(proveedor.getId_proveedor())){
+                    finish();
+                    Toast.makeText(this, "Proveedor eliminado", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Error al eliminar proveedor", Toast.LENGTH_SHORT).show();
+                }
+            });
             btnAddOrEdit.setOnClickListener( v -> {
                 if (controllerProveedores.updateProveedor(proveedor, getInputedProveedor())){
                     finish();
@@ -75,6 +86,8 @@ public class ProveedorFormularioView extends AppCompatActivity {
         t.setText("Actualizar Proveedor");
         Button b = findViewById(R.id.button8);
         b.setText("Actualizar");
+        b = findViewById(R.id.PrF_btnEliminar);
+        b.setVisibility(TextView.VISIBLE);
     }
     private Proveedor getInputedProveedor(){
         Proveedor proveedor = new Proveedor();

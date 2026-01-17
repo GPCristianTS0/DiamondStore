@@ -32,8 +32,8 @@ public class ProveedoresController {
         Log.i("Clover_App", "Proveedor: " + proveedor.toString());
         return proveedoresDAO.updateProveedor(proveedorOld, proveedor);
     }
-    public boolean deleteProveedor(String id_proveedor){
-        return false;
+    public boolean deleteProveedor(int id_proveedor){
+        return proveedoresDAO.deleteProveedor(id_proveedor);
     }
     public ArrayList<Proveedor> getProveedoresBy(String columna, String valor){
         return proveedoresDAO.getProveedor(columna, valor);
