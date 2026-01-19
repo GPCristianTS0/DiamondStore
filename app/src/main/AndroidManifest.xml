@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
         <activity
+            android:name=".ConfigNegocioView"
+            android:exported="false" />
+        <activity
+            android:name=".ui.config.ConfigView"
+            android:exported="false" />
+        <activity
             android:name=".ui.ventas.VentasCerrarCorte"
             android:exported="false" />
         <activity

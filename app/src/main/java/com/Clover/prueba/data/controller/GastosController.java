@@ -78,5 +78,7 @@ public class GastosController {
         }
         return "Prov. Desconocido (ID " + id_proveedor + ")";
     }
-
+    public double getMontoTotalGastos(){
+        return gastosDAO.getMontoTotalGastos();
+    }
 }

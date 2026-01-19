@@ -1,6 +1,9 @@
 package com.Clover.prueba.ui.clientes;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -23,6 +27,8 @@ import com.Clover.prueba.R;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +82,48 @@ public class ClientesPrincipalView extends AppCompatActivity {
                 Intent intent = new Intent( ClientesPrincipalView.this, ClientesFormulario.class);
                 intent.putExtra("cliente", cliente);
                 startActivity(intent);
+            }
+
+            @Override
+            public void OnWhatsappClick(String numero, int position) {
+                numero = numero.replace("+", "").replace(" ", "");
+                if (numero.length() == 10) {
+                    numero = "52" + numero; // Agregamos lada México
+                }
+
+                try {
+                    // B. Codificar mensaje para URL (espacios a %20, etc.)
+                    String url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + URLEncoder.encode("", "UTF-8");
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+
+                    // C. INTENTO 1: WhatsApp Business
+                    intent.setPackage("com.whatsapp.w4b");
+                    startActivity(intent);
+
+                } catch (ActivityNotFoundException e) {
+                    // D. FALLBACK: Si falla Business, intentamos WhatsApp Normal
+                    try {
+                        String url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + URLEncoder.encode("", "UTF-8");
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(url));
+
+                        intent.setPackage("com.whatsapp"); // WhatsApp Normal
+                        startActivity(intent);
+
+                    } catch (Exception e2) {
+                        // E. ERROR: No tiene ninguno instalado
+                        Toast.makeText(null, "No tienes WhatsApp instalado", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void OnLlamarClick(String numero, int position) {
+
             }
         });
         recyclerView.setAdapter(adapter);

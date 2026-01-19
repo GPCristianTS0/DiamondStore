@@ -234,6 +234,8 @@ public class VentaView extends AppCompatActivity {
                 totallbl.setText(String.valueOf("Total:$ 0"));
                 codetxt.setText("");
                 vi.setText("Nombre Cliente");
+                getSupportFragmentManager().popBackStack();
+                fragmentContainer.setVisibility(INVISIBLE);
             }
         });
         frament.setVentaConfirmada(new DialogFragmentVentas.ventaConfirmada(){
@@ -252,6 +254,9 @@ public class VentaView extends AppCompatActivity {
             @Override
             public void vaciarCarrito() {
                 modelVentas.vaciarCarrito();
+                adapter.notifyDataSetChanged();
+                getSupportFragmentManager().popBackStack();
+                fragmentContainer.setVisibility(INVISIBLE);
             }
         });
     }
@@ -270,6 +275,8 @@ public class VentaView extends AppCompatActivity {
             @Override
             public void onProductoSeleccionado(Productos producto) {
                 agregarAlCarrito(producto.getId());
+                getSupportFragmentManager().popBackStack();
+                fragmentContainer.setVisibility(INVISIBLE);
             }
         });
     }

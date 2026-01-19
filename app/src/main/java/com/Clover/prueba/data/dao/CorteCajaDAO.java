@@ -52,8 +52,10 @@ public class CorteCajaDAO implements ICorteCaja {
     @Override
     public double getVentasTotalesCorte(String fechaHora) {
         String sql = "SELECT SUM(monto) FROM ventas WHERE fecha_Hora >= ?";
+        Log.d("Clover_App", "fechaHora: " + fechaHora);
         try (Cursor cursor = db.rawQuery(sql, new String[]{fechaHora})){
             if (cursor.moveToFirst()) {
+                Log.d("Clover_App", "Ventas totales: " + cursor.getDouble(0));
                 return cursor.getDouble(0);
             }
         } catch (Exception e) {

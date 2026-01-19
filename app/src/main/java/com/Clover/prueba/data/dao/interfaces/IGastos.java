@@ -8,7 +8,9 @@ public interface IGastos {
     public boolean addGasto(Gastos gasto);
     public boolean deleteGasto(int gasto);
     public ArrayList<Gastos> getGastosBy(String columna, String valor);
-    public ArrayList<Gastos> getGastosByCorte(int id_corte);
-    public double sumarTotalGastosByCorte(int id_corte);
 
+    public double getMontoTotalGastos();
+
+    public ArrayList<Gastos> getGastosByCorte(int id_corte);
+    public double sumarTotalGastosByCorte(int id_corte, String metodoPago);
 }

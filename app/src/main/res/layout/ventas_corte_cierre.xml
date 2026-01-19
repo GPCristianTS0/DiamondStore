@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:id="@+id/main"
     android:background="#F5F5F5">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -328,7 +329,8 @@
             android:text="Confirmar y Cerrar Turno"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:backgroundTint="#263238"
+            android:textColor="@color/white"
+            android:backgroundTint="#008BDE"
             app:cornerRadius="12dp"
             app:icon="@android:drawable/ic_lock_power_off"
             app:iconGravity="textStart"

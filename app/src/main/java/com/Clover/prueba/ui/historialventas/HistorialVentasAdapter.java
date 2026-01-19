@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +64,7 @@ public class HistorialVentasAdapter extends RecyclerView.Adapter<HistorialVentas
         TextView fecha_hora;
         TextView monto;
         TextView total_piezas;
-        ConstraintLayout c;
+        CardView c;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

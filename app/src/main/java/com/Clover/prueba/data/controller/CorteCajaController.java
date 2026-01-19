@@ -1,9 +1,12 @@
 package com.Clover.prueba.data.controller;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.Clover.prueba.data.dao.CorteCajaDAO;
+import com.Clover.prueba.data.dao.GastosDAO;
 import com.Clover.prueba.data.dao.interfaces.ICorteCaja;
+import com.Clover.prueba.data.dao.interfaces.IGastos;
 import com.Clover.prueba.data.models.CorteCaja;
 
 import java.text.SimpleDateFormat;
@@ -14,42 +17,51 @@ public class CorteCajaController {
     private final String ABIERTO_CONST = "Abierto";
     private final String CERRADO_CONST = "Cerrado";
     private final ICorteCaja daoCorteCaja ;
+    private final IGastos gastosDAO;
+    private CorteCaja corteCaja;
+
     public CorteCajaController(Context context) {
         daoCorteCaja = new CorteCajaDAO(context);
+        gastosDAO = new GastosDAO(context);
     }
 
-    public boolean iniciarTurno(double montoInicial) {
+    public void iniciarTurno(double montoInicial) {
         CorteCaja corteCaja = new CorteCaja();
         corteCaja.setMonto_inicial(montoInicial);
         String fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
         corteCaja.setFecha_apertura(fechaHora);
         corteCaja.setEstado(ABIERTO_CONST);
-        return daoCorteCaja.iniciarCorte(corteCaja);
-    }
-    public double calcularDineroEsperado(double abonos, double gastos){
-        CorteCaja corteCaja = daoCorteCaja.getCorteActual();
-        if (corteCaja == null) return 0;
-        double total = daoCorteCaja.getVentasTotalesCorte(corteCaja.getFecha_apertura());
-        return corteCaja.getMonto_inicial() + abonos + total - gastos;
+        daoCorteCaja.iniciarCorte(corteCaja);
     }
     public boolean cerrarTurno(double dineroEnCaja) {
-        CorteCaja corteCaja = daoCorteCaja.getCorteActual();
-        if (corteCaja == null) return false;
         String fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-        double total = daoCorteCaja.getVentasTotalesCorte(corteCaja.getFecha_apertura());
         corteCaja.setFecha_cierre(fechaHora);
-        corteCaja.setVentas_totales(total);
-        //corteCaja.setAbonos_totales(abonos);
-        //corteCaja.setGastos_totales(gastos);
         corteCaja.setDinero_en_caja(dineroEnCaja);
-        //double esperado = corteCaja.getMonto_inicial() + abonos + total - gastos;
-        //corteCaja.setDiferencia(dineroEnCaja - esperado);
         corteCaja.setEstado(CERRADO_CONST);
         return daoCorteCaja.cerrarCorte(corteCaja);
     }
+    public CorteCaja getCorteActual() {
+        corteCaja = daoCorteCaja.getCorteActual();
+        corteCaja.setVentas_totales(daoCorteCaja.getVentasTotalesCorte(corteCaja.getFecha_apertura()));
+        Log.d("Clover_App", "Corte actuajl: " + corteCaja.getFecha_apertura());
 
+        double d = gastosDAO.sumarTotalGastosByCorte(corteCaja.getId_corte(), "Efectivo");
+        corteCaja.setGastos_totales(d);
+        double esperado = corteCaja.getMonto_inicial() + corteCaja.getVentas_totales() + corteCaja.getAbonos_totales() - d;
+        corteCaja.setDinero_en_caja(esperado);
+        Log.d("Clover_App", "Corte actual: " + corteCaja.toString());
+        return corteCaja;
+    }
+    public double getVentasTotalesCorte(int id, String metodoPago) {
+        return gastosDAO.sumarTotalGastosByCorte(id, metodoPago);
+    }
+    public double calcularDiferencia(double dineroEnCaja) {
+        return dineroEnCaja - corteCaja.getDinero_en_caja();
+    }
     public boolean isCorteAbierto() {
         return daoCorteCaja.getEstadoCorte();
     }
-
+    public void setDiferencia(double diferencia) {
+        corteCaja.setDiferencia(diferencia);
+    }
 }

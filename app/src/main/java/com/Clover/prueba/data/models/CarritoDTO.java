@@ -120,7 +120,7 @@ public class CarritoDTO {
         venta.setMonto(total);
         venta.setTotal_piezas(totalpiezas());
         venta.setTipo_pago(tipoPago);
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault());
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String fecha = LocalDateTime.now().format(format);
         venta.setFecha_hora(fecha);
         //Agregar venta

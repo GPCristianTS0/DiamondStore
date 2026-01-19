@@ -50,11 +50,14 @@ public class GastosDialog extends DialogFragment {
                 view.animate().translationY(0).setDuration(200).start();
             }
         });
+        total = view.findViewById(R.id.GP_TotalFinal);
         controllerGastos = new GastosController(getContext());
         controllerGastos.prepararDatosSpinner();
         rellenarTabla(controllerGastos.getGastos("", ""), view);
+        total.setText(String.format("$%.2f", controllerGastos.getMontoTotalGastos()));
         return view;
     }
+    private TextView total;
     private void rellenarTabla(ArrayList<Gastos> gastos, View v){
         GastosViewAdapter adapter;
         RecyclerView recyclerView = v.findViewById(R.id.rvHistorialGastos);
@@ -88,6 +91,8 @@ public class GastosDialog extends DialogFragment {
         valProveedor.setText(controllerGastos.getNombresProveedorById(gasto.getId_proveedor()));
         valDesc.setText(gasto.getDescripcion());
 
+
+
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
         builder.setView(view);
         final android.app.AlertDialog dialog = builder.create();
@@ -102,6 +107,7 @@ public class GastosDialog extends DialogFragment {
                     .setPositiveButton("Sí", (d, w) -> {
                         if (controllerGastos.deleteGasto(gasto.getId_gasto())){
                             rellenarTabla(controllerGastos.getGastos("",""), getView());
+                            total.setText(String.format("$%.2f", controllerGastos.getMontoTotalGastos()));
                             dialog.dismiss();
                             Toast.makeText(getContext(), "Gasto eliminado", Toast.LENGTH_SHORT).show();
 

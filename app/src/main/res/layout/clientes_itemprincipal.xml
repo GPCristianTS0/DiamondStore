@@ -1,48 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#A9A9A9"
-    android:layout_marginBottom="2dp"
-    android:layout_width="match_parent"
     android:id="@+id/CP_item"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#FFFFFF"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
-    <TextView
-        android:id="@+id/CP_item_id"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginStart="5dp"
-        android:text="6182345959"
-        android:textColor="#000000"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/CP_item_nombre"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="12dp">
 
-    <TextView
-        android:id="@+id/CP_item_nombre"
-        android:layout_width="167dp"
-        android:layout_height="17dp"
-        android:text="Cristian Uriel Tobar Santillan"
-        android:textColor="#000000"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/CP_item_id" />
+        <View
+            android:id="@+id/bgAvatar"
+            android:layout_width="48dp"
+            android:background="@drawable/redondear_esquinas"
+            android:layout_height="48dp"
+            android:backgroundTint="#E3F2FD"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/CP_item_saldo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-$100"
-        android:textColor="#000000"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/CP_item_nombre"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/iconAvatar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:text="C"
+            android:gravity="center"
+            app:tint="#1565C0"
+            app:layout_constraintStart_toStartOf="@id/bgAvatar"
+            app:layout_constraintEnd_toEndOf="@id/bgAvatar"
+            app:layout_constraintTop_toTopOf="@id/bgAvatar"
+            app:layout_constraintBottom_toBottomOf="@id/bgAvatar" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/CP_item_apodo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            tools:text="El Nonis"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#1976D2"
+            app:layout_constraintStart_toEndOf="@+id/bgAvatar"
+            app:layout_constraintEnd_toStartOf="@+id/CP_item_saldo"
+            app:layout_constraintTop_toTopOf="@+id/bgAvatar" />
+
+        <TextView
+            android:id="@+id/CP_item_nombre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Cristian Uriel Tobar"
+            android:textSize="12sp"
+            android:textColor="#757575"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="@+id/CP_item_apodo"
+            app:layout_constraintEnd_toStartOf="@+id/CP_item_saldo"
+            app:layout_constraintTop_toBottomOf="@+id/CP_item_apodo" />
+
+        <TextView
+            android:id="@+id/CP_item_saldo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="-$1,250"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#D32F2F"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lblSaldo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saldo"
+            android:textSize="10sp"
+            android:textColor="#9E9E9E"
+            app:layout_constraintEnd_toEndOf="@+id/CP_item_saldo"
+            app:layout_constraintTop_toBottomOf="@+id/CP_item_saldo"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/button_border"
+            android:backgroundTint="#FFF3E0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblSaldo">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                app:srcCompat="@android:drawable/btn_star_big_on"
+                app:tint="#FF9800" />
+
+            <TextView
+                android:id="@+id/CP_item_puntos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="#E65100"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="350 pts" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/dividerItem"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#F5F5F5"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            tools:layout_editor_absoluteX="12dp" />
+
+        <TextView
+            android:id="@+id/CP_item_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            tools:text="618-123-4567"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#424242"
+            app:drawableStartCompat="@android:drawable/sym_action_call"
+            android:drawablePadding="6dp"
+            app:drawableTint="#757575"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerItem" />
+
+        <TextView
+            android:id="@+id/CP_item_direccion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:minLines="3"
+            android:maxLines="4"
+            android:breakStrategy="simple"
+            tools:text="Av. Tecnológico #200"
+            android:textSize="11sp"
+            android:textColor="#9E9E9E"
+            android:ellipsize="end"
+            app:drawableStartCompat="@android:drawable/ic_dialog_map"
+            android:drawablePadding="6dp"
+            app:drawableTint="#9E9E9E"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/CP_item_btnWhatsApp"
+            app:layout_constraintTop_toBottomOf="@+id/CP_item_id" />
+
+        <ImageButton
+            android:id="@+id/CP_item_btnWhatsApp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:backgroundTint="#4CAF50"
+            android:src="@android:drawable/stat_notify_chat"
+            android:clickable="true"
+            android:focusable="true"
+            app:tint="#FFFFFF"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/CP_item_btnLlamar"
+            app:layout_constraintTop_toBottomOf="@+id/dividerItem" />
+
+        <ImageButton
+            android:id="@+id/CP_item_btnLlamar"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:backgroundTint="#2196F3"
+            android:src="@android:drawable/ic_menu_call"
+            android:clickable="true"
+            android:focusable="true"
+            app:tint="#FFFFFF"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerItem" />
+
+        <TextView
+            android:id="@+id/CP_item_fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

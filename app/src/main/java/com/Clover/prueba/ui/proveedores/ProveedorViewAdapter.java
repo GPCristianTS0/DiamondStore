@@ -76,7 +76,7 @@ public class ProveedorViewAdapter extends RecyclerView.Adapter<ProveedorViewAdap
             txtNombreEmpresa = itemView.findViewById(R.id.PrVItem_NombreEmpresa);
             txtDetalles = itemView.findViewById(R.id.PrVItem_Detalles);
             txtDiaVisita = itemView.findViewById(R.id.PrVItem_DiaVisita);
-            btnLlamar = itemView.findViewById(R.id.btnLlamar);
+            btnLlamar = itemView.findViewById(R.id.CP_item_btnLlamar);
             btnWhatsapp = itemView.findViewById(R.id.btnWhatsapp);
             contenedor = itemView.findViewById(R.id.PrVItemContener);
         }

@@ -50,18 +50,32 @@ public class HistorialVentasDetalleVenta extends AppCompatActivity {
 
     }
     private void rellenarInformacion(Ventas venta){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault());
-        String fechaf = venta.getFecha_hora();
-        LocalDateTime fechaHora = LocalDateTime.parse(fechaf, formatter);
-
         TextView fecha,hora, monto, totalPiezas, idCliente;
         fecha = findViewById(R.id.ticketL_fechaOut);
         hora = findViewById(R.id.ticketL_horaOut);
+        try {
+            String fechaf = venta.getFecha_hora();
+            DateTimeFormatter inputFormatter;
+            if (fechaf.length() > 16) {
+                inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            } else {
+                inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault());
+            }
+
+            LocalDateTime fechaHora = LocalDateTime.parse(fechaf, inputFormatter);
+
+            fecha.setText(fechaHora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            hora.setText(fechaHora.format(DateTimeFormatter.ofPattern("HH:mm")));
+
+        } catch (Exception e) {
+            fecha.setText(venta.getFecha_hora());
+            hora.setText("--:--");
+            e.printStackTrace();
+        }
+
         monto = findViewById(R.id.ticket_TotalOut);
         totalPiezas = findViewById(R.id.ticketL_noArticulos);
         idCliente = findViewById(R.id.ticketL_apodoClienteOut);
-        fecha.setText(String.valueOf(fechaHora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
-        hora.setText(String.valueOf(fechaHora.format(DateTimeFormatter.ofPattern("HH:mm"))));
         monto.setText(String.valueOf("$ "+venta.getMonto()));
         totalPiezas.setText(String.valueOf(venta.getTotal_piezas()));
         IClient controller = new ClientesDAO(this);

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,7 +66,7 @@ public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdap
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtPrecio, txtCodigo, txtNombre, txtMarca, txtSeccion;
-        ConstraintLayout c;
+        CardView c;
         ImageView imagen;
         public ViewHolder(View itemView) {
             super(itemView);

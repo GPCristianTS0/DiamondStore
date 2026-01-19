@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.data.controller.CorteCajaController;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.ui.clientes.ClientesPrincipalView;
@@ -92,8 +94,13 @@ public class MenuPrincipal extends AppCompatActivity {
     }
     //Accion cerrar turno
     public void onClickCerrarTurno(View v){
-        Intent intent = new Intent(MenuPrincipal.this, VentasCerrarCorte.class);
-        startActivity(intent);
+        CorteCajaController corteCajaController = new CorteCajaController(this);
+        if (corteCajaController.isCorteAbierto()){
+            Intent intent = new Intent(MenuPrincipal.this, VentasCerrarCorte.class);
+            startActivity(intent);
+        }else {
+            Toast.makeText(this, "No hay un turno abierto", Toast.LENGTH_SHORT).show();
+        }
     }
     //Rellenado de datos de los productos
     private void rellenarDatos(){

@@ -1,97 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemproductos"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#FFFFFF"
+    android:clickable="true"
+    android:focusable="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/itemproductos"
-            android:layout_width="180dp"
-            android:layout_height="110dp"
-            android:background="@drawable/redondear_esquinas"
-            android:backgroundTint="#E7E7E7"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
 
-                <TextView
-                    android:id="@+id/nombretxt"
-                    android:layout_width="90dp"
-                    android:layout_height="20dp"
-                    android:gravity="center"
-                    android:textColor="#000000"
-                    android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.583"
-                    app:layout_constraintStart_toEndOf="@+id/imageItemProducto"
-                    app:layout_constraintTop_toBottomOf="@+id/marcaItemProducto"
-                    app:layout_constraintVertical_bias="0.152" />
-
-                <TextView
-                    android:id="@+id/preciotxt"
-                    android:layout_width="46dp"
-                    android:layout_height="21dp"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/codigoBarralbl"
-                    app:layout_constraintTop_toBottomOf="@+id/nombretxt" />
-
-                <TextView
-                    android:id="@+id/codigoBarralbl"
-                    android:layout_width="84dp"
-                    android:layout_height="15dp"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardImageContainer"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#F5F5F5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageItemProducto"
-                    app:layout_constraintVertical_bias="0.458" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imageItemProducto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:padding="2dp"
+                            app:srcCompat="@drawable/agregar_imgaen" />
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/secciontxt"
-                    android:layout_width="65dp"
-                    android:layout_height="13dp"
-                    android:text="Maquillaje"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    android:textSize="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="MAQUILLAJE"
+                    android:textSize="9sp"
+                    android:textColor="#1976D2"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/cardImageContainer"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageItemProducto"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/marcaItemProducto"
-                    android:layout_width="47dp"
-                    android:layout_height="15dp"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="Samsung"
-                    android:textColor="#000000"
-                    android:textSize="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="Samsung"
+                    android:textSize="9sp"
+                    android:textColor="#9E9E9E"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/cardImageContainer"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.6"
-                    app:layout_constraintStart_toEndOf="@+id/imageItemProducto"
                     app:layout_constraintTop_toBottomOf="@+id/secciontxt" />
 
-                <ImageView
-                    android:id="@+id/imageItemProducto"
-                    android:layout_width="66dp"
-                    android:layout_height="59dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/agregar_imgaen" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/nombretxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="Galaxy A10s"
+                    android:textColor="#333333"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toEndOf="@+id/cardImageContainer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/marcaItemProducto" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/codigoBarralbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="123456"
+                    android:textSize="8sp"
+                    android:textColor="#BDBDBD"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/cardImageContainer"
+                    app:layout_constraintEnd_toStartOf="@+id/preciotxt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nombretxt"
+                    app:layout_constraintVertical_bias="1.0"/>
+
+                <TextView
+                    android:id="@+id/preciotxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="$1,200"
+                    android:textColor="#2E7D32"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nombretxt"
+                    app:layout_constraintVertical_bias="1.0"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -3,204 +3,234 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".ui.ventas.VentaView">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardHeader"
         android:layout_width="match_parent"
-        android:layout_height="87dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/button_border"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="67dp"
-            android:layout_height="37dp"
-            android:text="@string/titleVentaView"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/noArticulosCount"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.49" />
-
-        <TextView
-            android:id="@+id/noArticuloslbl"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/VV_noArticuloslbl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="16dp"
+            android:background="@android:color/white">
 
-        <TextView
-            android:id="@+id/noArticulosCount"
-            android:layout_width="34dp"
-            android:layout_height="19dp"
-            android:layout_marginTop="40dp"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toStartOf="@+id/noArticuloslbl"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/titleVentaView"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="36dp"
-            app:layout_constraintEnd_toStartOf="@+id/noArticulosCount"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/articulos_icon" />
+            <TextView
+                android:id="@+id/VV_clienteNombre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Cliente General"
+                android:textColor="#757575"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView9"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
-        <TextView
-            android:id="@+id/VV_clienteNombre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nombre Cliente"
-            app:layout_constraintEnd_toStartOf="@+id/noArticulosCount"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/articulos_icon"
+                app:tint="#1976D2"
+                app:layout_constraintEnd_toStartOf="@+id/noArticulosCount"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/noArticulosCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#1976D2"
+                app:layout_constraintEnd_toStartOf="@+id/noArticuloslbl"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="4dp"/>
+
+            <TextView
+                android:id="@+id/noArticuloslbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/VV_noArticuloslbl"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/noArticulosCount"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerProductosView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.715"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:paddingHorizontal="12dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/cardHeader"
+        app:layout_constraintBottom_toTopOf="@+id/escanerVentasLayout"
+        tools:listitem="@android:layout/simple_list_item_1"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/escanerVentasLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/black"
-        android:padding="5dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="16dp"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.18"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.3">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
+        <LinearLayout
+            android:id="@+id/rowCliente"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.7"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <Button
-                android:id="@+id/pagarbtn"
-                android:layout_width="158dp"
-                android:layout_height="45dp"
-                android:onClick="onClickPagar"
-                android:text="@string/VV_btnPagar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/totallbl"
-                app:layout_constraintStart_toStartOf="@+id/totallbl"
-                app:layout_constraintTop_toBottomOf="@+id/totallbl" />
-
-            <TextView
-                android:id="@+id/totallbl"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"
-                android:text="Total: $ 0"
-                android:textAlignment="center"
-                android:textSize="19sp"
-                app:layout_constraintBottom_toBottomOf="@+id/escanertxt"
-                app:layout_constraintEnd_toStartOf="@+id/escanertxt"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/escanertxt" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/escanertxt"
-                android:layout_width="171dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="16dp"
-                android:hint="Codigo"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:textAlignment="center"
-                android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.193" />
-
-            <Button
-                android:id="@+id/escanerBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="@string/VV_btnEscaner"
-                android:onClick="onClickEscanner"
-                app:layout_constraintBottom_toBottomOf="@+id/pagarbtn"
-                app:layout_constraintEnd_toEndOf="@+id/escanertxt"
-                app:layout_constraintStart_toStartOf="@+id/escanertxt"
-                app:layout_constraintTop_toTopOf="@+id/pagarbtn" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="start"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.3"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/VV_btnBuscarProducto"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/VV_btnBuscarProducto"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content"
+                android:text="Buscar Prod."
+                android:textSize="10sp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginEnd="8dp"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/VV_clienteNombreTxt"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:hint="Ingresar Cliente"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button5"
-                app:layout_constraintStart_toEndOf="@+id/VV_btnBuscarProducto"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.58" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                android:hint="Cliente">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/VV_clienteNombreTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:paddingVertical="10dp"
+                    android:imeOptions="actionDone"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/button5"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/eliminar_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:backgroundTint="#F44336"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"/>
+        </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@+id/rowCliente">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Código manual"
+                app:boxBackgroundColor="#FAFAFA">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/escanertxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/escanerBtn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="8dp"
+                app:icon="@android:drawable/ic_menu_camera"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                android:backgroundTint="#37474F"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:cornerRadius="12dp"
+                android:onClick="onClickEscanner"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"/>
+
+        <TextView
+            android:id="@+id/totallbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: $0.00"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+            android:id="@+id/pagarbtn"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:text="@string/VV_btnPagar"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#2E7D32"
+            app:cornerRadius="8dp"
+            android:onClick="onClickPagar"
+            android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/totallbl"
+            app:layout_constraintTop_toBottomOf="@+id/divider"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -208,15 +238,10 @@
         android:id="@+id/fragment_container_view_tag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="20dp"
+        android:background="#80000000"
         android:clickable="true"
         android:focusable="true"
-        android:textAlignment="center"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
+        android:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

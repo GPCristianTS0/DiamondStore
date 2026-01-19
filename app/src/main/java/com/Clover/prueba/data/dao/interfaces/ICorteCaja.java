@@ -10,6 +10,5 @@ public interface ICorteCaja {
 
     public boolean getEstadoCorte();
     public CorteCaja getCorteActual();
-
     public void vaciarTabla();
 }
