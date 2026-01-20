@@ -18,6 +18,7 @@ import com.Clover.prueba.data.controller.CorteCajaController;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.ui.clientes.ClientesPrincipalView;
+import com.Clover.prueba.ui.config.ConfigView;
 import com.Clover.prueba.ui.gastos.GastoFormulario;
 import com.Clover.prueba.ui.gastos.GastosDialog;
 import com.Clover.prueba.ui.historialventas.HistorialVentasView;
@@ -101,6 +102,11 @@ public class MenuPrincipal extends AppCompatActivity {
         }else {
             Toast.makeText(this, "No hay un turno abierto", Toast.LENGTH_SHORT).show();
         }
+    }
+    //Accion boton configuracion
+    public void onClickConfiguracion(View v){
+        Intent intent = new Intent(MenuPrincipal.this, ConfigView.class);
+        startActivity(intent);
     }
     //Rellenado de datos de los productos
     private void rellenarDatos(){

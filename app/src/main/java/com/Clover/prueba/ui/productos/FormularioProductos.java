@@ -263,7 +263,7 @@ public class FormularioProductos extends AppCompatActivity {
         return utils.guardarImagen(uriImagen);
     }
 
-    //Elimiinar Producto Funcion
+    //Eliminar Producto Funcion
     private void deleteProduct(){
         Productos producto = getProductoOfInputs();
         Log.e("Clover_App", "deleteProduct: "+producto.toString());

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 6);
+        super(context, "Clover.db", null, 7);
     }
 
     @Override
@@ -91,6 +91,27 @@ public class CloverBD extends SQLiteOpenHelper{
                 "metodo_pago TEXT," +
                 "id_corte INTEGER," +
                 "id_proveedor INTEGER)");
+        //Configuraciones
+        db.execSQL("CREATE TABLE IF NOT EXISTS configuracion (" +
+                "id_config INTEGER PRIMARY KEY CHECK (id_config = 1), " + // Asegura que solo exista la fila 1
+                "negocio_nombre TEXT DEFAULT 'Taller Clover', " +
+                "negocio_eslogan TEXT DEFAULT 'Venta y Reparación', " +
+                "negocio_direccion TEXT DEFAULT '', " +
+                "negocio_telefono TEXT DEFAULT '', " +
+                "negocio_rfc TEXT DEFAULT '', " +
+                "negocio_logo_uri TEXT DEFAULT '', " +
+                "sys_stock_min INTEGER DEFAULT 5, " +
+                "sys_impuesto_iva REAL DEFAULT 0.0, " +
+                "sys_msg_garantia TEXT DEFAULT 'Garantía de 30 días.', " +
+                "sys_msg_share TEXT DEFAULT 'Gracias por tu compra en Clover.', " +
+                "printer_mac TEXT DEFAULT '', " +
+                "printer_name TEXT DEFAULT '', " +
+                "printer_width INTEGER DEFAULT 58, " +
+                "security_pin TEXT DEFAULT '1234', " +
+                "security_skip_login INTEGER DEFAULT 0 " +
+                ");");
+        String INIT_CONFIG = "INSERT OR IGNORE INTO configuracion (id_config) VALUES (1)";
+        db.execSQL(INIT_CONFIG);
     }
 
     @Override
@@ -134,6 +155,28 @@ public class CloverBD extends SQLiteOpenHelper{
                     "metodo_pago TEXT," +
                     "id_corte INTEGER," +
                     "id_proveedor INTEGER)");
+        }
+        if (oldVersion<7){
+            db.execSQL("CREATE TABLE IF NOT EXISTS configuracion (" +
+                    "id_config INTEGER PRIMARY KEY CHECK (id_config = 1), " + // Asegura que solo exista la fila 1
+                    "negocio_nombre TEXT DEFAULT 'Taller Clover', " +
+                    "negocio_eslogan TEXT DEFAULT 'Venta y Reparación', " +
+                    "negocio_direccion TEXT DEFAULT '', " +
+                    "negocio_telefono TEXT DEFAULT '', " +
+                    "negocio_rfc TEXT DEFAULT '', " +
+                    "negocio_logo_uri TEXT DEFAULT '', " +
+                    "sys_stock_min INTEGER DEFAULT 5, " +
+                    "sys_impuesto_iva REAL DEFAULT 0.0, " +
+                    "sys_msg_garantia TEXT DEFAULT 'Garantía de 30 días.', " +
+                    "sys_msg_share TEXT DEFAULT 'Gracias por tu compra en Clover.', " +
+                    "printer_mac TEXT DEFAULT '', " +
+                    "printer_name TEXT DEFAULT '', " +
+                    "printer_width INTEGER DEFAULT 58, " +
+                    "security_pin TEXT DEFAULT '1234', " +
+                    "security_skip_login INTEGER DEFAULT 0 " +
+                    ");");
+            String INIT_CONFIG = "INSERT OR IGNORE INTO configuracion (id_config) VALUES (1)";
+            db.execSQL(INIT_CONFIG);
         }
     }
     public static synchronized CloverBD getInstance(Context context) {

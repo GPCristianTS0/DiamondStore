@@ -9,7 +9,7 @@
     tools:context=".ui.historialventas.HistorialVentasDetalleVenta">
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/HV_nombreNegocio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -31,7 +31,7 @@
         app:cardBackgroundColor="#FFFFFF"
         app:layout_constraintWidth_percent="0.92"
         app:layout_constraintHeight_percent="0.85"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/HV_nombreNegocio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -42,7 +42,7 @@
             android:paddingBottom="16dp">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/HV_imagen"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="16dp"
@@ -58,7 +58,7 @@
                 android:background="#EEEEEE"
                 android:layout_marginTop="12dp"
                 android:layout_marginHorizontal="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3"/>
+                app:layout_constraintTop_toBottomOf="@+id/HV_imagen"/>
 
             <TextView
                 android:id="@+id/textView16"

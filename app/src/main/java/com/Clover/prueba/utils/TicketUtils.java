@@ -10,11 +10,14 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.data.dao.ConfiguracionDAO;
+import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
@@ -33,29 +36,53 @@ public class TicketUtils {
         View view = inflater.inflate(R.layout.ticket_virtual, null);
 
         // 2. DATA BINDING: Llenamos los datos en la vista invisible
-        TextView txtCliente = view.findViewById(R.id.ticketL_apodoClienteOut);
-        TextView txtFecha = view.findViewById(R.id.ticketL_fechaOut);
-        TextView txtHora = view.findViewById(R.id.ticketL_horaOut);
-        TextView txtTotal = view.findViewById(R.id.ticket_TotalOut);
-        TextView txtProductostotal = view.findViewById(R.id.ticketL_noArticulos);
-        LinearLayout contenedor = view.findViewById(R.id.ticketL_contenedor);
+        TextView txtCliente = view.findViewById(R.id.HV_clienteOut);
+        TextView txtNombre = view.findViewById(R.id.HV_nombreNegocio);
+        TextView txtFecha = view.findViewById(R.id.HV_fechaOut);
+        TextView txtDireccion = view.findViewById(R.id.HV_direccion);
+        TextView txtDatosFiscales = view.findViewById(R.id.HV_datosFiscales);
+        TextView txtHora = view.findViewById(R.id.HV_horaOut);
+        TextView txtTotal = view.findViewById(R.id.HV_totalVenta);
+        TextView txtProductostotal = view.findViewById(R.id.HV_totalArticulos);
+        LinearLayout contenedor = view.findViewById(R.id.HV_contenedorItems);
+        ImageView imagen = view.findViewById(R.id.HV_imagen);
+        Configuracion configuracion = new ConfiguracionDAO(context).getConfiguracion();
+        imagen.setImageURI(Uri.parse(configuracion.getRutaLogo()));
+        txtNombre.setText(configuracion.getNombreNegocio());
+        txtDireccion.setText(configuracion.getDireccion());
+        txtDatosFiscales.setText("Tel: "+configuracion.getTelefono()+" | RFC: "+configuracion.getRfc());
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault());
-        String fechaf = venta.getFecha_hora();
-        LocalDateTime fechaHora = LocalDateTime.parse(fechaf, formatter);
-        txtFecha.setText(String.valueOf(fechaHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
-        txtHora.setText(String.valueOf(fechaHora.format(DateTimeFormatter.ofPattern("HH:mm"))));
+
+        try {
+            String fechaf = venta.getFecha_hora();
+            DateTimeFormatter inputFormatter;
+            if (fechaf.length() > 16) {
+                inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            } else {
+                inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault());
+            }
+
+            LocalDateTime fechaHora = LocalDateTime.parse(fechaf, inputFormatter);
+
+            txtFecha.setText(fechaHora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            txtHora.setText(fechaHora.format(DateTimeFormatter.ofPattern("HH:mm")));
+
+        } catch (Exception e) {
+            txtFecha.setText(venta.getFecha_hora());
+            txtHora.setText("--:--");
+            e.printStackTrace();
+        }
 
 
         int piezas = 0;
         for (DetalleVenta detalleVenta : listaProductos) {
-            View rowView = inflater.inflate(R.layout.historialventas_detalles_item, null);
+            View rowView = inflater.inflate(R.layout.ticket_item, null);
             TextView nombreProducto = rowView.findViewById(R.id.ticketItem_nombreProducto);
             TextView piezasTextView = rowView.findViewById(R.id.ticketitem_piezas);
             TextView precioTextView = rowView.findViewById(R.id.ticketItem_precio);
-            nombreProducto.setText(detalleVenta.getProducto().getMarca().substring(0, 3)+" "+detalleVenta.getNombre_producto());
+            nombreProducto.setText(detalleVenta.getNombre_producto()+"\n\t (x $"+detalleVenta.getPrecio()+")");
             piezasTextView.setText(String.valueOf(detalleVenta.getCantidad()));
-            precioTextView.setText("$ "+detalleVenta.getPrecio());
+            precioTextView.setText("$ "+detalleVenta.getPrecio()*detalleVenta.getCantidad());
             contenedor.addView(rowView);
             // Sumar las piezas
             piezas += detalleVenta.getCantidad();
@@ -64,8 +91,8 @@ public class TicketUtils {
 
 
         // Aquí puedes poner la fecha real con DateFormat
-        if (nombreCliente == null) txtCliente.setText("Cliente: Publico General");
-        else txtCliente.setText("Cliente: "+nombreCliente);
+        if (nombreCliente == null) txtCliente.setText("Publico General");
+        else txtCliente.setText(nombreCliente);
         txtProductostotal.setText(String.valueOf(piezas));
         txtTotal.setText(String.valueOf(venta.getMonto()));
 
@@ -94,10 +121,10 @@ public class TicketUtils {
         view.draw(canvas);
 
         // 6. COMPARTIR: Guardamos temporalmente y lanzamos WhatsApp
-        compartirBitmap(context, bitmap);
+        compartirBitmap(context, bitmap, configuracion);
     }
 
-    private static void compartirBitmap(Context context, Bitmap bitmap) {
+    private static void compartirBitmap(Context context, Bitmap bitmap, Configuracion configuracion) {
         try {
             // Guardamos la imagen en la galería temporal o caché para obtener una URI
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -111,7 +138,7 @@ public class TicketUtils {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("image/jpeg");
             intent.putExtra(Intent.EXTRA_STREAM, imageUri);
-            intent.putExtra(Intent.EXTRA_TEXT, "¡Gracias por tu compra en NovaShop! ");
+            intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare().toString());
 
             // ESTA ES LA CLAVE: Forzamos a que solo use WhatsApp
             intent.setPackage("com.whatsapp");

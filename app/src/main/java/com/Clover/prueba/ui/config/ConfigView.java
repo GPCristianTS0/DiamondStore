@@ -1,9 +1,11 @@
 package com.Clover.prueba.ui.config;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,6 +23,15 @@ public class ConfigView extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        configNegocio();
+    }
+    //Accion para Boton configuracion negocio
+    private void configNegocio(){
+        CardView card = findViewById(R.id.btnConfigNegocio);
+        card.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ConfigNegocioView.class);
+            startActivity(intent);
         });
     }
 }

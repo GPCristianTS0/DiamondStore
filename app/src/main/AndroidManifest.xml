@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
         <activity
-            android:name=".ConfigNegocioView"
+            android:name=".ui.config.ConfigNegocioView"
             android:exported="false" />
         <activity
             android:name=".ui.config.ConfigView"

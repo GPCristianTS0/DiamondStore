@@ -1,6 +1,8 @@
 package com.Clover.prueba.ui.historialventas;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -18,11 +20,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import com.Clover.prueba.data.dao.ConfiguracionDAO;
 import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.models.Clientes;
+import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
@@ -53,6 +57,11 @@ public class HistorialVentasDetalleVenta extends AppCompatActivity {
         TextView fecha,hora, monto, totalPiezas, idCliente;
         fecha = findViewById(R.id.ticketL_fechaOut);
         hora = findViewById(R.id.ticketL_horaOut);
+        Configuracion configuracion = new ConfiguracionDAO(this).getConfiguracion();
+        ImageView imagen = findViewById(R.id.HV_imagen);
+        if (configuracion.getRutaLogo() != null){
+            imagen.setImageURI(Uri.parse(configuracion.getRutaLogo()));
+        }
         try {
             String fechaf = venta.getFecha_hora();
             DateTimeFormatter inputFormatter;

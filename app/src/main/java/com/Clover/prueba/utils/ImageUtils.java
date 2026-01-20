@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -61,6 +62,33 @@ public class ImageUtils {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    public boolean eliminarImagen(String rutaImagen) {
+        if (rutaImagen == null || rutaImagen.isEmpty()) {
+            return false;
+        }
+
+        try {
+            File archivo = new File(rutaImagen);
+
+            if (archivo.exists()) {
+                boolean eliminado = archivo.delete();
+
+                if (eliminado) {
+                    Log.d("Clover_App", "Imagen eliminada correctamente: " + rutaImagen);
+                } else {
+                    Log.e("Clover_App", "No se pudo eliminar el archivo: " + rutaImagen);
+                }
+
+                return eliminado;
+            } else {
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

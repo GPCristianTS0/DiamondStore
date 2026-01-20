@@ -59,7 +59,7 @@ public class ClientesPrincipalAdapter extends RecyclerView.Adapter<ClientesPrinc
         holder.CP_item_direccion.setText(cliente.getDireccion());
         holder.CP_item_direccion.setMinLines(2);
         holder.CP_item_puntos.setText(String.valueOf(cliente.getPuntos()));
-        holder.iconAvatar.setText(cliente.getNombre_cliente().substring(0, 1));
+        holder.iconAvatar.setText(cliente.getNombre_cliente().substring(0, 1).toUpperCase());
         //Listener
         holder.c.setOnClickListener(v -> {
             if (listener != null) {
