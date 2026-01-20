@@ -17,5 +17,5 @@ public interface IProducto {
     public void deleteProducto(Productos producto);
     public void updateProducto(Productos old, Productos newProducto);
     public boolean updateStock(int unidades, String producto);
-    public int getStockBajo();
+    public int getStockBajo(int stockMinimo);
 }

@@ -20,11 +20,12 @@ public class ConfiguracionControl {
     }
     public boolean updateConfiguracionNegocio(Configuracion configuracion) {
         ImageUtils utils = new ImageUtils(context);
-        Log.d("Clover_App", "updateConfiguracionNegocio: "+configuracion.toString());
         if (configuracion.getLogoURL() != null){
             String ruta = utils.guardarImagen(configuracion.getLogoURL());
             configuracion.setRutaLogo(ruta);
             utils.eliminarImagen(configuracion.getOldRutaLogo());
+        }else {
+            configuracion.setRutaLogo(configuracion.getOldRutaLogo());
         }
         return configuracionDAO.updateConfiguracionNegocio(configuracion);
     }

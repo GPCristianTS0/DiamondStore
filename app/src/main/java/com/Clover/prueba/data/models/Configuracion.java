@@ -170,6 +170,9 @@ public class Configuracion implements Serializable {
                 ", direccion='" + direccion + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", rfc='" + rfc + '\'' +
+                ", logoURL=" + logoURL +
+                ", rutaLogo='" + rutaLogo + '\'' +
+                ", oldRutaLogo='" + oldRutaLogo + '\'' +
                 ", stockMinimo=" + stockMinimo +
                 ", iva=" + iva +
                 ", notaGarantia='" + notaGarantia + '\'' +

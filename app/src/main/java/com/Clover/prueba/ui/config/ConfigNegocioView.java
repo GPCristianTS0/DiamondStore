@@ -69,6 +69,7 @@ public class ConfigNegocioView extends AppCompatActivity {
         //Boton Accion
         findViewById(R.id.ConP_btnActualizar).setOnClickListener(v -> {
             Configuracion configuracionActualizada = new Configuracion();
+            Log.v("Clover_App", "Configuracion: " + configuracionActualizada.toString() + " "+configuracion.toString());
             configuracionActualizada.setNombreNegocio(txtNombre.getText().toString());
             configuracionActualizada.setEslogan(txtEslogan.getText().toString());
             configuracionActualizada.setDireccion(txtDireccion.getText().toString());
@@ -78,11 +79,11 @@ public class ConfigNegocioView extends AppCompatActivity {
             configuracionActualizada.setIva(Double.parseDouble(txtImpuesto.getText().toString()));
             configuracionActualizada.setNotaGarantia(txtGarantia.getText().toString());
             configuracionActualizada.setMensajeShare(txtMensajeShare.getText().toString());
+            Log.e("Clover_App", "Ruta: " + ruta + " RutaNueva: "+configuracionActualizada.getRutaLogo());
             if (selectedImageUri != null) {
                 configuracionActualizada.setLogoURL(selectedImageUri);
-            } if (ruta != null){
-                configuracionActualizada.setOldRutaLogo(ruta);
             }
+            configuracionActualizada.setOldRutaLogo(ruta);
             if (configuracionControl.updateConfiguracionNegocio(configuracionActualizada)){
                 Toast.makeText(this, "Actualización exitosa", Toast.LENGTH_SHORT).show();
             }else{

@@ -14,9 +14,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.data.controller.ConfiguracionControl;
 import com.Clover.prueba.data.controller.CorteCajaController;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dao.VentasDAO;
+import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.ui.clientes.ClientesPrincipalView;
 import com.Clover.prueba.ui.config.ConfigView;
 import com.Clover.prueba.ui.gastos.GastoFormulario;
@@ -129,8 +131,10 @@ public class MenuPrincipal extends AppCompatActivity {
         co = findViewById(R.id.productosTotalContador);
         co.setText(String.valueOf("$ "+dineroEnCaja));
 
+        Configuracion configuracion = new ConfiguracionControl(this).getConfiguracion();
+        int stockMinimo = configuracion.getStockMinimo();
         //Contador de stock bajo
-        int contadorStockBajos= iProductos.getStockBajo();
+        int contadorStockBajos= iProductos.getStockBajo(stockMinimo);
         co = findViewById(R.id.stockTotalContador);
         if (contadorStockBajos>0) co.setTextColor(Color.parseColor("#FF0000"));
         else co.setTextColor(Color.parseColor("#008000"));

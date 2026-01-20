@@ -20,7 +20,8 @@
         android:theme="@style/Theme.Prueba">
         <activity
             android:name=".ui.config.ConfigNegocioView"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.config.ConfigView"
             android:exported="false" />

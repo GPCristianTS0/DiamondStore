@@ -140,7 +140,7 @@
                     android:id="@+id/VV_clienteNombreTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:paddingVertical="10dp"
                     android:imeOptions="actionDone"/>
             </com.google.android.material.textfield.TextInputLayout>

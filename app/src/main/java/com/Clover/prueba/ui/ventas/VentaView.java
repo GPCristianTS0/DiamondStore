@@ -236,6 +236,7 @@ public class VentaView extends AppCompatActivity {
                 vi.setText("Nombre Cliente");
                 getSupportFragmentManager().popBackStack();
                 fragmentContainer.setVisibility(INVISIBLE);
+                modelVentas.vaciarCarrito();
             }
         });
         frament.setVentaConfirmada(new DialogFragmentVentas.ventaConfirmada(){

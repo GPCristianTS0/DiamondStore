@@ -291,9 +291,9 @@ public class ProductoDAO implements IProducto {
     }
 
     @Override
-    public int getStockBajo() {
-        String sql = "SELECT COUNT(*) FROM productos WHERE stock < 3";
-        try (Cursor cursor = db.rawQuery(sql, null)) {
+    public int getStockBajo(int stockMinimo) {
+        String sql = "SELECT COUNT(*) FROM productos WHERE stock < ?";
+        try (Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(stockMinimo)})) {
             if (cursor.moveToFirst()) {
                 return cursor.getInt(0);
             }
