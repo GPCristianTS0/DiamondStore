@@ -3,6 +3,7 @@ package com.Clover.prueba.data.models;
 import android.content.Context;
 import android.util.Log;
 
+import com.Clover.prueba.data.controller.CorteCajaController;
 import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
@@ -123,6 +124,7 @@ public class CarritoDTO {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String fecha = LocalDateTime.now().format(format);
         venta.setFecha_hora(fecha);
+        venta.setId_corte(new CorteCajaController(context).getCorteActual().getId_corte());
         //Agregar venta
         iVentas.addVenta(venta, detallesVenta);
     }

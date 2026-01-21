@@ -1,4 +1,4 @@
-package com.Clover.prueba.ui.ventas;
+package com.Clover.prueba.ui.corte;
 
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -15,7 +15,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.CorteCajaController;
-import com.Clover.prueba.data.dao.CorteCajaDAO;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class DialogAbrirCorte extends DialogFragment {

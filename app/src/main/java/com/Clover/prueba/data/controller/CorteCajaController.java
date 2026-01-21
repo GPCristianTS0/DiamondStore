@@ -5,11 +5,14 @@ import android.util.Log;
 
 import com.Clover.prueba.data.dao.CorteCajaDAO;
 import com.Clover.prueba.data.dao.GastosDAO;
+import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.dao.interfaces.ICorteCaja;
 import com.Clover.prueba.data.dao.interfaces.IGastos;
+import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.models.CorteCaja;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -19,10 +22,12 @@ public class CorteCajaController {
     private final ICorteCaja daoCorteCaja ;
     private final IGastos gastosDAO;
     private CorteCaja corteCaja;
+    private IVentas ventasDAO;
 
     public CorteCajaController(Context context) {
         daoCorteCaja = new CorteCajaDAO(context);
         gastosDAO = new GastosDAO(context);
+        ventasDAO = new VentasDAO(context);
     }
 
     public void iniciarTurno(double montoInicial) {
@@ -63,5 +68,17 @@ public class CorteCajaController {
     }
     public void setDiferencia(double diferencia) {
         corteCaja.setDiferencia(diferencia);
+    }
+    public ArrayList<CorteCaja> getCortes(){
+        return daoCorteCaja.getCortes();
+    }
+
+    public CorteCaja getCorteCaja(int id_corte){
+        CorteCaja corteCaja = daoCorteCaja.getCorte(id_corte);
+        corteCaja.setGastos_efectivo(gastosDAO.sumarTotalGastosByCorte(id_corte, "Efectivo"));
+        corteCaja.setGastos_transferencia(gastosDAO.sumarTotalGastosByCorte(id_corte, "Transferencia"));
+        corteCaja.setVentas_efectivo(ventasDAO.getVentasMetodoPago("Efectivo", id_corte));
+        corteCaja.setVentas_tarjeta(ventasDAO.getVentasMetodoPago("Tarjeta", id_corte));
+        return corteCaja;
     }
 }

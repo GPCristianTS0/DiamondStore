@@ -9,6 +9,8 @@ public class Ventas implements Serializable {
     private int monto;
     private int total_piezas;
     private String tipo_pago;
+    private int id_corte;
+
 
     public Ventas() {
     }
@@ -69,6 +71,15 @@ public class Ventas implements Serializable {
     public void setTipo_pago(String tipo_pago) {
         this.tipo_pago = tipo_pago;
     }
+
+    public int getId_corte() {
+        return id_corte;
+    }
+
+    public void setId_corte(int id_corte) {
+        this.id_corte = id_corte;
+    }
+
     public String toColumns(){
         return "id_cliente, fecha_Hora, monto, total_piezas, tipo_pago";
     }

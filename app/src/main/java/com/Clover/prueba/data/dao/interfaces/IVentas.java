@@ -16,5 +16,8 @@ public interface IVentas {
     public ArrayList<String> getAnios();
     public int getGanancias();
     public int getVentasTotales();
+
+    public double getVentasMetodoPago(String metodoPago, int id_corte);
+
     public String getProductoMasVendido();
 }

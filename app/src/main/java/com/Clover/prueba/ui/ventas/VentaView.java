@@ -24,7 +24,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +31,7 @@ import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.CorteCajaController;
 import com.Clover.prueba.data.dao.CorteCajaDAO;
 import com.Clover.prueba.data.models.CarritoDTO;
+import com.Clover.prueba.ui.corte.DialogAbrirCorte;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -228,6 +228,8 @@ public class VentaView extends AppCompatActivity {
         frament.setTicketGenerado(new DialogFragmentVentas.ticketGenerado() {
             @Override
             public void ticketGenerado() {
+                modelVentas.vaciarCarrito();
+                adapter.notifyDataSetChanged();
                 modelVentas.compartirTicket();
                 //Limpiar
                 noArticulosCount.setText(String.valueOf(0));
@@ -236,7 +238,6 @@ public class VentaView extends AppCompatActivity {
                 vi.setText("Nombre Cliente");
                 getSupportFragmentManager().popBackStack();
                 fragmentContainer.setVisibility(INVISIBLE);
-                modelVentas.vaciarCarrito();
             }
         });
         frament.setVentaConfirmada(new DialogFragmentVentas.ventaConfirmada(){

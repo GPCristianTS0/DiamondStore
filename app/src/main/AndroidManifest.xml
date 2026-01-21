@@ -19,14 +19,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
         <activity
+            android:name=".DashboardFinanciero"
+            android:exported="false" />
+        <activity
+            android:name=".ui.corte.CorteView"
+            android:exported="false" />
+        <activity
             android:name=".ui.config.ConfigNegocioView"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.config.ConfigView"
             android:exported="false" />
         <activity
-            android:name=".ui.ventas.VentasCerrarCorte"
+            android:name=".ui.corte.VentasCerrarCorte"
             android:exported="false" />
         <activity
             android:name=".ui.proveedores.ProveedorFormularioView"

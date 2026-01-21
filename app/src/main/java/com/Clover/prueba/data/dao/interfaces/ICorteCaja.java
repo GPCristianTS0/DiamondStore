@@ -2,6 +2,8 @@ package com.Clover.prueba.data.dao.interfaces;
 
 import com.Clover.prueba.data.models.CorteCaja;
 
+import java.util.ArrayList;
+
 public interface ICorteCaja {
     public boolean iniciarCorte(CorteCaja corteCaja);
     public boolean cerrarCorte(CorteCaja corteCaja);
@@ -11,4 +13,8 @@ public interface ICorteCaja {
     public boolean getEstadoCorte();
     public CorteCaja getCorteActual();
     public void vaciarTabla();
+
+    ArrayList<CorteCaja> getCortes();
+
+    CorteCaja getCorte(int id_corte);
 }

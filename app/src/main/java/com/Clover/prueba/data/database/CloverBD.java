@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 7);
+        super(context, "Clover.db", null, 12);
     }
 
     @Override
@@ -76,9 +76,13 @@ public class CloverBD extends SQLiteOpenHelper{
                 "fecha_apertura TEXT, " +
                 "fecha_cierre TEXT, " +
                 "monto_inicial REAL, " +
-                "ventas_totales REAL, " +
+                "ventas_totales REAL," +
+                "ventas_efectivo REAL," +
+                "ventas_tarjeta REAL, " +
                 "abonos_totales REAL, " +
-                "gastos_totales REAL, "  +
+                "gastos_totales REAL," +
+                "gastos_efectivo REAL," +
+                "gastos_transferencia REAL, "  +
                 "dinero_en_caja REAL, " +
                 "diferencia REAL, " +
                 "estado TEXT)");
@@ -177,6 +181,19 @@ public class CloverBD extends SQLiteOpenHelper{
                     ");");
             String INIT_CONFIG = "INSERT OR IGNORE INTO configuracion (id_config) VALUES (1)";
             db.execSQL(INIT_CONFIG);
+        }
+        if (oldVersion<8){
+            db.execSQL("ALTER TABLE cortes_cajas ADD COLUMN gastos_transferencia REAL DEFAULT 0.0");
+            db.execSQL("ALTER TABLE cortes_cajas ADD COLUMN gastos_efectivo REAL DEFAULT 0.0");
+        }
+        if (oldVersion<11) {
+            db.execSQL("ALTER TABLE gastos DROP COLUMN ventas_tarjeta");
+            db.execSQL("ALTER TABLE gastos DROP COLUMN ventas_efectivo");
+            db.execSQL("ALTER TABLE cortes_cajas ADD COLUMN ventas_efectivo REAL DEFAULT 0.0");
+            db.execSQL("ALTER TABLE cortes_cajas ADD COLUMN ventas_tarjeta REAL DEFAULT 0.0");
+        }
+        if (oldVersion<12){
+            db.execSQL("ALTER TABLE ventas ADD COLUMN id_corte TEXT");
         }
     }
     public static synchronized CloverBD getInstance(Context context) {

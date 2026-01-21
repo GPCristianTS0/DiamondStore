@@ -13,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Clover.prueba.DashboardFinanciero;
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.ConfiguracionControl;
 import com.Clover.prueba.data.controller.CorteCajaController;
@@ -21,6 +22,7 @@ import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.ui.clientes.ClientesPrincipalView;
 import com.Clover.prueba.ui.config.ConfigView;
+import com.Clover.prueba.ui.corte.CorteView;
 import com.Clover.prueba.ui.gastos.GastoFormulario;
 import com.Clover.prueba.ui.gastos.GastosDialog;
 import com.Clover.prueba.ui.historialventas.HistorialVentasView;
@@ -31,7 +33,7 @@ import com.Clover.prueba.ui.ventas.VentaView;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
-import com.Clover.prueba.ui.ventas.VentasCerrarCorte;
+import com.Clover.prueba.ui.corte.VentasCerrarCorte;
 
 public class MenuPrincipal extends AppCompatActivity {
     private IVentas iVentas;
@@ -110,6 +112,17 @@ public class MenuPrincipal extends AppCompatActivity {
         Intent intent = new Intent(MenuPrincipal.this, ConfigView.class);
         startActivity(intent);
     }
+    //Accion botn reporte financiero
+    public void onClickFinanciero(View v){
+        Intent intent = new Intent(MenuPrincipal.this, DashboardFinanciero.class);
+        startActivity(intent);
+    }
+    //Accion boton historial cortes
+    public void onClickHistorialCortes(View v){
+        Intent intent = new Intent(MenuPrincipal.this, CorteView.class);
+        startActivity(intent);
+    }
+
     //Rellenado de datos de los productos
     private void rellenarDatos(){
 

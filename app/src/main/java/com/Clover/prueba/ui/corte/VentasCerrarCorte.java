@@ -1,6 +1,5 @@
-package com.Clover.prueba.ui.ventas;
+package com.Clover.prueba.ui.corte;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;

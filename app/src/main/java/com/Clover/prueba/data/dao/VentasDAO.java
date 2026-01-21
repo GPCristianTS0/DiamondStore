@@ -35,6 +35,7 @@ public class VentasDAO implements IVentas {
             valuesVentas.put("monto", venta.getMonto());
             valuesVentas.put("total_piezas", venta.getTotal_piezas());
             valuesVentas.put("tipo_pago", venta.getTipo_pago());
+            valuesVentas.put("id_corte", venta.getId_corte());
             long id_venta = db.insert("ventas", null, valuesVentas);
 
             String sqlVendidos = "UPDATE productos SET vendidos = vendidos + ? WHERE id_producto = ?";
@@ -104,6 +105,7 @@ public class VentasDAO implements IVentas {
                 venta.setMonto(cursor.getInt(3));
                 venta.setTotal_piezas(cursor.getInt(4));
                 venta.setTipo_pago(cursor.getString(5));
+                venta.setId_corte(cursor.getInt(cursor.getColumnIndexOrThrow("id_corte")));
                 ventas.add(venta);
             }
         } catch (Exception e) {
@@ -142,6 +144,7 @@ public class VentasDAO implements IVentas {
                 venta.setMonto(cursor.getInt(3));
                 venta.setTotal_piezas(cursor.getInt(4));
                 venta.setTipo_pago(cursor.getString(5));
+                venta.setId_corte(cursor.getInt(cursor.getColumnIndexOrThrow("id_corte")));
                 ventas.add(venta);
             }
         } catch (Exception e) {
@@ -151,7 +154,6 @@ public class VentasDAO implements IVentas {
     }
     @Override
     public ArrayList<DetalleVenta> getDetalleVentas(int idVenta) {
-        //DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm", new Locale("es", "ES"));
         ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
         String[] args = {String.valueOf(idVenta)};
         String sql = "SELECT * FROM detalles_venta WHERE id_venta= ?";
@@ -170,7 +172,6 @@ public class VentasDAO implements IVentas {
         } catch (Exception e) {
             Log.e("Clover_App", "Error en getDetalleVentas: " + e.getMessage());
         }
-        getDetalleVenta();
         return detalleVentas;
     }
 
@@ -216,7 +217,22 @@ public class VentasDAO implements IVentas {
         }
         return 0;
     }
-
+    @Override
+    public double getVentasMetodoPago(String metodoPago, int id_corte) {
+        String sql = "SELECT SUM(monto) FROM ventas WHERE tipo_pago = ? AND id_corte = ?";
+        ArrayList<String> args = new ArrayList<>();
+        args.add(metodoPago);
+        args.add(String.valueOf(id_corte));
+        Log.d("Clover_App", "id_corte: " + id_corte);
+        try (Cursor cursor = db.rawQuery(sql, args.toArray(new String[0]))){
+            if (cursor.moveToFirst()) {
+                return cursor.getDouble(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getVentasMetodoPago: " + e.getMessage());
+        }
+        return 0;
+    }
     @Override
     public String getProductoMasVendido() {
         String sql = "SELECT nombre_producto FROM detalles_venta GROUP BY nombre_producto ORDER BY SUM(cantidad) DESC LIMIT 1";
@@ -230,25 +246,6 @@ public class VentasDAO implements IVentas {
         return "";
     }
 
-    private void getDetalleVenta(){
-        String sql = "SELECT * FROM detalles_venta";
-        ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery(sql, null)){
-            while (cursor.moveToNext()){
-                DetalleVenta detalleVenta = new DetalleVenta();
-                detalleVenta.setId_detalle(cursor.getInt(0));
-                detalleVenta.setId_venta(cursor.getInt(1));
-                detalleVenta.setId_producto(cursor.getString(2));
-                detalleVenta.setNombre_producto(cursor.getString(3));
-                detalleVenta.setCantidad(cursor.getInt(4));
-                detalleVenta.setPrecio(cursor.getInt(5));
-                detalleVenta.setPrecio_neto(cursor.getInt(6));
-                detalleVentas.add(detalleVenta);
-            }
-        } catch (Exception e) {
-            Log.e("Clover_App", "Error en getDetalleVenta: " + e.getMessage());
-        }
-    }
 
     //Tools
     private LocalDateTime parseStringLocalDateTime(String fecha){

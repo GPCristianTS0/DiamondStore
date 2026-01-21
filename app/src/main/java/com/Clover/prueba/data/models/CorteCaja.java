@@ -1,13 +1,19 @@
 package com.Clover.prueba.data.models;
 
-public class CorteCaja {
+import java.io.Serializable;
+
+public class CorteCaja implements Serializable {
     private int id_corte;
     private String fecha_apertura;
     private String fecha_cierre;
     private double monto_inicial;
     private double ventas_totales;
+    private double ventas_efectivo;
+    private double ventas_tarjeta;
     private double abonos_totales;
     private double gastos_totales;
+    private double gastos_efectivo;
+    private double gastos_transferencia;
     private double dinero_en_caja;
     private double diferencia;
     private String estado;
@@ -107,6 +113,38 @@ public class CorteCaja {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public double getVentas_efectivo() {
+        return ventas_efectivo;
+    }
+
+    public void setVentas_efectivo(double ventas_efectivo) {
+        this.ventas_efectivo = ventas_efectivo;
+    }
+
+    public double getVentas_tarjeta() {
+        return ventas_tarjeta;
+    }
+
+    public void setVentas_tarjeta(double ventas_tarjeta) {
+        this.ventas_tarjeta = ventas_tarjeta;
+    }
+
+    public double getGastos_efectivo() {
+        return gastos_efectivo;
+    }
+
+    public void setGastos_efectivo(double gastos_efectivo) {
+        this.gastos_efectivo = gastos_efectivo;
+    }
+
+    public double getGastos_transferencia() {
+        return gastos_transferencia;
+    }
+
+    public void setGastos_transferencia(double gastos_transferencia) {
+        this.gastos_transferencia = gastos_transferencia;
     }
 
     @Override
