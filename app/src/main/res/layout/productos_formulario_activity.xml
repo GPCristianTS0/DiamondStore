@@ -1,245 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.productos.FormularioProductos">
+    android:background="@color/white"
+    android:padding="24dp"
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/imagenFP"
-        android:layout_marginTop="15dp"
-        android:layout_width="0dp"
-        android:layout_height="108dp"
-        android:background="@drawable/agregar_imgaen"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toStartOf="@+id/nombertxt"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.3" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tittlelbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tittleFP"
-        app:layout_constraintBottom_toTopOf="@+id/nombertxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imagenFP"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imagenFP"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/agregar_imgaen"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/vendidosInputFP"
-            android:layout_width="134dp"
-            android:layout_height="49dp"
+        <TextView
+            android:id="@+id/tittlelbl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/tittleFP"
+            android:textColor="#0D47A1"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imagenFP"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imagenFP"
+            app:layout_constraintTop_toTopOf="@+id/imagenFP" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/FP_layoutNombre"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="@string/nombreFP"
+            app:boxStrokeColor="#0D47A1"
+            app:hintTextColor="#0D47A1"
+            android:textColorHint="#1565C0"
+            app:layout_constraintTop_toBottomOf="@+id/imagenFP">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nombertxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/FP_layoutMarca"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/marcaFP"
+            app:boxStrokeColor="#0D47A1"
+            app:hintTextColor="#0D47A1"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toStartOf="@+id/FP_containerSpinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FP_layoutNombre">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/marcatxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/FP_containerSpinner"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/button_border"
-            android:enabled="false"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/escanearButton"
-            app:layout_constraintTop_toTopOf="@+id/unidadestxt" />
+            android:backgroundTint="#F0F0F0"
+            android:orientation="vertical"
+            android:padding="1dp"
+            app:layout_constraintBottom_toBottomOf="@+id/FP_layoutMarca"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/FP_layoutMarca"
+            app:layout_constraintTop_toTopOf="@+id/FP_layoutMarca">
 
-        <TextView
-            android:id="@+id/codeBarlbl"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="12dp"
+                android:paddingTop="4dp"
+                android:text="@string/modeloFP"
+                android:textColor="#0D47A1"
+                android:textSize="12sp" />
+
+            <Spinner
+                android:id="@+id/spinnerSeccionFP"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/FP_layoutDesc"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/codigoBarrasFPlabel"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/codeBartxt"
-            app:layout_constraintStart_toStartOf="@+id/codeBartxt" />
+            android:layout_marginTop="16dp"
+            android:hint="@string/descripcionFP"
+            app:boxStrokeColor="#0D47A1"
+            android:textColorHint="#1565C0"
+            app:hintTextColor="#0D47A1"
+            app:layout_constraintTop_toBottomOf="@+id/FP_layoutMarca">
 
-        <TextView
-            android:id="@+id/p_netolbl"
-            android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descripciontxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/FP_layoutPrecioPub"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/p_netoFP"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/p_netotxt"
-            app:layout_constraintStart_toStartOf="@+id/p_netotxt" />
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/p_publicoFP"
+            app:boxStrokeColor="#0D47A1"
+            android:textColorHint="#1565C0"
+            app:hintTextColor="#0D47A1"
+            app:layout_constraintEnd_toStartOf="@+id/FP_layoutPrecioNeto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FP_layoutDesc">
 
-        <TextView
-            android:id="@+id/modelolbl"
-            android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/p_publicotxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/FP_layoutPrecioNeto"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/modeloFP"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/spinnerSeccionFP"
-            app:layout_constraintStart_toStartOf="@+id/spinnerSeccionFP" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/p_netoFP"
+            app:boxStrokeColor="#0D47A1"
+            app:hintTextColor="#0D47A1"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/FP_layoutPrecioPub"
+            app:layout_constraintTop_toBottomOf="@+id/FP_layoutDesc">
 
-        <TextView
-            android:id="@+id/nombrelbl"
-            android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/p_netotxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/FP_layoutCodeBar"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/nombreFP"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/nombertxt"
-            app:layout_constraintStart_toStartOf="@+id/nombertxt" />
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/codigoBarrasFPlabel"
+            app:boxStrokeColor="#0D47A1"
+            app:hintTextColor="#0D47A1"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toStartOf="@+id/escanearButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FP_layoutPrecioPub">
 
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="@string/vendidosFP"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/vendidosInputFP"
-            app:layout_constraintStart_toStartOf="@+id/vendidosInputFP" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/marcatxt"
-            android:layout_width="134dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_border"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="@+id/nombertxt"
-            app:layout_constraintTop_toBottomOf="@+id/nombertxt" />
-
-        <TextView
-            android:id="@+id/marcalbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/marcaFP"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/marcatxt"
-            app:layout_constraintStart_toStartOf="@+id/marcatxt" />
-
-        <Spinner
-            android:id="@+id/spinnerSeccionFP"
-            android:layout_width="134dp"
-            android:layout_height="42dp"
-            android:background="@drawable/button_border"
-            android:backgroundTint="#ED1F1F"
-            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:spinnerMode="dropdown"
-            app:layout_constraintEnd_toEndOf="@+id/nombertxt"
-            app:layout_constraintTop_toTopOf="@+id/marcatxt" />
-
-        <TextView
-            android:id="@+id/descriptionlbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/descripcionFP"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/descripciontxt"
-            app:layout_constraintStart_toStartOf="@+id/descripciontxt" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/codeBartxt"
-            android:layout_width="174dp"
-            android:layout_height="49dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_border"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="@+id/p_publicotxt"
-            app:layout_constraintTop_toBottomOf="@+id/p_publicotxt" />
-
-        <TextView
-            android:id="@+id/p_publicolbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/p_publicoFP"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/p_publicotxt"
-            app:layout_constraintStart_toStartOf="@+id/p_publicotxt" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/descripciontxt"
-            android:layout_width="295dp"
-            android:layout_height="79dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_border"
-            android:gravity="top|start"
-            android:hint=""
-            android:inputType="textMultiLine"
-            android:minLines="4"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="@+id/marcatxt"
-            app:layout_constraintTop_toBottomOf="@+id/marcatxt" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/codeBartxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/escanearButton"
-            android:layout_width="119dp"
-            android:layout_height="39dp"
-            android:background="@drawable/button_border"
-            android:backgroundTint="@color/white"
-            android:text="@string/codigoBarrasFPlabel"
-            android:textColor="@color/black"
-            android:textColorLink="@color/white"
-            android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/codeBartxt"
-            app:layout_constraintEnd_toEndOf="@+id/p_netotxt"
-            app:layout_constraintTop_toTopOf="@+id/codeBartxt" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/unidadestxt"
-            android:layout_width="134dp"
-            android:layout_height="49dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_border"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="@+id/codeBartxt"
-            app:layout_constraintTop_toBottomOf="@+id/codeBartxt" />
-
-        <TextView
-            android:id="@+id/unidadeslbl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/unidadestxtFP"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/unidadestxt"
-            app:layout_constraintStart_toStartOf="@+id/unidadestxt" />
+            android:backgroundTint="#0D47A1"
+            android:text="Escanear"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/FP_layoutCodeBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/FP_layoutCodeBar" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/FP_layoutUnidades"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/unidadestxtFP"
+            app:boxStrokeColor="#0D47A1"
+            app:hintTextColor="#0D47A1"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toStartOf="@+id/FP_layoutVendidos"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FP_layoutCodeBar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/unidadestxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/FP_layoutVendidos"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:enabled="false"
+            android:hint="@string/vendidosFP"
+            app:boxStrokeColor="#0D47A1"
+            app:hintTextColor="#0D47A1"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/FP_layoutUnidades"
+            app:layout_constraintTop_toBottomOf="@+id/FP_layoutCodeBar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/vendidosInputFP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/agregarBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_border"
-            android:text="Agregar"
-            android:textColorLink="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/vendidosInputFP"
-            app:layout_constraintStart_toStartOf="@+id/unidadestxt"
-            app:layout_constraintTop_toBottomOf="@+id/unidadestxt" />
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#0D47A1"
+            android:text="Agregar Producto"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/addProductoBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FP_layoutUnidades" />
 
         <Button
             android:id="@+id/addProductoBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#D32F2F"
             android:text="Eliminar"
-            app:layout_constraintEnd_toEndOf="@+id/vendidosInputFP"
-            app:layout_constraintStart_toStartOf="@+id/vendidosInputFP"
-            app:layout_constraintTop_toBottomOf="@+id/vendidosInputFP" />
+            android:textAllCaps="false"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/agregarBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/agregarBtn"
+            app:layout_constraintTop_toTopOf="@+id/agregarBtn" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/p_publicotxt"
-            android:layout_width="134dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_border"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="@+id/descripciontxt"
-            app:layout_constraintTop_toBottomOf="@+id/descripciontxt" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/p_netotxt"
-            android:layout_width="134dp"
-            android:layout_height="49dp"
-            android:background="@drawable/button_border"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toEndOf="@+id/descripciontxt"
-            app:layout_constraintTop_toTopOf="@+id/p_publicotxt" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/nombertxt"
-        android:layout_width="295dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_border"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenFP" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

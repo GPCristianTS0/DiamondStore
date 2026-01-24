@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,7 @@ import java.util.Locale;
 import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.models.Clientes;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class ClientesFormulario extends AppCompatActivity {
     IClient controller = new ClientesDAO(this);
@@ -66,31 +69,27 @@ public class ClientesFormulario extends AppCompatActivity {
         nombre.setText(cliente.getNombre_cliente());
         TextInputEditText apodo = findViewById(R.id.CP_apodoTXT);
         apodo.setText(cliente.getApodo());
-        TextInputEditText saldo = findViewById(R.id.CP_saldoTXT);
-        saldo.setVisibility(VISIBLE);
-        saldo.setText(String.valueOf(cliente.getSaldo()));
         TextInputEditText direccion = findViewById(R.id.CP_direccionTXT);
         direccion.setText(cliente.getDireccion());
         TextInputEditText telefono = findViewById(R.id.CP_telefonoTXT);
         telefono.setText(cliente.getId_cliente());
-        TextInputEditText puntos = findViewById(R.id.CP_puntosTXT);
+        TextInputLayout saldo = findViewById(R.id.CP_layoutSaldo);
+        saldo.setVisibility(VISIBLE);
+        saldo.getEditText().setText(String.valueOf(cliente.getSaldo()));
+        TextInputLayout puntos = findViewById(R.id.CP_layoutPuntos);
         puntos.setVisibility(VISIBLE);
-        puntos.setText(String.valueOf(cliente.getPuntos()));
-        TextView saldoL = findViewById(R.id.CP_saldoLabel);
-        TextView puntosL = findViewById(R.id.CP_puntosLabel);
-        saldoL.setVisibility(VISIBLE);
-        puntosL.setVisibility(VISIBLE);
-        Button historial = findViewById(R.id.CP_buttinHistorialVentas);
-        historial.setVisibility(VISIBLE);
-        Button abonos = findViewById(R.id.CP_buttonAbonos);
-        abonos.setVisibility(VISIBLE);
-        Button eliminar = findViewById(R.id.CP_buttonEliminar);
-        eliminar.setVisibility(VISIBLE);
+        puntos.getEditText().setText(String.valueOf(cliente.getPuntos()));
+        LinearLayout container = findViewById(R.id.CP_accionesContainer);
+        container.setVisibility(VISIBLE);
         Button agregar = findViewById(R.id.CP_agregarBoton);
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Clientes clienteNew = getClienteOfInputs();
+                if (isClientInvalide(clienteNew)){
+                    Toast.makeText(ClientesFormulario.this, "Rellena todos los campos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (controller.updateClient(cliente, clienteNew)) {
                     finish();
                 } else {
@@ -105,14 +104,29 @@ public class ClientesFormulario extends AppCompatActivity {
     }
 
     public void agregarCleinte(){
-        Clientes cliente = getClienteOfInputs();;
+        Clientes cliente = getClienteOfInputs();
+        Log.e("Clover_App", "agregarCleinte: "+cliente.toString());
+        if (isClientInvalide(cliente)){
+            Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMMM-yyyy", Locale.getDefault());
         String fecha = LocalDateTime.now().format(format);
         cliente.setFecha_registro(fecha);
         cliente.setPuntos(0);
         cliente.setSaldo(0);
-        controller.addClient(cliente);
+        Toast.makeText(this, cliente.getId_cliente(), Toast.LENGTH_SHORT).show();
+        //controller.addClient(cliente);
         finish();
+    }
+    private boolean isClientInvalide(Clientes cliente){
+        if (cliente.getId_cliente() == null||cliente.getNombre_cliente().isEmpty())
+            return true;
+        if (cliente.getApodo().isEmpty())
+            return true;
+        if (cliente.getDireccion().isEmpty())
+            return true;
+        return false;
     }
     private Clientes getClienteOfInputs(){
         Clientes cliente = new Clientes();
@@ -120,11 +134,16 @@ public class ClientesFormulario extends AppCompatActivity {
         cliente.setNombre_cliente(nombre.getText().toString());
         TextInputEditText apodo = findViewById(R.id.CP_apodoTXT);
         cliente.setApodo(apodo.getText().toString());
-        TextInputEditText saldo = findViewById(R.id.CP_saldoTXT);
+        LinearLayout saldo = findViewById(R.id.CP_accionesContainer);
         if (saldo.getVisibility() == VISIBLE) {
-            cliente.setSaldo(Integer.parseInt(saldo.getText().toString()));
+            TextInputEditText saldot = findViewById(R.id.CP_saldoTXT);
             TextInputEditText puntos = findViewById(R.id.CP_puntosTXT);
-            cliente.setPuntos(Integer.parseInt(puntos.getText().toString()));
+            if (saldot.getText().toString().isEmpty()||puntos.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Rellena los campos de saldo y puntos", Toast.LENGTH_SHORT).show();
+            }else{
+                cliente.setSaldo(Integer.parseInt(saldot.getText().toString()));
+                cliente.setPuntos(Integer.parseInt(puntos.getText().toString()));
+            }
 
         }
         TextInputEditText direccion = findViewById(R.id.CP_direccionTXT);

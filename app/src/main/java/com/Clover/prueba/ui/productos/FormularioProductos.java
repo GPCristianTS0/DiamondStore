@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.Clover.prueba.R;
 import com.Clover.prueba.utils.ImageUtils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -68,7 +69,7 @@ public class FormularioProductos extends AppCompatActivity {
         //Desaparecer los campos de vendidos
         TextInputEditText vendidosTxt = findViewById(R.id.vendidosInputFP);
         vendidosTxt.setVisibility(INVISIBLE);
-        TextView vendidostxtf = findViewById(R.id.textView17);
+        TextInputLayout vendidostxtf = findViewById(R.id.FP_layoutVendidos);
         vendidostxtf.setVisibility(INVISIBLE);
         t = findViewById(R.id.codeBartxt);
         //rellenar el spiner de secciones
@@ -157,7 +158,7 @@ public class FormularioProductos extends AppCompatActivity {
         t.setText(String.valueOf(producto.getVendidos()));
         t = findViewById(R.id.vendidosInputFP);
         t.setVisibility(VISIBLE);
-        TextView vendidostxtf = findViewById(R.id.textView17);
+        TextInputLayout vendidostxtf = findViewById(R.id.FP_layoutVendidos);
         vendidostxtf.setVisibility(VISIBLE);
         ImageView imagen = findViewById(R.id.imagenFP);
         if (producto.getRutaImagen()!=null) {

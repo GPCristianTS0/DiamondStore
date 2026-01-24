@@ -1,202 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".ui.clientes.ClientesFormulario">
+    android:background="@color/white"
+    android:padding="24dp"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/CF_nombreLabel"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nombre"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/CP_nombreTXT"
-        app:layout_constraintStart_toStartOf="@+id/CP_nombreTXT" />
+        android:padding="24dp">
 
-    <Button
-        android:id="@+id/CP_agregarBoton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:text="Agregar"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/CP_puntosTXT"
-        app:layout_constraintStart_toStartOf="@+id/CP_saldoTXT"
-        app:layout_constraintTop_toBottomOf="@+id/CP_puntosTXT" />
+        <LinearLayout
+            android:id="@+id/CP_headerContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/CP_saldoTXT"
-        android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/button_border"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/CP_direccionTXT"
-        app:layout_constraintTop_toBottomOf="@+id/CP_direccionTXT"
-        app:layout_constraintWidth_percent="0.44" />
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_my_calendar"
+                app:tint="#1565C0" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/CP_puntosTXT"
-        android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:background="@drawable/button_border"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/CP_direccionTXT"
-        app:layout_constraintTop_toTopOf="@+id/CP_saldoTXT"
-        app:layout_constraintWidth_percent="0.44" />
+            <TextView
+                android:id="@+id/CP_tituloLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Agregar Cliente"
+                android:textColor="#1565C0"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/CP_apodoTXT"
-        android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/button_border"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/CP_nombreTXT"
-        app:layout_constraintTop_toBottomOf="@+id/CP_nombreTXT"
-        app:layout_constraintWidth_percent="0.44" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CP_layoutNombre"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Nombre Completo"
+            app:boxStrokeColor="#1565C0"
+            app:hintTextColor="#1565C0"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CP_headerContainer">
 
-    <TextView
-        android:id="@+id/CF_apodoLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Apodo:"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/CP_apodoTXT"
-        app:layout_constraintStart_toStartOf="@+id/CP_apodoTXT" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/CP_nombreTXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/CP_telefonoLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Telefono:"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/CP_telefonoTXT"
-        app:layout_constraintStart_toStartOf="@+id/CP_telefonoTXT" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CP_layoutApodo"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Apodo"
+            app:boxStrokeColor="#1565C0"
+            app:hintTextColor="#1565C0"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toStartOf="@+id/CP_layoutTelefono"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CP_layoutNombre">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/CP_telefonoTXT"
-        android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:background="@drawable/button_border"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="@+id/CP_nombreTXT"
-        app:layout_constraintTop_toTopOf="@+id/CP_apodoTXT"
-        app:layout_constraintWidth_percent="0.45" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/CP_apodoTXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/CP_nombreTXT"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/button_border"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.611"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CP_tituloLabel"
-        app:layout_constraintWidth_percent="0.9" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CP_layoutTelefono"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="Teléfono"
+            app:boxStrokeColor="#1565C0"
+            app:hintTextColor="#1565C0"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/CP_layoutApodo"
+            app:layout_constraintTop_toBottomOf="@+id/CP_layoutNombre">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/CP_direccionTXT"
-        android:layout_width="0dp"
-        android:layout_height="99dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/button_border"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/CP_apodoTXT"
-        app:layout_constraintTop_toBottomOf="@+id/CP_apodoTXT"
-        app:layout_constraintWidth_percent="0.9" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/CP_telefonoTXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/CP_direccionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Direccion:"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/CP_direccionTXT"
-        app:layout_constraintStart_toStartOf="@+id/CP_direccionTXT" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CP_layoutDireccion"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Dirección"
+            app:boxStrokeColor="#1565C0"
+            app:hintTextColor="#1565C0"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CP_layoutApodo">
 
-    <TextView
-        android:id="@+id/CP_tituloLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Agregar Cliente"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/CP_direccionTXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/CP_saldoLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Saldo:"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/CP_saldoTXT"
-        app:layout_constraintStart_toStartOf="@+id/CP_saldoTXT" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CP_layoutSaldo"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Saldo"
+            android:visibility="invisible"
+            app:boxStrokeColor="#1565C0"
+            app:hintTextColor="#1565C0"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toStartOf="@+id/CP_layoutPuntos"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CP_layoutDireccion">
 
-    <TextView
-        android:id="@+id/CP_puntosLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Puntos"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/CP_puntosTXT"
-        app:layout_constraintStart_toStartOf="@+id/CP_puntosTXT" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/CP_saldoTXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/CP_buttinHistorialVentas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Historial \n Ventas"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/CP_buttonEliminar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/CP_buttonEliminar"
-        app:layout_constraintTop_toTopOf="@+id/CP_buttonEliminar" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CP_layoutPuntos"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="Puntos"
+            android:visibility="invisible"
+            app:boxStrokeColor="#1565C0"
+            app:hintTextColor="#1565C0"
+            android:textColorHint="#1565C0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/CP_layoutSaldo"
+            app:layout_constraintTop_toBottomOf="@+id/CP_layoutDireccion">
 
-    <Button
-        android:id="@+id/CP_buttonAbonos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Abonos"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/CP_buttonEliminar"
-        app:layout_constraintEnd_toStartOf="@+id/CP_buttonEliminar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/CP_buttonEliminar" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/CP_puntosTXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/CP_buttonEliminar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Eliminar"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/CP_agregarBoton"
-        app:layout_constraintEnd_toEndOf="@+id/CP_puntosTXT"
-        app:layout_constraintStart_toStartOf="@+id/CP_saldoTXT"
-        app:layout_constraintTop_toBottomOf="@+id/CP_puntosTXT" />
+        <LinearLayout
+            android:id="@+id/CP_accionesContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:visibility="invisible"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CP_layoutSaldo">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <Button
+                    android:id="@+id/CP_buttonAbonos"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:text="Abonos"
+                    android:textColor="#1565C0"
+                    android:visibility="visible"
+                    app:strokeColor="#1565C0" />
+
+                <Button
+                    android:id="@+id/CP_buttinHistorialVentas"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Historial Ventas"
+                    android:textColor="#1565C0"
+                    android:visibility="visible"
+                    app:strokeColor="#1565C0" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/CP_buttonEliminar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#D32F2F"
+                android:text="Eliminar Cliente"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/CP_agregarBoton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#1565C0"
+            android:text="Agregar"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CP_accionesContainer"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
