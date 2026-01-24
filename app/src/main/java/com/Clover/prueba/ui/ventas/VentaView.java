@@ -228,14 +228,9 @@ public class VentaView extends AppCompatActivity {
         frament.setTicketGenerado(new DialogFragmentVentas.ticketGenerado() {
             @Override
             public void ticketGenerado() {
-                modelVentas.vaciarCarrito();
-                adapter.notifyDataSetChanged();
                 modelVentas.compartirTicket();
                 //Limpiar
-                noArticulosCount.setText(String.valueOf(0));
-                totallbl.setText(String.valueOf("Total:$ 0"));
-                codetxt.setText("");
-                vi.setText("Nombre Cliente");
+                limpiarVista();
                 getSupportFragmentManager().popBackStack();
                 fragmentContainer.setVisibility(INVISIBLE);
             }
@@ -245,18 +240,11 @@ public class VentaView extends AppCompatActivity {
             @Override
             public void ventaConfirmada() {
                 modelVentas.ventaConfirmada("Efectivo");
-                //Limpiar
-                noArticulosCount.setText(String.valueOf(0));
-                totallbl.setText(String.valueOf("Total:$ 0"));
-                codetxt.setText("");
-                vi.setText("Nombre Cliente");
-                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void vaciarCarrito() {
-                modelVentas.vaciarCarrito();
-                adapter.notifyDataSetChanged();
+                limpiarVista();
                 getSupportFragmentManager().popBackStack();
                 fragmentContainer.setVisibility(INVISIBLE);
             }
@@ -322,5 +310,19 @@ public class VentaView extends AppCompatActivity {
                 fragmentContainer.setVisibility(INVISIBLE);
             }
         });
+    }
+    private void limpiarVista(){
+        modelVentas.vaciarCarrito();
+        adapter.notifyDataSetChanged();
+        noArticulosCount.setText(String.valueOf(0));
+        totallbl.setText(String.valueOf("Total:$ 0"));
+        codetxt.setText("");
+        TextView vi = findViewById(R.id.VV_clienteNombre);
+        vi.setText("Cliente General");
+        TextInputEditText t = findViewById(R.id.VV_clienteNombreTxt);
+        t.setVisibility(VISIBLE);
+        t.setText("");
+        t.setEnabled(true);
+        vi.setText("Nombre Cliente");
     }
 }

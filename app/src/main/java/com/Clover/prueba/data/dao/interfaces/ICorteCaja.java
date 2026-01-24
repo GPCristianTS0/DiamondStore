@@ -14,7 +14,7 @@ public interface ICorteCaja {
     public CorteCaja getCorteActual();
     public void vaciarTabla();
 
-    ArrayList<CorteCaja> getCortes();
+    ArrayList<CorteCaja> getCortes(String estado);
 
     CorteCaja getCorte(int id_corte);
 }

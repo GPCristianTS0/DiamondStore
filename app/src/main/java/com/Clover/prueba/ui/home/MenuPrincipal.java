@@ -13,7 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.Clover.prueba.DashboardFinanciero;
+import com.Clover.prueba.ui.financiero.DashboardFinanciero;
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.ConfiguracionControl;
 import com.Clover.prueba.data.controller.CorteCajaController;

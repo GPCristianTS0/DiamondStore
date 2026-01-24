@@ -55,8 +55,7 @@ public class CorteDetalleDialog extends BottomSheetDialogFragment {
             TC_txtDiferencia.setTextColor(getResources().getColor(R.color.black));
         }
         TC_txtDiferencia.setText("$ "+corteCaja.getDiferencia());
-        double montoEsperado = corteCaja.getMonto_inicial() + corteCaja.getVentas_totales() + corteCaja.getAbonos_totales() - corteCaja.getGastos_totales();
-        TC_txtTotalReal.setText("$ "+montoEsperado);
+        TC_txtTotalReal.setText("$ "+corteCaja.getVentas_totales());
         TC_txtTotalCalculado.setText("$ "+corteCaja.getDinero_en_caja());
         TC_txtGastosEfectivo.setText("- $ "+corteCaja.getGastos_efectivo());
         TC_txtVentasEfectivo.setText("$ "+corteCaja.getVentas_efectivo());

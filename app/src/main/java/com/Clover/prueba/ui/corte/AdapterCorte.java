@@ -42,12 +42,9 @@ public class AdapterCorte extends RecyclerView.Adapter<AdapterCorte.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull AdapterCorte.ViewHolder holder, int position) {
         CorteCaja corte = cortes.get(position);
-
         SimpleDateFormat formatoEntrada = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         SimpleDateFormat formatoSalida = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", new Locale("es", "MX"));
-        String fechaa;
-        if (corte.getFecha_cierre() == null) fechaa = corte.getFecha_apertura();
-        else fechaa = corte.getFecha_cierre();
+        String fechaa = corte.getFecha_cierre();
         try {
             Date fecha = formatoEntrada.parse(fechaa);
             fechaa = formatoSalida.format(fecha);

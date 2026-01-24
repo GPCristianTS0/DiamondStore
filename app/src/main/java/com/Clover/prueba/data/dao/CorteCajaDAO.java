@@ -105,10 +105,10 @@ public class CorteCajaDAO implements ICorteCaja {
         db.execSQL("DELETE FROM cortes_cajas");
     }
     @Override
-    public ArrayList<CorteCaja> getCortes() {
+    public ArrayList<CorteCaja> getCortes(String estado) {
         ArrayList<CorteCaja> cortes = new ArrayList<>();
-        String sql = "SELECT * FROM cortes_cajas ORDER BY id_corte DESC";
-        try (Cursor cursor = db.rawQuery(sql, null)) {
+        String sql = "SELECT * FROM cortes_cajas WHERE estado = ? ORDER BY id_corte DESC ";
+        try (Cursor cursor = db.rawQuery(sql, new String[]{estado})) {
             while (cursor.moveToNext()){
                 CorteCaja corteCaja = new CorteCaja();
                 corteCaja.setId_corte(cursor.getInt(cursor.getColumnIndexOrThrow("id_corte")));
@@ -130,7 +130,7 @@ public class CorteCajaDAO implements ICorteCaja {
     }
     @Override
     public CorteCaja getCorte(int id_corte) {
-        String sql = "SELECT * FROM cortes_cajas WHERE id_corte = ?";
+        String sql = "SELECT * FROM cortes_cajas WHERE id_corte = ? ";
         try (Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(id_corte)})){
             if (cursor.moveToFirst()) {
                 CorteCaja corteCaja = new CorteCaja();

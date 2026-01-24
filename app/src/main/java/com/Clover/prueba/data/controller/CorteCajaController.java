@@ -70,7 +70,7 @@ public class CorteCajaController {
         corteCaja.setDiferencia(diferencia);
     }
     public ArrayList<CorteCaja> getCortes(){
-        return daoCorteCaja.getCortes();
+        return daoCorteCaja.getCortes(CERRADO_CONST);
     }
 
     public CorteCaja getCorteCaja(int id_corte){
@@ -79,6 +79,7 @@ public class CorteCajaController {
         corteCaja.setGastos_transferencia(gastosDAO.sumarTotalGastosByCorte(id_corte, "Transferencia"));
         corteCaja.setVentas_efectivo(ventasDAO.getVentasMetodoPago("Efectivo", id_corte));
         corteCaja.setVentas_tarjeta(ventasDAO.getVentasMetodoPago("Tarjeta", id_corte));
+        corteCaja.setVentas_totales(corteCaja.getMonto_inicial() + corteCaja.getVentas_totales() + corteCaja.getAbonos_totales() - corteCaja.getGastos_totales());
         return corteCaja;
     }
 }

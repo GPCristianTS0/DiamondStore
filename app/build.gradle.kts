@@ -30,28 +30,34 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
-
 dependencies {
-    //implementation("con.airbnb.android:lottie:3.0.1")
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)// CameraX
-    implementation("androidx.activity:activity-ktx:1.8.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
-    implementation("com.google.zxing:core:3.4.1")
+    // ---- Dependencias base de AndroidX (versiones más recientes) ----
     implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.activity:activity-ktx:1.8.0")
+    implementation(libs.constraintlayout) // Asumo que libs.constraintlayout apunta a una versión estable
+    implementation(libs.recyclerview)     // Asumo que libs.recyclerview apunta a una versión estable
+
+    // ---- Gráficos ----
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // ---- Escáner de código de barras (ZXing y ML Kit) ----
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    // Nota: 'com.google.zxing:core' ya viene incluida en zxing-android-embedded, por lo que no necesitas declararla de nuevo.
+    implementation(libs.play.services.mlkit.barcode.scanning)
+
+    // ---- Carga de imágenes (Glide) ----
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
+    // ---- Componentes de ciclo de vida (Lifecycle) ----
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.core)
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
-    implementation(libs.constraintlayout)
-    implementation(libs.play.services.mlkit.barcode.scanning)
-    implementation(libs.firebase.crashlytics.buildtools)
-    implementation(libs.recyclerview)
+
+    // ---- Dependencias de Testing (sin cambios) ----
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(libs.junit.junit)
+    // 'junit:junit' está duplicado si libs.junit ya es 'junit:junit'. Lo puedes eliminar si es el caso.
+    // androidTestImplementation(libs.junit.junit)
 }

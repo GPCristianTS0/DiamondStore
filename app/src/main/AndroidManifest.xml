@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
         <activity
-            android:name=".DashboardFinanciero"
+            android:name=".ui.financiero.DashboardFinanciero"
             android:exported="false" />
         <activity
             android:name=".ui.corte.CorteView"
