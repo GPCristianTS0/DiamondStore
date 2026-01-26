@@ -54,6 +54,9 @@ public class ConfigNegocioView extends AppCompatActivity {
         TextInputEditText txtImpuesto = findViewById(R.id.ConP_txtImpuesto);
         TextInputEditText txtGarantia = findViewById(R.id.ConP_txtGarantia);
         TextInputEditText txtMensajeShare = findViewById(R.id.ConP_txtMensajeShare);
+        TextInputEditText txtBeneficiario = findViewById(R.id.ConP_txtBeneficiario);
+        TextInputEditText txtBanco = findViewById(R.id.ConP_txtBanco);
+        TextInputEditText txtCuenta = findViewById(R.id.ConP_txtCuenta);
         txtNombre.setText(configuracion.getNombreNegocio());
         txtEslogan.setText(configuracion.getEslogan());
         txtDireccion.setText(configuracion.getDireccion());
@@ -63,6 +66,10 @@ public class ConfigNegocioView extends AppCompatActivity {
         txtImpuesto.setText(String.valueOf(configuracion.getIva()));
         txtGarantia.setText(configuracion.getNotaGarantia());
         txtMensajeShare.setText(configuracion.getMensajeShare());
+        txtBeneficiario.setText(configuracion.getBeneficiario());
+        txtBanco.setText(configuracion.getBanco());
+        txtCuenta.setText(configuracion.getCuenta());
+        //Imagen
         if (configuracion.getRutaLogo() != null){
             imgLogo.setImageURI(Uri.parse(configuracion.getRutaLogo()));
         }
@@ -79,6 +86,9 @@ public class ConfigNegocioView extends AppCompatActivity {
             configuracionActualizada.setIva(Double.parseDouble(txtImpuesto.getText().toString()));
             configuracionActualizada.setNotaGarantia(txtGarantia.getText().toString());
             configuracionActualizada.setMensajeShare(txtMensajeShare.getText().toString());
+            configuracionActualizada.setBeneficiario(txtBeneficiario.getText().toString());
+            configuracionActualizada.setBanco(txtBanco.getText().toString());
+            configuracionActualizada.setCuenta(txtCuenta.getText().toString());
             Log.e("Clover_App", "Ruta: " + ruta + " RutaNueva: "+configuracionActualizada.getRutaLogo());
             if (selectedImageUri != null) {
                 configuracionActualizada.setLogoURL(selectedImageUri);

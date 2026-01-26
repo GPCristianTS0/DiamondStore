@@ -37,6 +37,9 @@ public class ConfiguracionDAO implements IConfiguracion {
         values.put("printer_width", configuracion.getPrinterWidth());
         values.put("security_pin", configuracion.getPin());
         values.put("security_skip_login", configuracion.isSkipLogin() ? 1 : 0);
+        values.put("bank_name", configuracion.getBanco());
+        values.put("bank_account", configuracion.getCuenta());
+        values.put("bank_account_name", configuracion.getBeneficiario());
         return db.update("configuracion", values, "id_config = ?", new String[]{"1"}) > 0;
     }
 
@@ -61,6 +64,9 @@ public class ConfiguracionDAO implements IConfiguracion {
                 configuracion.setPrinterWidth(cursor.getInt(cursor.getColumnIndexOrThrow("printer_width")));
                 configuracion.setPin(cursor.getString(cursor.getColumnIndexOrThrow("security_pin")));
                 configuracion.setSkipLogin(cursor.getInt(cursor.getColumnIndexOrThrow("security_skip_login")) == 1);
+                configuracion.setBanco(cursor.getString(cursor.getColumnIndexOrThrow("bank_name")));
+                configuracion.setCuenta(cursor.getString(cursor.getColumnIndexOrThrow("bank_account")));
+                configuracion.setBeneficiario(cursor.getString(cursor.getColumnIndexOrThrow("bank_account_name")));
                 return configuracion;
             }
 

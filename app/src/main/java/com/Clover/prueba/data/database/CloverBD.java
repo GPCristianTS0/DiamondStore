@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 12);
+        super(context, "Clover.db", null, 13);
     }
 
     @Override
@@ -112,8 +112,10 @@ public class CloverBD extends SQLiteOpenHelper{
                 "printer_name TEXT DEFAULT '', " +
                 "printer_width INTEGER DEFAULT 58, " +
                 "security_pin TEXT DEFAULT '1234', " +
-                "security_skip_login INTEGER DEFAULT 0 " +
-                ");");
+                "security_skip_login INTEGER DEFAULT 0 ," +
+                "bank_name TEXT DEFAULT 'BBVA', " +
+                "bank_account TEXT DEFAULT '1234567890', " +
+                "bank_account_name TEXT DEFAULT 'Clover')");
         String INIT_CONFIG = "INSERT OR IGNORE INTO configuracion (id_config) VALUES (1)";
         db.execSQL(INIT_CONFIG);
     }
@@ -194,6 +196,11 @@ public class CloverBD extends SQLiteOpenHelper{
         }
         if (oldVersion<12){
             db.execSQL("ALTER TABLE ventas ADD COLUMN id_corte TEXT");
+        }
+        if (oldVersion<13){
+            db.execSQL("ALTER TABLE configuracion ADD COLUMN bank_name TEXT");
+            db.execSQL("ALTER TABLE configuracion ADD COLUMN bank_account TEXT");
+            db.execSQL("ALTER TABLE configuracion ADD COLUMN bank_account_name TEXT");
         }
     }
     public static synchronized CloverBD getInstance(Context context) {

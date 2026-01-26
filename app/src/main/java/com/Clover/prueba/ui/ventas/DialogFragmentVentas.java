@@ -82,6 +82,7 @@ public class DialogFragmentVentas extends DialogFragment {
         txtBanco.setText(config.getBanco());
         TextView txtCuenta = view.findViewById(R.id.PVI_txtCuentaInfo);
         txtCuenta.setText(config.getCuenta());
+
         return view;
     }
     public interface ticketGenerado {
@@ -121,7 +122,7 @@ public class DialogFragmentVentas extends DialogFragment {
         viewFlipper.setInAnimation(getContext(), R.anim.slide_in_left);
         viewFlipper.setDisplayedChild(0);
     }
-    //Configuracion de metodos de pago
+    //Validaciones de metodos de pago
     private void configEfectivo(View view){
         //Detecta si ya se presiono el boton y lo cierra en caso que si
         if (pago){
@@ -168,6 +169,7 @@ public class DialogFragmentVentas extends DialogFragment {
         //Ya que se valido se procesa la venta y el cobro
         procesarCobro();
     }
+    //Proceso para el cobro o el cierre de la venta
     private void procesarCobro(){
         if (pago){
             if (ventaConfirmada != null){
@@ -196,7 +198,7 @@ public class DialogFragmentVentas extends DialogFragment {
         });
     }
     private void cambiarEstado(){
-        btnAceptar.setText("Aceptar");
+        btnAceptar.setText("¡Listo!");
         breturn.setVisibility(View.GONE);
         btnTicket.setVisibility(VISIBLE);
     }

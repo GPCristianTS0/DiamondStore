@@ -98,7 +98,9 @@
                         app:hintTextColor="#1976D2"
                         android:hint="Nombre del Negocio"
                         app:startIconDrawable="@android:drawable/ic_menu_myplaces"
-                        app:startIconTint="#1976D2">
+                        app:startIconTint="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        android:textColorHint="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ConP_txtNombre"
@@ -115,14 +117,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         app:hintTextColor="#1976D2"
-                        android:gravity="center"
                         android:hint="Eslogan (Debajo del nombre)"
                         app:startIconDrawable="@android:drawable/ic_menu_edit"
-                        app:startIconTint="#1976D2">
+                        app:startIconTint="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        android:textColorHint="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ConP_txtEslogan"
-                            android:gravity="center"
                             android:layout_width="match_parent"
                             android:textColor="@color/black"
                             android:layout_height="wrap_content"
@@ -159,9 +161,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Dirección Completa"
-                        android:gravity="center"
                         app:startIconDrawable="@android:drawable/ic_dialog_map"
-                        app:startIconTint="#1976D2">
+                        app:startIconTint="#1976D2"
+                        app:hintTextColor="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        android:textColorHint="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ConP_txtDireccion"
@@ -170,8 +174,7 @@
                             android:textColor="@color/black"
                             android:inputType="textMultiLine"
                             android:minLines="2"
-                            android:maxLines="3"
-                            android:gravity="center" />
+                            android:maxLines="3"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -179,17 +182,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:gravity="center"
                         android:hint="Teléfono / WhatsApp"
                         app:startIconDrawable="@android:drawable/ic_menu_call"
-                        app:startIconTint="#1976D2">
+                        app:startIconTint="#1976D2"
+                        app:hintTextColor="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        android:textColorHint="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ConP_txtTelefono"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:gravity="center"
                             android:inputType="phone" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,16 +204,119 @@
                         android:layout_marginTop="16dp"
                         android:hint="RFC (Opcional)"
                         app:startIconDrawable="@android:drawable/ic_menu_agenda"
-                        app:startIconTint="#1976D2">
+                        app:startIconTint="#1976D2"
+                        app:hintTextColor="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        android:textColorHint="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ConP_txtRFC"
                             android:layout_width="match_parent"
-                            android:gravity="center"
                             android:textColor="@color/black"
                             android:layout_height="wrap_content"
                             android:inputType="textCapCharacters" />
                     </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Datos para Transferencia"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#1976D2"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nombre del Beneficiario"
+                        app:startIconDrawable="@android:drawable/ic_menu_myplaces"
+                        app:startIconTint="#1976D2"
+                        app:hintTextColor="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        android:textColorHint="#1976D2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/ConP_txtBeneficiario"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:inputType="textCapWords" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:hint="Banco"
+                            app:startIconDrawable="@android:drawable/ic_menu_compass"
+                            app:startIconTint="#1976D2"
+                            app:hintTextColor="#1976D2"
+                            app:boxStrokeColor="#1976D2"
+                            android:textColorHint="#1976D2">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/ConP_txtBanco"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:inputType="textCapWords" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:layout_marginStart="4dp"
+                            android:hint="Cuenta / CLABE / Tarjeta"
+                            app:startIconDrawable="@android:drawable/ic_menu_agenda"
+                            app:startIconTint="#1976D2"
+                            app:hintTextColor="#1976D2"
+                            app:boxStrokeColor="#1976D2"
+                            android:textColorHint="#1976D2">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/ConP_txtCuenta"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -250,7 +357,10 @@
                             android:layout_marginEnd="8dp"
                             android:hint="Stock Mínimo"
                             app:startIconDrawable="@android:drawable/stat_sys_warning"
-                            app:startIconTint="#D32F2F">
+                            app:startIconTint="#1976D2"
+                            app:hintTextColor="#1976D2"
+                            app:boxStrokeColor="#1976D2"
+                            android:textColorHint="#1976D2">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/ConP_txtStockMin"
@@ -269,7 +379,10 @@
                             android:layout_marginStart="8dp"
                             android:hint="IVA (%)"
                             app:startIconDrawable="@android:drawable/ic_menu_info_details"
-                            app:startIconTint="#757575">
+                            app:startIconTint="#1976D2"
+                            app:hintTextColor="#1976D2"
+                            app:boxStrokeColor="#1976D2"
+                            android:textColorHint="#1976D2">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/ConP_txtImpuesto"
@@ -288,7 +401,10 @@
                         android:layout_marginTop="16dp"
                         android:hint="Nota al pie del ticket (Garantía)"
                         app:startIconDrawable="@android:drawable/ic_menu_help"
-                        app:startIconTint="#1976D2">
+                        app:startIconTint="#1976D2"
+                        app:hintTextColor="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        android:textColorHint="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ConP_txtGarantia"
@@ -309,7 +425,10 @@
                         android:layout_marginTop="16dp"
                         android:hint="Mensaje para Compartir (WhatsApp)"
                         app:startIconDrawable="@android:drawable/ic_menu_send"
-                        app:startIconTint="#4CAF50">
+                        app:startIconTint="#1976D2"
+                        app:hintTextColor="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        android:textColorHint="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ConP_txtMensajeShare"
