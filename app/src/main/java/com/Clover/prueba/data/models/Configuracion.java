@@ -23,7 +23,37 @@ public class Configuracion implements Serializable {
     private String printerName;
     private int printerWidth;
 
+    //Datos para transferencia
+    private String cuenta;
+    private String banco;
+    private String beneficiario;
+
+
     public Configuracion() {
+    }
+
+    public String getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public String getBanco() {
+        return banco;
+    }
+
+    public void setBanco(String banco) {
+        this.banco = banco;
+    }
+
+    public String getBeneficiario() {
+        return beneficiario;
+    }
+
+    public void setBeneficiario(String beneficiario) {
+        this.beneficiario = beneficiario;
     }
 
     public String getNombreNegocio() {

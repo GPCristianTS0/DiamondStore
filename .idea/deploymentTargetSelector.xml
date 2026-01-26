@@ -7,10 +7,10 @@
       </SelectionState>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-01-20T06:14:31.537629900Z">
+        <DropdownSelection timestamp="2026-01-24T19:19:41.869255400Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=659d02f07d78" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Crist\.android\avd\Samsung_A36_5G.avd" />
             </handle>
           </Target>
         </DropdownSelection>

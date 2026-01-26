@@ -2,128 +2,587 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="5dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#80000000"
+    android:padding="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/aaaaaa"
+        android:id="@+id/PVI_cardContainer"
         android:layout_width="match_parent"
-        android:clickable="true"
-        android:focusable="true"
         android:layout_height="wrap_content"
         android:background="@drawable/redondear_esquinas"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="68dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/pagaConPVIlbl"
+            android:id="@+id/PVI_totalLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Paga con:"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnaceptarPVI"
+            android:text="Total a Pagar"
+            android:textColor="#757575"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.221"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/totalPVIlbl"
-            app:layout_constraintVertical_bias="0.568" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/totalCountPVI"
-            android:layout_width="75dp"
-            android:layout_height="24dp"
-            android:textColor="@color/black"
-            android:text="$ 1850"
-            android:textSize="18dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/btnaceptarPVI"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.454"
-            app:layout_constraintStart_toEndOf="@+id/totalPVIlbl"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.299" />
-
-        <TextView
-            android:id="@+id/totalPVIlbl"
+            android:id="@+id/PVI_totalCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="72dp"
-            android:textColor="@color/black"
-            android:text="Total:"
-            android:textSize="18dp"
-            app:layout_constraintBottom_toTopOf="@+id/txtPagaConPVI"
+            android:layout_marginTop="4dp"
+            android:text="$ 1,850.00"
+            android:textColor="#1565C0"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.64" />
+            app:layout_constraintTop_toBottomOf="@+id/PVI_totalLabel" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtPagaConPVI"
-            android:layout_width="142dp"
-            android:layout_height="40dp"
-            android:background="@drawable/button_border"
-            android:textColor="@color/black"
-            android:hint="Ingrese monto"
-            android:inputType="number"
-            android:textSize="18dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnaceptarPVI"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.432"
-            app:layout_constraintStart_toEndOf="@+id/pagaConPVIlbl"
-            app:layout_constraintTop_toBottomOf="@+id/totalCountPVI"
-            app:layout_constraintVertical_bias="0.514" />
-
-        <Button
-            android:id="@+id/btnaceptarPVI"
-            android:layout_width="wrap_content"
+        <ViewFlipper
+            android:id="@+id/PVI_viewFlipper"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Aceptar"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.891" />
+            app:layout_constraintTop_toBottomOf="@+id/PVI_totalCount">
 
-        <TextView
-            android:id="@+id/cambioPVIlbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="24dp"
-            android:text="Cambio:"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/pagaConPVIlbl"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/totalPVIlbl"
-            app:layout_constraintVertical_bias="0.0" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/cambioCountPVI"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="$ 100"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.481"
-            app:layout_constraintStart_toEndOf="@+id/pagaConPVIlbl"
-            app:layout_constraintTop_toTopOf="@+id/txtPagaConPVI" />
+                <TextView
+                    android:id="@+id/PVI_metodoLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccione Método de Pago"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Compartir\nTicket"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/btnaceptarPVI"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnaceptarPVI"
-            app:layout_constraintTop_toTopOf="@+id/btnaceptarPVI" />
+                <LinearLayout
+                    android:id="@+id/PVI_filaBotones1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/PVI_btnEfectivo"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:text="Efectivo"
+                        android:textColor="#1565C0"
+                        app:icon="@android:drawable/ic_menu_rotate"
+                        app:iconTint="#1565C0"
+                        app:strokeColor="#1565C0" />
+
+                    <Button
+                        android:id="@+id/PVI_btnTarjeta"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:text="Tarjeta"
+                        android:textColor="#1565C0"
+                        app:icon="@android:drawable/ic_menu_agenda"
+                        app:iconTint="#1565C0"
+                        app:strokeColor="#1565C0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/PVI_filaBotones2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/PVI_btnTransfer"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:text="Transf."
+                        android:textColor="#1565C0"
+                        app:icon="@android:drawable/ic_menu_share"
+                        app:iconTint="#1565C0"
+                        app:strokeColor="#1565C0" />
+
+                    <Button
+                        android:id="@+id/PVI_btnCredito"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:text="Crédito"
+                        android:textColor="#1565C0"
+                        app:icon="@android:drawable/ic_menu_my_calendar"
+                        app:iconTint="#1565C0"
+                        app:strokeColor="#1565C0" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/PVI_layoutEfectivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/PVI_tituloMetodoSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Cobro en Efectivo"
+                        android:textColor="#1565C0"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/PVI_layoutPagaCon"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:hint="Paga con:"
+                    app:boxStrokeColor="#1565C0"
+                    app:hintTextColor="#1565C0">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/PVI_txtPagaCon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/PVI_containerCambio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/PVI_cambiolbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Su Cambio: "
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/PVI_cambioCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$ 0.00"
+                        android:textColor="#388E3C"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/PVI_btnAceptar"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#1565C0"
+                        android:text="Cobrar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:cornerRadius="8dp" />
+
+                    <Button
+                        android:id="@+id/PVI_btnRegresar"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FF0000"
+                        android:text="Regresar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="8dp"
+                        app:iconGravity="textStart" />
+
+                    <Button
+                        android:id="@+id/PVI_btnCompartir"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#000000"
+                        android:text="Ticket"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_share"
+                        app:iconGravity="textStart" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/PVI_layoutTarjeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:text="Datos de la Tarjeta"
+                    android:textColor="#1565C0"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_border"
+                        android:orientation="vertical"
+                        android:padding="1dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="8dp"
+                            android:paddingTop="4dp"
+                            android:text="Banco"
+                            android:textColor="#1565C0"
+                            android:textSize="10sp" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/PVI_layoutBanco"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:hint="Últimos 4"
+                            app:boxStrokeColor="#1565C0"
+                            app:hintTextColor="#1565C0">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/PVI_txtBanco"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="4"
+                                android:textColor="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/PVI_layoutDigitos"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:hint="Últimos 4"
+                        app:boxStrokeColor="#1565C0"
+                        app:hintTextColor="#1565C0">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/PVI_txtDigitos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/PVI_layoutAprobacion"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="No. Aprobación (7 dígitos)"
+                    app:boxStrokeColor="#1565C0"
+                    app:hintTextColor="#1565C0">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/PVI_txtAprobacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Tipo de Tarjeta"
+                    android:textColor="#757575" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/PVI_chipGroupTipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/PVI_chipDebito"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Débito"
+                        android:backgroundTint="#1565C0"
+                        android:textColor="@color/white" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/PVI_chipCredito"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Crédito"
+                        android:backgroundTint="#1565C0"
+                        android:textColor="@color/white" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/PVI_btnCobrarTarjeta"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#1565C0"
+                        android:text="Cobrar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:cornerRadius="8dp" />
+
+                    <Button
+                        android:id="@+id/PVI_btnRegresarT"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FF0000"
+                        android:text="Regresar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="8dp" />
+
+                    <Button
+                        android:id="@+id/PVI_btnCompartirT"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#000000"
+                        android:text="Ticket"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_share"
+                        app:iconGravity="textStart" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/PVI_layoutTransfer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:text="Datos para Transferencia"
+                    android:textColor="#1565C0"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/PVI_containerInfoTransfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_border"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Beneficiario:"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/PVI_txtNombreInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Cargando nombre..."
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Banco:"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/PVI_txtBancoInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Cargando banco..."
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cuenta / CLABE / Tarjeta:"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/PVI_txtCuentaInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0000 0000 0000 0000"
+                        android:textColor="#1565C0"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.1"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="Muestre estos datos al cliente\ny espere el comprobante."
+                    android:textColor="#757575"
+                    android:textSize="12sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/PVI_btnCobrarTransf"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#1565C0"
+                        android:text="Cobrar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:cornerRadius="8dp" />
+
+                    <Button
+                        android:id="@+id/PVI_btnRegresarTransf"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FF0000"
+                        android:text="Regresar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="8dp" />
+
+                    <Button
+                        android:id="@+id/PVI_btnCompartirTrans"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#000000"
+                        android:text="Ticket"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_share"
+                        app:iconGravity="textStart" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </ViewFlipper>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

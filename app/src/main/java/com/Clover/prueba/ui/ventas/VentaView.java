@@ -238,8 +238,8 @@ public class VentaView extends AppCompatActivity {
         frament.setVentaConfirmada(new DialogFragmentVentas.ventaConfirmada(){
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void ventaConfirmada() {
-                modelVentas.ventaConfirmada("Efectivo");
+            public void ventaConfirmada(String metodo) {
+                modelVentas.ventaConfirmada(metodo);
             }
 
             @Override
