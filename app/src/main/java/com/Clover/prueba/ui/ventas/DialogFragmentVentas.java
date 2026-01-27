@@ -2,6 +2,7 @@ package com.Clover.prueba.ui.ventas;
 
 import static android.view.View.VISIBLE;
 
+import static com.Clover.prueba.utils.Constantes.CONST_CREDITO;
 import static com.Clover.prueba.utils.Constantes.CONST_EFECTIVO;
 import static com.Clover.prueba.utils.Constantes.CONST_TARJETA;
 import static com.Clover.prueba.utils.Constantes.CONST_TRANSFERENCIA;
@@ -22,6 +23,7 @@ import androidx.fragment.app.DialogFragment;
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.ConfiguracionControl;
 import com.Clover.prueba.data.models.Configuracion;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class DialogFragmentVentas extends DialogFragment {
@@ -71,6 +73,13 @@ public class DialogFragmentVentas extends DialogFragment {
                     view.findViewById(R.id.PVI_btnCompartirTrans),
                     CONST_TRANSFERENCIA, v1 -> configTransfer(view), 3);
         });
+        btnCredito.setOnClickListener(v -> {
+            setBtnMetodosPago(view.findViewById(R.id.PVI_btnRegresarCredito),
+                    view.findViewById(R.id.PVI_btnCobrarCredito),
+                    view.findViewById(R.id.PVI_btnCompartirCredito),
+                    CONST_CREDITO, v1 -> configCredito(view), 4);
+        });
+
         TextView textViewTotal = view.findViewById(R.id.PVI_totalCount);
         textViewTotal.setText("$ "+total);
 
@@ -160,6 +169,16 @@ public class DialogFragmentVentas extends DialogFragment {
         procesarCobro();
     }
     private void configTransfer(View v){
+        if (pago){
+            procesarCobro();
+            return;
+        }
+        //Validaciones
+
+        //Ya que se valido se procesa la venta y el cobro
+        procesarCobro();
+    }
+    private void configCredito(View v){
         if (pago){
             procesarCobro();
             return;

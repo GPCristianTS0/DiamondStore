@@ -10,6 +10,7 @@ public class CorteCaja implements Serializable {
     private double ventas_totales;
     private double ventas_efectivo;
     private double ventas_tarjeta;
+    private double ventas_transferencia;
     private double abonos_totales;
     private double gastos_totales;
     private double gastos_efectivo;
@@ -33,6 +34,14 @@ public class CorteCaja implements Serializable {
         this.dinero_en_caja = dinero_en_caja;
         this.diferencia = diferencia;
         this.estado = estado;
+    }
+
+    public double getVentas_transferencia() {
+        return ventas_transferencia;
+    }
+
+    public void setVentas_transferencia(double ventas_transferencia) {
+        this.ventas_transferencia = ventas_transferencia;
     }
 
     public int getId_corte() {

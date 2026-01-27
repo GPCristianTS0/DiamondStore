@@ -300,7 +300,7 @@
                     android:id="@+id/VCC_LabelGastosTrans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gastos por Transferencia"
+                    android:text="Cobros por Transferencia"
                     android:textSize="13sp"
                     android:textColor="#616161"
                     android:layout_marginTop="8dp"

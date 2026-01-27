@@ -1,5 +1,7 @@
 package com.Clover.prueba.ui.corte;
 
+import static com.Clover.prueba.utils.Constantes.CONST_EFECTIVO;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.CorteCajaController;
 import com.Clover.prueba.data.models.CorteCaja;
+import com.Clover.prueba.utils.Constantes;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class VentasCerrarCorte extends AppCompatActivity {
@@ -24,6 +27,7 @@ public class VentasCerrarCorte extends AppCompatActivity {
     private String dineroEnCaja;
 
 
+    private TextInputEditText input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +41,12 @@ public class VentasCerrarCorte extends AppCompatActivity {
         });
         corteCajaController = new CorteCajaController(this);
         rellenarDatos(corteCajaController.getCorteActual());
+        input = findViewById(R.id.VCC_InputDineroFisico);
         input();
         Button boton = findViewById(R.id.VCC_BtnCerrarTurno);
         boton.setOnClickListener(v -> {
-            if (dineroEnCaja.isEmpty()){
+            String s = String.valueOf(input.getText());
+            if (s.isEmpty()||s.equals("0")){
                 Toast.makeText(this, "Ingrese un valor", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -57,7 +63,7 @@ public class VentasCerrarCorte extends AppCompatActivity {
         TextView co = findViewById(R.id.VCC_ValorFondo);
         co.setText(String.valueOf("+$"+corteCaja.getMonto_inicial()));
         co = findViewById(R.id.VCC_ValorVentas);
-        co.setText(String.valueOf("+$"+corteCaja.getVentas_totales()));
+        co.setText(String.valueOf("+$"+corteCaja.getVentas_efectivo()));
         co = findViewById(R.id.VCC_ValorAbonos);
         co.setText(String.valueOf("+$"+corteCaja.getAbonos_totales()));
         co = findViewById(R.id.VCC_ValorGastos);
@@ -67,11 +73,12 @@ public class VentasCerrarCorte extends AppCompatActivity {
         co = findViewById(R.id.VCC_ValorTotalSistema);
         co.setText(String.valueOf("$ "+corteCaja.getDinero_en_caja()));
         co = findViewById(R.id.VCC_ValorGastosTrans);
-        co.setText(String.valueOf("-$"+corteCajaController.getVentasTotalesCorte(corteCaja.getId_corte(), "Transferencia")));
+        co.setText(String.valueOf("-$"+corteCaja.getVentas_transferencia()));
+        co = findViewById(R.id.VCC_ValorVentasTarjeta);
+        co.setText(String.valueOf("-$"+corteCaja.getVentas_tarjeta()));
     }
     private void input(){
         TextView diferencia = findViewById(R.id.VCC_ValorDiferencia);
-        TextInputEditText input = findViewById(R.id.VCC_InputDineroFisico);
         input.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {

@@ -1,5 +1,9 @@
 package com.Clover.prueba.data.controller;
 
+import static com.Clover.prueba.utils.Constantes.CONST_EFECTIVO;
+import static com.Clover.prueba.utils.Constantes.CONST_TARJETA;
+import static com.Clover.prueba.utils.Constantes.CONST_TRANSFERENCIA;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -22,7 +26,7 @@ public class CorteCajaController {
     private final ICorteCaja daoCorteCaja ;
     private final IGastos gastosDAO;
     private CorteCaja corteCaja;
-    private IVentas ventasDAO;
+    private final IVentas ventasDAO;
 
     public CorteCajaController(Context context) {
         daoCorteCaja = new CorteCajaDAO(context);
@@ -48,13 +52,13 @@ public class CorteCajaController {
     public CorteCaja getCorteActual() {
         corteCaja = daoCorteCaja.getCorteActual();
         corteCaja.setVentas_totales(daoCorteCaja.getVentasTotalesCorte(corteCaja.getFecha_apertura()));
-        Log.d("Clover_App", "Corte actuajl: " + corteCaja.getFecha_apertura());
-
-        double d = gastosDAO.sumarTotalGastosByCorte(corteCaja.getId_corte(), "Efectivo");
+        corteCaja.setVentas_efectivo(ventasDAO.getVentasMetodoPago(CONST_EFECTIVO, corteCaja.getId_corte()));
+        corteCaja.setVentas_tarjeta(ventasDAO.getVentasMetodoPago(CONST_TARJETA, corteCaja.getId_corte()));
+        corteCaja.setVentas_transferencia(ventasDAO.getVentasMetodoPago(CONST_TRANSFERENCIA, corteCaja.getId_corte()));
+        double d = gastosDAO.sumarTotalGastosByCorte(corteCaja.getId_corte(), CONST_EFECTIVO);
         corteCaja.setGastos_totales(d);
-        double esperado = corteCaja.getMonto_inicial() + corteCaja.getVentas_totales() + corteCaja.getAbonos_totales() - d;
+        double esperado = corteCaja.getMonto_inicial() + corteCaja.getVentas_efectivo() + corteCaja.getAbonos_totales() - d;
         corteCaja.setDinero_en_caja(esperado);
-        Log.d("Clover_App", "Corte actual: " + corteCaja.toString());
         return corteCaja;
     }
     public double getVentasTotalesCorte(int id, String metodoPago) {

@@ -581,6 +581,185 @@
                         app:iconGravity="textStart" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/PVI_layoutCredito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_menu_myplaces"
+                        app:tint="#F57C00"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Confirmar Crédito"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#F57C00"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cliente asignado:"
+                    android:textSize="12sp"
+                    android:textColor="#757575"/>
+
+                <TextView
+                    android:id="@+id/PVI_txtNombreClienteCredito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Público General"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="#1565C0"
+                    app:hintTextColor="#1565C0"
+                    android:hint="Días de plazo">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/PVI_txtDiasCredito"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="30"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:gravity="center"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frecuencia de Abonos:"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#1565C0"
+                    android:layout_marginTop="12dp"/>
+
+                <RadioGroup
+                    android:id="@+id/PVI_radioGroupFrecuencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp">
+
+                    <RadioButton
+                        android:id="@+id/PVI_rbSemanal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Semanal"
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:buttonTint="#1565C0"
+                        android:textColor="#000000"
+                        android:layout_marginEnd="4dp"/>
+
+                    <RadioButton
+                        android:id="@+id/PVI_rbQuincenal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quincenal"
+                        android:textSize="12sp"
+                        android:buttonTint="#1565C0"
+                        android:textColor="#000000"
+                        android:layout_marginEnd="4dp"/>
+
+                    <RadioButton
+                        android:id="@+id/PVI_rbMensual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Un pago"
+                        android:textSize="12sp"
+                        android:buttonTint="#1565C0"
+                        android:textColor="#000000"/>
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/PVI_lblAbonoSugerido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Debe dar: $ 0.00 cada Semana"
+                    android:background="#E3F2FD"
+                    android:padding="6dp"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:textSize="12sp"
+                    android:textStyle="italic"
+                    android:textColor="#455A64"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/PVI_btnCobrarCredito"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#F57C00"
+                        android:text="Fiar / Crédito"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:cornerRadius="8dp" />
+
+                    <Button
+                        android:id="@+id/PVI_btnRegresarCredito"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FF0000"
+                        android:text="Regresar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="8dp" />
+
+                    <Button
+                        android:id="@+id/PVI_btnCompartirCredito"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#000000"
+                        android:text="Ticket"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_share"
+                        app:iconGravity="textStart" />
+                </LinearLayout>
+            </LinearLayout>
 
         </ViewFlipper>
     </androidx.constraintlayout.widget.ConstraintLayout>
