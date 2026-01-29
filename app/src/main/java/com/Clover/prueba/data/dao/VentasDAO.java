@@ -35,7 +35,14 @@ public class VentasDAO implements IVentas {
             valuesVentas.put("monto", venta.getMonto());
             valuesVentas.put("total_piezas", venta.getTotal_piezas());
             valuesVentas.put("tipo_pago", venta.getTipo_pago());
+            valuesVentas.put("pago_con", venta.getPago_con());
             valuesVentas.put("id_corte", venta.getId_corte());
+            valuesVentas.put("banco_tarjeta", venta.getBanco_tarjeta());
+            valuesVentas.put("numero_tarjeta", venta.getNumero_tarjeta());
+            valuesVentas.put("numero_aprobacion", venta.getNumero_aprobacion());
+            valuesVentas.put("tipo_tarjeta", venta.getTipo_tarjeta());
+            valuesVentas.put("dias_plazo", venta.getDias_plazo());
+            valuesVentas.put("frecuencia_pago", venta.getFrecuencia_pago());
             long id_venta = db.insert("ventas", null, valuesVentas);
 
             String sqlVendidos = "UPDATE productos SET vendidos = vendidos + ? WHERE id_producto = ?";
@@ -99,13 +106,22 @@ public class VentasDAO implements IVentas {
         try (Cursor cursor = db.rawQuery(sql, null)){
             while (cursor.moveToNext()){
                 Ventas venta = new Ventas();
-                venta.setId_venta(cursor.getInt(0));
-                venta.setId_cliente(cursor.getString(1));
-                venta.setFecha_hora(cursor.getString(2));
-                venta.setMonto(cursor.getInt(3));
-                venta.setTotal_piezas(cursor.getInt(4));
-                venta.setTipo_pago(cursor.getString(5));
+                venta.setId_venta(cursor.getInt(cursor.getColumnIndexOrThrow("id_venta")));
+                venta.setId_cliente(cursor.getString(cursor.getColumnIndexOrThrow("id_cliente")));
+                venta.setFecha_hora(cursor.getString(cursor.getColumnIndexOrThrow("fecha_Hora")));
+                venta.setMonto(cursor.getInt(cursor.getColumnIndexOrThrow("monto")));
+                venta.setTotal_piezas(cursor.getInt(cursor.getColumnIndexOrThrow("total_piezas")));
+                venta.setTipo_pago(cursor.getString(cursor.getColumnIndexOrThrow("tipo_pago")));
                 venta.setId_corte(cursor.getInt(cursor.getColumnIndexOrThrow("id_corte")));
+                venta.setPago_con(cursor.getDouble(cursor.getColumnIndexOrThrow("pago_con")));
+                venta.setBanco_tarjeta(cursor.getString(cursor.getColumnIndexOrThrow("banco_tarjeta")));
+                venta.setNumero_tarjeta(cursor.getString(cursor.getColumnIndexOrThrow("numero_tarjeta")));
+                venta.setNumero_aprobacion(cursor.getString(cursor.getColumnIndexOrThrow("numero_aprobacion")));
+                venta.setTipo_tarjeta(cursor.getString(cursor.getColumnIndexOrThrow("tipo_tarjeta")));
+                venta.setDias_plazo(cursor.getInt(cursor.getColumnIndexOrThrow("dias_plazo")));
+                venta.setFrecuencia_pago(cursor.getString(cursor.getColumnIndexOrThrow("frecuencia_pago")));
+                venta.setFecha_limite(cursor.getString(cursor.getColumnIndexOrThrow("fecha_limite")));
+                venta.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("estado")));
                 ventas.add(venta);
             }
         } catch (Exception e) {
@@ -138,13 +154,22 @@ public class VentasDAO implements IVentas {
         try (Cursor cursor = rawQueryGetVentas(mes, year, busqueda)){
             while (cursor.moveToNext()){
                 Ventas venta = new Ventas();
-                venta.setId_venta(cursor.getInt(0));
-                venta.setId_cliente(cursor.getString(1));
-                venta.setFecha_hora(cursor.getString(2));
-                venta.setMonto(cursor.getInt(3));
-                venta.setTotal_piezas(cursor.getInt(4));
-                venta.setTipo_pago(cursor.getString(5));
+                venta.setId_venta(cursor.getInt(cursor.getColumnIndexOrThrow("id_venta")));
+                venta.setId_cliente(cursor.getString(cursor.getColumnIndexOrThrow("id_cliente")));
+                venta.setFecha_hora(cursor.getString(cursor.getColumnIndexOrThrow("fecha_Hora")));
+                venta.setMonto(cursor.getInt(cursor.getColumnIndexOrThrow("monto")));
+                venta.setTotal_piezas(cursor.getInt(cursor.getColumnIndexOrThrow("total_piezas")));
+                venta.setTipo_pago(cursor.getString(cursor.getColumnIndexOrThrow("tipo_pago")));
                 venta.setId_corte(cursor.getInt(cursor.getColumnIndexOrThrow("id_corte")));
+                venta.setPago_con(cursor.getDouble(cursor.getColumnIndexOrThrow("pago_con")));
+                venta.setBanco_tarjeta(cursor.getString(cursor.getColumnIndexOrThrow("banco_tarjeta")));
+                venta.setNumero_tarjeta(cursor.getString(cursor.getColumnIndexOrThrow("numero_tarjeta")));
+                venta.setNumero_aprobacion(cursor.getString(cursor.getColumnIndexOrThrow("numero_aprobacion")));
+                venta.setTipo_tarjeta(cursor.getString(cursor.getColumnIndexOrThrow("tipo_tarjeta")));
+                venta.setDias_plazo(cursor.getInt(cursor.getColumnIndexOrThrow("dias_plazo")));
+                venta.setFrecuencia_pago(cursor.getString(cursor.getColumnIndexOrThrow("frecuencia_pago")));
+                venta.setFecha_limite(cursor.getString(cursor.getColumnIndexOrThrow("fecha_limite")));
+                venta.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("estado")));
                 ventas.add(venta);
             }
         } catch (Exception e) {

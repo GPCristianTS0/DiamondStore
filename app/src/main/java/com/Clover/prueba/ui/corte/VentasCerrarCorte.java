@@ -1,7 +1,5 @@
 package com.Clover.prueba.ui.corte;
 
-import static com.Clover.prueba.utils.Constantes.CONST_EFECTIVO;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;

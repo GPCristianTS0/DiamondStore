@@ -1,5 +1,7 @@
 package com.Clover.prueba.utils;
 
+import static com.Clover.prueba.utils.Constantes.CONST_METODO_TARJETA;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,6 +45,11 @@ public class TicketUtils {
         TextView txtHora = view.findViewById(R.id.HV_horaOut);
         TextView txtTotal = view.findViewById(R.id.HV_totalVenta);
         TextView txtProductostotal = view.findViewById(R.id.HV_totalArticulos);
+        if (nombreCliente == null) txtCliente.setText("Publico General");
+        else txtCliente.setText(nombreCliente);
+        if(venta.getTipo_pago().equals(CONST_METODO_TARJETA)){
+
+        }
         LinearLayout contenedor = view.findViewById(R.id.HV_contenedorItems);
         ImageView imagen = view.findViewById(R.id.HV_imagen);
         Configuracion configuracion = new ConfiguracionDAO(context).getConfiguracion();

@@ -12,16 +12,18 @@ import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.utils.TicketUtils;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class CarritoDTO {
+public class CarritoDTO implements Serializable {
     private final IVentas iVentas;
     private final IProducto controller;
     private final ArrayList<DetalleVenta> detallesVenta = new ArrayList<>();
-    private int total;
+    private double total;
     private Clientes cliente;
     private Context context;
 
@@ -35,7 +37,7 @@ public class CarritoDTO {
         return detallesVenta;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         recalcularTotal();
         return total;
     }
@@ -114,17 +116,20 @@ public class CarritoDTO {
         total = 0;
         cliente = null;
     }
-    Ventas venta = new Ventas();
-    public void ventaConfirmada(String tipoPago){
-        if (cliente == null) venta.setId_cliente("N/A");
+    private Ventas venta;
+    public void ventaConfirmada(Ventas venta){
+        if (cliente == null) venta.setId_cliente("Publico General");
         else venta.setId_cliente(cliente.getId_cliente());
         venta.setMonto(total);
         venta.setTotal_piezas(totalpiezas());
-        venta.setTipo_pago(tipoPago);
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        LocalDate fechaLimite = LocalDate.now();
+        int dias = venta.getDias_plazo();
+        venta.setFecha_limite(fechaLimite.plusDays(dias).toString());
         String fecha = LocalDateTime.now().format(format);
         venta.setFecha_hora(fecha);
         venta.setId_corte(new CorteCajaController(context).getCorteActual().getId_corte());
+        this.venta = venta;
         //Agregar venta
         iVentas.addVenta(venta, detallesVenta);
     }

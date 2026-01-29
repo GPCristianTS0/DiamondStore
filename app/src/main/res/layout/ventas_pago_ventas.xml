@@ -283,44 +283,25 @@
                     android:baselineAligned="false"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/PVI_layoutBanco"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button_border"
-                        android:orientation="vertical"
-                        android:padding="1dp">
+                        android:layout_marginEnd="8dp"
+                        android:hint="Nombre del Banco"
+                        app:boxStrokeColor="#1565C0"
+                        app:hintTextColor="#1565C0">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/PVI_txtBanco"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingStart="8dp"
-                            android:paddingTop="4dp"
-                            android:text="Banco"
-                            android:textColor="#1565C0"
-                            android:textSize="10sp" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/PVI_layoutBanco"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.8"
-                            android:hint="Últimos 4"
-                            app:boxStrokeColor="#1565C0"
-                            app:hintTextColor="#1565C0">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/PVI_txtBanco"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="4"
-                                android:textColor="@color/black" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
+                            android:gravity="start"
+                            android:inputType="textCapWords"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/PVI_layoutDigitos"
@@ -381,9 +362,9 @@
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
                         android:text="Débito"
-                        android:backgroundTint="#1565C0"
+                        app:chipBackgroundColor="@color/selector_chip_azul"
+                        app:checkedIconTint="@color/white"
                         android:textColor="@color/white" />
 
                     <com.google.android.material.chip.Chip
@@ -392,7 +373,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Crédito"
-                        android:backgroundTint="#1565C0"
+                        app:chipBackgroundColor="@color/selector_chip_azul"
+                        app:checkedIconTint="@color/white"
                         android:textColor="@color/white" />
                 </com.google.android.material.chip.ChipGroup>
 
@@ -581,6 +563,7 @@
                         app:iconGravity="textStart" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/PVI_layoutCredito"
                 android:layout_width="match_parent"
@@ -664,35 +647,47 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center"
+                    android:weightSum="4"
                     android:layout_marginTop="4dp">
 
                     <RadioButton
-                        android:id="@+id/PVI_rbSemanal"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/PVI_rbPagoUnico"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Semanal"
+                        android:layout_weight="1"
+                        android:text="Un Pago"
                         android:checked="true"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:buttonTint="#1565C0"
-                        android:textColor="#000000"
-                        android:layout_marginEnd="4dp"/>
+                        android:textColor="#000000"/>
+
+                    <RadioButton
+                        android:id="@+id/PVI_rbSemanal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Semanal"
+                        android:textSize="11sp"
+                        android:buttonTint="#1565C0"
+                        android:textColor="#000000"/>
 
                     <RadioButton
                         android:id="@+id/PVI_rbQuincenal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="Quincenal"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:buttonTint="#1565C0"
-                        android:textColor="#000000"
-                        android:layout_marginEnd="4dp"/>
+                        android:textColor="#000000"/>
 
                     <RadioButton
                         android:id="@+id/PVI_rbMensual"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Un pago"
-                        android:textSize="12sp"
+                        android:layout_weight="1"
+                        android:text="Mensual"
+                        android:textSize="11sp"
                         android:buttonTint="#1565C0"
                         android:textColor="#000000"/>
                 </RadioGroup>

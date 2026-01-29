@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 13);
+        super(context, "Clover.db", null, 15);
     }
 
     @Override
@@ -38,7 +38,17 @@ public class CloverBD extends SQLiteOpenHelper{
                 "fecha_Hora TEXT,"+
                 "monto INTEGER," +
                 "total_piezas INTEGER," +
-                "tipo_pago TEXT)");
+                "tipo_pago TEXT, " +
+                "id_corte TEXT, " +
+                "pago_con REAL," +
+                "estado TEXT, " +
+                "dias_plazo INTEGER, " +
+                "frecuencia_pago TEXT, " +
+                "fecha_limite TEXT, " +
+                "banco_tarjeta TEXT, " +
+                "numero_tarjeta TEXT, " +
+                "numero_aprobacion TEXT, " +
+                "tipo_tarjeta TEXT)");//Credito o debito
         //Tabla detalle_venta
         db.execSQL("create table IF NOT EXISTS detalles_venta (" +
                 "id_detalle INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -118,6 +128,17 @@ public class CloverBD extends SQLiteOpenHelper{
                 "bank_account_name TEXT DEFAULT 'Clover')");
         String INIT_CONFIG = "INSERT OR IGNORE INTO configuracion (id_config) VALUES (1)";
         db.execSQL(INIT_CONFIG);
+        //Tabla para los abonos
+        db.execSQL("create table IF NOT EXISTS abonos (" +
+                "id_abono INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "fecha_hora TEXT, " +
+                "monto REAL, " +
+                "id_corte INTEGER, " +
+                "id_cliente TEXT, " +
+                "saldo_anterior REAL, " +
+                "saldo_nuevo REAL, " +
+                "id_empleado TEXT, " +
+                "observaciones TEXT)");
     }
 
     @Override
@@ -164,7 +185,7 @@ public class CloverBD extends SQLiteOpenHelper{
         }
         if (oldVersion<7){
             db.execSQL("CREATE TABLE IF NOT EXISTS configuracion (" +
-                    "id_config INTEGER PRIMARY KEY CHECK (id_config = 1), " + // Asegura que solo exista la fila 1
+                    "id_config INTEGER PRIMARY KEY CHECK (id_config = 1), " + //Asegura que solo exista la fila 1
                     "negocio_nombre TEXT DEFAULT 'Taller Clover', " +
                     "negocio_eslogan TEXT DEFAULT 'Venta y Reparación', " +
                     "negocio_direccion TEXT DEFAULT '', " +
@@ -201,6 +222,31 @@ public class CloverBD extends SQLiteOpenHelper{
             db.execSQL("ALTER TABLE configuracion ADD COLUMN bank_name TEXT");
             db.execSQL("ALTER TABLE configuracion ADD COLUMN bank_account TEXT");
             db.execSQL("ALTER TABLE configuracion ADD COLUMN bank_account_name TEXT");
+        }
+        if (oldVersion<14){
+            //Modificacion de la tabla ventas para el sistema de credito
+            db.execSQL("ALTER TABLE ventas ADD COLUMN banco_tarjeta TEXT");
+            db.execSQL("ALTER TABLE ventas ADD COLUMN numero_tarjeta TEXT");
+            db.execSQL("ALTER TABLE ventas ADD COLUMN numero_aprobacion TEXT");
+            db.execSQL("ALTER TABLE ventas ADD COLUMN estado TEXT");
+            db.execSQL("ALTER TABLE ventas ADD COLUMN dias_plazo INTEGER");
+            db.execSQL("ALTER TABLE ventas ADD COLUMN frecuencia_pago TEXT");
+            db.execSQL("ALTER TABLE ventas ADD COLUMN fecha_limite TEXT");
+            db.execSQL("ALTER TABLE ventas ADD COLUMN tipo_tarjeta TEXT");
+            //Creacion de la tabla abonos
+            db.execSQL("create table IF NOT EXISTS abonos (" +
+                    "id_abono INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "fecha_hora TEXT, " +
+                    "monto REAL, " +
+                    "id_corte INTEGER, " +
+                    "id_cliente TEXT, " +
+                    "saldo_anterior REAL, " +
+                    "saldo_nuevo REAL, " +
+                    "id_empleado TEXT, " +
+                    "observaciones TEXT)");
+        }
+        if (oldVersion<15){
+            db.execSQL("ALTER TABLE ventas ADD COLUMN pago_con REAL");
         }
     }
     public static synchronized CloverBD getInstance(Context context) {

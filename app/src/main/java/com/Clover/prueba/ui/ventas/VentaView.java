@@ -31,6 +31,7 @@ import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.CorteCajaController;
 import com.Clover.prueba.data.dao.CorteCajaDAO;
 import com.Clover.prueba.data.models.CarritoDTO;
+import com.Clover.prueba.data.models.Ventas;
 import com.Clover.prueba.ui.corte.DialogAbrirCorte;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -210,13 +211,15 @@ public class VentaView extends AppCompatActivity {
         }
     }
     //Accion boton pagar
-    private boolean pago = false;
     public void onClickPagar(View view){
         if (modelVentas.isVacio()){
             Toast.makeText(this, "No hay articulos", Toast.LENGTH_SHORT).show();
             return;
         }
-        DialogFragmentVentas frament = new DialogFragmentVentas(modelVentas.getTotal());
+        DialogFragmentVentas frament = new DialogFragmentVentas();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("carrito", modelVentas);
+        frament.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, frament).addToBackStack(null).commit();
 
         FrameLayout fragmentContainer = findViewById(R.id.fragment_container_view_tag);
@@ -225,23 +228,14 @@ public class VentaView extends AppCompatActivity {
             getSupportFragmentManager().popBackStack();
             fragmentContainer.setVisibility(INVISIBLE);
         });
-        frament.setTicketGenerado(new DialogFragmentVentas.ticketGenerado() {
-            @Override
-            public void ticketGenerado() {
-                modelVentas.compartirTicket();
-                //Limpiar
-                limpiarVista();
-                getSupportFragmentManager().popBackStack();
-                fragmentContainer.setVisibility(INVISIBLE);
-            }
-        });
         frament.setVentaConfirmada(new DialogFragmentVentas.ventaConfirmada(){
             @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void ventaConfirmada(String metodo) {
-                modelVentas.ventaConfirmada(metodo);
-            }
 
+            @Override
+            public void ventaConfirmada(Ventas venta) {
+                modelVentas.ventaConfirmada(venta);
+                limpiarVista();
+            }
             @Override
             public void vaciarCarrito() {
                 limpiarVista();

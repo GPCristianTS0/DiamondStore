@@ -1,11 +1,10 @@
 package com.Clover.prueba.data.controller;
 
-import static com.Clover.prueba.utils.Constantes.CONST_EFECTIVO;
-import static com.Clover.prueba.utils.Constantes.CONST_TARJETA;
-import static com.Clover.prueba.utils.Constantes.CONST_TRANSFERENCIA;
+import static com.Clover.prueba.utils.Constantes.CONST_METODO_EFECTIVO;
+import static com.Clover.prueba.utils.Constantes.CONST_METODO_TARJETA;
+import static com.Clover.prueba.utils.Constantes.CONST_METODO_TRANSFERENCIA;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.Clover.prueba.data.dao.CorteCajaDAO;
 import com.Clover.prueba.data.dao.GastosDAO;
@@ -52,10 +51,10 @@ public class CorteCajaController {
     public CorteCaja getCorteActual() {
         corteCaja = daoCorteCaja.getCorteActual();
         corteCaja.setVentas_totales(daoCorteCaja.getVentasTotalesCorte(corteCaja.getFecha_apertura()));
-        corteCaja.setVentas_efectivo(ventasDAO.getVentasMetodoPago(CONST_EFECTIVO, corteCaja.getId_corte()));
-        corteCaja.setVentas_tarjeta(ventasDAO.getVentasMetodoPago(CONST_TARJETA, corteCaja.getId_corte()));
-        corteCaja.setVentas_transferencia(ventasDAO.getVentasMetodoPago(CONST_TRANSFERENCIA, corteCaja.getId_corte()));
-        double d = gastosDAO.sumarTotalGastosByCorte(corteCaja.getId_corte(), CONST_EFECTIVO);
+        corteCaja.setVentas_efectivo(ventasDAO.getVentasMetodoPago(CONST_METODO_EFECTIVO, corteCaja.getId_corte()));
+        corteCaja.setVentas_tarjeta(ventasDAO.getVentasMetodoPago(CONST_METODO_TARJETA, corteCaja.getId_corte()));
+        corteCaja.setVentas_transferencia(ventasDAO.getVentasMetodoPago(CONST_METODO_TRANSFERENCIA, corteCaja.getId_corte()));
+        double d = gastosDAO.sumarTotalGastosByCorte(corteCaja.getId_corte(), CONST_METODO_EFECTIVO);
         corteCaja.setGastos_totales(d);
         double esperado = corteCaja.getMonto_inicial() + corteCaja.getVentas_efectivo() + corteCaja.getAbonos_totales() - d;
         corteCaja.setDinero_en_caja(esperado);
