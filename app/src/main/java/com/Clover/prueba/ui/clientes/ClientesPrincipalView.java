@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.utils.AbrirAppExternas;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -76,6 +77,7 @@ public class ClientesPrincipalView extends AppCompatActivity {
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.CP_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        AbrirAppExternas abrirAppExternas = new AbrirAppExternas();
         adapter = new ClientesPrincipalAdapter(cliente, new ClientesPrincipalAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Clientes cliente, int position) {
@@ -86,44 +88,12 @@ public class ClientesPrincipalView extends AppCompatActivity {
 
             @Override
             public void OnWhatsappClick(String numero, int position) {
-                numero = numero.replace("+", "").replace(" ", "");
-                if (numero.length() == 10) {
-                    numero = "52" + numero; // Agregamos lada México
-                }
-
-                try {
-                    // B. Codificar mensaje para URL (espacios a %20, etc.)
-                    String url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + URLEncoder.encode("", "UTF-8");
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(url));
-
-                    // C. INTENTO 1: WhatsApp Business
-                    intent.setPackage("com.whatsapp.w4b");
-                    startActivity(intent);
-
-                } catch (ActivityNotFoundException e) {
-                    // D. FALLBACK: Si falla Business, intentamos WhatsApp Normal
-                    try {
-                        String url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + URLEncoder.encode("", "UTF-8");
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse(url));
-
-                        intent.setPackage("com.whatsapp"); // WhatsApp Normal
-                        startActivity(intent);
-
-                    } catch (Exception e2) {
-                        // E. ERROR: No tiene ninguno instalado
-                        Toast.makeText(null, "No tienes WhatsApp instalado", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+                abrirAppExternas.abrirWhatsapp(ClientesPrincipalView.this, numero, null);
             }
 
             @Override
             public void OnLlamarClick(String numero, int position) {
-
+                abrirAppExternas.abrirLlamada(ClientesPrincipalView.this, numero);
             }
         });
         recyclerView.setAdapter(adapter);

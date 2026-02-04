@@ -8,7 +8,9 @@ public interface IClient {
     public boolean addClient(Clientes cliente);
     public ArrayList<Clientes> getClient(String filtro, String valor, boolean deudores);
     public Clientes getClient(String idCliente);
+    public ArrayList<Clientes> getDeudores();
     public ArrayList<Clientes> getClients();
+    public double getSaldoTotal();
     public boolean deleteClient(Clientes cliente);
     public boolean updateClient(Clientes oldClient, Clientes newClient);
 }

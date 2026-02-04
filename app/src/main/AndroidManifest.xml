@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
         <activity
+            android:name=".ui.credito.CreditoPrincipalView"
+            android:exported="false" />
+        <activity
             android:name=".ui.financiero.DashboardFinanciero"
             android:exported="false" />
         <activity

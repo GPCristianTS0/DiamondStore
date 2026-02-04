@@ -1,5 +1,7 @@
 package com.Clover.prueba.data.models;
 
+import static com.Clover.prueba.utils.Constantes.VENTA_PENDIENTE;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -10,6 +12,7 @@ import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
+import com.Clover.prueba.utils.Constantes;
 import com.Clover.prueba.utils.TicketUtils;
 
 import java.io.Serializable;
@@ -128,10 +131,14 @@ public class CarritoDTO implements Serializable {
         venta.setFecha_limite(fechaLimite.plusDays(dias).toString());
         String fecha = LocalDateTime.now().format(format);
         venta.setFecha_hora(fecha);
+        venta.setEstado(VENTA_PENDIENTE);
         venta.setId_corte(new CorteCajaController(context).getCorteActual().getId_corte());
+        if (venta.getTipo_pago().equals(Constantes.CONST_METODO_CREDITO))
+            venta.setMonto_pendiente(total);
         this.venta = venta;
         //Agregar venta
-        iVentas.addVenta(venta, detallesVenta);
+        long id = iVentas.addVenta(venta, detallesVenta);
+        this.venta.setId_venta((int) id);
     }
     public void compartirTicket(){
         TicketUtils ticketUtils = new TicketUtils();

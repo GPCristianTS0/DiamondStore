@@ -48,6 +48,7 @@ dependencies {
 
     // ---- Carga de imágenes (Glide) ----
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.activity)
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 
     // ---- Componentes de ciclo de vida (Lifecycle) ----

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Clover.prueba.ui.credito.CreditoDarAbono;
+import com.Clover.prueba.ui.credito.CreditoPrincipalView;
 import com.Clover.prueba.ui.financiero.DashboardFinanciero;
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.ConfiguracionControl;
@@ -55,6 +58,16 @@ public class MenuPrincipal extends AppCompatActivity {
         iProductos = new ProductoDAO(this);
         rellenarDatos();
 
+        Button btn = findViewById(R.id.abonoBtn);
+        btn.setOnClickListener(v -> {
+            CreditoDarAbono dialog = new CreditoDarAbono();
+            dialog.show(getSupportFragmentManager(), "dialog");
+        });
+        Button btn2 = findViewById(R.id.verDeudoresBtn);
+        btn2.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuPrincipal.this, CreditoPrincipalView.class);
+            startActivity(intent);
+        });
     }
     //Accion boton de clientes
     public void onClickClientesView(View v){

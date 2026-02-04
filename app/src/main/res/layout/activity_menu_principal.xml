@@ -289,6 +289,35 @@
             app:layout_constraintTop_toTopOf="@+id/precioPublicoBtn"
             app:strokeColor="#EF9A9A" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/abonoBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="12dp"
+            android:text="Realizar\nAbono"
+            android:textColor="#388E3C"
+            android:textSize="14sp"
+            app:cornerRadius="12dp"
+            app:strokeColor="#388E3C"
+            app:layout_constraintEnd_toEndOf="@+id/precioPublicoBtn"
+            app:layout_constraintStart_toStartOf="@+id/precioPublicoBtn"
+            app:layout_constraintTop_toBottomOf="@+id/precioPublicoBtn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/verDeudoresBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:text="Cuentas por\nCobrar"
+            android:textColor="#F57C00"
+            android:textSize="14sp"
+            app:cornerRadius="12dp"
+            app:strokeColor="#F57C00"
+            app:layout_constraintBottom_toBottomOf="@+id/abonoBtn"
+            app:layout_constraintEnd_toEndOf="@+id/realizarGastoBtn"
+            app:layout_constraintStart_toStartOf="@+id/realizarGastoBtn"
+            app:layout_constraintTop_toTopOf="@+id/abonoBtn" />
 
         <View
             android:id="@+id/sepAdmin"
@@ -297,7 +326,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:background="#E0E0E0"
-            app:layout_constraintTop_toBottomOf="@+id/precioPublicoBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/abonoBtn" />
 
         <TextView
             android:id="@+id/lblAdmin"

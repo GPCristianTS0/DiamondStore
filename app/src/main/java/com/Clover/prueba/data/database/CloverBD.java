@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 15);
+        super(context, "Clover.db", null, 18);
     }
 
     @Override
@@ -37,6 +37,7 @@ public class CloverBD extends SQLiteOpenHelper{
                 "id_cliente TEXT," +
                 "fecha_Hora TEXT,"+
                 "monto INTEGER," +
+                "monto_pendiente REAL," +
                 "total_piezas INTEGER," +
                 "tipo_pago TEXT, " +
                 "id_corte TEXT, " +
@@ -138,7 +139,23 @@ public class CloverBD extends SQLiteOpenHelper{
                 "saldo_anterior REAL, " +
                 "saldo_nuevo REAL, " +
                 "id_empleado TEXT, " +
+                "tipo_pago TEXT," +
                 "observaciones TEXT)");
+
+        //Index
+        db.execSQL("CREATE INDEX idx_ventas_id_cliente ON ventas (id_cliente)");
+        db.execSQL("CREATE INDEX idx_ventas_id_corte ON ventas (id_corte)");
+        db.execSQL("CREATE INDEX idx_det_venta_id_venta ON detalles_venta (id_venta)");
+        db.execSQL("CREATE INDEX idx_cortes_fecha_apertura ON cortes_cajas (fecha_apertura)");
+        db.execSQL("CREATE INDEX idx_cortes_fecha_cierre ON cortes_cajas (fecha_cierre)");
+        db.execSQL("CREATE INDEX idx_gastos_fecha_hora ON gastos (fecha_hora)");
+        db.execSQL("CREATE INDEX idx_abonos_fecha_hora ON abonos (fecha_hora)");
+        db.execSQL("CREATE INDEX idx_ventas_fecha_Hora ON ventas (fecha_Hora)");
+        db.execSQL("CREATE INDEX idx_productos_nombre_producto ON productos (nombre_producto)");
+        db.execSQL("CREATE INDEX idx_ventas_estado ON ventas (estado)");
+        db.execSQL("CREATE INDEX idx_abonos_id_cliente ON abonos (id_cliente)");
+        db.execSQL("CREATE INDEX idx_abonos_id_corte ON abonos (id_corte)");
+        db.execSQL("CREATE INDEX idx_clientes_saldo ON clientes (saldo)");
     }
 
     @Override
@@ -247,6 +264,27 @@ public class CloverBD extends SQLiteOpenHelper{
         }
         if (oldVersion<15){
             db.execSQL("ALTER TABLE ventas ADD COLUMN pago_con REAL");
+        }
+        if (oldVersion<16){
+            db.execSQL("ALTER TABLE abonos ADD COLUMN tipo_pago TEXT");
+        }
+        if (oldVersion<17) {
+            db.execSQL("ALTER TABLE ventas ADD COLUMN monto_pendiente REAL");
+        }
+        if (oldVersion<18){
+            db.execSQL("CREATE INDEX idx_ventas_id_cliente ON ventas (id_cliente)");
+            db.execSQL("CREATE INDEX idx_ventas_id_corte ON ventas (id_corte)");
+            db.execSQL("CREATE INDEX idx_det_venta_id_venta ON detalles_venta (id_venta)");
+            db.execSQL("CREATE INDEX idx_cortes_fecha_apertura ON cortes_cajas (fecha_apertura)");
+            db.execSQL("CREATE INDEX idx_cortes_fecha_cierre ON cortes_cajas (fecha_cierre)");
+            db.execSQL("CREATE INDEX idx_gastos_fecha_hora ON gastos (fecha_hora)");
+            db.execSQL("CREATE INDEX idx_abonos_fecha_hora ON abonos (fecha_hora)");
+            db.execSQL("CREATE INDEX idx_ventas_fecha_Hora ON ventas (fecha_Hora)");
+            db.execSQL("CREATE INDEX idx_productos_nombre_producto ON productos (nombre_producto)");
+            db.execSQL("CREATE INDEX idx_ventas_estado ON ventas (estado)");
+            db.execSQL("CREATE INDEX idx_abonos_id_cliente ON abonos (id_cliente)");
+            db.execSQL("CREATE INDEX idx_abonos_id_corte ON abonos (id_corte)");
+            db.execSQL("CREATE INDEX idx_clientes_saldo ON clientes (saldo)");
         }
     }
     public static synchronized CloverBD getInstance(Context context) {

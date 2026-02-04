@@ -10,6 +10,9 @@ public class Clientes implements Serializable {
     private int puntos;
     private int saldo;
     private String fecha_registro;
+    private String fechaLimite;
+    private String ultimoAbono;
+
 
     public Clientes() {
 
@@ -19,6 +22,22 @@ public class Clientes implements Serializable {
         this.nombre_cliente = nombre;
         this.apodo = apodo;
         this.saldo = saldo;
+    }
+
+    public String getFechaLimite() {
+        return fechaLimite;
+    }
+
+    public void setFechaLimite(String fechaLimite) {
+        this.fechaLimite = fechaLimite;
+    }
+
+    public String getUltimoAbono() {
+        return ultimoAbono;
+    }
+
+    public void setUltimoAbono(String ultimoAbono) {
+        this.ultimoAbono = ultimoAbono;
     }
 
     public String getId_cliente() {
@@ -84,13 +103,15 @@ public class Clientes implements Serializable {
     @Override
     public String toString() {
         return "Clientes{" +
-                "id=" + id_cliente +
-                ", nombre='" + nombre_cliente + '\'' +
+                "id_cliente='" + id_cliente + '\'' +
+                ", nombre_cliente='" + nombre_cliente + '\'' +
                 ", apodo='" + apodo + '\'' +
-                ", saldo=" + saldo +
                 ", direccion='" + direccion + '\'' +
                 ", puntos=" + puntos +
+                ", saldo=" + saldo +
                 ", fecha_registro='" + fecha_registro + '\'' +
+                ", fechaLimite='" + fechaLimite + '\'' +
+                ", ultimoAbono='" + ultimoAbono + '\'' +
                 '}';
     }
 }

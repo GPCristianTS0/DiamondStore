@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ICD_cardContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp">
+
+        <View
+            android:id="@+id/ICD_barraEstado"
+            android:layout_width="6dp"
+            android:layout_height="0dp"
+            android:background="#4CAF50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ICD_txtNombre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Juan Pérez"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/ICD_txtMonto"
+            app:layout_constraintStart_toEndOf="@+id/ICD_barraEstado"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ICD_txtFechaLimite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Vence: 28 Feb"
+            android:textColor="#757575"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="@+id/ICD_txtNombre"
+            app:layout_constraintTop_toBottomOf="@+id/ICD_txtNombre" />
+
+        <TextView
+            android:id="@+id/ICD_txtUltimoMov"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Último abono: Hace 3 días"
+            android:textColor="#1976D2"
+            android:textSize="11sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@+id/ICD_txtNombre"
+            app:layout_constraintTop_toBottomOf="@+id/ICD_txtFechaLimite" />
+
+        <TextView
+            android:id="@+id/ICD_txtMonto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:text="$ 500.00"
+            android:textColor="#D32F2F"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ICD_badgeAtrasado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/redondear_esquinas"
+            android:backgroundTint="#FFEBEE"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="2dp"
+            android:text="MOROSO"
+            android:textColor="#D32F2F"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/ICD_txtMonto"
+            app:layout_constraintTop_toBottomOf="@+id/ICD_txtMonto"
+            tools:visibility="visible"/>
+
+        <View
+            android:id="@+id/ICD_separador"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:background="#EEEEEE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ICD_txtNombre"
+            app:layout_constraintTop_toBottomOf="@+id/ICD_txtUltimoMov" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ICD_txtNombre"
+            app:layout_constraintTop_toBottomOf="@+id/ICD_separador">
+
+            <ImageButton
+                android:id="@+id/ICD_btnLlamar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_menu_call"
+                app:tint="#616161"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/ICD_btnWhatsapp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_menu_send"
+                app:tint="#25D366"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/ICD_btnAbonar"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="ABONAR"
+                android:textColor="#1565C0"
+                android:textStyle="bold"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:strokeColor="#1565C0"
+                app:strokeWidth="1dp"
+                app:cornerRadius="18dp"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -91,7 +91,7 @@ public class DialogFragmentVentas extends DialogFragment {
                     v1 -> configTransfer(view), 3);
         });
         btnCredito.setOnClickListener(v -> {
-            if (modelCarrito.getClienteNombre() == null){
+            if (modelCarrito.getClienteNombre().isEmpty()){
                 Toast.makeText(getContext(), "Agregue un cliente para pagar de esta forma", Toast.LENGTH_SHORT).show();
                 return;
             }

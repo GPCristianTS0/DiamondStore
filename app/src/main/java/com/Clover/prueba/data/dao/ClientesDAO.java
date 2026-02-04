@@ -1,5 +1,7 @@
 package com.Clover.prueba.data.dao;
 
+import static com.Clover.prueba.utils.Constantes.VENTA_PENDIENTE;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -87,11 +89,9 @@ public class ClientesDAO implements IClient {
     @Override
     public Clientes getClient(String idCliente) {
         Clientes clientee = new Clientes();
-        try {
-            String query = "SELECT * FROM clientes WHERE id_cliente = ?";
-            String[] args = {String.valueOf(idCliente)};
-            ArrayList<Clientes> clientes = new ArrayList<>();
-            Cursor cursor = db.rawQuery(query, args);
+        String query = "SELECT * FROM clientes WHERE id_cliente = ?";
+        String[] args = {String.valueOf(idCliente)};
+        try (Cursor cursor = db.rawQuery(query, args)){
             if (cursor.moveToFirst()) {
                 clientee.setId_cliente(cursor.getString(0));
                 clientee.setNombre_cliente(cursor.getString(1));
@@ -105,9 +105,35 @@ public class ClientesDAO implements IClient {
         } catch (Exception e) {
             Log.e("Clover_App", "getClient: "+e.getMessage());
         }
-        return clientee;
+        return null;
     }
-
+    @Override
+    public ArrayList<Clientes> getDeudores(){
+        ArrayList<Clientes> clientes = new ArrayList<>();
+        String query = "SELECT cl.*, " +
+                "(SELECT MIN(fecha_limite) FROM ventas WHERE id_cliente = cl.id_cliente AND estado = '"+VENTA_PENDIENTE+"') AS fecha_limiteCl, " +
+                "(SELECT MAX(fecha_hora) FROM abonos WHERE id_cliente = cl.id_cliente) AS ultimo_abono FROM clientes cl " +
+                "WHERE cl.saldo > 0";
+        try (Cursor cursor = db.rawQuery(query, null)){
+            while (cursor.moveToNext()){
+                Clientes cliente = new Clientes();
+                cliente.setId_cliente(cursor.getString(cursor.getColumnIndexOrThrow("id_cliente")));
+                cliente.setNombre_cliente(cursor.getString(cursor.getColumnIndexOrThrow("nombre_cliente")));
+                cliente.setApodo(cursor.getString(cursor.getColumnIndexOrThrow("apodo")));
+                cliente.setDireccion(cursor.getString(cursor.getColumnIndexOrThrow("direccion")));
+                cliente.setFecha_registro(cursor.getString(cursor.getColumnIndexOrThrow("fecha_registro")));
+                cliente.setSaldo(cursor.getInt(cursor.getColumnIndexOrThrow("saldo")));
+                cliente.setPuntos(cursor.getInt(cursor.getColumnIndexOrThrow("puntos")));
+                cliente.setFechaLimite(cursor.getString(cursor.getColumnIndexOrThrow("fecha_limiteCl")));
+                cliente.setUltimoAbono(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_abono")));
+                clientes.add(cliente);
+            }
+            return clientes;
+        } catch (Exception e) {
+            Log.e("Clover_App", "getDeudores: "+e.getMessage());
+        }
+        return clientes;
+    }
     @Override
     public ArrayList<Clientes> getClients() {
         ArrayList<Clientes> clientes = new ArrayList<>();
@@ -130,6 +156,20 @@ public class ClientesDAO implements IClient {
             Log.e("Clover_App", "getClients: "+e.getMessage());
         }
         return clientes;
+    }
+
+    @Override
+    public double getSaldoTotal() {
+        String sql = "SELECT SUM(saldo) FROM clientes";
+        try (Cursor cursor = db.rawQuery(sql, null)){
+            if (cursor.moveToFirst()){
+                return cursor.getDouble(0);
+
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "getSaldoTotal: "+e.getMessage());
+        }
+        return 0;
     }
 
     @Override

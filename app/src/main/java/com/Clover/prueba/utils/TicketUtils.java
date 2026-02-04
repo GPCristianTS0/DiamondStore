@@ -1,6 +1,9 @@
 package com.Clover.prueba.utils;
 
+import static com.Clover.prueba.utils.Constantes.CONST_METODO_CREDITO;
+import static com.Clover.prueba.utils.Constantes.CONST_METODO_EFECTIVO;
 import static com.Clover.prueba.utils.Constantes.CONST_METODO_TARJETA;
+import static com.Clover.prueba.utils.Constantes.CONST_METODO_TRANSFERENCIA;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,91 +36,19 @@ public class TicketUtils {
 
     public void generarYCompartirTicket(Context context,String nombreCliente, Ventas venta, ArrayList<DetalleVenta>listaProductos) {
 
-        // 1. INFLAR: Traemos el layout del cajón a la memoria
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.ticket_virtual, null);
-
-        // 2. DATA BINDING: Llenamos los datos en la vista invisible
-        TextView txtCliente = view.findViewById(R.id.HV_clienteOut);
-        TextView txtNombre = view.findViewById(R.id.HV_nombreNegocio);
-        TextView txtFecha = view.findViewById(R.id.HV_fechaOut);
-        TextView txtDireccion = view.findViewById(R.id.HV_direccion);
-        TextView txtDatosFiscales = view.findViewById(R.id.HV_datosFiscales);
-        TextView txtHora = view.findViewById(R.id.HV_horaOut);
-        TextView txtTotal = view.findViewById(R.id.HV_totalVenta);
-        TextView txtProductostotal = view.findViewById(R.id.HV_totalArticulos);
-        if (nombreCliente == null) txtCliente.setText("Publico General");
-        else txtCliente.setText(nombreCliente);
-        if(venta.getTipo_pago().equals(CONST_METODO_TARJETA)){
-
-        }
-        LinearLayout contenedor = view.findViewById(R.id.HV_contenedorItems);
-        ImageView imagen = view.findViewById(R.id.HV_imagen);
-        Configuracion configuracion = new ConfiguracionDAO(context).getConfiguracion();
-        imagen.setImageURI(Uri.parse(configuracion.getRutaLogo()));
-        txtNombre.setText(configuracion.getNombreNegocio());
-        txtDireccion.setText(configuracion.getDireccion());
-        txtDatosFiscales.setText("Tel: "+configuracion.getTelefono()+" | RFC: "+configuracion.getRfc());
-
-
-        try {
-            String fechaf = venta.getFecha_hora();
-            DateTimeFormatter inputFormatter;
-            if (fechaf.length() > 16) {
-                inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            } else {
-                inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault());
-            }
-
-            LocalDateTime fechaHora = LocalDateTime.parse(fechaf, inputFormatter);
-
-            txtFecha.setText(fechaHora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-            txtHora.setText(fechaHora.format(DateTimeFormatter.ofPattern("HH:mm")));
-
-        } catch (Exception e) {
-            txtFecha.setText(venta.getFecha_hora());
-            txtHora.setText("--:--");
-            e.printStackTrace();
-        }
-
-
-        int piezas = 0;
-        for (DetalleVenta detalleVenta : listaProductos) {
-            View rowView = inflater.inflate(R.layout.ticket_item, null);
-            TextView nombreProducto = rowView.findViewById(R.id.ticketItem_nombreProducto);
-            TextView piezasTextView = rowView.findViewById(R.id.ticketitem_piezas);
-            TextView precioTextView = rowView.findViewById(R.id.ticketItem_precio);
-            nombreProducto.setText(detalleVenta.getNombre_producto()+"\n\t (x $"+detalleVenta.getPrecio()+")");
-            piezasTextView.setText(String.valueOf(detalleVenta.getCantidad()));
-            precioTextView.setText("$ "+detalleVenta.getPrecio()*detalleVenta.getCantidad());
-            contenedor.addView(rowView);
-            // Sumar las piezas
-            piezas += detalleVenta.getCantidad();
-        }
-
-
-
-        // Aquí puedes poner la fecha real con DateFormat
-        if (nombreCliente == null) txtCliente.setText("Publico General");
-        else txtCliente.setText(nombreCliente);
-        txtProductostotal.setText(String.valueOf(piezas));
-        txtTotal.setText(String.valueOf(venta.getMonto()));
-
-        // 3. MEDIR (MEASURE): Esta es la parte CLAVE
-        // Le decimos: "Tienes 380 pixeles de ancho, calcula tu alto automáticamente"
+        //Medicion de la pantalla
         int widthSpec = View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY); // Ancho fijo
         int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED); // Alto automático
         view.measure(widthSpec, heightSpec);
         int altoDelContenido = view.getMeasuredHeight();
 
-// Definimos tu altura mínima deseada (1920px)
+        //Definimos tu altura mínima deseada (1920px)
         int altoMinimo = 2040;
 
-// ELEGIMOS EL MAYOR: Si el contenido es chico, usamos 1920. Si es grande, usamos el contenido.
+        //ELEGIMOS EL MAYOR: Si el contenido es chico, usamos 1920. Si es grande, usamos el contenido.
         int altoFinal = Math.max(altoDelContenido, altoMinimo);
 
-        // ")
-        // 4. ACOMODAR (LAYOUT): Le asignamos su tamaño final
+
         view.layout(0, 0, view.getMeasuredWidth(), altoFinal);
 
         // 5. DIBUJAR (DRAW): Creamos el Bitmap y le decimos a la vista "dibújate aquí"

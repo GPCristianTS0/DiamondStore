@@ -7,6 +7,7 @@ public class Ventas implements Serializable {
     private String id_cliente;
     private String fecha_hora;
     private double monto;
+    private double monto_pendiente;
     private int total_piezas;
     private String tipo_pago;
     private String estado;
@@ -31,6 +32,14 @@ public class Ventas implements Serializable {
         this.monto = monto;
         this.total_piezas = total_piezas;
         this.tipo_pago = tipo_pago;
+    }
+
+    public double getMonto_pendiente() {
+        return monto_pendiente;
+    }
+
+    public void setMonto_pendiente(double monto_pendiente) {
+        this.monto_pendiente = monto_pendiente;
     }
 
     public String getEstado() {

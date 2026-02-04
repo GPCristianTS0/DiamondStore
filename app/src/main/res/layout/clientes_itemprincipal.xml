@@ -24,20 +24,20 @@
             android:layout_width="48dp"
             android:background="@drawable/redondear_esquinas"
             android:layout_height="48dp"
-            android:backgroundTint="#E3F2FD"
+            android:backgroundTint="#1836BA"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/iconAvatar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content "
+            android:layout_height="wrap_content"
             android:text="C"
             android:textAlignment="center"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="22sp"
-            app:tint="#1565C0"
+            app:tint="#102E94"
             app:layout_constraintStart_toStartOf="@id/bgAvatar"
             app:layout_constraintEnd_toEndOf="@id/bgAvatar"
             app:layout_constraintTop_toTopOf="@id/bgAvatar"
@@ -95,15 +95,14 @@
             android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
             android:background="@drawable/button_border"
             android:backgroundTint="#FFF3E0"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="6dp"
             android:paddingVertical="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblSaldo">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
                 android:layout_width="12dp"
@@ -126,9 +125,9 @@
             android:id="@+id/dividerItem"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="18dp"
             android:background="#F5F5F5"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/CP_item_nombre"
             tools:layout_editor_absoluteX="12dp" />
 
         <TextView
