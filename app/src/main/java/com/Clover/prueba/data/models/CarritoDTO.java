@@ -141,9 +141,9 @@ public class CarritoDTO implements Serializable {
         this.venta.setId_venta((int) id);
     }
     public void compartirTicket(){
-        TicketUtils ticketUtils = new TicketUtils();
+        TicketUtils ticketUtils = new TicketUtils(context);
         Log.i("Clover_App", "detallesVenta: "+detallesVenta.toString());
-        ticketUtils.generarYCompartirTicket(context, getClienteNombre(), venta, detallesVenta);
+        ticketUtils.generarTicketVenta(context, getClienteNombre(), venta, detallesVenta);
         vaciarCarrito();
     }
 

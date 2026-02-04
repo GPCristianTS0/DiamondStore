@@ -135,6 +135,19 @@ public class ClientesDAO implements IClient {
         return clientes;
     }
     @Override
+    public String getNombreCliente(String idCliente){
+        String sql = "SELECT nombre_cliente FROM clientes WHERE id_cliente = ?";
+        String[] args = {idCliente};
+        try (Cursor cursor = db.rawQuery(sql, args)){
+            if (cursor.moveToFirst()){
+                return cursor.getString(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "getNombreCliente: "+e.getMessage());
+        }
+        return "";
+    }
+    @Override
     public ArrayList<Clientes> getClients() {
         ArrayList<Clientes> clientes = new ArrayList<>();
         try {

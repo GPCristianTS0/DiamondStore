@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#00000000">
+    android:background="#C3C3C3">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardTicket"
@@ -47,10 +47,10 @@
 
             <TextView
                 android:id="@+id/txtDireccionEmpresa"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                tools:text="Av. Principal #123, Centro.\nTel: 618-123-4567"
+                tools:text="Av. Principal #123, Centro."
                 android:gravity="center"
                 android:textColor="#757575"
                 android:textSize="11sp"
@@ -58,15 +58,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtNombreEmpresa" />
 
+            <TextView
+                android:id="@+id/txtTelefonoEmpresa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#757575"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDireccionEmpresa"
+                tools:text="Tel: 618-123-4567" />
+
             <View
                 android:id="@+id/divHeader"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:background="@color/black"
                 android:backgroundTint="#EEEEEE"
-                app:layout_constraintTop_toBottomOf="@+id/txtDireccionEmpresa" />
+                app:layout_constraintTop_toBottomOf="@+id/txtTelefonoEmpresa"
+                tools:layout_editor_absoluteX="24dp" />
 
             <TextView
                 android:id="@+id/lblTitulo"

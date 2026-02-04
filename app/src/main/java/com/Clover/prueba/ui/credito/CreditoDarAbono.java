@@ -29,6 +29,7 @@ import com.Clover.prueba.data.controller.ControllerCredito;
 import com.Clover.prueba.data.controller.GastosController;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Gastos;
+import com.Clover.prueba.utils.TicketUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -97,7 +98,6 @@ public class CreditoDarAbono extends BottomSheetDialogFragment {
             if (selectedId== R.id.DA_rbTransf) tipoPago = CONST_METODO_TRANSFERENCIA;
 
             if(controllerCredito.darAbono(montoAbono, cliente,tipoPago)){
-                Toast.makeText(getContext(), "Abono registrado", Toast.LENGTH_SHORT).show();
                 da_layoutExito.setVisibility(View.VISIBLE);
                 da_layoutResultado.setVisibility(View.GONE);
                 btnConfirmar.setVisibility(View.GONE);
@@ -112,7 +112,8 @@ public class CreditoDarAbono extends BottomSheetDialogFragment {
         btnCancelar.setOnClickListener(v -> {dismiss();});
 
         btnTicket.setOnClickListener(v -> {
-
+            controllerCredito.generarTicketAbono(getContext(), cliente.getNombre_cliente());
+            dismiss();
         });
 
         btnListo.setOnClickListener(v -> {dismiss();});

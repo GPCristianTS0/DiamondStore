@@ -2,6 +2,7 @@ package com.Clover.prueba.data.controller;
 
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
+import android.util.Log;
 
 import com.Clover.prueba.data.dao.AbonosDAO;
 import com.Clover.prueba.data.dao.ClientesDAO;
@@ -14,6 +15,7 @@ import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.models.Abonos;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Ventas;
+import com.Clover.prueba.utils.TicketUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +27,7 @@ public class ControllerCredito {
     private IVentas ventasDAO;
     private IAbonos abonosDAO;
     private ICorteCaja corteCajaDAO;
+    private Abonos abono;
     public ControllerCredito(Context context) {
         this.context = context;
         clientesDAO = new ClientesDAO(context);
@@ -44,7 +47,18 @@ public class ControllerCredito {
         abonos.setTipoPago(tipoPago);
         int id = corteCajaDAO.getCorteActual().getId_corte();
         abonos.setIdCorte(id);
-        return abonosDAO.addAbono(abonos);
+        long idRow = abonosDAO.addAbono(abonos);
+        if(idRow==-1){
+            Log.e("Clover_App", "Error al registrar abono");
+            return false;
+        }
+        abonos.setId((int)idRow);
+        this.abono = abonos;
+        return true;
+    }
+    public void generarTicketAbono(Context context, String nombreCliente){
+        TicketUtils ticketUtils = new TicketUtils(context);
+        ticketUtils.generarTicketAbono(context, abono, nombreCliente);
     }
     public Clientes getCliente(String id){
         return clientesDAO.getClient(id);

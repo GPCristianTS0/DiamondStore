@@ -23,7 +23,7 @@ public class AbonosDAO implements IAbonos {
     }
 
     @Override
-    public boolean addAbono(Abonos abono) {
+    public long addAbono(Abonos abono) {
         try{
             db.beginTransaction();
             //Registro del abono
@@ -43,7 +43,7 @@ public class AbonosDAO implements IAbonos {
             if (newRowId == -1) {
                 db.endTransaction();
                 Log.e("Clover_App", "Error al agregar abono");
-                return false;
+                return -1;
             }
             //Actualizacion del saldo del cliente
             values = new ContentValues();
@@ -52,7 +52,7 @@ public class AbonosDAO implements IAbonos {
             if (rowsUpdated == -1) {
                 db.endTransaction();
                 Log.e("Clover_App", "Error al actualizar el saldo del cliente");
-                return false;
+                return -1;
             }
             //Actualizar ventas
             String sql = "SELECT * FROM ventas WHERE id_cliente = ? AND estado = '"+VENTA_PENDIENTE+"' ORDER BY monto_pendiente ASC";
@@ -73,7 +73,7 @@ public class AbonosDAO implements IAbonos {
                     if (i == -1){
                         db.endTransaction();
                         Log.e("Clover_App", "Error al actualizar la venta");
-                        return false;
+                        return -1;
                     }
                 }else{
                     cantidadAPagar = montoTotal;
@@ -88,7 +88,7 @@ public class AbonosDAO implements IAbonos {
                     if (i == -1){
                         db.endTransaction();
                         Log.e("Clover_App", "Error al actualizar la venta");
-                        return false;
+                        return -1;
                     }
                 }
                 montoTotal -= cantidadAPagar;
@@ -96,11 +96,11 @@ public class AbonosDAO implements IAbonos {
             cursor.close();
             db.setTransactionSuccessful();
             db.endTransaction();
-            return true;
+            return newRowId;
         } catch (Exception e) {
             Log.e("Clover_App", "Error al agregar abono: " + e.getMessage());
         }
-        return false;
+        return -1;
     }
 
     @Override
