@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.ConfiguracionControl;
 import com.Clover.prueba.data.dao.ConfiguracionDAO;
@@ -30,6 +32,8 @@ import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -209,18 +213,30 @@ public class TicketUtils {
     }
     private static void compartirBitmap(Context context, Bitmap bitmap, Configuracion configuracion) {
         try {
-            // Guardamos la imagen en la galería temporal o caché para obtener una URI
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+            File cache = new File(context.getCacheDir(), "tickets");
+            if (!cache.exists()) cache.mkdirs();
 
-            // NOTA: Esto guarda en galería. Para producción profesional se usa FileProvider,
-            // pero esto funciona rápido para empezar.
-            String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Ticket_" + System.currentTimeMillis(), null);
-            Uri imageUri = Uri.parse(path);
+            //Se borrar tickets Antiguos
+            File[] files = cache.listFiles();
+            if (files != null)
+                for (File file : files) file.delete();
 
+            //Se crea una archivo temporal para guardar el ticket
+            File newFile = new File(cache, "ticket.png");
+            FileOutputStream stream = new FileOutputStream(newFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream.close();
+
+            //Se genera la Uri
+            Uri contentUri = FileProvider.getUriForFile(context, "com.Clover.prueba.fileprovider", newFile);
+
+            if (contentUri == null) {
+                Log.e("Clover_App", "Error al generar la URI");
+                return;
+            }
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("image/jpeg");
-            intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            intent.putExtra(Intent.EXTRA_STREAM, contentUri);
             intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare());
 
             // ESTA ES LA CLAVE: Forzamos a que solo use WhatsApp
@@ -239,7 +255,7 @@ public class TicketUtils {
                 }
             }
         } catch (Exception e) {
-            Toast.makeText(context, "Error al generar ticket: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e("Clover_App", "Error al compartir ticket"+e.getMessage());
         }
     }
     private String getFecha(String fecha){
