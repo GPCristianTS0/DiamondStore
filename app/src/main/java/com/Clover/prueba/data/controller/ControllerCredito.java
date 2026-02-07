@@ -56,9 +56,9 @@ public class ControllerCredito {
         this.abono = abonos;
         return true;
     }
-    public void generarTicketAbono(Context context, String nombreCliente){
+    public void generarTicketAbono(Context context, String nombreCliente, boolean reimprimir){
         TicketUtils ticketUtils = new TicketUtils(context);
-        ticketUtils.generarTicketAbono(context, abono, nombreCliente);
+        ticketUtils.generarTicketAbono(context, abono, nombreCliente, reimprimir);
     }
     public Clientes getCliente(String id){
         return clientesDAO.getClient(id);

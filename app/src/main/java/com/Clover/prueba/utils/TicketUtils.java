@@ -47,7 +47,7 @@ public class TicketUtils {
         configuracionControl = new ConfiguracionControl(context);
     }
 
-    public void generarTicketVenta(Context context,String nombreCliente, Ventas venta, ArrayList<DetalleVenta>listaProductos){
+    public void generarTicketVenta(Context context,String nombreCliente, Ventas venta, ArrayList<DetalleVenta>listaProductos, boolean waoOrGeneric){
         // 1. INFLAR: Traemos el layout del cajón a la memoria
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.ticket_virtual, null);
@@ -133,6 +133,7 @@ public class TicketUtils {
         if(venta.getTipo_pago().equals(CONST_METODO_TARJETA)){
             txtTipoTarjeta.setText(venta.getTipo_tarjeta().toUpperCase());
             txtDatosTarjeta.setText(venta.getBanco_tarjeta().toUpperCase().concat(" **** ").concat(venta.getNumero_tarjeta()+" (Aprob: "+venta.getNumero_aprobacion()+")"));
+            txtImportePago.setText(importes.concat(String.valueOf(venta.getMonto())));
 
         }else if (venta.getTipo_pago().equals(CONST_METODO_CREDITO)) {
             txtTipoTarjeta.setText(String.valueOf(venta.getFrecuencia_pago()));
@@ -147,12 +148,14 @@ public class TicketUtils {
         if(venta.getTipo_pago().equals(CONST_METODO_EFECTIVO)){
             txtCambio.setText(importes.concat(String.valueOf(venta.getPago_con()-venta.getMonto())));
             txtImportePago.setText(importes.concat(String.valueOf(venta.getPago_con())));
-        }else {
-            txtImportePago.setText(importes.concat(venta.getMonto()+""));
         }
-        generarYCompartirTicket(view, context, configuracion);
+        if (venta.getTipo_pago().equals(CONST_METODO_TRANSFERENCIA)){
+            txtCambio.setText(importes.concat("0.00"));
+            txtImportePago.setText(importes.concat(String.valueOf(venta.getMonto())));
+        }
+        generarYCompartirTicket(view, context, configuracion, waoOrGeneric);
     }
-    public void generarTicketAbono(Context context, Abonos abono, String nombreCliente){
+    public void generarTicketAbono(Context context, Abonos abono, String nombreCliente, boolean waoOrGeneric){
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.ticket_virtual_abono, null);
 
@@ -173,7 +176,10 @@ public class TicketUtils {
         txtNombre.setText(configuracion.getNombreNegocio());
         txtDireccion.setText("Dirección: "+configuracion.getDireccion());
         txtTelefono.setText("Telefono: "+configuracion.getTelefono());
-        txtMontoAbono.setText(importes.concat(abono.getMonto()+""));
+        if (abono.getMonto()>abono.getSaldoAnterior()){
+            txtMontoAbono.setText(importes.concat(abono.getSaldoAnterior()+""));
+        }else
+            txtMontoAbono.setText(importes.concat(abono.getMonto()+""));
         txtNombreCliente.setText(nombreCliente);
         txtFolio.setText("#A-"+abono.getId());
         imagen.setImageURI(Uri.parse(configuracion.getRutaLogo()));
@@ -181,10 +187,10 @@ public class TicketUtils {
         txtSaldoAnterior.setText(importes.concat(abono.getSaldoAnterior()+""));
         txtSaldoRestante.setText(importes.concat(abono.getSaldoActual()+""));
 
-        generarYCompartirTicket(view, context, configuracion);
+        generarYCompartirTicket(view, context, configuracion, waoOrGeneric);
 
     }
-    private void generarYCompartirTicket(View view, Context context, Configuracion configuracion) {
+    private void generarYCompartirTicket(View view, Context context, Configuracion configuracion, boolean waoOrGeneric) {
 
         //Medicion de la pantalla
         int widthSpec = View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY); // Ancho fijo
@@ -193,7 +199,7 @@ public class TicketUtils {
         int altoDelContenido = view.getMeasuredHeight();
 
         //Definimos tu altura mínima deseada (1920px)
-        int altoMinimo = 2040;
+        int altoMinimo = 1920;
 
         //ELEGIMOS EL MAYOR: Si el contenido es chico, usamos 1920. Si es grande, usamos el contenido.
         int altoFinal = Math.max(altoDelContenido, altoMinimo);
@@ -202,17 +208,39 @@ public class TicketUtils {
         view.layout(0, 0, view.getMeasuredWidth(), altoFinal);
 
         // 5. DIBUJAR (DRAW): Creamos el Bitmap y le decimos a la vista "dibújate aquí"
-        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), altoFinal, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        // Pintamos fondo blanco por si acaso
-        canvas.drawColor(Color.WHITE);
-        view.draw(canvas);
-
-        // 6. COMPARTIR: Guardamos temporalmente y lanzamos WhatsApp
-        compartirBitmap(context, bitmap, configuracion);
+        float escala = 2.0f;
+        CreacionImagen(view, context, configuracion,altoFinal, escala, waoOrGeneric);
     }
-    private static void compartirBitmap(Context context, Bitmap bitmap, Configuracion configuracion) {
+
+    private void CreacionImagen(View view, Context context, Configuracion configuracion,int altoFinal, float escala, boolean waoOrGeneric) {
+        int anchoReal = (int) (view.getMeasuredWidth() * escala);
+        int altoReal = (int) (altoFinal * escala);
+
+        Bitmap bitmap = Bitmap.createBitmap(anchoReal, altoReal, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
         try {
+            // Pintamos fondo blanco por si acaso
+            canvas.drawColor(Color.WHITE);
+            canvas.scale(escala, escala);
+            view.draw(canvas);
+            // 6. COMPARTIR: Guardamos temporalmente y lanzamos WhatsApp
+            compartirBitmap(context, bitmap, configuracion, waoOrGeneric);
+        } catch (OutOfMemoryError|Exception e) {
+            Log.e("Clover_App", "Error al generar ticket: "+e.getMessage());
+
+            if (escala <= 1.0f) {
+                Toast.makeText(context, "No hay memoria suficiente para generar el ticket", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            CreacionImagen(view, context, configuracion, altoReal, 1.0f, waoOrGeneric);
+        }
+
+    }
+
+    private void compartirBitmap(Context context, Bitmap bitmap, Configuracion configuracion, boolean wapOrGeneric) {
+        try {
+            //Busca la carpeta y si no existe la crea
             File cache = new File(context.getCacheDir(), "tickets");
             if (!cache.exists()) cache.mkdirs();
 
@@ -234,34 +262,49 @@ public class TicketUtils {
                 Log.e("Clover_App", "Error al generar la URI");
                 return;
             }
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("image/jpeg");
-            intent.putExtra(Intent.EXTRA_STREAM, contentUri);
-            intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare());
-
-            // ESTA ES LA CLAVE: Forzamos a que solo use WhatsApp
-            intent.setPackage("com.whatsapp");
-
-            // Evitamos que crashee si no tiene WA instalado
-            try {
-                context.startActivity(intent);
-            } catch (android.content.ActivityNotFoundException ex) {
-                // Si tiene WhatsApp Business, el paquete cambia
-                try {
-                    intent.setPackage("com.whatsapp.w4b");
-                    context.startActivity(intent);
-                } catch (android.content.ActivityNotFoundException e2) {
-                    Toast.makeText(context, "No tienes WhatsApp instalado", Toast.LENGTH_SHORT).show();
-                }
-            }
+            if (wapOrGeneric){
+                compartirWhatsapp(context, configuracion, contentUri);
+            }else
+                compartir(context, configuracion, contentUri);
         } catch (Exception e) {
             Log.e("Clover_App", "Error al compartir ticket"+e.getMessage());
         }
     }
+    private void compartir(Context context, Configuracion configuracion, Uri contentUri) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+
+        intent.setDataAndType(contentUri, context.getContentResolver().getType(contentUri));
+        intent.putExtra(Intent.EXTRA_STREAM, contentUri);
+        intent.setType("image/png");
+        intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare());
+        context.startActivity(Intent.createChooser(intent, "Compartir Imagen Via...."));
+    }
+    private void compartirWhatsapp(Context context, Configuracion configuracion, Uri contentUri) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/jpeg");
+        intent.putExtra(Intent.EXTRA_STREAM, contentUri);
+        intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare());
+
+        // ESTA ES LA CLAVE: Forzamos a que solo use WhatsApp
+        intent.setPackage("com.whatsapp");
+
+        // Evitamos que crashee si no tiene WA instalado
+        try {
+            context.startActivity(intent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Si tiene WhatsApp Business, el paquete cambia
+            try {
+                intent.setPackage("com.whatsapp.w4b");
+                context.startActivity(intent);
+            } catch (android.content.ActivityNotFoundException e2) {
+                Toast.makeText(context, "No tienes WhatsApp instalado", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private String getFecha(String fecha){
         LocalDateTime date = LocalDateTime.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        LocalDateTime date2 = LocalDateTime.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        return capitalizar(date.format(DateTimeFormatter.ofPattern("dd-MMMM-yyyy", new Locale("es", "ES"))))+" "+date2.format(DateTimeFormatter.ofPattern("hh:mm a", Locale.US));
+        return capitalizar(date.format(DateTimeFormatter.ofPattern("dd-MMMM-yyyy", new Locale("es", "ES"))))+" "+date.format(DateTimeFormatter.ofPattern("hh:mm a", Locale.US));
     }
     private static String capitalizar(String string){
         if (string == null || string.isEmpty()) return "";

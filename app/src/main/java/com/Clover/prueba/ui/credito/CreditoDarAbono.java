@@ -5,6 +5,7 @@ import static com.Clover.prueba.utils.Constantes.CONST_METODO_TARJETA;
 import static com.Clover.prueba.utils.Constantes.CONST_METODO_TRANSFERENCIA;
 
 import android.content.Context;
+import android.location.GnssAntennaInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -38,7 +39,14 @@ public class CreditoDarAbono extends BottomSheetDialogFragment {
     private Clientes cliente;
     private LinearLayout da_layoutResultado;
     private LinearLayout da_layoutExito;
+    private ListoListener listener;
 
+    public interface ListoListener{
+        void onListo();
+    }
+    public void setListener(ListoListener listener){
+        this.listener = listener;
+    }
 
     @Nullable
     @Override
@@ -112,11 +120,19 @@ public class CreditoDarAbono extends BottomSheetDialogFragment {
         btnCancelar.setOnClickListener(v -> {dismiss();});
 
         btnTicket.setOnClickListener(v -> {
-            controllerCredito.generarTicketAbono(getContext(), cliente.getNombre_cliente());
+            controllerCredito.generarTicketAbono(getContext(), cliente.getNombre_cliente(), false);
+            if (listener!=null){
+                listener.onListo();
+            }
             dismiss();
         });
 
-        btnListo.setOnClickListener(v -> {dismiss();});
+        btnListo.setOnClickListener(v -> {
+            if (listener!=null){
+                listener.onListo();
+            }
+            dismiss();
+        });
 
         Bundle bundle = getArguments();
         if (bundle!=null){

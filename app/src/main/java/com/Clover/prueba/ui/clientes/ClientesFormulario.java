@@ -3,6 +3,7 @@ package com.Clover.prueba.ui.clientes;
 import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -53,6 +54,17 @@ public class ClientesFormulario extends AppCompatActivity {
         if (cliente!=null){
             actualizarCliente(cliente);
         }
+        agregar = findViewById(R.id.CP_buttonAbonos);
+        agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ClientesFormulario.this, ClientesDetalleAbonos.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("cliente",cliente);
+                startActivity(intent);
+            }
+        });
+
         //Funcion boton eliminar
         Button eliminar = findViewById(R.id.CP_buttonEliminar);
         eliminar.setOnClickListener(new View.OnClickListener() {

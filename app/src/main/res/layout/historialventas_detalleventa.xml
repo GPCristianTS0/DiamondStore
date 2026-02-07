@@ -9,14 +9,14 @@
     tools:context=".ui.historialventas.HistorialVentasDetalleVenta">
 
     <TextView
-        android:id="@+id/HV_nombreNegocio"
+        android:id="@+id/HV_tituloPantalla"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/hvdetalle_tittle"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:text="Detalle de Venta"
         android:textColor="#333333"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,16 +25,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
-        app:cardBackgroundColor="#FFFFFF"
-        app:layout_constraintWidth_percent="0.92"
-        app:layout_constraintHeight_percent="0.85"
-        app:layout_constraintTop_toBottomOf="@+id/HV_nombreNegocio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHeight_percent="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.94"
+        app:layout_constraintTop_toBottomOf="@+id/HV_tituloPantalla">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -43,33 +43,62 @@
 
             <ImageView
                 android:id="@+id/HV_imagen"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/logo_nuevo"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/logotipo_diamondsystems"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/HV_txtFolio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="24dp"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Folio: #A-2453" />
+
+            <TextView
+                android:id="@+id/HV_statusVenta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/button_border"
+                android:backgroundTint="#4CAF50"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:textColor="#4CAF50"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/HV_txtFolio"
+                app:layout_constraintTop_toBottomOf="@+id/HV_txtFolio"
+                tools:text="PAGADO" />
 
             <View
                 android:id="@+id/divider1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#EEEEEE"
-                android:layout_marginTop="12dp"
                 android:layout_marginHorizontal="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/HV_imagen"/>
+                android:layout_marginTop="12dp"
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@+id/HV_imagen" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/lblFecha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="12dp"
                 android:text="Fecha:"
-                android:textStyle="bold"
                 android:textColor="#1976D2"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider1" />
 
@@ -78,47 +107,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                tools:text="10-12-2025"
                 android:textColor="#616161"
                 android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/textView16"
-                app:layout_constraintTop_toTopOf="@+id/textView16"
-                app:layout_constraintBottom_toBottomOf="@+id/textView16"/>
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Hora:"
-                android:textStyle="bold"
-                android:textColor="#1976D2"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/ticketL_horaOut"
-                app:layout_constraintTop_toTopOf="@+id/textView16" />
+                app:layout_constraintBottom_toBottomOf="@+id/lblFecha"
+                app:layout_constraintStart_toEndOf="@+id/lblFecha"
+                app:layout_constraintTop_toTopOf="@+id/lblFecha"
+                tools:text="10-12-2025" />
 
             <TextView
                 android:id="@+id/ticketL_horaOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
-                tools:text="21:23"
                 android:textColor="#616161"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lblFecha"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView16" />
+                app:layout_constraintTop_toTopOf="@+id/lblFecha"
+                tools:text="21:23 PM" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/lblHora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Hora:"
+                android:textColor="#1976D2"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/lblFecha"
+                app:layout_constraintEnd_toStartOf="@+id/ticketL_horaOut"
+                app:layout_constraintTop_toTopOf="@+id/lblFecha" />
+
+            <TextView
+                android:id="@+id/lblCliente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Cliente:"
-                android:textStyle="bold"
                 android:textColor="#1976D2"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/textView16"
-                app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/lblFecha"
+                app:layout_constraintTop_toBottomOf="@+id/lblFecha" />
 
             <TextView
                 android:id="@+id/ticketL_apodoClienteOut"
@@ -126,90 +157,89 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="24dp"
-                tools:text="Nonis Herrera"
                 android:textColor="#424242"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView20"
-                app:layout_constraintTop_toTopOf="@+id/textView20" />
+                app:layout_constraintStart_toEndOf="@+id/lblCliente"
+                app:layout_constraintTop_toTopOf="@+id/lblCliente"
+                tools:text="Nonis Herrera" />
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/lblArticulos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="No. Artículos:"
-                android:textStyle="bold"
                 android:textColor="#1976D2"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/textView20"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/lblCliente"
                 app:layout_constraintTop_toBottomOf="@+id/ticketL_apodoClienteOut" />
 
             <TextView
                 android:id="@+id/ticketL_noArticulos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="10"
+                android:layout_marginStart="8dp"
                 android:textColor="#424242"
                 android:textSize="14sp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toEndOf="@+id/textView23"
-                app:layout_constraintTop_toTopOf="@+id/textView23" />
+                app:layout_constraintStart_toEndOf="@+id/lblArticulos"
+                app:layout_constraintTop_toTopOf="@+id/lblArticulos"
+                tools:text="10" />
 
             <LinearLayout
-                android:id="@+id/linearLayout"
+                android:id="@+id/contenedorLista"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/dividerTotal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView23"
-                app:layout_constraintBottom_toTopOf="@+id/dividerTotal">
+                app:layout_constraintTop_toBottomOf="@+id/lblArticulos">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:background="#1976D2"
-                    android:paddingHorizontal="16dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
 
                     <TextView
-                        android:id="@+id/textView30"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="Nombre"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF"
-                        android:textSize="12sp"/>
-
-                    <TextView
-                        android:id="@+id/textView29"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
                         android:gravity="center"
                         android:text="Cant."
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView28"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Nombre"
+                        android:paddingStart="15dp"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="Precio"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
-                <ScrollView
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fillViewport="true">
@@ -225,45 +255,166 @@
                             android:id="@+id/hvD_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="false"/>
+                            android:nestedScrollingEnabled="false"
+                            tools:listitem="@layout/ticket_item"
+                            tools:itemCount="3"/>
                     </LinearLayout>
-                </ScrollView>
+                </androidx.core.widget.NestedScrollView>
             </LinearLayout>
 
             <View
                 android:id="@+id/dividerTotal"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="#1976D2"
-                android:layout_marginBottom="12dp"
                 android:layout_marginHorizontal="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/ticket_TotalOut"/>
+                android:layout_marginBottom="12dp"
+                android:background="#1976D2"
+                app:layout_constraintBottom_toTopOf="@+id/ticket_TotalOut" />
 
             <TextView
-                android:id="@+id/textView26"
+                android:id="@+id/lblTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:text="TOTAL:"
-                android:textStyle="bold"
                 android:textColor="#333333"
                 android:textSize="18sp"
-                android:layout_marginStart="24dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/ticket_TotalOut"
-                app:layout_constraintTop_toTopOf="@+id/ticket_TotalOut"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ticket_TotalOut" />
 
             <TextView
                 android:id="@+id/ticket_TotalOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                tools:text="$ 2,000.00"
+                android:layout_marginBottom="8dp"
                 android:textColor="#1976D2"
-                android:textStyle="bold"
                 android:textSize="28sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/HV_layoutDetallesPago"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="$ 2,000.00" />
+
+            <LinearLayout
+                android:id="@+id/HV_layoutDetallesPago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="#F0F4C3"
+                android:orientation="vertical"
+                android:padding="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/HV_contenedorBotones">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Método de Pago:"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#555555"/>
+                    <TextView
+                        android:id="@+id/HV_metodoPago"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="TARJETA DÉBITO"
+                        android:gravity="end"
+                        android:textSize="12sp"
+                        android:textColor="#000000"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/HV_datosTarjeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="BBVA **** 1234 (Aprob: 8762)"
+                    android:gravity="end"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:id="@+id/HV_layoutEfectivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
+                    android:visibility="visible">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Recibido:"
+                        android:textSize="12sp"
+                        android:textColor="#757575"/>
+                    <TextView
+                        android:id="@+id/HV_txtRecibido"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        tools:text="$ 2,000.00"
+                        android:textSize="12sp"
+                        android:gravity="end"
+                        android:textColor="#757575"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Cambio:"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="#757575"/>
+                    <TextView
+                        android:id="@+id/HV_txtCambio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        tools:text="$ 0.00"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="#388E3C"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/HV_contenedorBotones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <Button
+                    android:id="@+id/HV_btnReimprimir"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="Reimprimir"
+                    android:textSize="12sp"
+                    android:backgroundTint="#FF9800"
+                    android:textColor="#FFFFFF"
+                    app:iconGravity="textStart" />
+
+                <Button
+                    android:id="@+id/HV_btnCompartir"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="Compartir"
+                    android:textSize="12sp"
+                    android:backgroundTint="#4CAF50"
+                    android:textColor="#FFFFFF"
+                    app:icon="@android:drawable/ic_menu_share"
+                    app:iconGravity="textStart" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

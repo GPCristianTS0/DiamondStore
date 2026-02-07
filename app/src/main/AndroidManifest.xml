@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
         <activity
+            android:name=".ui.clientes.ClientesDetalleAbonos"
+            android:exported="false" />
+        <activity
             android:name=".ui.credito.CreditoPrincipalView"
             android:exported="false" />
         <activity
@@ -88,6 +91,7 @@
         <activity
             android:name=".ui.home.SplasActivity"
             android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.Clover.prueba.fileprovider"

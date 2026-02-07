@@ -42,13 +42,14 @@ public class CreditoPrincipalView extends AppCompatActivity {
         controllerClientes = new ClientesDAO(this);
         controllerCredito = new ControllerCredito(this);
         ventasDAO = new VentasDAO(this);
-        TextView txtTotal = findViewById(R.id.CPC_txtGranTotal);
-        String importes = "$ ";
-        txtTotal.setText(importes.concat(controllerCredito.getSaldoTotal()+""));
         rellenarDatos(controllerClientes.getDeudores());
 
     }
     private void rellenarDatos(ArrayList<Clientes> clientes){
+        String importes = "$ ";
+        TextView txtTotal;
+        txtTotal = findViewById(R.id.CPC_txtGranTotal);
+        txtTotal.setText(importes.concat(controllerCredito.getSaldoTotal()+""));
         TextView txtClientes = findViewById(R.id.CPC_txtClientesCount);
         txtClientes.setText(clientes.size()+" Clientes con Deuda");
         AbrirAppExternas abrirAppExternas = new AbrirAppExternas();
@@ -65,6 +66,9 @@ public class CreditoPrincipalView extends AppCompatActivity {
             @Override
             public void onAbonar(Clientes cliente) {
                 CreditoDarAbono darAbono = new CreditoDarAbono();
+                darAbono.setListener(() -> {
+                    rellenarDatos(controllerClientes.getDeudores());
+                });
                 Bundle bundle = new Bundle();
                 bundle.putString("idCliente", cliente.getId_cliente());
                 darAbono.setArguments(bundle);
@@ -74,6 +78,5 @@ public class CreditoPrincipalView extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.CPC_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     }
 }
