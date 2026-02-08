@@ -2,6 +2,7 @@ package com.Clover.prueba.ui.gastos;
 
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,9 @@ public class GastoFormulario extends BottomSheetDialogFragment {
         Button btnGuardarGasto = view.findViewById(R.id.btnGuardarGasto);
         btnGuardarGasto.setOnClickListener(v -> {
             Gastos gasto = getGasto(view);
+            if (gasto==null){
+                return;
+            }
             gasto.setId_proveedor(provedor);
             if (controllerGastos.addGasto(gasto)){
                 Toast.makeText(getContext(), "Gasto agregado", Toast.LENGTH_SHORT).show();
@@ -69,8 +73,17 @@ public class GastoFormulario extends BottomSheetDialogFragment {
         TextInputEditText etDescripcionGasto = v.findViewById(R.id.etDescripcionGasto);
         Spinner spProveedoresGasto = v.findViewById(R.id.spProveedoresGasto);
         RadioGroup rgMetodoPago = v.findViewById(R.id.rgMetodoPago);
-        // Obtener los datos del formulario
+        //Validacion de datos y asignacion
         Gastos gasto = new Gastos();
+        String monto = etMontoGasto.getText().toString();
+        if (monto.isEmpty()){
+            Toast.makeText(getContext(), "El monto es requerido", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        if (etDescripcionGasto.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "La descripcion es requerida", Toast.LENGTH_SHORT).show();
+            return null;
+        }
         gasto.setMonto(Double.parseDouble(etMontoGasto.getText().toString()));
         gasto.setDescripcion(etDescripcionGasto.getText().toString());
         gasto.setId_proveedor(spProveedoresGasto.getSelectedItemPosition());
