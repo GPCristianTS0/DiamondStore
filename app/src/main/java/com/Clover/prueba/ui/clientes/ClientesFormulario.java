@@ -50,7 +50,7 @@ public class ClientesFormulario extends AppCompatActivity {
             }
         });
         //Cuando se edita un cliente
-        Clientes cliente = (Clientes) getIntent().getSerializableExtra("cliente");
+        Clientes cliente = getIntent().getSerializableExtra("cliente", Clientes.class);
         if (cliente!=null){
             actualizarCliente(cliente);
         }
@@ -61,6 +61,7 @@ public class ClientesFormulario extends AppCompatActivity {
                 Intent intent = new Intent(ClientesFormulario.this, ClientesDetalleAbonos.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("cliente",cliente);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

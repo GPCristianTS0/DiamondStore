@@ -227,7 +227,7 @@ public class VentasDAO implements IVentas {
     }
 
     @Override
-    public int getVentasTotales() {
+    public int getSaldoTotal() {
         String sql = "SELECT SUM(monto) FROM ventas WHERE fecha_Hora LIKE ?";
         String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         try (Cursor cursor = db.rawQuery(sql, new String[]{fechaHoy+"%"})){
@@ -238,6 +238,18 @@ public class VentasDAO implements IVentas {
             Log.e("Clover_App", "Error en getVentasTotales: " + e.getMessage());
         }
         return 0;
+    }
+    @Override
+    public double getSaldoTotal(String idCliente) {
+        String sql = "SELECT SUM(monto) FROM ventas WHERE id_cliente = ? AND estado = '"+VENTA_PENDIENTE+"'";
+        try (Cursor cursor = db.rawQuery(sql, new String[]{idCliente})){
+            if (cursor.moveToFirst()) {
+                return cursor.getDouble(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getVentasTotales: ");
+        }
+        return -1;
     }
     @Override
     public double getVentasMetodoPago(String metodoPago, int id_corte) {
@@ -266,6 +278,18 @@ public class VentasDAO implements IVentas {
             Log.e("Clover_App", "Error en getProductoMasVendido: " + e.getMessage());
         }
         return "";
+    }
+    @Override
+    public double getSaldoPendiente(String idCliente){
+        String sql = "SELECT SUM(monto_pendiente) FROM ventas WHERE id_cliente = ? AND estado = '"+VENTA_PENDIENTE+"'";
+        try (Cursor cursor = db.rawQuery(sql, new String[]{idCliente})){
+            if (cursor.moveToFirst()) {
+                return cursor.getDouble(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getSaldoPendiente: " + e.getMessage());
+        }
+        return -1;
     }
 
 

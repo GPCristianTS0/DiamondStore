@@ -153,7 +153,7 @@ public class MenuPrincipal extends AppCompatActivity {
         co.setText(String.valueOf(productoEstrella));
 
         //contador de dinero en caja
-        int dineroEnCaja = iVentas.getVentasTotales();
+        int dineroEnCaja = iVentas.getSaldoTotal();
         co = findViewById(R.id.productosTotalContador);
         co.setText(String.valueOf("$ "+dineroEnCaja));
 

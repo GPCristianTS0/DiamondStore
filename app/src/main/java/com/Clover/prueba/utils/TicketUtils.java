@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,16 +24,13 @@ import androidx.core.content.FileProvider;
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.ConfiguracionControl;
 import com.Clover.prueba.data.dao.ConfiguracionDAO;
-import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.models.Abonos;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -166,12 +162,12 @@ public class TicketUtils {
         TextView txtNombre = view.findViewById(R.id.txtNombreEmpresa);
         TextView txtDireccion = view.findViewById(R.id.txtDireccionEmpresa);
         TextView txtTelefono = view.findViewById(R.id.txtTelefonoEmpresa);
-        TextView txtMontoAbono = view.findViewById(R.id.txtMontoAbono);
+        TextView txtMontoAbono = view.findViewById(R.id.CDA_txtMontoAbono);
         TextView txtFechaHora = view.findViewById(R.id.txtFechaHora);
         TextView txtNombreCliente = view.findViewById(R.id.txtNombreCliente);
-        TextView txtFolio = view.findViewById(R.id.txtFolio);
-        TextView txtSaldoAnterior = view.findViewById(R.id.txtSaldoAnterior);
-        TextView txtSaldoRestante = view.findViewById(R.id.txtSaldoRestante);
+        TextView txtFolio = view.findViewById(R.id.CDA_txtFolio);
+        TextView txtSaldoAnterior = view.findViewById(R.id.CDA_txtSaldoAnterior);
+        TextView txtSaldoRestante = view.findViewById(R.id.CDA_txtSaldoRestante);
 
         txtNombre.setText(configuracion.getNombreNegocio());
         txtDireccion.setText("Dirección: "+configuracion.getDireccion());
@@ -263,9 +259,9 @@ public class TicketUtils {
                 return;
             }
             if (wapOrGeneric){
-                compartirWhatsapp(context, configuracion, contentUri);
-            }else
                 compartir(context, configuracion, contentUri);
+            }else
+                compartirWhatsapp(context, configuracion, contentUri);
         } catch (Exception e) {
             Log.e("Clover_App", "Error al compartir ticket"+e.getMessage());
         }

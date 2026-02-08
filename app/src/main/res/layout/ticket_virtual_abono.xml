@@ -99,7 +99,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/divHeader" />
 
             <TextView
-                android:id="@+id/txtMontoAbono"
+                android:id="@+id/CDA_txtMontoAbono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -120,7 +120,7 @@
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtMontoAbono" />
+                app:layout_constraintTop_toBottomOf="@+id/CDA_txtMontoAbono" />
 
 
             <View
@@ -172,7 +172,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/lblCliente" />
 
             <TextView
-                android:id="@+id/txtFolio"
+                android:id="@+id/CDA_txtFolio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
@@ -208,7 +208,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/txtSaldoAnterior"
+                        android:id="@+id/CDA_txtSaldoAnterior"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="$ 1,500.00"
@@ -237,7 +237,7 @@
                         android:textSize="13sp"/>
 
                     <TextView
-                        android:id="@+id/txtSaldoRestante"
+                        android:id="@+id/CDA_txtSaldoRestante"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="$ 1,000.00"

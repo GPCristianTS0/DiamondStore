@@ -56,9 +56,17 @@ public class ControllerCredito {
         this.abono = abonos;
         return true;
     }
-    public void generarTicketAbono(Context context, String nombreCliente, boolean reimprimir){
+    public void generarTicketAbono(Context context, String nombreCliente, boolean reimprimir, Abonos abonoLocal){
         TicketUtils ticketUtils = new TicketUtils(context);
-        ticketUtils.generarTicketAbono(context, abono, nombreCliente, reimprimir);
+        String nombre = nombreCliente;
+        if (abonoLocal!=null){
+            abono = abonoLocal;
+            nombre = clientesDAO.getNombreCliente(abonoLocal.getIdCliente());
+        }
+        ticketUtils.generarTicketAbono(context, abono, nombre, reimprimir);
+    }
+    public Abonos getAbono(String idAbono){
+        return abonosDAO.getAbono(idAbono);
     }
     public Clientes getCliente(String id){
         return clientesDAO.getClient(id);
@@ -68,5 +76,8 @@ public class ControllerCredito {
     }
     public double getSaldoTotal(){
         return clientesDAO.getSaldoTotal();
+    }
+    public boolean deleteAbono(int idAbono){
+        return abonosDAO.deleteAbono(String.valueOf(idAbono));
     }
 }

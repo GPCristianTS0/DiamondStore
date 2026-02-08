@@ -120,7 +120,7 @@ public class CreditoDarAbono extends BottomSheetDialogFragment {
         btnCancelar.setOnClickListener(v -> {dismiss();});
 
         btnTicket.setOnClickListener(v -> {
-            controllerCredito.generarTicketAbono(getContext(), cliente.getNombre_cliente(), false);
+            controllerCredito.generarTicketAbono(getContext(), cliente.getNombre_cliente(), false, null);
             if (listener!=null){
                 listener.onListo();
             }

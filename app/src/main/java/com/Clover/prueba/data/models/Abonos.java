@@ -2,7 +2,9 @@ package com.Clover.prueba.data.models;
 
 import androidx.annotation.NonNull;
 
-public class Abonos {
+import java.io.Serializable;
+
+public class Abonos implements Serializable {
     private int id;
     private String idCliente;
     private double monto;

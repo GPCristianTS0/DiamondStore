@@ -16,9 +16,13 @@ public interface IVentas {
     public ArrayList<DetalleVenta> getDetalleVentas(int idVenta); //Obtiene el detalle de la venta por el id de la venta "Folio"
     public ArrayList<String> getAnios();
     public int getGanancias();
-    public int getVentasTotales();
+    public int getSaldoTotal();
+
+    double getSaldoTotal(String idCliente);
 
     public double getVentasMetodoPago(String metodoPago, int id_corte);
 
     public String getProductoMasVendido();
+
+    double getSaldoPendiente(String idCliente);
 }

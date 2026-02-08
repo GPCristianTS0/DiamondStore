@@ -11,6 +11,7 @@
     app:cardElevation="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CAI_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp">
@@ -19,12 +20,12 @@
             android:id="@+id/iconMoney"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@drawable/ticket_icon"
+            android:background="@drawable/pago_icon"
             android:padding="6dp"
-            app:tint="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -40,32 +41,32 @@
                 android:id="@+id/txtFechaAbono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="12 Octubre 2025"
                 android:textColor="#212121"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:textSize="14sp" />
+                tools:text="12 Octubre 2025" />
 
             <TextView
                 android:id="@+id/txtMetodoPago"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                tools:text="Transferencia"
                 android:textColor="#757575"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="Transferencia" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/txtMontoItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="+$ 500.00"
             android:textColor="#4CAF50"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="+$ 500.00" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
