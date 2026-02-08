@@ -145,7 +145,6 @@ public class FormularioProductos extends AppCompatActivity {
         t.setText(producto.getNombre());
         t = findViewById(R.id.marcatxt);
         t.setText(producto.getMarca());
-        t.setText(producto.getSeccion());
         t = findViewById(R.id.p_publicotxt);
         t.setText(String.valueOf(producto.getPrecioPublico()));
         t = findViewById(R.id.p_netotxt);

@@ -86,7 +86,7 @@ public class ProductoDAO implements IProducto {
         String sql = "SELECT nombre_seccion FROM secciones";
         try (Cursor cursor = db.rawQuery(sql, null)) {
             while (cursor.moveToNext()) {
-                secciones.add(cursor.getString(0));
+                secciones.add(cursor.getString(cursor.getColumnIndexOrThrow("nombre_seccion")));
             }
         } catch (Exception e) {
             Log.e("Clover_App", "En getSecciones: " + e.getMessage());
@@ -117,7 +117,7 @@ public class ProductoDAO implements IProducto {
         }
         return producto;
     }
-    private Cursor rawQueryGetProductos(String seccion, String columnaObtencion, String busqueda){
+    private Cursor rawQueryGetProductos(int seccion, String columnaObtencion, String busqueda){
         String filtroStock = "stock";
         String filtroVendidos = "vendidos";
         String filtroPrecio = "precioPublico";
@@ -125,48 +125,40 @@ public class ProductoDAO implements IProducto {
 
         if (busqueda==null) busqueda="";
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT p.*, s.nombre_seccion ");
-        sql.append("FROM productos p ");
-        sql.append("INNER JOIN secciones s ON p.seccion=s.id_seccion ");
+        sql.append("SELECT p.*, s.nombre_seccion AS seccionNombre FROM productos p " +
+                "LEFT INNER JOIN secciones s ON p.seccion=s.id_seccion WHERE 1=1 ");
         ArrayList<String> arrgs = new ArrayList<>();
-        boolean all = false;
 
-        if (!seccion.equals("Todas")) {
-            sql.append("WHERE ");
-            sql.append("s.nombre_seccion= ? ");
-            arrgs.add(seccion);
-            all = true;
+        if (seccion!=0) {
+            sql.append("AND p.seccion = ? ");
+            arrgs.add(seccion+"");
         }
         //Busca en la seccion seleccionada
         if (!busqueda.isEmpty()) {
-            if (all)
-                sql.append("AND ");
-            else
-                sql.append("WHERE ");
-            //if (columnaObtencion.equals())
-            sql.append(columnaObtencion).append(" LIKE ?");
+            sql.append("AND ").append(columnaObtencion).append(" LIKE ?");
             arrgs.add("%"+busqueda+"%");
         }
-        sql.append(" ORDER BY s.nombre_seccion ASC");
+        sql.append(" ORDER BY seccionNombre ASC");
         return db.rawQuery(sql.toString(), arrgs.toArray(new String[0]));
     }
     @Override
-    public ArrayList<Productos> buscarProductosPor(String seccion, String columnaObtencion, String busqueda) {
+    public ArrayList<Productos> buscarProductosPor(int seccion, String columnaObtencion, String busqueda) {
         ArrayList<Productos> productos = new ArrayList<>();
         try (Cursor cursor = rawQueryGetProductos(seccion, columnaObtencion, busqueda)) {
             while (cursor.moveToNext()) {
                 Productos producto = new Productos();
-                producto.setRutaImagen(cursor.getString(0));
-                producto.setId(cursor.getString(1));
-                producto.setNombre(cursor.getString(2));
-                producto.setMarca(cursor.getString(3));
-                producto.setSeccion(cursor.getString(11));
-                producto.setPrecioPublico(cursor.getInt(5));
-                producto.setPrecioNeto(cursor.getInt(6));
-                producto.setDescripcion(cursor.getString(7));
-                producto.setVendidos(cursor.getInt(8));
-                producto.setStock(cursor.getInt(9));
-                producto.setUltimoPedido(cursor.getString(10));
+                producto.setRutaImagen(cursor.getString(cursor.getColumnIndexOrThrow("rutaImagen")));
+                producto.setId(cursor.getString(cursor.getColumnIndexOrThrow("id_producto")));
+                producto.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre_producto")));
+                producto.setMarca(cursor.getString(cursor.getColumnIndexOrThrow("marca")));
+                producto.setSeccion(cursor.getString(cursor.getColumnIndexOrThrow("seccionNombre")));
+                producto.setPrecioPublico(cursor.getInt(cursor.getColumnIndexOrThrow("precioPublico")));
+                producto.setPrecioNeto(cursor.getInt(cursor.getColumnIndexOrThrow("precioNeto")));
+                producto.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("descripcion")));
+                producto.setVendidos(cursor.getInt(cursor.getColumnIndexOrThrow("vendidos")));
+                producto.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
+                producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
+                Log.e("Clover_App", "Producto: "+producto.toString());
                 productos.add(producto);
             }
         } catch (Exception e) {
@@ -178,15 +170,24 @@ public class ProductoDAO implements IProducto {
     @Override
     public ArrayList<Productos> getProductos() {
         ArrayList<Productos> productos = new ArrayList<>();
-        String sql = "SELECT p.*, s.nombre_seccion FROM productos p INNER JOIN secciones s ON p.seccion=s.id_seccion ORDER BY p.nombre_producto ASC";
+        String sql = "SELECT *, (SELECT nombre_seccion FROM secciones WHERE id_seccion=seccion) AS seccionNombre FROM productos  ORDER BY seccionNombre ASC";
         try (Cursor cursor = db.rawQuery(sql, null)) {
-            while(cursor.moveToNext()) {
+            return getByCursor(cursor);
+        } catch (Exception e) {
+            Log.e("Clover_App", "getProductos: "+e.getMessage());
+        }
+        return productos;
+    }
+    private ArrayList<Productos> getByCursor(Cursor cursor) {
+        try {
+            ArrayList<Productos> productos = new ArrayList<>();
+            while (cursor.moveToNext()) {
                 Productos producto = new Productos();
                 producto.setRutaImagen(cursor.getString(cursor.getColumnIndexOrThrow("rutaImagen")));
                 producto.setId(cursor.getString(cursor.getColumnIndexOrThrow("id_producto")));
                 producto.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre_producto")));
                 producto.setMarca(cursor.getString(cursor.getColumnIndexOrThrow("marca")));
-                producto.setSeccion(cursor.getString(cursor.getColumnIndexOrThrow("nombre_seccion")));
+                producto.setSeccion(cursor.getString(cursor.getColumnIndexOrThrow("seccionNombre")));
                 producto.setPrecioPublico(cursor.getInt(cursor.getColumnIndexOrThrow("precioPublico")));
                 producto.setPrecioNeto(cursor.getInt(cursor.getColumnIndexOrThrow("precioNeto")));
                 producto.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("descripcion")));
@@ -195,12 +196,12 @@ public class ProductoDAO implements IProducto {
                 producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
                 productos.add(producto);
             }
+            return productos;
         } catch (Exception e) {
-            Log.e("Clover_App", "getProductos: "+e.getMessage());
+            Log.e("Clover_App", "En getByCursor: "+e.getMessage());
         }
-        return productos;
+        return null;
     }
-
     @Override
     public void deleteProducto(Productos producto) {
         try {

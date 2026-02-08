@@ -48,7 +48,6 @@ public class VentasDAO implements IVentas {
             valuesVentas.put("frecuencia_pago", venta.getFrecuencia_pago());
             valuesVentas.put("estado", venta.getEstado());
             valuesVentas.put("fecha_limite", venta.getFecha_limite());
-            valuesVentas.put("monto_pendiente", venta.getMonto_pendiente());
             //Ventas insersion
             long id_venta = db.insert("ventas", null, valuesVentas);
 

@@ -31,7 +31,7 @@ import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.models.Productos;
 
 public class DialogVentasBuscarProducto extends DialogFragment {
-    private String seccionG = "Todas";
+    private int seccionG = 0;
     private String columnaObtencionG = "Codigo Barras";
     private IProducto controller;
     public DialogVentasBuscarProducto(){
@@ -79,13 +79,13 @@ public class DialogVentasBuscarProducto extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ArrayList<Productos> productos;
-                seccionG = secciones.get(position);
+                seccionG = position;
                 Log.e("Clover_App", "onItemSelected: "+secciones.get(position));
                 if (position==0){
                     rellenarTabla(controller.getProductos(), v);
                     return;
                 }
-                productos = controller.buscarProductosPor(secciones.get(position), columnaObtencionG, "");
+                productos = controller.buscarProductosPor(position, columnaObtencionG, "");
                 rellenarTabla(productos, v);
             }
 

@@ -27,7 +27,7 @@ import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.models.Productos;
 
 public class ProductosView extends AppCompatActivity {
-    private String seccionG;
+    private int seccionG;
     private String columnaObtencionG;
     private IProducto controller;
     private TextInputEditText t ;
@@ -42,7 +42,7 @@ public class ProductosView extends AppCompatActivity {
             return insets;
         });
         controller = new ProductoDAO(this);
-        seccionG = "Todas";
+        seccionG = 0;
         t = findViewById(R.id.textInputEditText);
         rellenarSpinnerSecciones();
         rellenarSpinnerColumnas();
@@ -79,12 +79,12 @@ public class ProductosView extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ArrayList<Productos> productos;
-                seccionG = secciones.get(position);
+                seccionG = position;
                 if (position==0){
                     rellenarTabla(controller.getProductos());
                     return;
                 }
-                productos = controller.buscarProductosPor(secciones.get(position), columnaObtencionG, "");
+                productos = controller.buscarProductosPor(position, columnaObtencionG, "");
                 t.setText("");
                 rellenarTabla(productos);
             }

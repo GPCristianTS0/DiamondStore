@@ -12,7 +12,7 @@ public interface IProducto {
     public String getSeccion(int id);
     public int addSeccion(String nombre);
     public ArrayList<String> getSeccione();
-    public ArrayList<Productos> buscarProductosPor(String seccion, String columnaObtencion, String busqueda);
+    public ArrayList<Productos> buscarProductosPor(int seccion, String columnaObtencion, String busqueda);
     public ArrayList<Productos> getProductos();
     public void deleteProducto(Productos producto);
     public void updateProducto(Productos old, Productos newProducto);

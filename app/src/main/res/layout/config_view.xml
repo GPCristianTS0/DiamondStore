@@ -25,7 +25,7 @@
         android:id="@+id/tvSubConfig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ajustes del sistema Clover"
+        android:text="Ajustes Del Sistema"
         android:textColor="#757575"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/tvTituloConfig"
