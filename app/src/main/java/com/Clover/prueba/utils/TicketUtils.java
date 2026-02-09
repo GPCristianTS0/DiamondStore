@@ -44,11 +44,9 @@ public class TicketUtils {
     }
 
     public void generarTicketVenta(Context context,String nombreCliente, Ventas venta, ArrayList<DetalleVenta>listaProductos, boolean waoOrGeneric){
-        // 1. INFLAR: Traemos el layout del cajón a la memoria
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.ticket_virtual, null);
 
-        // 2. DATA BINDING: Llenamos los datos en la vista invisible
         TextView txtCliente = view.findViewById(R.id.HV_clienteOut);
         TextView txtNombre = view.findViewById(R.id.HV_nombreNegocio);
         TextView txtFecha = view.findViewById(R.id.HV_fechaOut);

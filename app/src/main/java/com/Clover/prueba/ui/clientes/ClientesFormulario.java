@@ -116,8 +116,7 @@ public class ClientesFormulario extends AppCompatActivity {
         cliente.setFecha_registro(fecha);
         cliente.setPuntos(0);
         cliente.setSaldo(0);
-        Toast.makeText(this, cliente.getId_cliente(), Toast.LENGTH_SHORT).show();
-        //controller.addClient(cliente);
+        controller.addClient(cliente);
         finish();
     }
     private boolean isClientInvalide(Clientes cliente){

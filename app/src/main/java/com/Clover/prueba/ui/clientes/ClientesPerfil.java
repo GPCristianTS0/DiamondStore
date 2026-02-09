@@ -1,6 +1,7 @@
 package com.Clover.prueba.ui.clientes;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.Clover.prueba.data.controller.ControllerClientes;
 import com.Clover.prueba.data.dto.ProductoMasCompradoDTO;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.ui.credito.CreditoDarAbono;
+import com.Clover.prueba.utils.GeneradorQR;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,7 @@ public class ClientesPerfil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_clientes_perfil);
+        setContentView(R.layout.clientes_perfil);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -47,6 +49,7 @@ public class ClientesPerfil extends AppCompatActivity {
         }
     }
     private void bindDatos(){
+        ImageView imagen = findViewById(R.id.PC_imgQRPrincipal);
         TextView nombre = findViewById(R.id.PC_txtNombre);
         TextView apodo = findViewById(R.id.PC_txtApodo);
         TextView telefono = findViewById(R.id.PC_txtTelefono);
@@ -56,6 +59,9 @@ public class ClientesPerfil extends AppCompatActivity {
 
         String importes = "$ ";
         //Agrega los datos del cliente
+        GeneradorQR qr = new GeneradorQR(this);
+        Bitmap bitmap = qr.generarQR(clientes.getId_cliente());
+        imagen.setImageBitmap(bitmap);
         nombre.setText(clientes.getNombre_cliente());
         apodo.setText(clientes.getApodo());
         telefono.setText(formatoNumeroTelefonico(clientes.getId_cliente()));
@@ -147,6 +153,8 @@ public class ClientesPerfil extends AppCompatActivity {
         Button verAbonos = findViewById(R.id.PC_btnVerAbonos);
         Button editarInfo = findViewById(R.id.PC_btnEditarInfo);
         Button abonarRapido = findViewById(R.id.PC_btnAbonarRapido);
+        LinearLayout btnCompartir = findViewById(R.id.PC_layoutCompartir);
+
 
         //Funciones de botones
         verVentas.setOnClickListener(v -> {
@@ -179,6 +187,10 @@ public class ClientesPerfil extends AppCompatActivity {
             bundle.putString("idCliente", clientes.getId_cliente());
             darAbono.setArguments(bundle);
             darAbono.show(getSupportFragmentManager(), "CreditoDarAbono");
+        });
+        btnCompartir.setOnClickListener(v -> {
+            GeneradorQR generadorQR = new GeneradorQR(this);
+            generadorQR.compartirQR(this, clientes);
         });
     }
 

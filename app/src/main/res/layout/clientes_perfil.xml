@@ -36,27 +36,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/PC_txtPuntos"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:background="@drawable/button_border"
             android:backgroundTint="#FFFFFF"
-            android:drawablePadding="4dp"
-            android:drawableTint="#FF9800"
-            android:gravity="center"
             android:elevation="4dp"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="6dp"
-            android:textColor="#FF9800"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:drawableStartCompat="@android:drawable/btn_star_big_on"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="150 pts" />
+            android:paddingHorizontal="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/PC_lblTituloPantalla"
+            app:layout_constraintEnd_toEndOf="@+id/PC_layoutCompartir"
+            app:layout_constraintTop_toTopOf="@+id/PC_lblTituloPantalla">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/estrella_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/PC_txtPuntos"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#FF9800" />
+
+            <TextView
+                android:id="@+id/PC_txtPuntos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:drawableTint="#FF9800"
+                android:gravity="center"
+                android:text="150"
+                android:textColor="#FF9800"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="@+id/imageView4"
+                tools:text="150 pts" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/PC_cardQRHeader"
@@ -121,11 +140,14 @@
             app:layout_constraintTop_toBottomOf="@+id/PC_txtApodo" />
 
         <LinearLayout
+            android:id="@+id/PC_layoutCompartir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_border"
             android:backgroundTint="#FFFFFF"
             android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal"
             android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/PC_headerBg"
