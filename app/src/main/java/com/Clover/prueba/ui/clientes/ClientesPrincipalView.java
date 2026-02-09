@@ -81,7 +81,7 @@ public class ClientesPrincipalView extends AppCompatActivity {
         adapter = new ClientesPrincipalAdapter(cliente, new ClientesPrincipalAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Clientes cliente, int position) {
-                Intent intent = new Intent( ClientesPrincipalView.this, ClientesFormulario.class);
+                Intent intent = new Intent( ClientesPrincipalView.this, ClientesPerfil.class);
                 intent.putExtra("cliente", cliente);
                 startActivity(intent);
             }

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 public interface IAbonos {
     public long addAbono(Abonos abono);
     public ArrayList<Abonos> getAbonos(String idCliente);
+
+    Abonos getUltimoAbono(String idCliente);
+
     public Abonos getAbono(String idAbono);
     public boolean deleteAbono(String idAbono);
 

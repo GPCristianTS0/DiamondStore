@@ -30,7 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.CorteCajaController;
 import com.Clover.prueba.data.dao.CorteCajaDAO;
-import com.Clover.prueba.data.models.CarritoDTO;
+import com.Clover.prueba.data.dto.CarritoDTO;
 import com.Clover.prueba.data.models.Ventas;
 import com.Clover.prueba.ui.corte.DialogAbrirCorte;
 import com.google.android.material.textfield.TextInputEditText;

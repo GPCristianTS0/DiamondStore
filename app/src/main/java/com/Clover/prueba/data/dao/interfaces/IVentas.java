@@ -2,6 +2,7 @@ package com.Clover.prueba.data.dao.interfaces;
 
 import java.util.ArrayList;
 
+import com.Clover.prueba.data.dto.ProductoMasCompradoDTO;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
@@ -24,5 +25,12 @@ public interface IVentas {
 
     public String getProductoMasVendido();
 
+    public ArrayList<ProductoMasCompradoDTO> getMasCompradobyCliente(String idCliente, int noProductos);
+
+    //Clientes y ventas
+    int getVentasTotales(String idCliente);
+
     double getSaldoPendiente(String idCliente);
+
+    double getTicketPromedio(String idCliente);
 }

@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
         <activity
+            android:name=".ui.clientes.ClientesPerfil"
+            android:exported="false" />
+        <activity
             android:name=".ui.clientes.ClientesDetalleAbonos"
             android:exported="false" />
         <activity

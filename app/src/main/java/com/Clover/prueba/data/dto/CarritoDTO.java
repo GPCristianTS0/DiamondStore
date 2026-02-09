@@ -1,4 +1,4 @@
-package com.Clover.prueba.data.models;
+package com.Clover.prueba.data.dto;
 
 import static com.Clover.prueba.utils.Constantes.CONST_METODO_CREDITO;
 import static com.Clover.prueba.utils.Constantes.VENTA_PENDIENTE;
@@ -13,6 +13,10 @@ import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
+import com.Clover.prueba.data.models.Clientes;
+import com.Clover.prueba.data.models.DetalleVenta;
+import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.Ventas;
 import com.Clover.prueba.utils.Constantes;
 import com.Clover.prueba.utils.TicketUtils;
 
@@ -127,12 +131,12 @@ public class CarritoDTO implements Serializable {
         venta.setMonto(total);
         venta.setTotal_piezas(totalpiezas());
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        LocalDate fechaLimite = LocalDate.now();
-        int dias = venta.getDias_plazo();
-        venta.setFecha_limite(fechaLimite.plusDays(dias).toString());
         String fecha = LocalDateTime.now().format(format);
         venta.setFecha_hora(fecha);
         if (venta.getTipo_pago().equals(CONST_METODO_CREDITO)) {
+            LocalDate fechaLimite = LocalDate.now();
+            int dias = venta.getDias_plazo();
+            venta.setFecha_limite(fechaLimite.plusDays(dias).toString());
             venta.setMonto_pendiente(total);
             venta.setEstado(VENTA_PENDIENTE);
         }

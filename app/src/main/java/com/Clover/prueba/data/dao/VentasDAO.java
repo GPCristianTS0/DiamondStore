@@ -18,6 +18,7 @@ import java.util.Locale;
 
 import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.database.CloverBD;
+import com.Clover.prueba.data.dto.ProductoMasCompradoDTO;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
 
@@ -62,7 +63,7 @@ public class VentasDAO implements IVentas {
             SQLiteStatement stmtStock = db.compileStatement(sqlStock);
             SQLiteStatement stmtVendidos = db.compileStatement(sqlVendidos);
             SQLiteStatement stmtCliente = db.compileStatement(sqlCliente);
-            stmtCliente.bindDouble(1, venta.getMonto());
+            stmtCliente.bindDouble(1, venta.getMonto_pendiente());
             stmtCliente.bindString(2, venta.getId_cliente());
             stmtCliente.executeUpdateDelete();
 
@@ -279,6 +280,45 @@ public class VentasDAO implements IVentas {
         return "";
     }
     @Override
+    public ArrayList<ProductoMasCompradoDTO> getMasCompradobyCliente(String idCliente, int noProductos) {
+        String sql = "SELECT p.nombre_producto, p.rutaImagen AS ruta, SUM(dv.cantidad) AS cantidad FROM ventas v" +
+                " INNER JOIN detalles_venta dv ON v.id_venta = dv.id_venta " +
+                " INNER JOIN productos p ON dv.id_producto = p.id_producto " +
+                " WHERE v.id_cliente = ? GROUP BY p.nombre_producto, p.rutaImagen, p.id_producto " +
+                " ORDER BY cantidad DESC LIMIT ?";
+        ArrayList<String> args = new ArrayList<>();
+        args.add(idCliente);
+        args.add(String.valueOf(noProductos));
+        ArrayList<ProductoMasCompradoDTO> masComprados = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery(sql, args.toArray(new String[0]))){
+            while (cursor.moveToNext()) {
+                ProductoMasCompradoDTO productoMasComprado = new ProductoMasCompradoDTO();
+                productoMasComprado.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre_producto")));
+                productoMasComprado.setRuta(cursor.getString(cursor.getColumnIndexOrThrow("ruta")));
+                productoMasComprado.setCantidad(cursor.getInt(cursor.getColumnIndexOrThrow("cantidad")));
+                masComprados.add(productoMasComprado);
+            }
+            return masComprados;
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getMasCompradobyCliente: " + e.getMessage());
+        }
+        return null;
+    }
+    //Clientes y ventas
+    @Override
+    public int getVentasTotales(String idCliente) {
+        String sql = "SELECT COUNT(*) FROM ventas WHERE id_cliente = ?";
+        try (Cursor cursor = db.rawQuery(sql, new String[]{idCliente})){
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getVentasTotales: " + e.getMessage());
+        }
+        return -1;
+    }
+
+    @Override
     public double getSaldoPendiente(String idCliente){
         String sql = "SELECT SUM(monto_pendiente) FROM ventas WHERE id_cliente = ? AND estado = '"+VENTA_PENDIENTE+"'";
         try (Cursor cursor = db.rawQuery(sql, new String[]{idCliente})){
@@ -287,6 +327,18 @@ public class VentasDAO implements IVentas {
             }
         } catch (Exception e) {
             Log.e("Clover_App", "Error en getSaldoPendiente: " + e.getMessage());
+        }
+        return -1;
+    }
+    @Override
+    public double getTicketPromedio(String idCliente) {
+        String sql = "SELECT AVG(monto) FROM ventas WHERE id_cliente = ?";
+        try (Cursor cursor = db.rawQuery(sql, new String[]{idCliente})){
+            if (cursor.moveToFirst()) {
+                return cursor.getDouble(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getTicketPromedio: " + e.getMessage());
         }
         return -1;
     }

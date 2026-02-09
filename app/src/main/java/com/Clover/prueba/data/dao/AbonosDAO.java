@@ -128,6 +128,30 @@ public class AbonosDAO implements IAbonos {
         }
         return null;
     }
+    @Override
+    public Abonos getUltimoAbono(String idCliente) {
+        String sql = "SELECT * FROM abonos WHERE id_cliente = ? ORDER BY fecha_hora DESC LIMIT 1";
+        try (Cursor cursor = db.rawQuery(sql, new String[]{idCliente})){
+            if (cursor.moveToFirst()){
+                Abonos abono = new Abonos();
+                abono.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id_abono")));
+                abono.setFecha(cursor.getString(cursor.getColumnIndexOrThrow("fecha_hora")));
+                abono.setMonto(cursor.getDouble(cursor.getColumnIndexOrThrow("monto")));
+                abono.setIdCorte(cursor.getInt(cursor.getColumnIndexOrThrow("id_corte")));
+                abono.setIdCliente(cursor.getString(cursor.getColumnIndexOrThrow("id_cliente")));
+                abono.setSaldoAnterior(cursor.getDouble(cursor.getColumnIndexOrThrow("saldo_anterior")));
+                abono.setSaldoActual(cursor.getDouble(cursor.getColumnIndexOrThrow("saldo_nuevo")));
+                abono.setIdEmpleado(cursor.getInt(cursor.getColumnIndexOrThrow("id_empleado")));
+                abono.setObservacion(cursor.getString(cursor.getColumnIndexOrThrow("observaciones")));
+                abono.setTipoPago(cursor.getString(cursor.getColumnIndexOrThrow("tipo_pago")));
+                return abono;
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error al obtener abonos: " + e.getMessage());
+        }
+        return null;
+    }
+
 
     @Override
     public Abonos getAbono(String idAbono) {

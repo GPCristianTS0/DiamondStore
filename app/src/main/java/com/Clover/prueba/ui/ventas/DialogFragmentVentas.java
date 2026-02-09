@@ -31,7 +31,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.controller.ConfiguracionControl;
-import com.Clover.prueba.data.models.CarritoDTO;
+import com.Clover.prueba.data.dto.CarritoDTO;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.Ventas;
 import com.google.android.material.chip.ChipGroup;
