@@ -59,11 +59,11 @@ public class CarritoDTO implements Serializable {
     public boolean setCliente(String idCliente) {
         IClient controller = new ClientesDAO(context);
         cliente = controller.getClient(idCliente);
-        return cliente.getId_cliente() != null;
+        return cliente != null;
     }
 
     public String getClienteNombre(){
-        if (cliente == null) return "";
+        if (cliente == null ||cliente.getNombre_cliente()== null) return "";
         return cliente.getNombre_cliente();
     }
 

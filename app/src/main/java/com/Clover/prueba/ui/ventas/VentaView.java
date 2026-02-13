@@ -88,9 +88,24 @@ public class VentaView extends AppCompatActivity {
         CorteCajaDAO corteCajaDAO = new CorteCajaDAO(this);
         //corteCajaDAO.vaciarTabla();
         modelVentas = new CarritoDTO(this);
+        txtCliente = findViewById(R.id.VV_clienteNombreTxt);
         rellenarCarrito();
         movimientoCodigo();
-        inputCliente();
+        txtCliente.setOnEditorActionListener((v, actionId, event) ->{
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE|| (event != null && event.getAction() == KeyEvent.ACTION_DOWN
+                    && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
+                String texto = txtCliente.getText().toString();
+                if (texto.isEmpty()){
+                    return false;
+                }
+                if(inputCliente(texto)){
+                    return true;
+                }else {
+                    Toast.makeText(this, "Codigo No Reconocido", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return false;
+        });
         //Inicializar recycler
         noArticulosCount = findViewById(R.id.noArticulosCount);
         totallbl = findViewById(R.id.totallbl);
@@ -142,20 +157,19 @@ public class VentaView extends AppCompatActivity {
         EscanerCodeBar escaner = new EscanerCodeBar();
         escaner.inicializarEscaner(VentaView.this);
     }
-    private void agregarAlCarrito(String codigo){
+    private boolean agregarAlCarrito(String codigo){
         String result = modelVentas.agregarAlCarrito(codigo);
         switch (result) {
             case "No existe":
-                Toast.makeText(this, "No existe", Toast.LENGTH_SHORT).show();
-                return;
+                Toast.makeText(this, "No Encontrado", Toast.LENGTH_SHORT).show();
+                return false;
             case "Agotado":
                 Toast.makeText(this, "Agotado", Toast.LENGTH_SHORT).show();
-                return;
+                return true;
             case "insertado":
                 adapter.notifyItemInserted(0);
                 RecyclerView recyclerView = findViewById(R.id.recyclerProductosView);
                 recyclerView.scrollToPosition(0);
-
                 break;
             default:
                 adapter.notifyItemChanged(Integer.parseInt(result));
@@ -166,6 +180,7 @@ public class VentaView extends AppCompatActivity {
         noArticulosCount.setText(String.valueOf(modelVentas.totalpiezas()));
         String total = "Total: $";
         totallbl.setText(total.concat(modelVentas.getTotal()+""));
+        return true;
     }
     //Repinta la tabla con el recycler
     private void rellenarCarrito(){
@@ -203,9 +218,15 @@ public class VentaView extends AppCompatActivity {
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Escaneo cancelado", Toast.LENGTH_SHORT).show();
-            } else {
-                agregarAlCarrito(result.getContents());
+                return;
             }
+            if (modelVentas.getClienteNombre().isEmpty()) {
+                if(inputCliente(result.getContents())){
+                    return;
+                }
+            }
+            agregarAlCarrito(result.getContents());
+
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -265,29 +286,15 @@ public class VentaView extends AppCompatActivity {
         });
     }
     //Funcion agregar Cliente
-    private void inputCliente(){
-        TextInputEditText t = findViewById(R.id.VV_clienteNombreTxt);
-        t.setOnEditorActionListener((v, actionId, event) ->{
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE|| (event != null && event.getAction() == KeyEvent.ACTION_DOWN
-                    && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
-                String texto = t.getText().toString().trim();
-                if (texto.isEmpty()){
-                    return false;
-                }
-                if(modelVentas.setCliente(texto)){
-                    t.setVisibility(INVISIBLE);
-                    vi.setText(modelVentas.getClienteNombre());
-                }else{
-                    Toast.makeText(this, "Cliente no existe", Toast.LENGTH_SHORT).show();
-                }
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(t.getWindowToken(), 0);
-                t.setText("");
-                return true;
-            }
-            return false;
-        });
-
+    private TextInputEditText txtCliente;
+    private boolean inputCliente(String texto){
+        if(!modelVentas.setCliente(texto)){ return false;}
+        txtCliente.setVisibility(INVISIBLE);
+        vi.setText(modelVentas.getClienteNombre());
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(txtCliente.getWindowToken(), 0);
+        txtCliente.setText("");
+        return true;
     }
     //Funcion para abrir caja
     private void abrirCajaFuncion(){

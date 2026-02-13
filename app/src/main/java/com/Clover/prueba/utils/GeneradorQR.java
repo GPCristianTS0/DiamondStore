@@ -134,18 +134,18 @@ public class GeneradorQR {
         view.measure(widthSpec, heightSpec);
         int altoDelContenido = view.getMeasuredHeight();
 
-        //Definimos tu altura mínima deseada (1920px)
+        /*Definimos tu altura mínima deseada (1920px)
         int altoMinimo = 1920;
 
         //ELEGIMOS EL MAYOR: Si el contenido es chico, usamos 1920. Si es grande, usamos el contenido.
         int altoFinal = Math.max(altoDelContenido, altoMinimo);
+        */
 
-
-        view.layout(0, 0, view.getMeasuredWidth(), altoFinal);
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
 
         // 5. DIBUJAR (DRAW): Creamos el Bitmap y le decimos a la vista "dibújate aquí"
         float escala = 2.0f;
-        CreacionImagen(view, context,altoFinal, escala);
+        CreacionImagen(view, context,view.getMeasuredHeight(), escala);
     }
 
     private void CreacionImagen(View view, Context context,int altoFinal, float escala) {
