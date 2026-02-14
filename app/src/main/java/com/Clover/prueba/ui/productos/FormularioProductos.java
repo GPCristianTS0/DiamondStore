@@ -285,9 +285,9 @@ public class FormularioProductos extends AppCompatActivity {
         Spinner sp = findViewById(R.id.spinnerSeccionFP);
         productos.setSeccion(sp.getSelectedItem().toString());
         t = findViewById(R.id.p_publicotxt);
-        productos.setPrecioPublico(Integer.parseInt(t.getText().toString()));
+        productos.setPrecioPublico(Double.parseDouble(t.getText().toString()));
         t = findViewById(R.id.p_netotxt);
-        productos.setPrecioNeto(Integer.parseInt(t.getText().toString()));
+        productos.setPrecioNeto(Double.parseDouble(t.getText().toString()));
         t = findViewById(R.id.descripciontxt);
         productos.setDescripcion(t.getText().toString().trim());
         t = findViewById(R.id.unidadestxt);

@@ -126,7 +126,7 @@ public class ProductoDAO implements IProducto {
         if (busqueda==null) busqueda="";
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT p.*, s.nombre_seccion AS seccionNombre FROM productos p " +
-                "LEFT INNER JOIN secciones s ON p.seccion=s.id_seccion WHERE 1=1 ");
+                "LEFT JOIN secciones s ON p.seccion=s.id_seccion WHERE 1=1 ");
         ArrayList<String> arrgs = new ArrayList<>();
 
         if (seccion!=0) {

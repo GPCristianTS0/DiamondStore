@@ -35,10 +35,11 @@ public class LabelProductGenerator {
         TextView txtTelefono = view.findViewById(R.id.EP_txtTelefono);
 
         //Bind de datos
+        String importe = "$ ";
         txtNombre.setText(productos.getNombre());
         txtCodigo.setText(productos.getId());
-        txtPrecio.setText(productos.getPrecioPublico());
-        imgLogo.setImageURI(Uri.parse(conf.getRutaLogo()));
+        txtPrecio.setText(importe.concat(productos.getPrecioPublico()+""));
+        if (conf.getRutaLogo()!=null) imgLogo.setImageURI(Uri.parse(conf.getRutaLogo()));
         txtEmpresa.setText(conf.getNombreNegocio());
         txtTelefono.setText(conf.getTelefono());
         image.setImageBitmap(qr.generarQR(productos.getId()));

@@ -13,7 +13,7 @@ import com.Clover.prueba.data.models.Configuracion;
 public class ImageGenerator {
     public ImageGenerator() {
     }
-    private Bitmap getImageBitmap(View view, int altoMinimo) {
+    public Bitmap getImageBitmap(View view, int altoMinimo) {
 
         //Medicion de la pantalla
         int widthSpec = View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY); // Ancho fijo

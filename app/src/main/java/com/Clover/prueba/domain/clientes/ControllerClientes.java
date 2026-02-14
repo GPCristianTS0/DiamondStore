@@ -2,6 +2,7 @@ package com.Clover.prueba.domain.clientes;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.View;
 
 import com.Clover.prueba.data.dao.AbonosDAO;
@@ -15,6 +16,7 @@ import com.Clover.prueba.data.models.Abonos;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.services.generators.CardClientGenerator;
 import com.Clover.prueba.services.generators.GeneradorQR;
+import com.Clover.prueba.services.generators.ImageGenerator;
 import com.Clover.prueba.services.sharing.ShareManager;
 import com.Clover.prueba.services.storage.StorageImage;
 import com.Clover.prueba.utils.FormatterFechas;
@@ -83,10 +85,12 @@ public class ControllerClientes {
         View viewCard = cardClientGenerator.generarCardCliente(context, cliente, bitmap);
         //Genera y guarda la imagen
         StorageImage storageImage = new StorageImage(context);
-        String rutaImagen = storageImage.guardarImgaenTemporal(context, )
+        ImageGenerator imageGenerator = new ImageGenerator();
+        Bitmap bitmapa = imageGenerator.getImageBitmap(viewCard, 0);
+        Uri rutaImagen = storageImage.guardarImagenTemporal(bitmapa);
         //Compartir imagen
         ShareManager shareManager = new ShareManager();
-        shareManager.compartirImagen(context, "Gracias por ser parte de nosotros", null);
+        shareManager.compartirImagen(context, "Gracias por ser parte de nosotros", rutaImagen);
         return false;
     }
 

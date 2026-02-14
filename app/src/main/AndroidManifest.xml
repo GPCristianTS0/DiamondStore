@@ -8,7 +8,9 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -20,6 +22,9 @@
         android:roundIcon="@drawable/logotipo_diamondsystems"
         android:supportsRtl="true"
         android:theme="@style/Theme.Prueba">
+        <activity
+            android:name=".ui.productos.ProductoPerfil"
+            android:exported="false" />
         <activity
             android:name=".ui.clientes.ClientesPerfil"
             android:exported="false" />

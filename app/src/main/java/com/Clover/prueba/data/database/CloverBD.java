@@ -227,8 +227,6 @@ public class CloverBD extends SQLiteOpenHelper{
             db.execSQL("ALTER TABLE cortes_cajas ADD COLUMN gastos_efectivo REAL DEFAULT 0.0");
         }
         if (oldVersion<11) {
-            db.execSQL("ALTER TABLE gastos DROP COLUMN ventas_tarjeta");
-            db.execSQL("ALTER TABLE gastos DROP COLUMN ventas_efectivo");
             db.execSQL("ALTER TABLE cortes_cajas ADD COLUMN ventas_efectivo REAL DEFAULT 0.0");
             db.execSQL("ALTER TABLE cortes_cajas ADD COLUMN ventas_tarjeta REAL DEFAULT 0.0");
         }

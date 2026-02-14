@@ -58,7 +58,7 @@ public class ProductosView extends AppCompatActivity {
         adapter = new ProductosViewAdapter(productos, new ProductosViewAdapter.OnItemClickListener() {
             @Override
             public void OnClickEditProduct(Productos producto, int position) {
-                Intent intent = new Intent(ProductosView.this, FormularioProductos.class);
+                Intent intent = new Intent(ProductosView.this, ProductoPerfil.class);
                 intent.putExtra("producto", producto);
                 startActivity(intent);
             }
