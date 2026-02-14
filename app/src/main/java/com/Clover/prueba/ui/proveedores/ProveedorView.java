@@ -1,11 +1,9 @@
 package com.Clover.prueba.ui.proveedores;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,9 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ProveedoresController;
+import com.Clover.prueba.domain.proveedores.ProveedoresController;
 import com.Clover.prueba.data.models.Proveedor;
-import com.Clover.prueba.utils.AbrirAppExternas;
+import com.Clover.prueba.services.sharing.ShareManager;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -61,12 +59,12 @@ public class ProveedorView extends AppCompatActivity {
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.PrV_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AbrirAppExternas abrirAppExternas = new AbrirAppExternas();
+        ShareManager shareManager = new ShareManager();
         adapter = new ProveedorViewAdapter(proveedores, new ProveedorViewAdapter.OnClickListener(){
             @Override
             public void onClickLlamar(String numero, int position) {
                 if (numero != null && !numero.isEmpty()) {
-                    abrirAppExternas.abrirLlamada(ProveedorView.this, numero);
+                    shareManager.abrirLlamada(ProveedorView.this, numero);
                 } else {
                     Toast.makeText(null, "Sin número registrado", Toast.LENGTH_SHORT).show();
                 }
@@ -74,7 +72,7 @@ public class ProveedorView extends AppCompatActivity {
             @Override
             public void onClickWhatsapp(String numero, int position) {
                 if (numero != null && !numero.isEmpty()) {
-                    abrirAppExternas.abrirWhatsapp(ProveedorView.this, numero, null);
+                    shareManager.abrirWhatsapp(ProveedorView.this, numero, null);
                 } else {
                     android.widget.Toast.makeText(null, "Sin número para WhatsApp", android.widget.Toast.LENGTH_SHORT).show();
                 }

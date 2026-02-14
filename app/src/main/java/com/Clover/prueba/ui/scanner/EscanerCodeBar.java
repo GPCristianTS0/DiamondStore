@@ -1,4 +1,4 @@
-package com.Clover.prueba.utils;
+package com.Clover.prueba.ui.scanner;
 
 import android.app.Activity;
 import com.google.zxing.integration.android.IntentIntegrator;

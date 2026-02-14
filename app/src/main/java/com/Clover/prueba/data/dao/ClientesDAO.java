@@ -1,7 +1,5 @@
 package com.Clover.prueba.data.dao;
 
-import static com.Clover.prueba.utils.Constantes.VENTA_PENDIENTE;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

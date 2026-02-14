@@ -1,4 +1,4 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.domain.credito;
 
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
@@ -15,7 +15,7 @@ import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.models.Abonos;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Ventas;
-import com.Clover.prueba.utils.TicketUtils;
+import com.Clover.prueba.services.generators.TicketUtils;
 
 import java.util.ArrayList;
 import java.util.Date;

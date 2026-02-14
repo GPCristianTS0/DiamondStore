@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ControllerCredito;
+import com.Clover.prueba.domain.credito.ControllerCredito;
 import com.Clover.prueba.data.models.Abonos;
 import com.Clover.prueba.utils.FormatterFechas;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;

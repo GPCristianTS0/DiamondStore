@@ -1,12 +1,13 @@
 package com.Clover.prueba.data.dto;
 
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_CREDITO;
-import static com.Clover.prueba.utils.Constantes.VENTA_PENDIENTE;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_CREDITO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.VENTA_PAGADA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.VENTA_PENDIENTE;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.Clover.prueba.data.controller.CorteCajaController;
+import com.Clover.prueba.domain.ventas.CorteCajaController;
 import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
@@ -17,8 +18,7 @@ import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.data.models.Ventas;
-import com.Clover.prueba.utils.Constantes;
-import com.Clover.prueba.utils.TicketUtils;
+import com.Clover.prueba.services.generators.TicketUtils;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -141,7 +141,7 @@ public class CarritoDTO implements Serializable {
             venta.setEstado(VENTA_PENDIENTE);
         }
         else
-            venta.setEstado(Constantes.VENTA_PAGADA);
+            venta.setEstado(VENTA_PAGADA);
         venta.setId_corte(new CorteCajaController(context).getCorteActual().getId_corte());
         this.venta = venta;
         //Agregar venta

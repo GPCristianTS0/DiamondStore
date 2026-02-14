@@ -2,18 +2,18 @@ package com.Clover.prueba.ui.ventas;
 
 import static android.view.View.VISIBLE;
 
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_CREDITO;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_EFECTIVO;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TRANSFERENCIA;
-import static com.Clover.prueba.utils.Constantes.CONST_PAGO_MENSUAL;
-import static com.Clover.prueba.utils.Constantes.CONST_PAGO_QUINCENAL;
-import static com.Clover.prueba.utils.Constantes.CONST_PAGO_SEMANAL;
-import static com.Clover.prueba.utils.Constantes.CONST_PAGO_UNICO;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TARJETA;
-import static com.Clover.prueba.utils.Constantes.CONST_TARJETA_CREDITO;
-import static com.Clover.prueba.utils.Constantes.CONST_TARJETA_DEBITO;
-import static com.Clover.prueba.utils.Constantes.VENTA_PAGADA;
-import static com.Clover.prueba.utils.Constantes.VENTA_PENDIENTE;
+import static com.Clover.prueba.domain.credito.CreditoConstantes.CONST_PAGO_MENSUAL;
+import static com.Clover.prueba.domain.credito.CreditoConstantes.CONST_PAGO_QUINCENAL;
+import static com.Clover.prueba.domain.credito.CreditoConstantes.CONST_PAGO_SEMANAL;
+import static com.Clover.prueba.domain.credito.CreditoConstantes.CONST_PAGO_UNICO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_CREDITO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_EFECTIVO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TARJETA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TRANSFERENCIA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_TARJETA_CREDITO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_TARJETA_DEBITO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.VENTA_PAGADA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.VENTA_PENDIENTE;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,7 +30,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ConfiguracionControl;
+import com.Clover.prueba.domain.configuracion.ConfiguracionControl;
 import com.Clover.prueba.data.dto.CarritoDTO;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.Ventas;

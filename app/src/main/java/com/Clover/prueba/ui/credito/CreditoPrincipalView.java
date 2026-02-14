@@ -1,7 +1,5 @@
 package com.Clover.prueba.ui.credito;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -14,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ControllerCredito;
+import com.Clover.prueba.domain.credito.ControllerCredito;
 import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.models.Clientes;
-import com.Clover.prueba.utils.AbrirAppExternas;
+import com.Clover.prueba.services.sharing.ShareManager;
 
 import java.util.ArrayList;
 
@@ -52,16 +50,16 @@ public class CreditoPrincipalView extends AppCompatActivity {
         txtTotal.setText(importes.concat(controllerCredito.getSaldoTotal()+""));
         TextView txtClientes = findViewById(R.id.CPC_txtClientesCount);
         txtClientes.setText(clientes.size()+" Clientes con Deuda");
-        AbrirAppExternas abrirAppExternas = new AbrirAppExternas();
+        ShareManager shareManager = new ShareManager();
         CreditoAdapterMain adapter = new CreditoAdapterMain(clientes, new CreditoAdapterMain.ListenerCreditoMain() {
             @Override
             public void onLlamar(Clientes cliente) {
-                abrirAppExternas.abrirLlamada(CreditoPrincipalView.this, cliente.getId_cliente());
+                shareManager.abrirLlamada(CreditoPrincipalView.this, cliente.getId_cliente());
             }
             @Override
             public void onWhatsapp(Clientes cliente) {
                 String telefono = cliente.getId_cliente();
-                abrirAppExternas.abrirWhatsapp(CreditoPrincipalView.this, telefono,"");
+                shareManager.abrirWhatsapp(CreditoPrincipalView.this, telefono,"");
             }
             @Override
             public void onAbonar(Clientes cliente) {

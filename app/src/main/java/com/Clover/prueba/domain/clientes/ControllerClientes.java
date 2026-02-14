@@ -1,6 +1,8 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.domain.clientes;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.view.View;
 
 import com.Clover.prueba.data.dao.AbonosDAO;
 import com.Clover.prueba.data.dao.ClientesDAO;
@@ -11,6 +13,10 @@ import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dto.ProductoMasCompradoDTO;
 import com.Clover.prueba.data.models.Abonos;
 import com.Clover.prueba.data.models.Clientes;
+import com.Clover.prueba.services.generators.CardClientGenerator;
+import com.Clover.prueba.services.generators.GeneradorQR;
+import com.Clover.prueba.services.sharing.ShareManager;
+import com.Clover.prueba.services.storage.StorageImage;
 import com.Clover.prueba.utils.FormatterFechas;
 
 import java.text.DecimalFormat;
@@ -21,11 +27,13 @@ public class ControllerClientes {
     private IVentas ventasDAO;
     private IAbonos abonosDAO;
     private IClient clientesDAO;
+    private GeneradorQR qr;
     public ControllerClientes(Context context) {
         this.context = context;
         ventasDAO = new VentasDAO(context);
         abonosDAO = new AbonosDAO(context);
         clientesDAO = new ClientesDAO(context);
+        qr = new GeneradorQR(context);
     }
     public double getSaldoPendiente(String idCliente){
         return ventasDAO.getSaldoPendiente(idCliente);
@@ -66,6 +74,20 @@ public class ControllerClientes {
     }
     public void compartirTicket(Abonos abono){
 
+    }
+    public boolean compartirCard(Clientes cliente) {
+        //Genera y guarda el QR
+        Bitmap bitmap = qr.generarQR(cliente.getId_cliente());
+        //Genera el view con el qr y los datos del cliente
+        CardClientGenerator cardClientGenerator = new CardClientGenerator();
+        View viewCard = cardClientGenerator.generarCardCliente(context, cliente, bitmap);
+        //Genera y guarda la imagen
+        StorageImage storageImage = new StorageImage(context);
+        String rutaImagen = storageImage.guardarImgaenTemporal(context, )
+        //Compartir imagen
+        ShareManager shareManager = new ShareManager();
+        shareManager.compartirImagen(context, "Gracias por ser parte de nosotros", null);
+        return false;
     }
 
     public Clientes getClientes(String idCliente) {

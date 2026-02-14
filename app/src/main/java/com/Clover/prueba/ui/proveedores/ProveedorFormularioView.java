@@ -13,7 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ProveedoresController;
+import com.Clover.prueba.domain.proveedores.ProveedoresController;
 import com.Clover.prueba.data.models.Proveedor;
 import com.google.android.material.textfield.TextInputEditText;
 

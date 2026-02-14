@@ -18,11 +18,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ControllerClientes;
+import com.Clover.prueba.domain.clientes.ControllerClientes;
 import com.Clover.prueba.data.dto.ProductoMasCompradoDTO;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.ui.credito.CreditoDarAbono;
-import com.Clover.prueba.utils.GeneradorQR;
+import com.Clover.prueba.services.generators.GeneradorQR;
 
 import java.util.ArrayList;
 
@@ -189,8 +189,7 @@ public class ClientesPerfil extends AppCompatActivity {
             darAbono.show(getSupportFragmentManager(), "CreditoDarAbono");
         });
         btnCompartir.setOnClickListener(v -> {
-            GeneradorQR generadorQR = new GeneradorQR(this);
-            generadorQR.compartirQR(this, clientes);
+            controller.compartirCard(clientes);
         });
     }
 

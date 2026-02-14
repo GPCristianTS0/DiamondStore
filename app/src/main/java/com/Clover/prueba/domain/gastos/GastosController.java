@@ -1,4 +1,4 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.domain.gastos;
 
 import android.content.Context;
 

@@ -1,8 +1,6 @@
 package com.Clover.prueba.ui.gastos;
 
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.GastosController;
+import com.Clover.prueba.domain.gastos.GastosController;
 import com.Clover.prueba.data.models.Gastos;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;

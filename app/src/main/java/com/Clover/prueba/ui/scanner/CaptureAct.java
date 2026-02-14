@@ -1,4 +1,4 @@
-package com.Clover.prueba.utils;
+package com.Clover.prueba.ui.scanner;
 
 import com.journeyapps.barcodescanner.CaptureActivity;
 

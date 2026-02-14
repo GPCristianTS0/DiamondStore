@@ -1,19 +1,17 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.domain.reportes;
 
-import static com.Clover.prueba.utils.Constantes.CONST_ESTA_SEMANA;
-import static com.Clover.prueba.utils.Constantes.CONST_ESTE_DIA;
-import static com.Clover.prueba.utils.Constantes.CONST_ESTE_MES;
-import static com.Clover.prueba.utils.Constantes.CONST_THIS_YEAR;
+import static com.Clover.prueba.domain.reportes.FiltroRangoFechas.CONST_ESTA_SEMANA;
+import static com.Clover.prueba.domain.reportes.FiltroRangoFechas.CONST_ESTE_DIA;
+import static com.Clover.prueba.domain.reportes.FiltroRangoFechas.CONST_ESTE_MES;
+import static com.Clover.prueba.domain.reportes.FiltroRangoFechas.CONST_THIS_YEAR;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.Clover.prueba.data.dao.FinancieroDAO;
 import com.Clover.prueba.data.models.ReporteFinanciero;
 
 import java.time.*;
-import java.util.Date;
 
 public class ControllerFinanciero {
     private final FinancieroDAO financieroDAO;

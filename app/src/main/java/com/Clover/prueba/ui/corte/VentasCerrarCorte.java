@@ -15,9 +15,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.CorteCajaController;
+import com.Clover.prueba.domain.ventas.CorteCajaController;
 import com.Clover.prueba.data.models.CorteCaja;
-import com.Clover.prueba.utils.Constantes;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class VentasCerrarCorte extends AppCompatActivity {

@@ -1,8 +1,8 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.domain.ventas;
 
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_EFECTIVO;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TARJETA;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TRANSFERENCIA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_EFECTIVO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TARJETA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TRANSFERENCIA;
 
 import android.content.Context;
 

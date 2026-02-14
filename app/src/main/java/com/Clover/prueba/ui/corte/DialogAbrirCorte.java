@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.CorteCajaController;
+import com.Clover.prueba.domain.ventas.CorteCajaController;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class DialogAbrirCorte extends DialogFragment {

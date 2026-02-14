@@ -1,11 +1,10 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.domain.configuracion;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.Clover.prueba.data.dao.ConfiguracionDAO;
 import com.Clover.prueba.data.models.Configuracion;
-import com.Clover.prueba.utils.ImageUtils;
+import com.Clover.prueba.services.storage.StorageImage;
 
 public class ConfiguracionControl {
     private ConfiguracionDAO configuracionDAO;
@@ -19,9 +18,9 @@ public class ConfiguracionControl {
         return configuracionDAO.getConfiguracion();
     }
     public boolean updateConfiguracionNegocio(Configuracion configuracion) {
-        ImageUtils utils = new ImageUtils(context);
+        StorageImage utils = new StorageImage(context);
         if (configuracion.getLogoURL() != null){
-            String ruta = utils.guardarImagen(configuracion.getLogoURL());
+            String ruta = utils.guardarImagenInterno(configuracion.getLogoURL());
             configuracion.setRutaLogo(ruta);
             utils.eliminarImagen(configuracion.getOldRutaLogo());
         }else {

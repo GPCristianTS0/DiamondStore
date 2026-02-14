@@ -1,9 +1,9 @@
 package com.Clover.prueba.ui.financiero;
 
-import static com.Clover.prueba.utils.Constantes.CONST_ESTA_SEMANA;
-import static com.Clover.prueba.utils.Constantes.CONST_ESTE_DIA;
-import static com.Clover.prueba.utils.Constantes.CONST_ESTE_MES;
-import static com.Clover.prueba.utils.Constantes.CONST_THIS_YEAR;
+import static com.Clover.prueba.domain.reportes.FiltroRangoFechas.CONST_ESTA_SEMANA;
+import static com.Clover.prueba.domain.reportes.FiltroRangoFechas.CONST_ESTE_DIA;
+import static com.Clover.prueba.domain.reportes.FiltroRangoFechas.CONST_ESTE_MES;
+import static com.Clover.prueba.domain.reportes.FiltroRangoFechas.CONST_THIS_YEAR;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.Clover.prueba.utils.Constantes;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +21,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ControllerFinanciero;
+import com.Clover.prueba.domain.reportes.ControllerFinanciero;
 import com.Clover.prueba.data.models.ReporteFinanciero;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -31,7 +30,6 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;

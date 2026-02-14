@@ -1,4 +1,4 @@
-package com.Clover.prueba.utils;
+package com.Clover.prueba.services.generators;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,8 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,14 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.dao.ConfiguracionDAO;
-import com.Clover.prueba.data.dao.interfaces.IConfiguracion;
-import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Configuracion;
+import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.services.sharing.ShareManager;
+import com.Clover.prueba.services.storage.StorageImage;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -32,8 +28,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,25 +99,32 @@ public class GeneradorQR {
 
         return bitCombinado;
     }
-
-    public void compartirQR(Context context, Clientes cliente){
+    //Funcion para compartir QR descargar QR del producto
+    private void guardarEtiquetaProducto(Context context, Productos productos){
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.cliente_card, null);
+        View view = layoutInflater.inflate(R.layout.productos_etiqueta, null);
 
         //Inicializacion
-        TextView txtNombre = view.findViewById(R.id.CRED_txtNombre);
-        TextView txtID = view.findViewById(R.id.CRED_txtID);
-        TextView txtNombreEmpresa = view.findViewById(R.id.CRED_txtEmpresa);
-        ImageView image = view.findViewById(R.id.CRED_imgQR);
+        TextView txtNombre = view.findViewById(R.id.EP_txtNombre);
+        ImageView image = view.findViewById(R.id.EP_imgQR);
+        TextView txtCodigo = view.findViewById(R.id.EP_txtCodigo);
+        TextView txtPrecio = view.findViewById(R.id.EP_txtPrecio);
+        ImageView imgLogo = view.findViewById(R.id.EP_imgLogo);
+        TextView txtEmpresa = view.findViewById(R.id.EP_txtEmpresa);
+        TextView txtTelefono = view.findViewById(R.id.EP_txtTelefono);
         Configuracion conf = new ConfiguracionDAO(context).getConfiguracion();
-        Bitmap bitmap = generarQR(cliente.getId_cliente());
+
         //Bind de datos
-        txtNombre.setText(cliente.getNombre_cliente());
-        txtID.setText(String.valueOf("#"+cliente.getId_cliente()));
-        txtNombreEmpresa.setText(conf.getNombreNegocio());
-        image.setImageBitmap(bitmap);
+        txtNombre.setText(productos.getNombre());
+        txtCodigo.setText(productos.getId());
+        txtPrecio.setText(productos.getPrecioPublico());
+        imgLogo.setImageURI(Uri.parse(conf.getRutaLogo()));
+        txtEmpresa.setText(conf.getNombreNegocio());
+        txtTelefono.setText(conf.getTelefono());
+        image.setImageBitmap(generarQR(productos.getId()));
+
         //Compartir datos
-        generarYCompartirTicket(view, context);
+
     }
 
     private void generarYCompartirTicket(View view, Context context) {
@@ -160,7 +161,10 @@ public class GeneradorQR {
             canvas.scale(escala, escala);
             view.draw(canvas);
             // 6. COMPARTIR: Guardamos temporalmente y lanzamos WhatsApp
-            compartirBitmap(context, bitmap);
+            ShareManager shareManager = new ShareManager();
+            StorageImage storageImage = new StorageImage(context);
+            Uri uri = storageImage.guardarImgaenTemporal(context, bitmap);
+            shareManager.compartirImagen(context, "Gracias por ser parte de nosotros", uri);
         } catch (OutOfMemoryError|Exception e) {
             Log.e("Clover_App", "Error al generar ticket: "+e.getMessage());
 
@@ -174,34 +178,5 @@ public class GeneradorQR {
 
     }
 
-    private void compartirBitmap(Context context, Bitmap bitmap) {
-        try {
-            //Busca la carpeta y si no existe la crea
-            File cache = new File(context.getCacheDir(), "tickets");
-            if (!cache.exists()) cache.mkdirs();
 
-            //Se borrar tickets Antiguos
-            File[] files = cache.listFiles();
-            if (files != null)
-                for (File file : files) file.delete();
-
-            //Se crea una archivo temporal para guardar el ticket
-            File newFile = new File(cache, "ticket.png");
-            FileOutputStream stream = new FileOutputStream(newFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            stream.close();
-
-            //Se genera la Uri
-            Uri contentUri = FileProvider.getUriForFile(context, "com.Clover.prueba.fileprovider", newFile);
-
-            if (contentUri == null) {
-                Log.e("Clover_App", "Error al generar la URI");
-                return;
-            }
-            AbrirAppExternas abrirAppExternas = new AbrirAppExternas();
-            abrirAppExternas.compartirImagen(context, "Gracias por ser parte de nosotros!!",contentUri);
-        } catch (Exception e) {
-            Log.e("Clover_App", "Error al compartir ticket"+e.getMessage());
-        }
-    }
 }

@@ -18,9 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.GastosController;
-import com.Clover.prueba.data.dao.GastosDAO;
-import com.Clover.prueba.data.dao.interfaces.IGastos;
+import com.Clover.prueba.domain.gastos.GastosController;
 import com.Clover.prueba.data.models.Gastos;
 
 import java.util.ArrayList;

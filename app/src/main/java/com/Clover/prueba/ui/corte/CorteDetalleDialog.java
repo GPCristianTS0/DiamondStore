@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.CorteCajaController;
+import com.Clover.prueba.domain.ventas.CorteCajaController;
 import com.Clover.prueba.data.models.CorteCaja;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 

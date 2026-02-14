@@ -1,4 +1,4 @@
-package com.Clover.prueba.utils;
+package com.Clover.prueba.services.sharing;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -11,8 +11,8 @@ import com.Clover.prueba.data.models.Configuracion;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class AbrirAppExternas {
-    public AbrirAppExternas() {
+public class ShareManager {
+    public ShareManager() {
     }
 
     public void abrirLlamada(Context context, String numero) {

@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ControllerClientes;
-import com.Clover.prueba.data.controller.ControllerCredito;
-import com.Clover.prueba.data.dao.interfaces.IAbonos;
+import com.Clover.prueba.domain.clientes.ControllerClientes;
+import com.Clover.prueba.domain.credito.ControllerCredito;
 import com.Clover.prueba.data.models.Abonos;
 import com.Clover.prueba.data.models.Clientes;
 

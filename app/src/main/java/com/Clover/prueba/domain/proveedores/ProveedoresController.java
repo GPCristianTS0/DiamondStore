@@ -1,10 +1,7 @@
-package com.Clover.prueba.data.controller;
+package com.Clover.prueba.domain.proveedores;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.Clover.prueba.data.dao.ProveedoresDAO;
 import com.Clover.prueba.data.dao.interfaces.IProveedores;

@@ -1,11 +1,10 @@
 package com.Clover.prueba.ui.credito;
 
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_EFECTIVO;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TARJETA;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TRANSFERENCIA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_EFECTIVO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TARJETA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TRANSFERENCIA;
 
 import android.content.Context;
-import android.location.GnssAntennaInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -26,11 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ControllerCredito;
-import com.Clover.prueba.data.controller.GastosController;
+import com.Clover.prueba.domain.credito.ControllerCredito;
 import com.Clover.prueba.data.models.Clientes;
-import com.Clover.prueba.data.models.Gastos;
-import com.Clover.prueba.utils.TicketUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 

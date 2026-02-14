@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ControllerCredito;
+import com.Clover.prueba.domain.credito.ControllerCredito;
 import com.Clover.prueba.data.models.Clientes;
 
 import java.time.LocalDate;

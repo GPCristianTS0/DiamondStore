@@ -1,11 +1,11 @@
 package com.Clover.prueba.ui.historialventas;
 
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_CREDITO;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_EFECTIVO;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TARJETA;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TRANSFERENCIA;
-import static com.Clover.prueba.utils.Constantes.VENTA_PAGADA;
-import static com.Clover.prueba.utils.Constantes.VENTA_PENDIENTE;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_CREDITO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_EFECTIVO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TARJETA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TRANSFERENCIA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.VENTA_PAGADA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.VENTA_PENDIENTE;
 
 import android.graphics.Color;
 import android.net.Uri;
@@ -40,8 +40,7 @@ import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.DetalleVenta;
 import com.Clover.prueba.data.models.Ventas;
-import com.Clover.prueba.utils.Constantes;
-import com.Clover.prueba.utils.TicketUtils;
+import com.Clover.prueba.services.generators.TicketUtils;
 
 public class HistorialVentasDetalleVenta extends AppCompatActivity {
     private IVentas iVentas;

@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.utils.ImageUtils;
+import com.Clover.prueba.services.storage.StorageImage;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -45,7 +45,7 @@ import java.util.Locale;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.models.Productos;
-import com.Clover.prueba.utils.EscanerCodeBar;
+import com.Clover.prueba.ui.scanner.EscanerCodeBar;
 
 public class FormularioProductos extends AppCompatActivity {
     private static final String FILTRO_TODAS = "Todas";
@@ -259,8 +259,8 @@ public class FormularioProductos extends AppCompatActivity {
         launcherActivityGalery.launch(intent);
     }
     private String guardarImagenEnPrivado(Uri uriImagen) {
-        ImageUtils utils = new ImageUtils(this);
-        return utils.guardarImagen(uriImagen);
+        StorageImage utils = new StorageImage(this);
+        return utils.guardarImagenInterno(uriImagen);
     }
 
     //Eliminar Producto Funcion

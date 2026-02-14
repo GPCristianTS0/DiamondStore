@@ -1,9 +1,6 @@
 package com.Clover.prueba.ui.clientes;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -24,12 +20,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.utils.AbrirAppExternas;
+import com.Clover.prueba.services.sharing.ShareManager;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +71,7 @@ public class ClientesPrincipalView extends AppCompatActivity {
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.CP_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        AbrirAppExternas abrirAppExternas = new AbrirAppExternas();
+        ShareManager shareManager = new ShareManager();
         adapter = new ClientesPrincipalAdapter(cliente, new ClientesPrincipalAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Clientes cliente, int position) {
@@ -88,12 +82,12 @@ public class ClientesPrincipalView extends AppCompatActivity {
 
             @Override
             public void OnWhatsappClick(String numero, int position) {
-                abrirAppExternas.abrirWhatsapp(ClientesPrincipalView.this, numero, null);
+                shareManager.abrirWhatsapp(ClientesPrincipalView.this, numero, null);
             }
 
             @Override
             public void OnLlamarClick(String numero, int position) {
-                abrirAppExternas.abrirLlamada(ClientesPrincipalView.this, numero);
+                shareManager.abrirLlamada(ClientesPrincipalView.this, numero);
             }
         });
         recyclerView.setAdapter(adapter);

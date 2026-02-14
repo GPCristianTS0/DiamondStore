@@ -1,9 +1,9 @@
-package com.Clover.prueba.utils;
+package com.Clover.prueba.services.generators;
 
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_CREDITO;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_EFECTIVO;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TARJETA;
-import static com.Clover.prueba.utils.Constantes.CONST_METODO_TRANSFERENCIA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_CREDITO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_EFECTIVO;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TARJETA;
+import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TRANSFERENCIA;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +22,7 @@ import android.widget.Toast;
 import androidx.core.content.FileProvider;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ConfiguracionControl;
+import com.Clover.prueba.domain.configuracion.ConfiguracionControl;
 import com.Clover.prueba.data.dao.ConfiguracionDAO;
 import com.Clover.prueba.data.models.Abonos;
 import com.Clover.prueba.data.models.Configuracion;

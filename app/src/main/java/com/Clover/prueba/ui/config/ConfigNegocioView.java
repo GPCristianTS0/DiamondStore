@@ -17,7 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.data.controller.ConfiguracionControl;
+import com.Clover.prueba.domain.configuracion.ConfiguracionControl;
 import com.Clover.prueba.data.models.Configuracion;
 import com.google.android.material.textfield.TextInputEditText;
 
