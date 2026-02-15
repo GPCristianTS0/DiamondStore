@@ -158,7 +158,7 @@ public class ProductoDAO implements IProducto {
                 producto.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("descripcion")));
                 producto.setVendidos(cursor.getInt(cursor.getColumnIndexOrThrow("vendidos")));
                 producto.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
-                producto.setVentaxpeso(cursor.getInt(cursor.getColumnIndexOrThrow("ventaxpeso"))==1);
+                producto.setVentaxpeso(cursor.getInt(cursor.getColumnIndexOrThrow("ventaxpeso")));
                 producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
                 Log.e("Clover_App", "Producto: "+producto.toString());
                 productos.add(producto);
@@ -195,7 +195,7 @@ public class ProductoDAO implements IProducto {
                 producto.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("descripcion")));
                 producto.setVendidos(cursor.getInt(cursor.getColumnIndexOrThrow("vendidos")));
                 producto.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
-                producto.setVentaxpeso(cursor.getInt(cursor.getColumnIndexOrThrow("ventaxpeso"))==1);
+                producto.setVentaxpeso(cursor.getInt(cursor.getColumnIndexOrThrow("ventaxpeso")));
                 producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
                 productos.add(producto);
             }
