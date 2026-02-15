@@ -58,6 +58,7 @@ public class ProductoDAO implements IProducto {
             valuesd.put("descripcion", producto.getDescripcion());
             valuesd.put("vendidos", producto.getVendidos());
             valuesd.put("stock", producto.getStock());
+            valuesd.put("ventaxpeso", producto.getVentaxpeso());
             valuesd.put("ultimo_pedido", producto.getUltimoPedido());
             long idProducto = db.insert("productos", null, valuesd);
             if (idProducto==-1){
@@ -157,6 +158,7 @@ public class ProductoDAO implements IProducto {
                 producto.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("descripcion")));
                 producto.setVendidos(cursor.getInt(cursor.getColumnIndexOrThrow("vendidos")));
                 producto.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
+                producto.setVentaxpeso(cursor.getInt(cursor.getColumnIndexOrThrow("ventaxpeso"))==1);
                 producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
                 Log.e("Clover_App", "Producto: "+producto.toString());
                 productos.add(producto);
@@ -193,6 +195,7 @@ public class ProductoDAO implements IProducto {
                 producto.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("descripcion")));
                 producto.setVendidos(cursor.getInt(cursor.getColumnIndexOrThrow("vendidos")));
                 producto.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
+                producto.setVentaxpeso(cursor.getInt(cursor.getColumnIndexOrThrow("ventaxpeso"))==1);
                 producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
                 productos.add(producto);
             }
@@ -250,6 +253,7 @@ public class ProductoDAO implements IProducto {
             valuesd.put("descripcion",newProducto.getDescripcion());
             valuesd.put("vendidos",newProducto.getVendidos());
             valuesd.put("stock",newProducto.getStock());
+            valuesd.put("ventaxpeso",newProducto.getVentaxpeso());
             valuesd.put("ultimo_pedido",newProducto.getUltimoPedido());
             int filas = db.update("productos", valuesd, "id_producto=?", new String[]{old.getId()});
             db.setTransactionSuccessful();

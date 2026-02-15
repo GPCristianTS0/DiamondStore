@@ -14,6 +14,7 @@ public class Productos implements Serializable {
     private String descripcion;
     private int vendidos;
     private int stock;
+    private boolean ventaxpeso;
     private String ultimoPedido;
 
     private int id_seccion;
@@ -115,6 +116,16 @@ public class Productos implements Serializable {
         this.stock = stock;
     }
 
+    public boolean isVentaxpeso() {
+        return ventaxpeso;
+    }
+    public int getVentaxpeso(){
+        return ventaxpeso?1:0;
+    }
+    public void setVentaxpeso(boolean ventaxpeso) {
+        this.ventaxpeso = ventaxpeso;
+    }
+
     public String getUltimoPedido() {
         return ultimoPedido;
     }
@@ -145,6 +156,7 @@ public class Productos implements Serializable {
         array.add("ultimo_Pedido");
         return array;
     }
+
     @Override
     public String toString() {
         return "Productos{" +
@@ -158,6 +170,7 @@ public class Productos implements Serializable {
                 ", descripcion='" + descripcion + '\'' +
                 ", vendidos=" + vendidos +
                 ", stock=" + stock +
+                ", ventaxpeso=" + ventaxpeso +
                 ", ultimoPedido='" + ultimoPedido + '\'' +
                 '}';
     }

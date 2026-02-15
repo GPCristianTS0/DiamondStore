@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 18);
+        super(context, "Clover.db", null, 19);
     }
 
     @Override
@@ -26,6 +26,7 @@ public class CloverBD extends SQLiteOpenHelper{
                 "descripcion TEXT," +
                 "vendidos INTEGER," +
                 "stock INTEGER," +
+                "ventaxpeso INTEGER," +
                 "ultimo_pedido TEXT)");
         //Tabla secciones de productos
         db.execSQL("create table secciones (" +
@@ -283,6 +284,9 @@ public class CloverBD extends SQLiteOpenHelper{
             db.execSQL("CREATE INDEX idx_abonos_id_cliente ON abonos (id_cliente)");
             db.execSQL("CREATE INDEX idx_abonos_id_corte ON abonos (id_corte)");
             db.execSQL("CREATE INDEX idx_clientes_saldo ON clientes (saldo)");
+        }
+        if (oldVersion<19){
+            db.execSQL("ALTER TABLE productos ADD COLUMN ventaxpeso INTEGER DEFAULT 0");
         }
     }
     public static synchronized CloverBD getInstance(Context context) {
