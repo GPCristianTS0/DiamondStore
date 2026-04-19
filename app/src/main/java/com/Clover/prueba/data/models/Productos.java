@@ -134,7 +134,7 @@ public class Productos implements Serializable {
         this.ultimoPedido = ultimoPedido;
     }
     public double getMargenGanacia(){
-        return (precioNeto * 100) /precioPublico;
+        return (precioPublico * 100) /precioNeto;
     }
 
     public String toColumns(){
