@@ -18,9 +18,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.domain.productos.usecase.GetProductBy;
+import com.Clover.prueba.domain.productos.usecase.GetProductos;
+import com.Clover.prueba.domain.productos.usecase.GetSeccionesUseCase;
+import com.Clover.prueba.domain.productos.viewmodel.BusquedaViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
@@ -29,7 +34,7 @@ import com.Clover.prueba.data.models.Productos;
 public class ProductosView extends AppCompatActivity {
     private int seccionG;
     private String columnaObtencionG;
-    private IProducto controller;
+    private BusquedaViewModel viewModel;
     private TextInputEditText t ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,15 @@ public class ProductosView extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        controller = new ProductoDAO(this);
+        //Repositorio
+        IProducto productoDAO = new ProductoDAO(this);
+        //UseCase
+        GetSeccionesUseCase seccionesUseCase = new GetSeccionesUseCase(productoDAO);
+        GetProductBy productosByUseCase = new GetProductBy(productoDAO);
+        GetProductos productosUseCase = new GetProductos(productoDAO);
+        viewModel = new BusquedaViewModel(seccionesUseCase, productosByUseCase,productosUseCase);
+
+        viewModel.productos.observe(this, this::rellenarTabla);
         seccionG = 0;
         t = findViewById(R.id.textInputEditText);
         rellenarSpinnerSecciones();
@@ -49,7 +62,7 @@ public class ProductosView extends AppCompatActivity {
         inputBusqueda();
     }
 
-    private void rellenarTabla(ArrayList<Productos> productos){
+    private void rellenarTabla(List<Productos> productos){
         ProductosViewAdapter adapter;
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.recyclerProductosView);
@@ -69,7 +82,7 @@ public class ProductosView extends AppCompatActivity {
     //Spinner secciones
     private void rellenarSpinnerSecciones(){
         Spinner spinerSeccion = findViewById(R.id.spinner);
-        ArrayList<String> secciones = controller.getSeccione();
+        ArrayList<String> secciones = viewModel.getSecciones();
         secciones.add(0, "Todas");
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.productos_spiner_item, secciones);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -81,12 +94,11 @@ public class ProductosView extends AppCompatActivity {
                 ArrayList<Productos> productos;
                 seccionG = position;
                 if (position==0){
-                    rellenarTabla(controller.getProductos());
+                    viewModel.getProductos();
                     return;
                 }
-                productos = controller.buscarProductosPor(position, columnaObtencionG, "");
+                viewModel.buscarProductoPor(position, columnaObtencionG, "");
                 t.setText("");
-                rellenarTabla(productos);
             }
 
             @Override
@@ -134,10 +146,8 @@ public class ProductosView extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 busquedaIn = s.toString();
-                rellenarTabla(controller.buscarProductosPor(seccionG, columnaObtencionG, s.toString()));
+                viewModel.buscarProductoPor(seccionG, columnaObtencionG, s.toString());
             }
-
-            ;
         });
     }
 
@@ -151,6 +161,6 @@ public class ProductosView extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        rellenarTabla(controller.buscarProductosPor(seccionG, columnaObtencionG, busquedaIn));
+        viewModel.buscarProductoPor(seccionG, columnaObtencionG, busquedaIn);
     }
 }

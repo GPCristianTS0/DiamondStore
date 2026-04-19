@@ -19,7 +19,7 @@ import com.Clover.prueba.data.dao.ConfiguracionDAO;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.domain.productos.GenerarEtiquetaProductoUseCase;
-import com.Clover.prueba.domain.productos.ProductosViewModel;
+import com.Clover.prueba.domain.productos.viewmodel.ProductosViewModel;
 import com.Clover.prueba.services.generators.GeneradorQR;
 import com.Clover.prueba.services.generators.ImageGenerator;
 import com.Clover.prueba.services.generators.LabelProductGenerator;
