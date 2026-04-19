@@ -54,16 +54,20 @@ public class ProductosView extends AppCompatActivity {
         GetProductos productosUseCase = new GetProductos(productoDAO);
         viewModel = new BusquedaViewModel(seccionesUseCase, productosByUseCase,productosUseCase);
 
-        viewModel.productos.observe(this, this::rellenarTabla);
+        viewModel.productos.observe(this, productos -> {
+            adapter.setProductos(productos);
+            adapter.notifyDataSetChanged();
+        });
         seccionG = 0;
         t = findViewById(R.id.textInputEditText);
         rellenarSpinnerSecciones();
         rellenarSpinnerColumnas();
+        rellenarTabla(new ArrayList<>());
         inputBusqueda();
     }
 
+    private ProductosViewAdapter adapter;
     private void rellenarTabla(List<Productos> productos){
-        ProductosViewAdapter adapter;
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.recyclerProductosView);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
