@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ public class ProveedorView extends AppCompatActivity {
         rellenarSpinner();
         ArrayList<Proveedor> p = controllerProveedores.getProveedoresBy(null, null);
         rellenarTabla(p);
-        ImageView btnAgregar = findViewById(R.id.PrV_btnAgregar);
+        LinearLayout btnAgregar = findViewById(R.id.PrV_layoutAgregar);
         btnAgregar.setOnClickListener(v -> {
             Intent intent = new Intent(this, ProveedorFormularioView.class);
             startActivity(intent);

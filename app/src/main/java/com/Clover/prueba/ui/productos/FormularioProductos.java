@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.Clover.prueba.R;
 import com.Clover.prueba.services.storage.StorageImage;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -76,15 +77,9 @@ public class FormularioProductos extends AppCompatActivity {
         rellenarSpiner();
         //Boton Agregar
         Button btn = findViewById(R.id.agregarBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addProductView(v);
-            }
-        });
+        btn.setOnClickListener(v -> addProductView());
         //Boton Eliminar
         Button btnDelete = findViewById(R.id.addProductoBtn);
-        btnDelete.setVisibility(INVISIBLE);
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +133,8 @@ public class FormularioProductos extends AppCompatActivity {
     }
     //Rellenar Espacios para modificar productos
     private void rellenarEspacios(Productos producto) {
+        SwitchMaterial switchVentaGranel = findViewById(R.id.switchVentaGranelFP);
+        switchVentaGranel.setChecked(producto.isVentaxpeso());
         Spinner sp = findViewById(R.id.spinnerSeccionFP);
         int position = iProducto.getSeccione().indexOf(producto.getSeccion());
         sp.setSelection(position+1);
@@ -210,7 +207,7 @@ public class FormularioProductos extends AppCompatActivity {
     }
 
     //Funcion Boton agregar
-    public void addProductView(View v){
+    public void addProductView(){
         Spinner sp = findViewById(R.id.spinnerSeccionFP);
         Productos productos = iProducto.getProductoCode(t.getText().toString());
         if (productos.getId()!=null){
@@ -285,14 +282,16 @@ public class FormularioProductos extends AppCompatActivity {
         Spinner sp = findViewById(R.id.spinnerSeccionFP);
         productos.setSeccion(sp.getSelectedItem().toString());
         t = findViewById(R.id.p_publicotxt);
-        productos.setPrecioPublico(Integer.parseInt(t.getText().toString()));
+        productos.setPrecioPublico(Double.parseDouble(t.getText().toString()));
         t = findViewById(R.id.p_netotxt);
-        productos.setPrecioNeto(Integer.parseInt(t.getText().toString()));
+        productos.setPrecioNeto(Double.parseDouble(t.getText().toString()));
         t = findViewById(R.id.descripciontxt);
         productos.setDescripcion(t.getText().toString().trim());
         t = findViewById(R.id.unidadestxt);
         productos.setStock(Integer.parseInt(t.getText().toString()));
         t = findViewById(R.id.vendidosInputFP);
+        SwitchMaterial switchVentaGranel = findViewById(R.id.switchVentaGranelFP);
+        productos.setVentaxpeso(switchVentaGranel.isChecked()?1:0);
         if (t.getVisibility() == VISIBLE)
             productos.setVendidos(Integer.parseInt(t.getText().toString()));
         return productos;

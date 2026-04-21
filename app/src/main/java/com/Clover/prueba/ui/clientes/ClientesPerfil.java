@@ -18,16 +18,30 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.domain.clientes.ControllerClientes;
+import com.Clover.prueba.data.dao.AbonosDAO;
+import com.Clover.prueba.data.dao.ClientesDAO;
+import com.Clover.prueba.data.dao.VentasDAO;
+import com.Clover.prueba.data.dao.interfaces.IAbonos;
+import com.Clover.prueba.data.dao.interfaces.IClient;
+import com.Clover.prueba.data.dao.interfaces.IVentas;
+import com.Clover.prueba.domain.clientes.ViewModelClientes;
 import com.Clover.prueba.data.dto.ProductoMasCompradoDTO;
 import com.Clover.prueba.data.models.Clientes;
+import com.Clover.prueba.domain.clientes.usecase.CompartirCardUseCase;
+import com.Clover.prueba.domain.clientes.usecase.GetAbonosClientes;
+import com.Clover.prueba.domain.clientes.usecase.GetClientes;
+import com.Clover.prueba.domain.clientes.usecase.GetMasCompradosCliente;
+import com.Clover.prueba.domain.clientes.usecase.GetSaldoTotalCliente;
+import com.Clover.prueba.domain.clientes.usecase.GetUltimoAbono;
+import com.Clover.prueba.domain.clientes.usecase.GetVentasTotales;
+import com.Clover.prueba.domain.clientes.usecase.getTicketPromedio;
 import com.Clover.prueba.ui.credito.CreditoDarAbono;
 import com.Clover.prueba.services.generators.GeneradorQR;
 
 import java.util.ArrayList;
 
 public class ClientesPerfil extends AppCompatActivity {
-    private ControllerClientes controller;
+    private ViewModelClientes controller;
     private Clientes clientes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +53,25 @@ public class ClientesPerfil extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        controller = new ControllerClientes(this);
+
+        //Respository
+        IClient clientesDAO = new ClientesDAO(this);
+        IAbonos abonosDAO = new AbonosDAO(this);
+        IVentas ventasDAO = new VentasDAO(this);
+
+        //UseCase
+        GetClientes getClientesUseCase = new GetClientes(clientesDAO);
+        GetAbonosClientes getAbonosUseCase = new GetAbonosClientes(abonosDAO);
+        CompartirCardUseCase compartirCardUseCase = new CompartirCardUseCase(this, new GeneradorQR(this));
+        getTicketPromedio getTicketPromedio = new getTicketPromedio(ventasDAO);
+        GetMasCompradosCliente masCompradosCliente = new GetMasCompradosCliente(ventasDAO);
+        GetUltimoAbono getUltimoAbono = new GetUltimoAbono(abonosDAO);
+        GetSaldoTotalCliente saldoTotalCliente = new GetSaldoTotalCliente(ventasDAO);
+        GetVentasTotales getVentasTotales = new GetVentasTotales(ventasDAO);
+
+        //ViewModel
+        controller = new ViewModelClientes(saldoTotalCliente, getAbonosUseCase, masCompradosCliente, getVentasTotales, getTicketPromedio, compartirCardUseCase, getUltimoAbono, getClientesUseCase);
+
         clientes = getIntent().getSerializableExtra("cliente", Clientes.class);
         if (clientes!=null) {
             bindDatos();
@@ -69,7 +101,7 @@ public class ClientesPerfil extends AppCompatActivity {
         puntos.setText(String.valueOf(clientes.getPuntos()));
 
         //Estaod de cuenta
-        double saldoPendiente = controller.getSaldoPendiente(clientes.getId_cliente());
+        double saldoPendiente = 0;//controller.getSaldoPendiente(clientes.getId_cliente());
         if (saldoPendiente<=0){
             saldo.setText(importes.concat("0.00"));
             saldo.setTextColor(Color.parseColor("#4CAF50"));

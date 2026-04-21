@@ -11,11 +11,9 @@ import com.Clover.prueba.data.database.CloverBD;
 import java.util.LinkedHashMap;
 
 public class FinancieroDAO implements IFinanciero {
-    private SQLiteDatabase db;
-    private Context context;
+    private final SQLiteDatabase db;
 
     public FinancieroDAO(Context context) {
-        this.context = context;
         db = CloverBD.getInstance(context).getWritableDatabase();
     }
 

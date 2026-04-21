@@ -64,7 +64,7 @@ public class StorageImage {
             return null;
         }
     }
-    public Uri guardarImgaenTemporal(Context context, Bitmap bitmap) {
+    public Uri guardarImagenTemporal(Bitmap bitmap) {
         try {
             //Busca la carpeta y si no existe la crea
             File cache = new File(context.getCacheDir(), "tickets");

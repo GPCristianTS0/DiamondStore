@@ -10,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.domain.clientes.ControllerClientes;
+import com.Clover.prueba.domain.clientes.ViewModelClientes;
+import com.Clover.prueba.domain.clientes.usecase.GetClientes;
 import com.Clover.prueba.domain.credito.ControllerCredito;
 import com.Clover.prueba.data.models.Abonos;
 import com.Clover.prueba.data.models.Clientes;
@@ -22,7 +24,7 @@ import com.Clover.prueba.data.models.Clientes;
 import java.util.ArrayList;
 
 public class ClientesDetalleAbonos extends AppCompatActivity {
-    private ControllerClientes controllerClientes;
+    private ViewModelClientes viewModelClientes;
     private ControllerCredito controllerCredito;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +36,13 @@ public class ClientesDetalleAbonos extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        controllerClientes = new ControllerClientes(this);
+
+        viewModelClientes = new ViewModelProvider( this).get(ViewModelClientes.class);
         controllerCredito = new ControllerCredito(this);
         Clientes cliente = getIntent().getSerializableExtra("cliente", Clientes.class);
         if(cliente != null) {
             rellenarDatos(cliente);
-            rellenarAbonos(controllerClientes.getAbonos(cliente.getId_cliente()));
+            rellenarAbonos(viewModelClientes.getAbonos(cliente.getId_cliente()));
         }
     }
     private void rellenarDatos(Clientes cliente){
@@ -48,8 +51,8 @@ public class ClientesDetalleAbonos extends AppCompatActivity {
         TextView txtDeuda = findViewById(R.id.txtDeudaTotal);
         ProgressBar progressDeuda = findViewById(R.id.progressDeuda);
 
-        double saldoPendiente = controllerClientes.getSaldoPendiente(cliente.getId_cliente());
-        double saldoTotal = controllerClientes.getSaldoTotal(cliente.getId_cliente());
+        double saldoPendiente = 0;//viewModelClientes.getSaldoPendient(cliente.getId_cliente());
+        double saldoTotal = viewModelClientes.getSaldoTotal(cliente.getId_cliente());
         txtNombre.setText(cliente.getNombre_cliente());
         txtSaldo.setText(String.valueOf(cliente.getSaldo()));
         txtDeuda.setText(String.valueOf(saldoTotal));

@@ -1,4 +1,4 @@
-package com.Clover.prueba.services.generators;
+package com.Clover.prueba.domain.clientes.generators;
 
 import android.content.Context;
 import android.graphics.Bitmap;
