@@ -9,8 +9,8 @@ public class Productos implements Serializable {
     private String nombre;
     private String marca;
     private String seccion;
-    private double precioPublico;
-    private double precioNeto;
+    private int precioPublico;
+    private int precioNeto;
     private String descripcion;
     private int vendidos;
     private int stock;
@@ -76,19 +76,19 @@ public class Productos implements Serializable {
         this.seccion = seccion;
     }
 
-    public double getPrecioPublico() {
+    public int getPrecioPublico() {
         return precioPublico;
     }
 
-    public void setPrecioPublico(double precioPublico) {
+    public void setPrecioPublico(int precioPublico) {
         this.precioPublico = precioPublico;
     }
 
-    public double getPrecioNeto() {
+    public int getPrecioNeto() {
         return precioNeto;
     }
 
-    public void setPrecioNeto(double precioNeto) {
+    public void setPrecioNeto(int precioNeto) {
         this.precioNeto = precioNeto;
     }
 
