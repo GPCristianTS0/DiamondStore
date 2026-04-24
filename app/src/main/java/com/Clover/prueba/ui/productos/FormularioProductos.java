@@ -95,7 +95,6 @@ public class FormularioProductos extends AppCompatActivity {
         Productos producto = (Productos) getIntent().getSerializableExtra("producto");
         if (producto!=null){
             rellenarEspacios(producto);
-            binding.addProductoBtn.setVisibility(VISIBLE);
             binding.agregarBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

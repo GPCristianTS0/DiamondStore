@@ -17,9 +17,11 @@ import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.databinding.ProductoPerfilBinding;
 import com.Clover.prueba.domain.productos.generators.GenerarEtiquetaProductoUseCase;
+import com.Clover.prueba.domain.productos.usecase.DeleteProductUseCase;
 import com.Clover.prueba.domain.productos.usecase.GetProductById;
 import com.Clover.prueba.domain.productos.viewmodel.ProductosViewModel;
 import com.Clover.prueba.services.Helpers.BannerError;
+import com.Clover.prueba.services.Helpers.ConfirmDialog;
 import com.Clover.prueba.services.generators.GeneradorQR;
 import com.Clover.prueba.services.generators.ImageGenerator;
 import com.Clover.prueba.services.generators.LabelProductGenerator;
@@ -53,11 +55,19 @@ public class ProductoPerfil extends AppCompatActivity {
         //UseCase
         GenerarEtiquetaProductoUseCase useCase = new GenerarEtiquetaProductoUseCase(storageImage, imageGenerator, productGenerator);
         GetProductById getProductById = new GetProductById(productoDAO);
-        viewModel = new ProductosViewModel(useCase, getProductById);
+        DeleteProductUseCase deleteProductUseCase = new DeleteProductUseCase(productoDAO);
+        viewModel = new ProductosViewModel(useCase, getProductById, deleteProductUseCase);
         viewModel.getMensaje().observe(this, mensaje -> {
             BannerError.mostrarError(binding.getRoot(), mensaje);
         });
-        viewModel.getProducto().observe(this, this::bindData);
+        viewModel.getProducto().observe(this, producto -> {
+            if (producto ==null){
+                finish();
+                return;
+            }
+            bindData(producto);
+
+        });
         viewModel.getEtiqueta().observe(this, uri -> {
             if(uri != null) {
                 DialogConfirmacionEtiqueta dialog = new DialogConfirmacionEtiqueta(uri);
@@ -81,7 +91,13 @@ public class ProductoPerfil extends AppCompatActivity {
             intent.putExtra("producto", producto);
             startActivity(intent);
         });
-
+        binding.PPBtnEliminarProducto.setOnClickListener(v ->{
+            ConfirmDialog.mostrarDialogoConfirmacion(this,
+                    "Eliminar Producto", "Esta acción no se puede deshacer. ¿Estás seguro de que deseas eliminar este producto?",
+                    "Eliminar", true, () -> {
+                        viewModel.eliminarProducto();
+                    });
+        });
         binding.PPBtnGenerarEtiqueta.setOnClickListener(v -> {
             Configuracion conf = new ConfiguracionDAO(this).getConfiguracion();
             viewModel.generarEtiqueta(producto, conf);

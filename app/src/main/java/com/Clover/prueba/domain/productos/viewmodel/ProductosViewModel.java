@@ -2,6 +2,7 @@ package com.Clover.prueba.domain.productos.viewmodel;
 
 
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.domain.productos.generators.GenerarEtiquetaProductoUseCase;
+import com.Clover.prueba.domain.productos.usecase.DeleteProductUseCase;
 import com.Clover.prueba.domain.productos.usecase.GetProductById;
 
 public class ProductosViewModel extends ViewModel {
@@ -22,9 +24,11 @@ public class ProductosViewModel extends ViewModel {
 
     private final GenerarEtiquetaProductoUseCase etiquetaProductosUseCase;
     private final GetProductById getProductById;
-    public ProductosViewModel(GenerarEtiquetaProductoUseCase etiquetaProductosUseCase, GetProductById getProductById) {
+    private final DeleteProductUseCase deleteProductUseCase;
+    public ProductosViewModel(GenerarEtiquetaProductoUseCase etiquetaProductosUseCase, GetProductById getProductById, DeleteProductUseCase deleteProductUseCase) {
         this.etiquetaProductosUseCase = etiquetaProductosUseCase;
         this.getProductById = getProductById;
+        this.deleteProductUseCase = deleteProductUseCase;
     }
 
     public void generarEtiqueta(Productos producto, Configuracion conf) {
@@ -39,6 +43,20 @@ public class ProductosViewModel extends ViewModel {
             _producto.setValue(getProductById.execute(id));
         } catch (Exception e) {
             _error.setValue("No se pudo cargar el producto");
+        }
+    }
+    public void eliminarProducto() {
+        Productos d = producto.getValue();
+        if (d == null) {
+            _error.setValue("No se pudo eliminar el producto");
+            return;
+        }
+        try{
+            deleteProductUseCase.deleteProduct(d);
+            _producto.setValue(null);
+        } catch (Exception e) {
+            Log.e("Clover_App", e.getMessage());
+            _error.setValue("No se pudo eliminar el producto");
         }
     }
     public void clearEtiqueta() {
