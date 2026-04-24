@@ -19,29 +19,27 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.databinding.ProductosFormularioActivityBinding;
+import com.Clover.prueba.domain.productos.usecase.AddProductUseCase;
+import com.Clover.prueba.domain.productos.usecase.GetProductById;
+import com.Clover.prueba.domain.productos.usecase.GetSecciones;
+import com.Clover.prueba.domain.productos.usecase.UpdateProductUseCase;
+import com.Clover.prueba.domain.productos.viewmodel.FormularioProductosViewModel;
+import com.Clover.prueba.services.Helpers.BannerError;
 import com.Clover.prueba.services.storage.StorageImage;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
@@ -49,74 +47,56 @@ import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.ui.scanner.EscanerCodeBar;
 
 public class FormularioProductos extends AppCompatActivity {
-    private static final String FILTRO_TODAS = "Todas";
-    private boolean addOrEdit;
     private String codigo;
-    private IProducto iProducto = new ProductoDAO(this);;
-    private ImageView imagenView;//Para las imagenes
+    private FormularioProductosViewModel viewModel;
     private Uri selectedImageUri;
-    private Button btn;
+    private ProductosFormularioActivityBinding binding;
 
-    private TextInputEditText t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.productos_formulario_activity);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        binding = ProductosFormularioActivityBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Repositorio
+        IProducto iProducto = new ProductoDAO(this);
+        //Services
+        StorageImage storageImage = new StorageImage(this);
+        //UseCase
+        AddProductUseCase addProductUseCase = new AddProductUseCase(iProducto, storageImage);
+        GetProductById getProductById = new GetProductById(iProducto);
+        UpdateProductUseCase updateProductUseCase = new UpdateProductUseCase(iProducto, storageImage);
+        GetSecciones getSecciones = new GetSecciones(iProducto);
+        //ViewModel
+        viewModel = new FormularioProductosViewModel(addProductUseCase, getProductById, updateProductUseCase, getSecciones);
+        viewModel.getError().observe(this, mensaje -> {
+            BannerError.mostrarError(binding.getRoot(), mensaje);
+        });
+        viewModel.getExito().observe(this, mensaje -> {
+            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+            finish();
+        });
+
         //Desaparecer los campos de vendidos
-        TextInputEditText vendidosTxt = findViewById(R.id.vendidosInputFP);
-        vendidosTxt.setVisibility(INVISIBLE);
-        TextInputLayout vendidostxtf = findViewById(R.id.FP_layoutVendidos);
-        vendidostxtf.setVisibility(INVISIBLE);
-        t = findViewById(R.id.codeBartxt);
-        //rellenar el spiner de secciones
-        rellenarSpiner();
-        //Boton Agregar
-        Button btn = findViewById(R.id.agregarBtn);
-        btn.setOnClickListener(v -> addProductView());
-        //Boton Eliminar
-        Button btnDelete = findViewById(R.id.addProductoBtn);
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteProduct();
-            }
-        });
+        binding.vendidosInputFP.setVisibility(INVISIBLE);
+        binding.FPLayoutVendidos.setVisibility(INVISIBLE);
 
-        //Escanner de codigo de barras
-        Button escanearBtn = findViewById(R.id.escanearButton);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);
-        }
-        EscanerCodeBar escaner = new EscanerCodeBar();
-        escanearBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                escaner.inicializarEscaner(FormularioProductos.this);
-            }
-        });
+        inicilizarBotonesListener();
+        EscannerCamara();
+        rellenarSpiner(); //rellenar el spiner de secciones
+        addImage();//para agregar imagenes
 
-        //Sccion de agregar imagen
-        imagenView = findViewById(R.id.imagenFP);
-        addImage();
-        imagenView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirGaleria();
-            }
-        });
 
         //para la modificacion de productos
         Productos producto = (Productos) getIntent().getSerializableExtra("producto");
         if (producto!=null){
             rellenarEspacios(producto);
-            btnDelete.setVisibility(VISIBLE);
-            btn.setOnClickListener(new View.OnClickListener() {
+            binding.addProductoBtn.setVisibility(VISIBLE);
+            binding.agregarBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     actualizarProducto(producto);
@@ -131,56 +111,68 @@ public class FormularioProductos extends AppCompatActivity {
             }
         });
     }
+
+    private void inicilizarBotonesListener() {
+        //Boton Agregar
+        binding.agregarBtn.setOnClickListener(v -> addProductView());
+        //Boton Imagen
+        binding.imagenFP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirGaleria();
+            }
+        });
+    }
+
+    private void EscannerCamara() {
+        //Escanner de codigo de barras
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);
+        }
+        EscanerCodeBar escaner = new EscanerCodeBar();
+        binding.escanearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                escaner.inicializarEscaner(FormularioProductos.this);
+            }
+        });
+    }
+
     //Rellenar Espacios para modificar productos
     private void rellenarEspacios(Productos producto) {
-        SwitchMaterial switchVentaGranel = findViewById(R.id.switchVentaGranelFP);
-        switchVentaGranel.setChecked(producto.isVentaxpeso());
-        Spinner sp = findViewById(R.id.spinnerSeccionFP);
-        int position = iProducto.getSeccione().indexOf(producto.getSeccion());
-        sp.setSelection(position+1);
-        TextInputEditText t = findViewById(R.id.nombertxt);
-        t.setText(producto.getNombre());
-        t = findViewById(R.id.marcatxt);
-        t.setText(producto.getMarca());
-        t = findViewById(R.id.p_publicotxt);
-        t.setText(String.valueOf(producto.getPrecioPublico()));
-        t = findViewById(R.id.p_netotxt);
-        t.setText(String.valueOf(producto.getPrecioNeto()));
-        t = findViewById(R.id.descripciontxt);
-        t.setText(producto.getDescripcion());
-        t = findViewById(R.id.unidadestxt);
-        t.setText(String.valueOf(producto.getStock()));
-        t = findViewById(R.id.vendidosInputFP);
-        t.setText(String.valueOf(producto.getVendidos()));
-        t = findViewById(R.id.vendidosInputFP);
-        t.setVisibility(VISIBLE);
-        TextInputLayout vendidostxtf = findViewById(R.id.FP_layoutVendidos);
-        vendidostxtf.setVisibility(VISIBLE);
-        ImageView imagen = findViewById(R.id.imagenFP);
+        binding.switchVentaGranelFP.setChecked(producto.isVentaxpeso());
+        binding.spinnerSeccionFP.setSelection(producto.getId_seccion());
+        binding.nombertxt.setText(producto.getNombre());
+        binding.marcatxt.setText(producto.getMarca());
+        binding.pPublicotxt.setText(String.valueOf(producto.getPrecioPublico()));
+        binding.pNetotxt.setText(String.valueOf(producto.getPrecioNeto()));
+        binding.descripciontxt.setText(producto.getDescripcion());
+        binding.unidadestxt.setText(String.valueOf(producto.getStock()));
+        binding.vendidosInputFP.setText(String.valueOf(producto.getVendidos()));
+        binding.vendidosInputFP.setVisibility(VISIBLE);
+        binding.vendidosInputFP.setVisibility(VISIBLE);
+        binding.FPLayoutVendidos.setVisibility(VISIBLE);
+
         if (producto.getRutaImagen()!=null) {
-            imagen.setImageURI(Uri.parse(producto.getRutaImagen()));
-            rutaGuardada = producto.getRutaImagen();
+            binding.imagenFP.setImageURI(Uri.parse(producto.getRutaImagen()));
         }else
-            imagen.setImageResource(R.drawable.agregar_imgaen);
-        this.t.setText(producto.getId());
+            binding.imagenFP.setImageResource(R.drawable.agregar_imgaen);
+        binding.codeBartxt.setText(producto.getId());
         this.codigo = producto.getId();
-        Button btn = findViewById(R.id.agregarBtn);
-        btn.setText("Actualizar");
-        TextView te = findViewById(R.id.tittlelbl);
-        te.setText("Actualizar Producto");
-        Button btnEscanner = findViewById(R.id.escanearButton);
+
+        binding.agregarBtn.setText("Actualizar");
+        binding.tittlelbl.setText("Actualizar Producto");
     }
     //Actualizar productos
     private void actualizarProducto(Productos productoOld) {
         Productos productoNew = getProductoOfInputs();
-        productoNew.setUltimoPedido(productoOld.getUltimoPedido());
-        if (selectedImageUri!=null) {
-            rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
-            productoNew.setRutaImagen(rutaGuardada);
+        if (productoNew == null) {
+            return;
         }
-        iProducto.updateProducto(productoOld, productoNew);
-        Toast.makeText(this, "Producto Actualizado", Toast.LENGTH_SHORT).show();
-        finish();
+        productoNew.setUltimoPedido(productoOld.getUltimoPedido());
+
+        viewModel.updateProducto(productoNew, productoOld, selectedImageUri);
     }
     //Escaner de codigo de barras
     @Override
@@ -197,54 +189,30 @@ public class FormularioProductos extends AppCompatActivity {
         }
     }
     private void setCodigo(String codigo){
-        if (iProducto.getProductoCode(codigo).getId()!=null) {
-            Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();
-            t.setText("");
+        if (viewModel.isInvalidCodigo(codigo)) {
+            BannerError.mostrarError(binding.getRoot(), "El codigo ya existe");
+            binding.codeBartxt.setText("");
         } else {
-            t.setText(codigo);
+            binding.codeBartxt.setText(codigo);
         }
         this.codigo =codigo;
     }
 
     //Funcion Boton agregar
     public void addProductView(){
-        Spinner sp = findViewById(R.id.spinnerSeccionFP);
-        Productos productos = iProducto.getProductoCode(t.getText().toString());
-        if (productos.getId()!=null){
-            t.setText("");
-            Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();
+        Productos productos = getProductoOfInputs();
+        if (productos == null) {
             return;
         }
-        if (selectedImageUri != null) {
-            rutaGuardada = guardarImagenEnPrivado(selectedImageUri);
-        }
-        if(sp.getSelectedItem().toString().equals("Seleccionar")) {
-            Toast.makeText(this, "Seleccione una seccion", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        productos.setSeccion(sp.getSelectedItem().toString());
-        productos = getProductoOfInputs();
-        String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        productos.setRutaImagen(rutaGuardada);
-        productos.setUltimoPedido(fechaHoy);
-        iProducto.addProducto(productos);
-        Toast.makeText(this, "Producto Agregado", Toast.LENGTH_SHORT).show();
-        finish();
+        viewModel.addProduct(productos, selectedImageUri);
     }
-    ActivityResultLauncher<Intent> launcherActivityGalery;
-
-    private String rutaGuardada; // Aquí guardaremos la ruta del archivo
-
-    //Funcion para agregar imagen
+    private ActivityResultLauncher<Intent> launcherActivityGalery;
     public void addImage(){
-        // 🔹 1. Crear el launcher
         launcherActivityGalery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                     selectedImageUri = result.getData().getData();
-
-                    // 🔹 2. Mostrar la imagen en pantalla
-                    imagenView.setImageURI(selectedImageUri);
+                    binding.imagenFP.setImageURI(selectedImageUri);
                 }
             }
         );
@@ -255,54 +223,65 @@ public class FormularioProductos extends AppCompatActivity {
         intent.setType("image/*");
         launcherActivityGalery.launch(intent);
     }
-    private String guardarImagenEnPrivado(Uri uriImagen) {
-        StorageImage utils = new StorageImage(this);
-        return utils.guardarImagenInterno(uriImagen);
-    }
 
-    //Eliminar Producto Funcion
-    private void deleteProduct(){
-        Productos producto = getProductoOfInputs();
-        Log.e("Clover_App", "deleteProduct: "+producto.toString());
-        iProducto.deleteProducto(producto);
-        Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(FormularioProductos.this, ProductosView.class);
-        startActivity(intent);
-        finish();
-    }
     //Pasa a un producto todos los inputs del formulario
     private Productos getProductoOfInputs(){
         Productos productos = new Productos();
-        TextInputEditText t = findViewById(R.id.codeBartxt);
-        productos.setId(t.getText().toString());
-        t = findViewById(R.id.nombertxt);
-        productos.setNombre(t.getText().toString().trim());
-        t = findViewById(R.id.marcatxt);
-        productos.setMarca(t.getText().toString().trim());
-        Spinner sp = findViewById(R.id.spinnerSeccionFP);
-        productos.setSeccion(sp.getSelectedItem().toString());
-        t = findViewById(R.id.p_publicotxt);
-        productos.setPrecioPublico(Double.parseDouble(t.getText().toString()));
-        t = findViewById(R.id.p_netotxt);
-        productos.setPrecioNeto(Double.parseDouble(t.getText().toString()));
-        t = findViewById(R.id.descripciontxt);
-        productos.setDescripcion(t.getText().toString().trim());
-        t = findViewById(R.id.unidadestxt);
-        productos.setStock(Integer.parseInt(t.getText().toString()));
-        t = findViewById(R.id.vendidosInputFP);
-        SwitchMaterial switchVentaGranel = findViewById(R.id.switchVentaGranelFP);
-        productos.setVentaxpeso(switchVentaGranel.isChecked()?1:0);
-        if (t.getVisibility() == VISIBLE)
-            productos.setVendidos(Integer.parseInt(t.getText().toString()));
+        if (isInvalidInputs(binding.nombertxt, "Ingrese el nombre del producto")) return null;
+        if (isInvalidInputs(binding.marcatxt, "Ingrese la marca del producto")) return null;
+        if (isInvalidInputs(binding.pPublicotxt, "Ingrese el precio publico del producto")) return null;
+        if (isInvalidInputs(binding.pNetotxt, "Ingrese el precio neto del producto")) return null;
+        if (isInvalidInputs(binding.descripciontxt, "Ingrese la descripcion del producto")) return null;
+        if (isInvalidInputs(binding.unidadestxt, "Ingrese la cantidad del producto")) return null;
+        if (binding.vendidosInputFP.getVisibility() == VISIBLE)
+            if (isInvalidInputs(binding.vendidosInputFP, "Ingrese la cantidad de productos vendidos")) return null;
+        if (isInvalidInputs(binding.codeBartxt, "Ingrese el codigo del producto")) return null;
+        if (binding.spinnerSeccionFP.getSelectedItemPosition() == 0) {
+            BannerError.mostrarError(binding.getRoot(), "Seleccione una seccion");
+            return null;
+        }
+        //validaciones para numeros
+        int stock;
+        int vendidos = 0;
+        int precioPublico;
+        int precioNeto;
+        try {
+            precioPublico = Integer.parseInt((binding.pPublicotxt.getText().toString()));
+            precioNeto = Integer.parseInt(binding.pNetotxt.getText().toString());
+            stock = Integer.parseInt(binding.unidadestxt.getText().toString());
+            if (binding.vendidosInputFP.getVisibility() == VISIBLE)
+                vendidos = Integer.parseInt(binding.vendidosInputFP.getText().toString());
+        } catch (NumberFormatException e) {
+            BannerError.mostrarError(binding.getRoot(), "Ingrese un numero valido");
+            return null;
+        }
+        productos.setId(binding.codeBartxt.getText().toString());
+        productos.setNombre(binding.nombertxt.getText().toString().trim());
+        productos.setMarca(binding.marcatxt.getText().toString().trim());
+        productos.setSeccion(binding.spinnerSeccionFP.getSelectedItem().toString());
+        productos.setPrecioPublico(precioPublico);
+        productos.setPrecioNeto(precioNeto);
+        productos.setDescripcion(binding.descripciontxt.getText().toString().trim());
+        productos.setStock(stock);
+        productos.setVentaxpeso(binding.switchVentaGranelFP.isChecked()?1:0);
+        if (binding.vendidosInputFP.getVisibility() == VISIBLE)
+            productos.setVendidos(vendidos);
         return productos;
     }
+    private boolean isInvalidInputs(TextInputEditText field, String mensaje){
+        if(field.getText().toString().trim().isEmpty()){
+            BannerError.mostrarError(binding.getRoot(), mensaje);
+            return true;
+        }
+        return false;
+    }
     private void rellenarSpiner(){
-        ArrayList<String> secciones = iProducto.getSeccione();
+        ArrayList<String> secciones = viewModel.getSeccion();
         secciones.add(0, "Seleccionar");
         secciones.add("Agregar Nueva");
-        Spinner sp = findViewById(R.id.spinnerSeccionFP);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.productos_spiner_item, secciones);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner sp = binding.spinnerSeccionFP;
         sp.setAdapter(adapter);
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
