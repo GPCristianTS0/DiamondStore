@@ -1,0 +1,660 @@
+[33mcommit e959524f7b201b83e7f6d86ee9f642cd327ee9df[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrefactor/livedata-producto[m[33m, [m[1;31morigin/refactor/livedata-producto[m[33m)[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Mon Apr 20 21:01:24 2026 -0600
+
+    refactor: limpieza y mejora del flujo en formulario de productos
+
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/data/models/Productos.java b/app/src/main/java/com/Clover/prueba/data/models/Productos.java[m
+[1mindex 62739ea..4b3b633 100644[m
+[1m--- a/app/src/main/java/com/Clover/prueba/data/models/Productos.java[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/data/models/Productos.java[m
+[36m@@ -9,8 +9,8 @@[m [mpublic class Productos implements Serializable {[m
+     private String nombre;[m
+     private String marca;[m
+     private String seccion;[m
+[31m-    private double precioPublico;[m
+[31m-    private double precioNeto;[m
+[32m+[m[32m    private int precioPublico;[m
+[32m+[m[32m    private int precioNeto;[m
+     private String descripcion;[m
+     private int vendidos;[m
+     private int stock;[m
+[36m@@ -76,19 +76,19 @@[m [mpublic class Productos implements Serializable {[m
+         this.seccion = seccion;[m
+     }[m
+ [m
+[31m-    public double getPrecioPublico() {[m
+[32m+[m[32m    public int getPrecioPublico() {[m
+         return precioPublico;[m
+     }[m
+ [m
+[31m-    public void setPrecioPublico(double precioPublico) {[m
+[32m+[m[32m    public void setPrecioPublico(int precioPublico) {[m
+         this.precioPublico = precioPublico;[m
+     }[m
+ [m
+[31m-    public double getPrecioNeto() {[m
+[32m+[m[32m    public int getPrecioNeto() {[m
+         return precioNeto;[m
+     }[m
+ [m
+[31m-    public void setPrecioNeto(double precioNeto) {[m
+[32m+[m[32m    public void setPrecioNeto(int precioNeto) {[m
+         this.precioNeto = precioNeto;[m
+     }[m
+ [m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/usecase/AddProductUseCase.java b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/AddProductUseCase.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1d1ab4d[m
+[1m--- /dev/null[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/AddProductUseCase.java[m
+[36m@@ -0,0 +1,39 @@[m
+[32m+[m[32mpackage com.Clover.prueba.domain.productos.usecase;[m
+[32m+[m
+[32m+[m[32mimport android.net.Uri;[m
+[32m+[m[32mimport android.widget.Toast;[m
+[32m+[m
+[32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.services.storage.StorageImage;[m
+[32m+[m
+[32m+[m[32mimport java.text.SimpleDateFormat;[m
+[32m+[m[32mimport java.util.Date;[m
+[32m+[m[32mimport java.util.Locale;[m
+[32m+[m
+[32m+[m[32mpublic class AddProductUseCase {[m
+[32m+[m
+[32m+[m[32m    private final IProducto iProducto;[m
+[32m+[m[32m    private final StorageImage storageImage;[m
+[32m+[m
+[32m+[m[32m    public AddProductUseCase(IProducto iProducto, StorageImage storageImage) {[m
+[32m+[m[32m        this.iProducto = iProducto;[m
+[32m+[m[32m        this.storageImage = storageImage;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public void addProduct(Productos producto, Uri uri){[m
+[32m+[m[32m        Productos productoe = iProducto.getProductoCode(producto.getId());[m
+[32m+[m[32m        String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());[m
+[32m+[m[32m        producto.setUltimoPedido(fechaHoy);[m
+[32m+[m
+[32m+[m[32m        if (productoe.getId() != null){[m
+[32m+[m[32m            throw new RuntimeException("El codigo ya esta registrado");[m
+[32m+[m[32m        }[m
+[32m+[m[32m        if(producto.getSeccion().equals("Seleccionar")) {[m
+[32m+[m[32m            throw new RuntimeException("Seleccione una seccion");[m
+[32m+[m[32m        }[m
+[32m+[m[32m        if (uri != null) {[m
+[32m+[m[32m            producto.setRutaImagen(storageImage.guardarImagenInterno(uri));[m
+[32m+[m[32m        }[m
+[32m+[m[32m        iProducto.addProducto(producto);[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/usecase/DeleteProductUseCase.java b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/DeleteProductUseCase.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c03060c[m
+[1m--- /dev/null[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/DeleteProductUseCase.java[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32mpackage com.Clover.prueba.domain.productos.usecase;[m
+[32m+[m
+[32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.Productos;[m
+[32m+[m
+[32m+[m[32mpublic class DeleteProductUseCase {[m
+[32m+[m[32m    private final IProducto iProducto;[m
+[32m+[m[32m    public DeleteProductUseCase(IProducto iProducto) {[m
+[32m+[m[32m        this.iProducto = iProducto;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public void deleteProduct(Productos producto){[m
+[32m+[m[32m        iProducto.deleteProducto(producto);[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/usecase/GetSecciones.java b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/GetSecciones.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..43f4d23[m
+[1m--- /dev/null[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/GetSecciones.java[m
+[36m@@ -0,0 +1,15 @@[m
+[32m+[m[32mpackage com.Clover.prueba.domain.productos.usecase;[m
+[32m+[m
+[32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
+[32m+[m
+[32m+[m[32mimport java.util.ArrayList;[m
+[32m+[m
+[32m+[m[32mpublic class GetSecciones {[m
+[32m+[m[32m    private final IProducto iProducto;[m
+[32m+[m[32m    public GetSecciones(IProducto iProducto) {[m
+[32m+[m[32m        this.iProducto = iProducto;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public ArrayList<String> execute() {[m
+[32m+[m[32m        return iProducto.getSeccione();[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/usecase/UpdateProductUseCase.java b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/UpdateProductUseCase.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..652b6df[m
+[1m--- /dev/null[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/UpdateProductUseCase.java[m
+[36m@@ -0,0 +1,23 @@[m
+[32m+[m[32mpackage com.Clover.prueba.domain.productos.usecase;[m
+[32m+[m
+[32m+[m[32mimport android.net.Uri;[m
+[32m+[m
+[32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.services.storage.StorageImage;[m
+[32m+[m
+[32m+[m[32mpublic class UpdateProductUseCase {[m
+[32m+[m[32m    private final IProducto iProducto;[m
+[32m+[m[32m    private final StorageImage storageImage;[m
+[32m+[m
+[32m+[m[32m    public UpdateProductUseCase(IProducto iProducto, StorageImage storageImage) {[m
+[32m+[m[32m        this.iProducto = iProducto;[m
+[32m+[m[32m        this.storageImage = storageImage;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public void updateProduct(Productos productoOld, Productos productoNew, Uri uri) {[m
+[32m+[m[32m        if (uri != null) {[m
+[32m+[m[32m            productoNew.setRutaImagen(storageImage.guardarImagenInterno(uri));[m
+[32m+[m[32m        }[m
+[32m+[m[32m        iProducto.updateProducto(productoOld, productoNew);[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/viewmodel/FormularioProductosViewModel.java b/app/src/main/java/com/Clover/prueba/domain/productos/viewmodel/FormularioProductosViewModel.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..fb53840[m
+[1m--- /dev/null[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/viewmodel/FormularioProductosViewModel.java[m
+[36m@@ -0,0 +1,70 @@[m
+[32m+[m[32mpackage com.Clover.prueba.domain.productos.viewmodel;[m
+[32m+[m
+[32m+[m[32mimport android.net.Uri;[m
+[32m+[m
+[32m+[m[32mimport androidx.lifecycle.LiveData;[m
+[32m+[m[32mimport androidx.lifecycle.MutableLiveData;[m
+[32m+[m[32mimport androidx.lifecycle.ViewModel;[m
+[32m+[m
+[32m+[m[32mimport com.Clover.prueba.data.models.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.AddProductUseCase;[m
+[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetProductById;[m
+[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetSecciones;[m
+[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.UpdateProductUseCase;[m
+[32m+[m
+[32m+[m[32mimport java.util.ArrayList;[m
+[32m+[m
+[32m+[m[32mpublic class FormularioProductosViewModel extends ViewModel {[m
+[32m+[m[32m    private final MutableLiveData<String> _exito = new MutableLiveData<>();[m
+[32m+[m[32m    private final LiveData<String> exito = _exito;[m
+[32m+[m[32m    private final MutableLiveData<String> _error = new MutableLiveData<>();[m
+[32m+[m[32m    private final LiveData<String> error = _error;[m
+[32m+[m[32m    private final AddProductUseCase addProductUseCase;[m
+[32m+[m[32m    private final GetProductById getProductById;[m
+[32m+[m[32m    private final UpdateProductUseCase updateProductUseCase;[m
+[32m+[m[32m    private final GetSecciones getSecciones;[m
+[32m+[m
+[32m+[m[32m    public FormularioProductosViewModel(AddProductUseCase addProductUseCase, GetProductById getProductById, UpdateProductUseCase updateProductUseCase, GetSecciones getSecciones) {[m
+[32m+[m[32m        this.addProductUseCase = addProductUseCase;[m
+[32m+[m[32m        this.getProductById = getProductById;[m
+[32m+[m[32m        this.updateProductUseCase = updateProductUseCase;[m
+[32m+[m[32m        this.getSecciones = getSecciones;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public boolean isInvalidCodigo(String codigo){[m
+[32m+[m[32m        try{[m
+[32m+[m[32m            return getProductById.execute(codigo) != null;[m
+[32m+[m[32m        } catch (Exception e) {[m
+[32m+[m[32m            _error.setValue(e.getMessage());[m
+[32m+[m[32m            return false;[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public LiveData<String> getError() {[m
+[32m+[m[32m        return _error;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public LiveData<String> getExito(){[m
+[32m+[m[32m        return _exito;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public void addProduct(Productos producto, Uri uri){[m
+[32m+[m[32m        try{[m
+[32m+[m[32m            addProductUseCase.addProduct(producto, uri);[m
+[32m+[m[32m            _exito.setValue("Producto agregado");[m
+[32m+[m[32m        } catch (Exception e) {[m
+[32m+[m[32m            _error.setValue(e.getMessage());[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public void updateProducto(Productos productoNew, Productos productoOld, Uri uri) {[m
+[32m+[m[32m        try{[m
+[32m+[m[32m            updateProductUseCase.updateProduct(productoOld, productoNew, uri);[m
+[32m+[m[32m            _exito.setValue("Producto actualizado");[m
+[32m+[m[32m        } catch (Exception e) {[m
+[32m+[m[32m            _error.setValue(e.getMessage());[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public ArrayList<String> getSeccion(){[m
+[32m+[m[32m        return getSecciones.execute();[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public int getSeccion(String id){[m
+[32m+[m[32m        return getSecciones.execute().indexOf(id);[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/ui/productos/FormularioProductos.java b/app/src/main/java/com/Clover/prueba/ui/productos/FormularioProductos.java[m
+[1mindex 5b52e9f..9f6ce5d 100644[m
+[1m--- a/app/src/main/java/com/Clover/prueba/ui/productos/FormularioProductos.java[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/ui/productos/FormularioProductos.java[m
+[36m@@ -19,29 +19,27 @@[m [mimport android.content.Intent;[m
+ import android.content.pm.PackageManager;[m
+ import android.net.Uri;[m
+ import android.os.Bundle;[m
+[31m-import android.util.Log;[m
+ import android.view.View;[m
+ import android.widget.AdapterView;[m
+ import android.widget.ArrayAdapter;[m
+[31m-import android.widget.Button;[m
+[31m-import android.widget.ImageView;[m
+ import android.widget.Spinner;[m
+[31m-import android.widget.TextView;[m
+ import android.widget.Toast;[m
+ [m
+ [m
+ import com.Clover.prueba.R;[m
+[32m+[m[32mimport com.Clover.prueba.databinding.ProductosFormularioActivityBinding;[m
+[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.AddProductUseCase;[m
+[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetProductById;[m
+[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetSecciones;[m
+[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.UpdateProductUseCase;[m
+[32m+[m[32mimport com.Clover.prueba.domain.productos.viewmodel.FormularioProductosViewModel;[m
+[32m+[m[32mimport com.Clover.prueba.services.Helpers.BannerError;[m
+ import com.Clover.prueba.services.storage.StorageImage;[m
+[31m-import com.google.android.material.switchmaterial.SwitchMaterial;[m
+ import com.google.android.material.textfield.TextInputEditText;[m
+[31m-import com.google.android.material.textfield.TextInputLayout;[m
+ import com.google.zxing.integration.android.IntentIntegrator;[m
+ import com.google.zxing.integration.android.IntentResult;[m
+ [m
+[31m-import java.text.SimpleDateFormat;[m
+ import java.util.ArrayList;[m
+[31m-import java.util.Date;[m
+[31m-import java.util.Locale;[m
+ [m
+ import com.Clover.prueba.data.dao.ProductoDAO;[m
+ import com.Clover.prueba.data.dao.interfaces.IProducto;[m
+[36m@@ -49,74 +47,56 @@[m [mimport com.Clover.prueba.data.models.Productos;[m
+ import com.Clover.prueba.ui.scanner.EscanerCodeBar;[m
+ [m
+ public class FormularioProductos extends AppCompatActivity {[m
+[31m-    private static final String FILTRO_TODAS = "Todas";[m
+[31m-    private boolean addOrEdit;[m
+     private String codigo;[m
+[31m-    private IProducto iProducto = new ProductoDAO(this);;[m
+[31m-    private ImageView imagenView;//Para las imagenes[m
+[32m+[m[32m    private FormularioProductosViewModel viewModel;[m
+     private Uri selectedImageUri;[m
+[31m-    private Button btn;[m
+[32m+[m[32m    private ProductosFormularioActivityBinding binding;[m
+ [m
+[31m-    private TextInputEditText t;[m
+     @Override[m
+     protected void onCreate(Bundle savedInstanceState) {[m
+         super.onCreate(savedInstanceState);[m
+[31m-        setContentView(R.layout.productos_formulario_activity);[m
+[31m-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {[m
+[32m+[m[32m        binding = ProductosFormularioActivityBinding.inflate(getLayoutInflater());[m
+[32m+[m[32m        setContentView(binding.getRoot());[m
+[32m+[m[32m        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {[m
+             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());[m
+             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);[m
+             return insets;[m
+         });[m
+[31m-        //Desaparecer los campos de vendidos[m
+[31m-        TextInputEditText vendidosTxt = findViewById(R.id.vendidosInputFP);[m
+[31m-        vendidosTxt.setVisibility(INVISIBLE);[m
+[31m-        TextInputLayout vendidostxtf = findViewById(R.id.FP_layoutVendidos);[m
+[31m-        vendidostxtf.setVisibility(INVISIBLE);[m
+[31m-        t = findViewById(R.id.codeBartxt);[m
+[31m-        //rellenar el spiner de secciones[m
+[31m-        rellenarSpiner();[m
+[31m-        //Boton Agregar[m
+[31m-        Button btn = findViewById(R.id.agregarBtn);[m
+[31m-        btn.setOnClickListener(v -> addProductView());[m
+[31m-        //Boton Eliminar[m
+[31m-        Button btnDelete = findViewById(R.id.addProductoBtn);[m
+[31m-        btnDelete.setOnClickListener(new View.OnClickListener() {[m
+[31m-            @Override[m
+[31m-            public void onClick(View v) {[m
+[31m-                deleteProduct();[m
+[31m-            }[m
+[32m+[m[32m        //Repositorio[m
+[32m+[m[32m        IProducto iProducto = new ProductoDAO(this);[m
+[32m+[m[32m        //Services[m
+[32m+[m[32m        StorageImage storageImage = new StorageImage(this);[m
+[32m+[m[32m        //UseCase[m
+[32m+[m[32m        AddProductUseCase addProductUseCase = new AddProductUseCase(iProducto, storageImage);[m
+[32m+[m[32m        GetProductById getProductById = new GetProductById(iProducto);[m
+[32m+[m[32m        UpdateProductUseCase updateProductUseCase = new UpdateProductUseCase(iProducto, storageImage);[m
+[32m+[m[32m        GetSecciones getSecciones = new GetSecciones(iProducto);[m
+[32m+[m[32m        //ViewModel[m
+[32m+[m[32m        viewModel = new FormularioProductosViewModel(addProductUseCase, getProductById, updateProductUseCase, getSecciones);[m
+[32m+[m[32m        viewModel.getError().observe(this, mensaje -> {[m
+[32m+[m[32m            BannerError.mostrarError(binding.getRoot(), mensaje);[m
+         });[m
+[31m-[m
+[31m-        //Escanner de codigo de barras[m
+[31m-        Button escanearBtn = findViewById(R.id.escanearButton);[m
+[31m-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)[m
+[31m-                != PackageManager.PERMISSION_GRANTED) {[m
+[31m-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);[m
+[31m-        }[m
+[31m-        EscanerCodeBar escaner = new EscanerCodeBar();[m
+[31m-        escanearBtn.setOnClickListener(new View.OnClickListener() {[m
+[31m-            @Override[m
+[31m-            public void onClick(View v) {[m
+[31m-                escaner.inicializarEscaner(FormularioProductos.this);[m
+[31m-            }[m
+[32m+[m[32m        viewModel.getExito().observe(this, mensaje -> {[m
+[32m+[m[32m            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();[m
+[32m+[m[32m            finish();[m
+         });[m
+ [m
+[31m-        //Sccion de agregar imagen[m
+[31m-        imagenView = findViewById(R.id.imagenFP);[m
+[31m-        addImage();[m
+[31m-        imagenView.setOnClickListener(new View.OnClickListener() {[m
+[31m-            @Override[m
+[31m-            public void onClick(View v) {[m
+[31m-                abrirGaleria();[m
+[31m-            }[m
+[31m-        });[m
+[32m+[m[32m        //Desaparecer los campos de vendidos[m
+[32m+[m[32m        binding.vendidosInputFP.setVisibility(INVISIBLE);[m
+[32m+[m[32m        binding.FPLayoutVendidos.setVisibility(INVISIBLE);[m
+[32m+[m
+[32m+[m[32m        inicilizarBotonesListener();[m
+[32m+[m[32m        EscannerCamara();[m
+[32m+[m[32m        rellenarSpiner(); //rellenar el spiner de secciones[m
+[32m+[m[32m        addImage();//para agregar imagenes[m
+[32m+[m
+ [m
+         //para la modificacion de productos[m
+         Productos producto = (Productos) getIntent().getSerializableExtra("producto");[m
+         if (producto!=null){[m
+             rellenarEspacios(producto);[m
+[31m-            btnDelete.setVisibility(VISIBLE);[m
+[31m-            btn.setOnClickListener(new View.OnClickListener() {[m
+[32m+[m[32m            binding.addProductoBtn.setVisibility(VISIBLE);[m
+[32m+[m[32m            binding.addProductoBtn.setOnClickListener(new View.OnClickListener() {[m
+                 @Override[m
+                 public void onClick(View v) {[m
+                     actualizarProducto(producto);[m
+[36m@@ -131,56 +111,68 @@[m [mpublic class FormularioProductos extends AppCompatActivity {[m
+             }[m
+         });[m
+     }[m
+[32m+[m
+[32m+[m[32m    private void inicilizarBotonesListener() {[m
+[32m+[m[32m        //Boton Agregar[m
+[32m+[m[32m        binding.agregarBtn.setOnClickListener(v -> addProductView());[m
+[32m+[m[32m        //Boton Imagen[m
+[32m+[m[32m        binding.imagenFP.setOnClickListener(new View.OnClickListener() {[m
+[32m+[m[32m            @Override[m
+[32m+[m[32m            public void onClick(View v) {[m
+[32m+[m[32m                abrirGaleria();[m
+[32m+[m[32m            }[m
+[32m+[m[32m        });[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private void EscannerCamara() {[m
+[32m+[m[32m        //Escanner de codigo de barras[m
+[32m+[m[32m        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)[m
+[32m+[m[32m                != PackageManager.PERMISSION_GRANTED) {[m
+[32m+[m[32m            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);[m
+[32m+[m[32m        }[m
+[32m+[m[32m        EscanerCodeBar escaner = new EscanerCodeBar();[m
+[32m+[m[32m        binding.escanearButton.setOnClickListener(new View.OnClickListener() {[m
+[32m+[m[32m            @Override[m
+[32m+[m[32m            public void onClick(View v) {[m
+[32m+[m[32m                escaner.inicializarEscaner(FormularioProductos.this);[m
+[32m+[m[32m            }[m
+[32m+[m[32m        });[m
+[32m+[m[32m    }[m
+[32m+[m
+     //Rellenar Espacios para modificar productos[m
+     private void rellenarEspacios(Productos producto) {[m
+[31m-        SwitchMaterial switchVentaGranel = findViewById(R.id.switchVentaGranelFP);[m
+[31m-        switchVentaGranel.setChecked(producto.isVentaxpeso());[m
+[31m-        Spinner sp = findViewById(R.id.spinnerSeccionFP);[m
+[31m-        int position = iProducto.getSeccione().indexOf(producto.getSeccion());[m
+[31m-        sp.setSelection(position+1);[m
+[31m-        TextInputEditText t = findViewById(R.id.nombertxt);[m
+[31m-        t.setText(producto.getNombre());[m
+[31m-        t = findViewById(R.id.marcatxt);[m
+[31m-        t.setText(producto.getMarca());[m
+[31m-        t = findViewById(R.id.p_publicotxt);[m
+[31m-        t.setText(String.valueOf(producto.getPrecioPublico()));[m
+[31m-        t = findViewById(R.id.p_netotxt);[m
+[31m-        t.setText(String.valueOf(producto.getPrecioNeto()));[m
+[31m-        t = findViewById(R.id.descripciontxt);[m
+[31m-        t.setText(producto.getDescripcion());[m
+[31m-        t = findViewById(R.id.unidadestxt);[m
+[31m-        t.setText(String.valueOf(producto.getStock()));[m
+[31m-        t = findViewById(R.id.vendidosInputFP);[m
+[31m-        t.setText(String.valueOf(producto.getVendidos()));[m
+[31m-        t = findViewById(R.id.vendidosInputFP);[m
+[31m-        t.setVisibility(VISIBLE);[m
+[31m-        TextInputLayout vendidostxtf = findViewById(R.id.FP_layoutVendidos);[m
+[31m-        vendidostxtf.setVisibility(VISIBLE);[m
+[31m-        ImageView imagen = findViewById(R.id.imagenFP);[m
+[32m+[m[32m        binding.switchVentaGranelFP.setChecked(producto.isVentaxpeso());[m
+[32m+[m[32m        int position = viewModel.getSeccion(producto.getSeccion());[m
+[32m+[m[32m        binding.spinnerSeccionFP.setSelection(position+1);[m
+[32m+[m[32m        binding.nombertxt.setText(producto.getNombre());[m
+[32m+[m[32m        binding.marcatxt.setText(producto.getMarca());[m
+[32m+[m[32m        binding.pPublicotxt.setText(String.valueOf(producto.getPrecioPublico()));[m
+[32m+[m[32m        binding.pNetotxt.setText(String.valueOf(producto.getPrecioNeto()));[m
+[32m+[m[32m        binding.descripciontxt.setText(producto.getDescripcion());[m
+[32m+[m[32m        binding.unidadestxt.setText(String.valueOf(producto.getStock()));[m
+[32m+[m[32m        binding.vendidosInputFP.setText(String.valueOf(producto.getVendidos()));[m
+[32m+[m[32m        binding.vendidosInputFP.setVisibility(VISIBLE);[m
+[32m+[m[32m        binding.vendidosInputFP.setVisibility(VISIBLE);[m
+[32m+[m[32m        binding.FPLayoutVendidos.setVisibility(VISIBLE);[m
+         if (producto.getRutaImagen()!=null) {[m
+[31m-            imagen.setImageURI(Uri.parse(producto.getRutaImagen()));[m
+[31m-            rutaGuardada = producto.getRutaImagen();[m
+[32m+[m[32m            binding.imagenFP.setImageURI(Uri.parse(producto.getRutaImagen()));[m
+         }else[m
+[31m-            imagen.setImageResource(R.drawable.agregar_imgaen);[m
+[31m-        this.t.setText(producto.getId());[m
+[32m+[m[32m            binding.imagenFP.setImageResource(R.drawable.agregar_imgaen);[m
+[32m+[m[32m        binding.codeBartxt.setText(producto.getId());[m
+         this.codigo = producto.getId();[m
+[31m-        Button btn = findViewById(R.id.agregarBtn);[m
+[31m-        btn.setText("Actualizar");[m
+[31m-        TextView te = findViewById(R.id.tittlelbl);[m
+[31m-        te.setText("Actualizar Producto");[m
+[31m-        Button btnEscanner = findViewById(R.id.escanearButton);[m
+[32m+[m
+[32m+[m[32m        binding.agregarBtn.setText("Actualizar");[m
+[32m+[m[32m        binding.tittlelbl.setText("Actualizar Producto");[m
+     }[m
+     //Actualizar productos[m
+     private void actualizarProducto(Productos productoOld) {[m
+         Productos productoNew = getProductoOfInputs();[m
+[31m-        productoNew.setUltimoPedido(productoOld.getUltimoPedido());[m
+[31m-        if (selectedImageUri!=null) {[m
+[31m-            rutaGuardada = guardarImagenEnPrivado(selectedImageUri);[m
+[31m-            productoNew.setRutaImagen(rutaGuardada);[m
+[32m+[m[32m        if (productoNew == null) {[m
+[32m+[m[32m            return;[m
+         }[m
+[31m-        iProducto.updateProducto(productoOld, productoNew);[m
+[31m-        Toast.makeText(this, "Producto Actualizado", Toast.LENGTH_SHORT).show();[m
+[31m-        finish();[m
+[32m+[m[32m        productoNew.setUltimoPedido(productoOld.getUltimoPedido());[m
+[32m+[m
+[32m+[m[32m        viewModel.updateProducto(productoNew, productoOld, selectedImageUri);[m
+     }[m
+     //Escaner de codigo de barras[m
+     @Override[m
+[36m@@ -197,54 +189,30 @@[m [mpublic class FormularioProductos extends AppCompatActivity {[m
+         }[m
+     }[m
+     private void setCodigo(String codigo){[m
+[31m-        if (iProducto.getProductoCode(codigo).getId()!=null) {[m
+[31m-            Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();[m
+[31m-            t.setText("");[m
+[32m+[m[32m        if (viewModel.isInvalidCodigo(codigo)) {[m
+[32m+[m[32m            BannerError.mostrarError(binding.getRoot(), "El codigo ya existe");[m
+[32m+[m[32m            binding.codeBartxt.setText("");[m
+         } else {[m
+[31m-            t.setText(codigo);[m
+[32m+[m[32m            binding.codeBartxt.setText(codigo);[m
+         }[m
+         this.codigo =codigo;[m
+     }[m
+ [m
+     //Funcion Boton agregar[m
+     public void addProductView(){[m
+[31m-        Spinner sp = findViewById(R.id.spinnerSeccionFP);[m
+[31m-        Productos productos = iProducto.getProductoCode(t.getText().toString());[m
+[31m-        if (productos.getId()!=null){[m
+[31m-            t.setText("");[m
+[31m-            Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();[m
+[31m-            return;[m
+[31m-        }[m
+[31m-        if (selectedImageUri != null) {[m
+[31m-            rutaGuardada = guardarImagenEnPrivado(selectedImageUri);[m
+[31m-        }[m
+[31m-        if(sp.getSelectedItem().toString().equals("Seleccionar")) {[m
+[31m-            Toast.makeText(this, "Seleccione una seccion", Toast.LENGTH_SHORT).show();[m
+[32m+[m[32m        Productos productos = getProductoOfInputs();[m
+[32m+[m[32m        if (productos == null) {[m
+             return;[m
+         }[m
+[31m-        productos.setSeccion(sp.getSelectedItem().toString());[m
+[31m-        productos = getProductoOfInputs();[m
+[31m-        String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());[m
+[31m-        productos.setRutaImagen(rutaGuardada);[m
+[31m-        productos.setUltimoPedido(fechaHoy);[m
+[31m-        iProducto.addProducto(productos);[m
+[31m-        Toast.makeText(this, "Producto Agregado", Toast.LENGTH_SHORT).show();[m
+[31m-        finish();[m
+[32m+[m[32m        viewModel.addProduct(productos, selectedImageUri);[m
+     }[m
+[31m-    ActivityResultLauncher<Intent> launcherActivityGalery;[m
+[31m-[m
+[31m-    private String rutaGuardada; // Aquí guardaremos la ruta del archivo[m
+[31m-[m
+[31m-    //Funcion para agregar imagen[m
+[32m+[m[32m    private ActivityResultLauncher<Intent> launcherActivityGalery;[m
+     public void addImage(){[m
+[31m-        // 🔹 1. Crear el launcher[m
+         launcherActivityGalery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),[m
+             result -> {[m
+                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {[m
+                     selectedImageUri = result.getData().getData();[m
+[31m-[m
+[31m-                    // 🔹 2. Mostrar la imagen en pantalla[m
+[31m-                    imagenView.setImageURI(selectedImageUri);[m
+[32m+[m[32m                    binding.imagenFP.setImageURI(selectedImageUri);[m
+                 }[m
+             }[m
+         );[m
+[36m@@ -255,54 +223,65 @@[m [mpublic class FormularioProductos extends AppCompatActivity {[m
+         intent.setType("image/*");[m
+         launcherActivityGalery.launch(intent);[m
+     }[m
+[31m-    private String guardarImagenEnPrivado(Uri uriImagen) {[m
+[31m-        StorageImage utils = new StorageImage(this);[m
+[31m-        return utils.guardarImagenInterno(uriImagen);[m
+[31m-    }[m
+ [m
+[31m-    //Eliminar Producto Funcion[m
+[31m-    private void deleteProduct(){[m
+[31m-        Productos producto = getProductoOfInputs();[m
+[31m-        Log.e("Clover_App", "deleteProduct: "+producto.toString());[m
+[31m-        iProducto.deleteProducto(producto);[m
+[31m-        Toast.makeText(this, "Producto Eliminado", Toast.LENGTH_SHORT).show();[m
+[31m-        Intent intent = new Intent(FormularioProductos.this, ProductosView.class);[m
+[31m-        startActivity(intent);[m
+[31m-        finish();[m
+[31m-    }[m
+     //Pasa a un producto todos los inputs del formulario[m
+     private Productos getProductoOfInputs(){[m
+         Productos productos = new Productos();[m
+[31m-        TextInputEditText t = findViewById(R.id.codeBartxt);[m
+[31m-        productos.setId(t.getText().toString());[m
+[31m-        t = findViewById(R.id.nombertxt);[m
+[31m-        productos.setNombre(t.getText().toString().trim());[m
+[31m-        t = findViewById(R.id.marcatxt);[m
+[31m-        productos.setMarca(t.getText().toString().trim());[m
+[31m-        Spinner sp = findViewById(R.id.spinnerSeccionFP);[m
+[31m-        productos.setSeccion(sp.getSelectedItem().toString());[m
+[31m-        t = findViewById(R.id.p_publicotxt);[m
+[31m-        productos.setPrecioPublico(Double.parseDouble(t.getText().toString()));[m
+[31m-        t = findViewById(R.id.p_netotxt);[m
+[31m-        productos.setPrecioNeto(Double.parseDouble(t.getText().toString()));[m
+[31m-        t = findViewById(R.id.descripciontxt);[m
+[31m-        productos.setDescripcion(t.getText().toString().trim());[m
+[31m-        t = findViewById(R.id.unidadestxt);[m
+[31m-        productos.setStock(Integer.parseInt(t.getText().toString()));[m
+[31m-        t = findViewById(R.id.vendidosInputFP);[m
+[31m-        SwitchMaterial switchVentaGranel = findViewById(R.id.switchVentaGranelFP);[m
+[31m-        productos.setVentaxpeso(switchVentaGranel.isChecked()?1:0);[m
+[31m-        if (t.getVisibility() == VISIBLE)[m
+[31m-            productos.setVendidos(Integer.parseInt(t.getText().toString()));[m
+[32m+[m[32m        if (isInvalidInputs(binding.nombertxt, "Ingrese el nombre del producto")) return null;[m
+[32m+[m[32m        if (isInvalidInputs(binding.marcatxt, "Ingrese la marca del producto")) return null;[m
+[32m+[m[32m        if (isInvalidInputs(binding.pPublicotxt, "Ingrese el precio publico del producto")) return null;[m
+[32m+[m[32m        if (isInvalidInputs(binding.pNetotxt, "Ingrese el precio neto del producto")) return null;[m
+[32m+[m[32m        if (isInvalidInputs(binding.descripciontxt, "Ingrese la descripcion del producto")) return null;[m
+[32m+[m[32m        if (isInvalidInputs(binding.unidadestxt, "Ingrese la cantidad del producto")) return null;[m
+[32m+[m[32m        if (binding.vendidosInputFP.getVisibility() == VISIBLE)[m
+[32m+[m[32m            if (isInvalidInputs(binding.vendidosInputFP, "Ingrese la cantidad de productos vendidos")) return null;[m
+[32m+[m[32m        if (isInvalidInputs(binding.codeBartxt, "Ingrese el codigo del producto")) return null;[m
+[32m+[m[32m        if (binding.spinnerSeccionFP.getSelectedItemPosition() == 0) {[m
+[32m+[m[32m            BannerError.mostrarError(binding.getRoot(), "Seleccione una seccion");[m
+[32m+[m[32m            return null;[m
+[32m+[m[32m        }[m
+[32m+[m[32m        //validaciones para numeros[m
+[32m+[m[32m        int stock;[m
+[32m+[m[32m        int vendidos = 0;[m
+[32m+[m[32m        int precioPublico;[m
+[32m+[m[32m        int precioNeto;[m
+[32m+[m[32m        try {[m
+[32m+[m[32m            precioPublico = Integer.parseInt((binding.pPublicotxt.getText().toString()));[m
+[32m+[m[32m            precioNeto = Integer.parseInt(binding.pNetotxt.getText().toString());[m
+[32m+[m[32m            stock = Integer.parseInt(binding.unidadestxt.getText().toString());[m
+[32m+[m[32m            if (binding.vendidosInputFP.getVisibility() == VISIBLE)[m
+[32m+[m[32m                vendidos = Integer.parseInt(binding.vendidosInputFP.getText().toString());[m
+[32m+[m[32m        } catch (NumberFormatException e) {[m
+[32m+[m[32m            BannerError.mostrarError(binding.getRoot(), "Ingrese un numero valido");[m
+[32m+[m[32m            return null;[m
+[32m+[m[32m        }[m
+[32m+[m[32m        productos.setId(binding.codeBartxt.getText().toString());[m
+[32m+[m[32m        productos.setNombre(binding.nombertxt.getText().toString().trim());[m
+[32m+[m[32m        productos.setMarca(binding.marcatxt.getText().toString().trim());[m
+[32m+[m[32m        productos.setSeccion(binding.spinnerSeccionFP.getSelectedItem().toString());[m
+[32m+[m[32m        productos.setPrecioPublico(precioPublico);[m
+[32m+[m[32m        productos.setPrecioNeto(precioNeto);[m
+[32m+[m[32m        productos.setDescripcion(binding.descripciontxt.getText().toString().trim());[m
+[32m+[m[32m        productos.setStock(stock);[m
+[32m+[m[32m        productos.setVentaxpeso(binding.switchVentaGranelFP.isChecked()?1:0);[m
+[32m+[m[32m        if (binding.vendidosInputFP.getVisibility() == VISIBLE)[m
+[32m+[m[32m            productos.setVendidos(vendidos);[m
+         return productos;[m
+     }[m
+[32m+[m[32m    private boolean isInvalidInputs(TextInputEditText field, String mensaje){[m
+[32m+[m[32m        if(field.getText().toString().trim().isEmpty()){[m
+[32m+[m[32m            BannerError.mostrarError(binding.getRoot(), mensaje);[m
+[32m+[m[32m            return true;[m
+[32m+[m[32m        }[m
+[32m+[m[32m        return false;[m
+[32m+[m[32m    }[m
+     private void rellenarSpiner(){[m
+[31m-        ArrayList<String> secciones = iProducto.getSeccione();[m
+[32m+[m[32m        ArrayList<String> secciones = viewModel.getSeccion();[m
+         secciones.add(0, "Seleccionar");[m
+         secciones.add("Agregar Nueva");[m
+[31m-        Spinner sp = findViewById(R.id.spinnerSeccionFP);[m
+         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.productos_spiner_item, secciones);[m
+         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);[m
+[32m+[m[32m        Spinner sp = binding.spinnerSeccionFP;[m
+         sp.setAdapter(adapter);[m
+         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {[m
+             @Override[m

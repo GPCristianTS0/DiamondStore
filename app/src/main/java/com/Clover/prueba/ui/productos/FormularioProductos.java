@@ -96,7 +96,7 @@ public class FormularioProductos extends AppCompatActivity {
         if (producto!=null){
             rellenarEspacios(producto);
             binding.addProductoBtn.setVisibility(VISIBLE);
-            binding.addProductoBtn.setOnClickListener(new View.OnClickListener() {
+            binding.agregarBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     actualizarProducto(producto);
@@ -142,8 +142,7 @@ public class FormularioProductos extends AppCompatActivity {
     //Rellenar Espacios para modificar productos
     private void rellenarEspacios(Productos producto) {
         binding.switchVentaGranelFP.setChecked(producto.isVentaxpeso());
-        int position = viewModel.getSeccion(producto.getSeccion());
-        binding.spinnerSeccionFP.setSelection(position+1);
+        binding.spinnerSeccionFP.setSelection(producto.getId_seccion());
         binding.nombertxt.setText(producto.getNombre());
         binding.marcatxt.setText(producto.getMarca());
         binding.pPublicotxt.setText(String.valueOf(producto.getPrecioPublico()));
@@ -154,6 +153,7 @@ public class FormularioProductos extends AppCompatActivity {
         binding.vendidosInputFP.setVisibility(VISIBLE);
         binding.vendidosInputFP.setVisibility(VISIBLE);
         binding.FPLayoutVendidos.setVisibility(VISIBLE);
+
         if (producto.getRutaImagen()!=null) {
             binding.imagenFP.setImageURI(Uri.parse(producto.getRutaImagen()));
         }else

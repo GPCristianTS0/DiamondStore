@@ -1,19 +1,14 @@
-package com.Clover.prueba.domain.productos;
+package com.Clover.prueba.domain.productos.generators;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.Productos;
-import com.Clover.prueba.services.generators.GeneradorQR;
 import com.Clover.prueba.services.generators.ImageGenerator;
 import com.Clover.prueba.services.generators.LabelProductGenerator;
 import com.Clover.prueba.services.storage.StorageImage;
-import com.Clover.prueba.ui.productos.DialogConfirmacionEtiqueta;
 
 public class GenerarEtiquetaProductoUseCase {
     private final ImageGenerator imageGenerator;

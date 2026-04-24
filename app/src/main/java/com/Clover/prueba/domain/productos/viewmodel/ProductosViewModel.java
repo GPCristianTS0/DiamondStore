@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.Productos;
-import com.Clover.prueba.domain.productos.GenerarEtiquetaProductoUseCase;
+import com.Clover.prueba.domain.productos.generators.GenerarEtiquetaProductoUseCase;
 import com.Clover.prueba.domain.productos.usecase.GetProductById;
 
 public class ProductosViewModel extends ViewModel {

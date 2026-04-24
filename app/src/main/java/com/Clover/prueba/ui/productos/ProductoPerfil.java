@@ -16,7 +16,7 @@ import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.databinding.ProductoPerfilBinding;
-import com.Clover.prueba.domain.productos.GenerarEtiquetaProductoUseCase;
+import com.Clover.prueba.domain.productos.generators.GenerarEtiquetaProductoUseCase;
 import com.Clover.prueba.domain.productos.usecase.GetProductById;
 import com.Clover.prueba.domain.productos.viewmodel.ProductosViewModel;
 import com.Clover.prueba.services.Helpers.BannerError;
@@ -42,11 +42,7 @@ public class ProductoPerfil extends AppCompatActivity {
             return insets;
         });
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            Productos producto = extras.getSerializable("producto", Productos.class);
-            codigo = producto.getId();
-        }
+
 
         GeneradorQR generadorQR = new GeneradorQR(this);
         LabelProductGenerator productGenerator = new LabelProductGenerator(this, generadorQR);
@@ -70,7 +66,12 @@ public class ProductoPerfil extends AppCompatActivity {
                 viewModel.clearEtiqueta();
             }
         });
-
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Productos producto = extras.getSerializable("producto", Productos.class);
+            viewModel.cargarProducto(producto.getId());
+            codigo = producto.getId();
+        }
     }
     private void bindData(Productos producto) {
 
@@ -105,6 +106,6 @@ public class ProductoPerfil extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        viewModel.cargarProducto(codigo);
+        if (codigo != null) viewModel.cargarProducto(codigo);
     }
 }

@@ -36,6 +36,14 @@ public class Productos implements Serializable {
         this.ultimoPedido = ultimoPedido;
     }
 
+    public int getId_seccion() {
+        return id_seccion;
+    }
+
+    public void setId_seccion(int id_seccion) {
+        this.id_seccion = id_seccion;
+    }
+
     public String getRutaImagen() {
         return rutaImagen;
     }
