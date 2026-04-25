@@ -24,7 +24,7 @@ import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.dao.interfaces.IAbonos;
 import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
-import com.Clover.prueba.domain.clientes.ViewModelClientes;
+import com.Clover.prueba.domain.clientes.viewmodels.ViewModelClientes;
 import com.Clover.prueba.data.dto.ProductoMasCompradoDTO;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.domain.clientes.usecase.CompartirCardUseCase;

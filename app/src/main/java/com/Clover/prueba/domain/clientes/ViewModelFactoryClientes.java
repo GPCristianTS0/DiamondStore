@@ -11,6 +11,7 @@ import com.Clover.prueba.domain.clientes.usecase.GetSaldoTotalCliente;
 import com.Clover.prueba.domain.clientes.usecase.GetUltimoAbono;
 import com.Clover.prueba.domain.clientes.usecase.GetVentasTotales;
 import com.Clover.prueba.domain.clientes.usecase.getTicketPromedio;
+import com.Clover.prueba.domain.clientes.viewmodels.ViewModelClientes;
 
 public class ViewModelFactoryClientes implements ViewModelProvider.Factory {
 

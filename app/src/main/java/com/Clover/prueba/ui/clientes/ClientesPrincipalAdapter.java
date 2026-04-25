@@ -31,10 +31,13 @@ public class ClientesPrincipalAdapter extends RecyclerView.Adapter<ClientesPrinc
 
 
     public ClientesPrincipalAdapter (ArrayList<Clientes> clientes, OnItemClickListener listener) {
-        this.clientes = clientes;
         this.listener = listener;
+        this.clientes = clientes;
     }
-
+    public void setClientes(ArrayList<Clientes> clientes) {
+        this.clientes = clientes;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public ClientesPrincipalAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

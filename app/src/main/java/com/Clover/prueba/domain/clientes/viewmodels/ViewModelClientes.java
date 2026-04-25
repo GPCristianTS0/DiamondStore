@@ -1,4 +1,4 @@
-package com.Clover.prueba.domain.clientes;
+package com.Clover.prueba.domain.clientes.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 

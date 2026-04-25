@@ -46,7 +46,7 @@ public class ShareManager {
                 context.startActivity(intent);
 
             } catch (Exception e2) {
-                Toast.makeText(null, "No tienes WhatsApp instalado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "No tienes WhatsApp instalado", Toast.LENGTH_SHORT).show();
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

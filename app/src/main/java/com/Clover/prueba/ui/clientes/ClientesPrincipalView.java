@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +19,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.domain.clientes.usecase.GetClientsSearch;
+import com.Clover.prueba.domain.clientes.viewmodels.ViewModelBusquedaClientes;
+import com.Clover.prueba.services.Helpers.BannerError;
 import com.Clover.prueba.services.sharing.ShareManager;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,10 +34,12 @@ import com.Clover.prueba.data.dao.ClientesDAO;
 import com.Clover.prueba.data.models.Clientes;
 
 public class ClientesPrincipalView extends AppCompatActivity {
-    private String columnaGlobal;
+    private String columnaGlobal = "id_cliente";
     private String busquedaGlobal = "";
     private boolean deudoresGlobal;
-    private final IClient controller = new ClientesDAO(this);
+    private ViewModelBusquedaClientes viewModel;
+
+    private ClientesPrincipalAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +50,20 @@ public class ClientesPrincipalView extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        rellenarTabla(controller.getClients());
+        //Repository
+        IClient clientesDAO = new ClientesDAO(this);
+        //UseCase
+        GetClientsSearch clientesUseCase = new GetClientsSearch(clientesDAO);
+        viewModel = new ViewModelBusquedaClientes(clientesUseCase);
+        //Observers
+        viewModel.getClientes().observe(this, clientes -> {
+            adapter.setClientes(clientes);
+        });
+        viewModel.getError().observe(this, mensaje -> {
+            BannerError.mostrarError(findViewById(R.id.main), mensaje);
+        });
+        //Inicializar
+        inicializarRecycler();
         rellenarSpinner();
         //Funcion textField
         inputBusqueda();
@@ -62,17 +79,17 @@ public class ClientesPrincipalView extends AppCompatActivity {
                 if (list.get(0)==R.id.CP_chipDeudores) {
                     deudoresGlobal = true;
                 }
-                rellenarTabla(controller.getClient(columnaGlobal, busquedaGlobal, deudoresGlobal));
+
+                viewModel.cargarClientes(columnaGlobal, busquedaGlobal, deudoresGlobal);
             }
         });
     }
-    private void rellenarTabla(ArrayList<Clientes> cliente){
-        ClientesPrincipalAdapter adapter;
+    private void inicializarRecycler(){
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.CP_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         ShareManager shareManager = new ShareManager();
-        adapter = new ClientesPrincipalAdapter(cliente, new ClientesPrincipalAdapter.OnItemClickListener() {
+        adapter = new ClientesPrincipalAdapter(new ArrayList<Clientes> (), new ClientesPrincipalAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Clientes cliente, int position) {
                 Intent intent = new Intent( ClientesPrincipalView.this, ClientesPerfil.class);
@@ -104,7 +121,6 @@ public class ClientesPrincipalView extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String columna = columnas[position];
-                Log.e("Clover_App", "onItemSelected: "+columna);
                 if (columna.equals("ID")) columnaGlobal = "id_cliente";
                 if (columna.equals("Nombre")) columnaGlobal = "nombre_cliente";
                 if (columna.equals("Apodo")) columnaGlobal = "apodo";
@@ -134,7 +150,7 @@ public class ClientesPrincipalView extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 busquedaGlobal = s.toString();
-                rellenarTabla(controller.getClient(columnaGlobal, busquedaGlobal, deudoresGlobal));
+                viewModel.cargarClientes(columnaGlobal, busquedaGlobal, deudoresGlobal);
             }
         });
     }
@@ -146,6 +162,6 @@ public class ClientesPrincipalView extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        rellenarTabla(controller.getClient(columnaGlobal, busquedaGlobal, deudoresGlobal));
+        viewModel.cargarClientes(columnaGlobal, busquedaGlobal, deudoresGlobal);
     }
 }
