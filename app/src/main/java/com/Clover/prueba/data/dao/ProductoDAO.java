@@ -97,20 +97,21 @@ public class ProductoDAO implements IProducto {
     @Override
     public Productos getProductoCode(String id) {
         Productos producto = new Productos();
-        String sql = "SELECT p.*, s.nombre_seccion FROM productos p INNER JOIN secciones s ON p.seccion=s.id_seccion WHERE p.id_producto='" + id.toLowerCase().trim()+"'";
+        String sql = "SELECT p.*, s.nombre_seccion, s.id_seccion FROM productos p INNER JOIN secciones s ON p.seccion=s.id_seccion WHERE p.id_producto='" + id.toLowerCase().trim()+"'";
         try (Cursor cursor = db.rawQuery(sql, null)) {
             if (cursor.moveToFirst()) {
-                producto.setRutaImagen(cursor.getString(0));
-                producto.setId(cursor.getString(1));
-                producto.setNombre(cursor.getString(2));
-                producto.setMarca(cursor.getString(3));
-                producto.setSeccion(cursor.getString(4));
-                producto.setPrecioPublico(cursor.getInt(5));
-                producto.setPrecioNeto(cursor.getInt(6));
-                producto.setDescripcion(cursor.getString(7));
-                producto.setVendidos(cursor.getInt(8));
-                producto.setStock(cursor.getInt(9));
-                producto.setUltimoPedido(cursor.getString(10));
+                producto.setRutaImagen(cursor.getString(cursor.getColumnIndexOrThrow("rutaImagen")));
+                producto.setId(cursor.getString(cursor.getColumnIndexOrThrow("id_producto")));
+                producto.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre_producto")));
+                producto.setMarca(cursor.getString(cursor.getColumnIndexOrThrow("marca")));
+                producto.setSeccion(cursor.getString(cursor.getColumnIndexOrThrow("nombre_seccion")));
+                producto.setId_seccion(cursor.getInt(cursor.getColumnIndexOrThrow("id_seccion")));
+                producto.setPrecioPublico(cursor.getInt(cursor.getColumnIndexOrThrow("precioPublico")));
+                producto.setPrecioNeto(cursor.getInt(cursor.getColumnIndexOrThrow("precioNeto")));
+                producto.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("descripcion")));
+                producto.setVendidos(cursor.getInt(cursor.getColumnIndexOrThrow("vendidos")));
+                producto.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
+                producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
                 //return producto;
             }
         } catch (Exception e) {

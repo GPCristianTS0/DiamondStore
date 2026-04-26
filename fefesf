@@ -1,0 +1,362 @@
+[33mcommit e959524f7b201b83e7f6d86ee9f642cd327ee9df[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrefactor/livedata-producto[m[33m, [m[1;31morigin/refactor/livedata-producto[m[33m)[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Mon Apr 20 21:01:24 2026 -0600
+
+    refactor: limpieza y mejora del flujo en formulario de productos
+
+[33mcommit e84ecd5518a2bfc0850976f575d2292439d9c39c[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Apr 19 15:04:40 2026 -0600
+
+    feature: implementar flujo reactivo con Livedata en perfil de productos
+
+[33mcommit 369b028460027d072cc1a18da16ccc59d42bc809[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Apr 19 13:25:15 2026 -0600
+
+    feature: se refactoriza el adapter para que no recree el recyvler
+
+[33mcommit 9cfa032437c24ef441b8ad1e4ea1db48c2f029a8[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Apr 19 02:06:24 2026 -0600
+
+    feature: integrar busqueda de prodcutos con LiveData y ViewModel
+
+[33mcommit ed6f36c1dae10fc5061255f6e5e4fab92fccbf7f[m[33m ([m[1;31morigin/feature/ventas-granel-o-peso[m[33m, [m[1;32mfeature/ventas-granel-o-peso[m[33m)[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Apr 19 01:10:21 2026 -0600
+
+    Uso de usecase
+
+[33mcommit ee6d42eedf0f8532550970a64609f0160a31c93d[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Feb 14 19:40:20 2026 -0600
+
+    feat: Agregar soporte para el guardado del valor de ventaxpeso
+
+[33mcommit 0a175fc989605c20d0c65c5e1e6cdb039334237d[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Feb 14 18:42:44 2026 -0600
+
+    feat: Agregar soporte en BD, model y DAO para el dato de si se pesa o no
+
+[33mcommit 83424d59608c0c11c5c0dd1694dcb843d4f6e994[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Feb 14 18:18:24 2026 -0600
+
+    feat: Agregar UI de la calculadora
+
+[33mcommit f8fc48c476dd0e62963de206062385985920422e[m[33m ([m[1;32mmain[m[33m)[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Feb 14 17:36:25 2026 -0600
+
+    style: Actualizar UI proveedores principal
+
+[33mcommit fc314e0d927b6cbb3095c03d0d65e1aefd738bcf[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Feb 14 16:59:56 2026 -0600
+
+    feat: agregar generacion de etiquetas de producto
+
+[33mcommit 2ec4e404d0685bd5c4e2aaf9b690a191413c8ec3[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Feb 14 01:23:46 2026 -0600
+
+    Se agrego el generador de view para las etiquetas de los productos
+
+[33mcommit e6568167110648b55d0becd719308226206d068a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Fri Feb 13 21:58:47 2026 -0600
+
+    Reacomodo de estructura
+
+[33mcommit 03dd1f6d8aee992b9f3a0fc9f84b0d04742cb34a[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Thu Feb 12 20:55:16 2026 -0600
+
+    El scanener de ventas ahora ya detecta y agrega a clientes con QR
+
+[33mcommit 5f2370825e8a31e11186fe840b68045491d61aa7[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Mon Feb 9 11:19:17 2026 -0600
+
+    Se agrego la funcion de generar QR para la identificacion del cliente, asi como una card que se comparte con el qr
+
+[33mcommit dc5ab31e0a6b2aa304254dd95e889d03eda12fe9[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Feb 8 18:29:06 2026 -0600
+
+    Se integro una nuevo activity para el perfil del cliente con metricas y top productos mas comprados
+
+[33mcommit 5a91954083ab9643b17f5471f50c5713ad5ef5e1[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Feb 8 13:51:15 2026 -0600
+
+    Se arreglo el bug de secciones en productos principal
+
+[33mcommit c459e3fc5ee688081f74c84d7deabd2b2eb98781[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Feb 7 20:26:54 2026 -0600
+
+    SE agregaron validaciones al agregar gasto
+
+[33mcommit 771d5ce3bea0172e3ae44ae9a7065285134bdfb3[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Feb 7 19:41:22 2026 -0600
+
+    Se agrego UI para abonos de cada cliente y sus detalles, asi como un boton para volver a compartir el ticket seleccionado
+
+[33mcommit cc5468fed4dd656440a029a64896bf098854d2e8[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Feb 7 16:01:47 2026 -0600
+
+    Se agrego card con los datos de pago tambien dos botones para compartir el ticket de nuevo y se actualizo la UI en detalle de venta
+
+[33mcommit 467eb62ca5d24538c97c2f0d0b50697b70c76c04[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Wed Feb 4 14:07:35 2026 -0600
+
+    Se refactorizo el compratirBitMap de ticketUtils para que guarde la imagen temporalmente en cache y carpeta privada
+
+[33mcommit 4aecc0058c337b535d64e55a1e3e4e1b9ea5793a[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Wed Feb 4 13:06:58 2026 -0600
+
+    Se agrego la funcion para generar un ticket digital en tikcetUtils se agrego un nuevo metodo y se aislo el generador de bitMap
+
+[33mcommit 4a40768035352bd7cede882a50a726dec3a72fb5[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Wed Feb 4 12:13:05 2026 -0600
+
+    Se incorporo tabla para abonos y views
+
+[33mcommit b1e628a435b01e7b035d29374e83bf282d790f8a[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Wed Jan 28 21:48:24 2026 -0600
+
+    Se agregan nuevos campos a tabla ventas y una nueva tabla abonos para la logica de credito/fiar
+
+[33mcommit 949fac4d1f59c168ebbc5956a15e5d3ab7f9722d[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Tue Jan 27 11:55:19 2026 -0600
+
+    SE arreglaron y acomodaron los numeros en corteView y corteDetalleView
+
+[33mcommit 73e3a45ba829f3d7b778922d1b548942cddb6205[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Jan 25 19:43:34 2026 -0600
+
+    Se implementaron los datos para el metodo de pago de transferencia, y en ajustes se modifica esos datos
+
+[33mcommit 700409637a4228ea58e0ca26bbb41a2264e1d4bd[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Jan 25 18:52:13 2026 -0600
+
+    Refactorizacion de DialogFragmentVentas: Actualizacion UI, implementacion de viewFlipper y unificacion de logica de cobro
+
+[33mcommit 24836927f6d5cb5e6693b515e5482af23ca33078[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Jan 24 00:39:55 2026 -0600
+
+    Se actualizaron formularios visualmente }
+
+[33mcommit a53057d4cb99a839eddd57a9236fce844cb4610e[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Fri Jan 23 22:51:44 2026 -0600
+
+    Se incorporo datos financieros con filtros por semana, mes, dia y año
+
+[33mcommit 8a041a4793999aa238e5238053068452c0a2c8c7[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Wed Jan 21 01:02:23 2026 -0600
+
+    Se agrego view para los cortes asi como para ver los detalles
+
+[33mcommit 3a67ec19225c8b66230e355ecc0cc3c868da2c69[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Tue Jan 20 12:45:43 2026 -0600
+
+    Se corrigieron errores
+
+[33mcommit 57b92b95585982e2a38b48ea4d367efc32e4bb94[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Mon Jan 19 23:39:20 2026 -0600
+
+    Incorporacion de ajustes para la personalizacion de ticket digital, asi como actualizacion
+
+[33mcommit b6b0593857f95218a4e010c0952406117004720c[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Jan 18 20:49:10 2026 -0600
+
+    Se actualizaron y mejoraron las UI
+
+[33mcommit 3289bec1466062e901a0df2cc751febf58730916[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Jan 17 17:54:38 2026 -0600
+
+    Se incorporo el registro de gastos, asi como la visualizacion y la eliminacion de estos
+
+[33mcommit 2b931fb1caa65d25a7cb92464f460248d170aa71[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Jan 17 13:22:04 2026 -0600
+
+    Se incorporo eliminar proveedores
+
+[33mcommit 88a89138409210240fb9a981bc8af66b4ea2a30a[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Jan 17 13:09:16 2026 -0600
+
+    Se incorporaron proveedores
+
+[33mcommit 1705879c23208d7ea8a4bd7cafdded7a5b1a1f0f[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Thu Jan 15 12:24:50 2026 -0600
+
+    Se agrego la funcionalidad de compartir ticker por whatsapp en foto
+
+[33mcommit cd0ce7cce17620b029d3b97dc371f77d61aa9252[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Mon Jan 12 16:29:33 2026 -0600
+
+    readme
+
+[33mcommit ddac775cf3ca92c1b664278c87d86871ef31747a[m
+Merge: e843f48 9d2465d
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Mon Jan 12 16:27:25 2026 -0600
+
+    readme
+
+[33mcommit e843f48b68d43e957e1d35a694c71fdd6d74891f[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Mon Jan 12 16:21:38 2026 -0600
+
+    refactorizacion y atualizacion del readme
+
+[33mcommit 9d2465ddc346da41fac3557f25d074caaa49b20e[m
+Author: Cristian Uriel <127007211+GPCristianTS0@users.noreply.github.com>
+Date:   Mon Jan 12 16:12:03 2026 -0600
+
+    Update README.md
+
+[33mcommit 01d8305c468952266211465439434bc4e4146798[m
+Author: Cristian Uriel <127007211+GPCristianTS0@users.noreply.github.com>
+Date:   Mon Jan 12 16:11:18 2026 -0600
+
+    Update README.md
+    
+    Actualice el README
+
+[33mcommit d88a1998605178b346478cc176234a2749a09e6c[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Jan 11 16:35:19 2026 -0600
+
+    Refactorice estructura de carpetas y se agrego funcion en ventas, buscar productos
+
+[33mcommit 35934e9cd81b5c0b4ee4b3862fa0b2771557b6d6[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Jan 11 00:43:43 2026 -0600
+
+    Busqueda de clientes y chips funcionando en interface clientes
+
+[33mcommit 8b18b2b933d6d38c7ac55a293450610754a4becd[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Jan 10 18:57:07 2026 -0600
+
+    CRUD de clientes terminado, falta de hacer funcionar el buscador
+
+[33mcommit 7e386aaf3db5fc111c08b6f5a894a7429e57074a[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Thu Jan 8 19:23:27 2026 -0600
+
+    View Clientes principal terminado visualmente
+
+[33mcommit 909162c4b6ebe735eb44efffe08816ab19732c07[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Tue Dec 30 18:52:12 2025 -0600
+
+    se agrego la funcion de aumentar o disminuir piezas en ventas
+
+[33mcommit ca31a189fbdfe3e623a211d156ac858cacf3a5c2[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Tue Dec 16 17:15:15 2025 -0600
+
+    se arreglaron los problemas al agregar productos y al actualizar. Tambien se terminaron de agregar funciones del spinner
+
+[33mcommit a90bfb17f49ddf24570d11096fd1ad044a6b1dad[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Mon Dec 15 14:46:57 2025 -0600
+
+    Se termino de implementar la venta para actualizar el stock, asi como tambien la disminucion y agregacion del stock y vendidos en ventas
+
+[33mcommit 533d060393e471fdc6ba53cad88bfcdf85f70db8[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Dec 13 00:57:07 2025 -0600
+
+    Se incorporo a ventas el control de stock, para no se pueda comprar de mas
+
+[33mcommit c768746db9c80b0606426fb339397319e342424a[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Thu Dec 11 01:38:02 2025 -0600
+
+    Historial Ventas funciones del view bien
+
+[33mcommit a9684600e11cb3e7fc40efa243787fb3b17ba561[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Thu Dec 11 00:25:48 2025 -0600
+
+    Migracion a una estructura distinta
+
+[33mcommit 4cd76b0dac1e7bce9d5e9febd8609ecda4297b29[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Dec 7 01:48:37 2025 -0600
+
+    Historial de venta casi terminado, ya registra las ventas y los detallaes, en espera de terminar las funciones de la inteface detalles de venta
+
+[33mcommit 79d0ffbe1689c34767e0de9b4ecc877d1909c0c2[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sat Nov 15 03:32:08 2025 -0600
+
+    Funcion busqueda de productos view en funcionamiento, faltan pruebas
+
+[33mcommit fe0e9b7465f49432441488d924ceb90f4fb128ad[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Fri Nov 14 11:56:12 2025 -0600
+
+    Antes de cambiar el getProductos
+
+[33mcommit 7afa93001cbda7c2e74ba7c334c39f1705e45d3e[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Nov 9 20:36:52 2025 -0600
+
+    Funcion de eliminacion de producto terminada
+
+[33mcommit 70801ed920912c51cd8d25c73a03d468d0917b74[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Nov 9 14:31:31 2025 -0600
+
+    Funcion de actualizacion de productos terminada
+
+[33mcommit ff379d83f03ecbceaa30455a89eb76778b4e00cb[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Tue Nov 4 19:57:18 2025 -0600
+
+    Guardado de imagenes en almacenamiento privado completado
+
+[33mcommit b95fbd71f88bfabac1e3d24531942fdd5fd73a0b[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Sun Nov 2 17:29:34 2025 -0600
+
+    Funcionando antes de mover el items productos
+
+[33mcommit ea74655906e220d535b0e4d75710fdc3503eb394[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Fri Oct 31 13:02:08 2025 -0600
+
+    V2
+
+[33mcommit 392141e4f3fae649158b62ef55493aa9dd3c062f[m
+Author: GPCristianTS <gpcristiantstn@gmail.com>
+Date:   Fri Oct 31 12:48:30 2025 -0600
+
+    Antes de cambiar los items de los productosView

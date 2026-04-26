@@ -28,6 +28,10 @@ public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdap
         this.listener = listener;
     }
 
+    public void setProductos(List<Productos> productos) {
+        this.productos = productos;
+    }
+
     public interface OnItemClickListener {
         void OnClickEditProduct(Productos producto, int position);
     }

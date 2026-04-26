@@ -9,8 +9,8 @@ public class Productos implements Serializable {
     private String nombre;
     private String marca;
     private String seccion;
-    private double precioPublico;
-    private double precioNeto;
+    private int precioPublico;
+    private int precioNeto;
     private String descripcion;
     private int vendidos;
     private int stock;
@@ -34,6 +34,14 @@ public class Productos implements Serializable {
         this.vendidos = vendidos;
         this.stock = stock;
         this.ultimoPedido = ultimoPedido;
+    }
+
+    public int getId_seccion() {
+        return id_seccion;
+    }
+
+    public void setId_seccion(int id_seccion) {
+        this.id_seccion = id_seccion;
     }
 
     public String getRutaImagen() {
@@ -76,19 +84,19 @@ public class Productos implements Serializable {
         this.seccion = seccion;
     }
 
-    public double getPrecioPublico() {
+    public int getPrecioPublico() {
         return precioPublico;
     }
 
-    public void setPrecioPublico(double precioPublico) {
+    public void setPrecioPublico(int precioPublico) {
         this.precioPublico = precioPublico;
     }
 
-    public double getPrecioNeto() {
+    public int getPrecioNeto() {
         return precioNeto;
     }
 
-    public void setPrecioNeto(double precioNeto) {
+    public void setPrecioNeto(int precioNeto) {
         this.precioNeto = precioNeto;
     }
 
@@ -134,7 +142,7 @@ public class Productos implements Serializable {
         this.ultimoPedido = ultimoPedido;
     }
     public double getMargenGanacia(){
-        return (precioNeto * 100) /precioPublico;
+        return (precioPublico * 100) /precioNeto;
     }
 
     public String toColumns(){
