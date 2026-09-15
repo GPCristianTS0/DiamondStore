@@ -234,7 +234,8 @@
                             android:id="@+id/codeBartxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
+                            android:inputType="textVisiblePassword"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                             android:textColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
