@@ -22,7 +22,13 @@ jobs:
 
       - name: Permisos de ejecución a gradlew
         run: chmod +x gradlew
-
+      - name: Restaurar debug keystore
+        env:
+          DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE_BASE64}}
+        run: 
+          mkdir -p ~/.android
+          echo "$DEBUG_KEYSTORE" | base64 -d ~/.android/debug.keystore
+          
       - name: Compilar APK Debug
         run: ./gradlew assembleDebug --no-daemon
 
