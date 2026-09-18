@@ -1,4 +1,4 @@
-package com.Clover.prueba.data.models;
+package com.Clover.prueba.data.models.productos;
 
 import java.io.Serializable;
 import java.util.ArrayList;

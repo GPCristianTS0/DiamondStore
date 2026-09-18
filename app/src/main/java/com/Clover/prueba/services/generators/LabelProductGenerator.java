@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.models.Configuracion;
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 
 public class LabelProductGenerator {
     private final GeneradorQR qr;

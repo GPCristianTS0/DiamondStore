@@ -1,7 +1,5 @@
 package com.Clover.prueba.ui.ventas;
 
-import static android.view.View.INVISIBLE;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -28,7 +25,7 @@ import java.util.ArrayList;
 
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.dao.ProductoDAO;
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 
 public class DialogVentasBuscarProducto extends DialogFragment {
     private int seccionG = 0;

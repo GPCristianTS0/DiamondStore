@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.database.CloverBD;
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 
 public class ProductoDAO implements IProducto {
 
@@ -49,7 +49,7 @@ public class ProductoDAO implements IProducto {
 
             ContentValues valuesd = new ContentValues();
             valuesd.put("rutaImagen", producto.getRutaImagen());
-            valuesd.put("id_producto", producto.getId());
+            valuesd.put("id_producto", producto.getId().toUpperCase());
             valuesd.put("nombre_producto", producto.getNombre());
             valuesd.put("marca", producto.getMarca());
             valuesd.put("seccion", idSeccion);
@@ -97,7 +97,8 @@ public class ProductoDAO implements IProducto {
     @Override
     public Productos getProductoCode(String id) {
         Productos producto = new Productos();
-        String sql = "SELECT p.*, s.nombre_seccion, s.id_seccion FROM productos p INNER JOIN secciones s ON p.seccion=s.id_seccion WHERE p.id_producto='" + id.toLowerCase().trim()+"'";
+        String sql = "SELECT p.*, s.nombre_seccion, s.id_seccion FROM productos p INNER JOIN secciones s ON p.seccion=s.id_seccion WHERE p.id_producto='" + id.toLowerCase().toUpperCase()+"'";
+        Log.e("Clover_App", "ID: "+sql);
         try (Cursor cursor = db.rawQuery(sql, null)) {
             if (cursor.moveToFirst()) {
                 producto.setRutaImagen(cursor.getString(cursor.getColumnIndexOrThrow("rutaImagen")));
@@ -117,6 +118,7 @@ public class ProductoDAO implements IProducto {
         } catch (Exception e) {
             Log.e("Clover_App", "En getProductoCode: "+e.getMessage());
         }
+        Log.e("Clover_App", producto.toString());
         return producto;
     }
     private Cursor rawQueryGetProductos(int seccion, String columnaObtencion, String busqueda){

@@ -16,7 +16,7 @@ import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.DetalleVenta;
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 import com.Clover.prueba.data.models.Ventas;
 import com.Clover.prueba.services.generators.TicketUtils;
 

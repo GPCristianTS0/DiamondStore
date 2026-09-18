@@ -1,7 +1,6 @@
 package com.Clover.prueba.ui.productos;
 
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +9,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
 
 import java.util.List;
 
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 
 public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdapter.ViewHolder> {
     private List<Productos> productos;

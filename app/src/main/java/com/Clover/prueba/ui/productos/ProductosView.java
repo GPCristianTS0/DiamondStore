@@ -29,7 +29,7 @@ import java.util.List;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 
 public class ProductosView extends AppCompatActivity {
     private int seccionG;

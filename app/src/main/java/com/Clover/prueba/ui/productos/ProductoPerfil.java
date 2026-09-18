@@ -14,7 +14,7 @@ import com.Clover.prueba.data.dao.ConfiguracionDAO;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.models.Configuracion;
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 import com.Clover.prueba.databinding.ProductoPerfilBinding;
 import com.Clover.prueba.domain.productos.generators.GenerarEtiquetaProductoUseCase;
 import com.Clover.prueba.domain.productos.usecase.DeleteProductUseCase;

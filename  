@@ -55,7 +55,7 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32mimport android.widget.Toast;[m
 [32m+[m
 [32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
-[32m+[m[32mimport com.Clover.prueba.data.models.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.productos.Productos;[m
 [32m+[m[32mimport com.Clover.prueba.services.storage.StorageImage;[m
 [32m+[m
 [32m+[m[32mimport java.text.SimpleDateFormat;[m
@@ -97,7 +97,7 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32mpackage com.Clover.prueba.domain.productos.usecase;[m
 [32m+[m
 [32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
-[32m+[m[32mimport com.Clover.prueba.data.models.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.productos.Productos;[m
 [32m+[m
 [32m+[m[32mpublic class DeleteProductUseCase {[m
 [32m+[m[32m    private final IProducto iProducto;[m
@@ -140,7 +140,7 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32mimport android.net.Uri;[m
 [32m+[m
 [32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
-[32m+[m[32mimport com.Clover.prueba.data.models.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.productos.Productos;[m
 [32m+[m[32mimport com.Clover.prueba.services.storage.StorageImage;[m
 [32m+[m
 [32m+[m[32mpublic class UpdateProductUseCase {[m
@@ -172,7 +172,7 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32mimport androidx.lifecycle.MutableLiveData;[m
 [32m+[m[32mimport androidx.lifecycle.ViewModel;[m
 [32m+[m
-[32m+[m[32mimport com.Clover.prueba.data.models.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.productos.Productos;[m
 [32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.AddProductUseCase;[m
 [32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetProductById;[m
 [32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetSecciones;[m
@@ -275,7 +275,7 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
  [m
  import com.Clover.prueba.data.dao.ProductoDAO;[m
  import com.Clover.prueba.data.dao.interfaces.IProducto;[m
-[36m@@ -49,74 +47,56 @@[m [mimport com.Clover.prueba.data.models.Productos;[m
+[36m@@ -49,74 +47,56 @@[m [mimport com.Clover.prueba.data.models.productos.Productos;[m
  import com.Clover.prueba.ui.scanner.EscanerCodeBar;[m
  [m
  public class FormularioProductos extends AppCompatActivity {[m

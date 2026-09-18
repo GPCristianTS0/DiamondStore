@@ -1,10 +1,9 @@
 package com.Clover.prueba.domain.productos.usecase;
 
 import android.net.Uri;
-import android.widget.Toast;
 
 import com.Clover.prueba.data.dao.interfaces.IProducto;
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 import com.Clover.prueba.services.storage.StorageImage;
 
 import java.text.SimpleDateFormat;

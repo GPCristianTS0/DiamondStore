@@ -38,7 +38,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import com.Clover.prueba.data.models.DetalleVenta;
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 import com.Clover.prueba.ui.scanner.EscanerCodeBar;
 
 public class VentaView extends AppCompatActivity {

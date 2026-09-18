@@ -12,7 +12,7 @@ import com.Clover.prueba.R;
 import java.util.List;
 
 import com.Clover.prueba.data.models.DetalleVenta;
-import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.data.models.productos.Productos;
 
 public class VentasViewAdapter extends RecyclerView.Adapter<VentasViewAdapter.ViewHolder> {
 
