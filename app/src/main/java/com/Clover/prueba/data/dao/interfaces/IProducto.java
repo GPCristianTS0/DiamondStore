@@ -2,7 +2,7 @@ package com.Clover.prueba.data.dao.interfaces;
 
 import java.util.ArrayList;
 
-import com.Clover.prueba.data.models.productos.Productos;
+import com.Clover.prueba.data.models.Productos;
 
 public interface IProducto {
 

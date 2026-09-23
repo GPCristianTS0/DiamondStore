@@ -1,7 +1,7 @@
 package com.Clover.prueba.domain.productos.usecase;
 
 import com.Clover.prueba.data.dao.interfaces.IProducto;
-import com.Clover.prueba.data.models.productos.Productos;
+import com.Clover.prueba.data.models.Productos;
 
 public class DeleteProductUseCase {
     private final IProducto iProducto;

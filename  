@@ -2,7 +2,7 @@
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Mon Apr 20 21:01:24 2026 -0600
 
-    refactor: limpieza y mejora del flujo en formulario de productos
+    refactor: limpieza y mejora del flujo en formulario de accesorios
 
 [1mdiff --git a/app/src/main/java/com/Clover/prueba/data/models/Productos.java b/app/src/main/java/com/Clover/prueba/data/models/Productos.java[m
 [1mindex 62739ea..4b3b633 100644[m
@@ -43,19 +43,19 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
          this.precioNeto = precioNeto;[m
      }[m
  [m
-[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/usecase/AddProductUseCase.java b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/AddProductUseCase.java[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/AddProductUseCase.java b/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/AddProductUseCase.java[m
 [1mnew file mode 100644[m
 [1mindex 0000000..1d1ab4d[m
 [1m--- /dev/null[m
-[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/AddProductUseCase.java[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/AddProductUseCase.java[m
 [36m@@ -0,0 +1,39 @@[m
-[32m+[m[32mpackage com.Clover.prueba.domain.productos.usecase;[m
+[32m+[m[32mpackage com.Clover.prueba.domain.accesorios.usecase;[m
 [32m+[m
 [32m+[m[32mimport android.net.Uri;[m
 [32m+[m[32mimport android.widget.Toast;[m
 [32m+[m
 [32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
-[32m+[m[32mimport com.Clover.prueba.data.models.productos.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.productos.Accesorioss;[m
 [32m+[m[32mimport com.Clover.prueba.services.storage.StorageImage;[m
 [32m+[m
 [32m+[m[32mimport java.text.SimpleDateFormat;[m
@@ -88,16 +88,16 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32m        iProducto.addProducto(producto);[m
 [32m+[m[32m    }[m
 [32m+[m[32m}[m
-[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/usecase/DeleteProductUseCase.java b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/DeleteProductUseCase.java[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/DeleteProductUseCase.java b/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/DeleteProductUseCase.java[m
 [1mnew file mode 100644[m
 [1mindex 0000000..c03060c[m
 [1m--- /dev/null[m
-[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/DeleteProductUseCase.java[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/DeleteProductUseCase.java[m
 [36m@@ -0,0 +1,14 @@[m
-[32m+[m[32mpackage com.Clover.prueba.domain.productos.usecase;[m
+[32m+[m[32mpackage com.Clover.prueba.domain.accesorios.usecase;[m
 [32m+[m
 [32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
-[32m+[m[32mimport com.Clover.prueba.data.models.productos.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.productos.Accesorioss;[m
 [32m+[m
 [32m+[m[32mpublic class DeleteProductUseCase {[m
 [32m+[m[32m    private final IProducto iProducto;[m
@@ -108,13 +108,13 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32m        iProducto.deleteProducto(producto);[m
 [32m+[m[32m    }[m
 [32m+[m[32m}[m
-[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/usecase/GetSecciones.java b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/GetSecciones.java[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/GetSecciones.java b/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/GetSecciones.java[m
 [1mnew file mode 100644[m
 [1mindex 0000000..43f4d23[m
 [1m--- /dev/null[m
-[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/GetSecciones.java[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/GetSecciones.java[m
 [36m@@ -0,0 +1,15 @@[m
-[32m+[m[32mpackage com.Clover.prueba.domain.productos.usecase;[m
+[32m+[m[32mpackage com.Clover.prueba.domain.accesorios.usecase;[m
 [32m+[m
 [32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
 [32m+[m
@@ -129,18 +129,18 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32m        return iProducto.getSeccione();[m
 [32m+[m[32m    }[m
 [32m+[m[32m}[m
-[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/usecase/UpdateProductUseCase.java b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/UpdateProductUseCase.java[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/UpdateProductUseCase.java b/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/UpdateProductUseCase.java[m
 [1mnew file mode 100644[m
 [1mindex 0000000..652b6df[m
 [1m--- /dev/null[m
-[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/usecase/UpdateProductUseCase.java[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/accesorios/usecase/UpdateProductUseCase.java[m
 [36m@@ -0,0 +1,23 @@[m
-[32m+[m[32mpackage com.Clover.prueba.domain.productos.usecase;[m
+[32m+[m[32mpackage com.Clover.prueba.domain.accesorios.usecase;[m
 [32m+[m
 [32m+[m[32mimport android.net.Uri;[m
 [32m+[m
 [32m+[m[32mimport com.Clover.prueba.data.dao.interfaces.IProducto;[m
-[32m+[m[32mimport com.Clover.prueba.data.models.productos.Productos;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.productos.Accesorioss;[m
 [32m+[m[32mimport com.Clover.prueba.services.storage.StorageImage;[m
 [32m+[m
 [32m+[m[32mpublic class UpdateProductUseCase {[m
@@ -158,13 +158,13 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32m        iProducto.updateProducto(productoOld, productoNew);[m
 [32m+[m[32m    }[m
 [32m+[m[32m}[m
-[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/productos/viewmodel/FormularioProductosViewModel.java b/app/src/main/java/com/Clover/prueba/domain/productos/viewmodel/FormularioProductosViewModel.java[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/domain/accesorios/viewmodel/FormularioProductosViewModel.java b/app/src/main/java/com/Clover/prueba/domain/accesorios/viewmodel/FormularioProductosViewModel.java[m
 [1mnew file mode 100644[m
 [1mindex 0000000..fb53840[m
 [1m--- /dev/null[m
-[1m+++ b/app/src/main/java/com/Clover/prueba/domain/productos/viewmodel/FormularioProductosViewModel.java[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/domain/accesorios/viewmodel/FormularioProductosViewModel.java[m
 [36m@@ -0,0 +1,70 @@[m
-[32m+[m[32mpackage com.Clover.prueba.domain.productos.viewmodel;[m
+[32m+[m[32mpackage com.Clover.prueba.domain.accesorios.viewmodel;[m
 [32m+[m
 [32m+[m[32mimport android.net.Uri;[m
 [32m+[m
@@ -172,11 +172,11 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32mimport androidx.lifecycle.MutableLiveData;[m
 [32m+[m[32mimport androidx.lifecycle.ViewModel;[m
 [32m+[m
-[32m+[m[32mimport com.Clover.prueba.data.models.productos.Productos;[m
-[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.AddProductUseCase;[m
-[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetProductById;[m
-[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetSecciones;[m
-[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.UpdateProductUseCase;[m
+[32m+[m[32mimport com.Clover.prueba.data.models.productos.Accesorioss;[m
+[32m+[m[32mimport com.Clover.prueba.domain.accesorios.usecase.AddProductUseCase;[m
+[32m+[m[32mimport com.Clover.prueba.domain.accesorios.usecase.GetProductById;[m
+[32m+[m[32mimport com.Clover.prueba.domain.accesorios.usecase.GetSecciones;[m
+[32m+[m[32mimport com.Clover.prueba.domain.accesorios.usecase.UpdateProductUseCase;[m
 [32m+[m
 [32m+[m[32mimport java.util.ArrayList;[m
 [32m+[m
@@ -234,10 +234,10 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32m        return getSecciones.execute().indexOf(id);[m
 [32m+[m[32m    }[m
 [32m+[m[32m}[m
-[1mdiff --git a/app/src/main/java/com/Clover/prueba/ui/productos/FormularioProductos.java b/app/src/main/java/com/Clover/prueba/ui/productos/FormularioProductos.java[m
+[1mdiff --git a/app/src/main/java/com/Clover/prueba/ui/accesorios/FormularioProductos.java b/app/src/main/java/com/Clover/prueba/ui/accesorios/FormularioProductos.java[m
 [1mindex 5b52e9f..9f6ce5d 100644[m
-[1m--- a/app/src/main/java/com/Clover/prueba/ui/productos/FormularioProductos.java[m
-[1m+++ b/app/src/main/java/com/Clover/prueba/ui/productos/FormularioProductos.java[m
+[1m--- a/app/src/main/java/com/Clover/prueba/ui/accesorios/FormularioProductos.java[m
+[1m+++ b/app/src/main/java/com/Clover/prueba/ui/accesorios/FormularioProductos.java[m
 [36m@@ -19,29 +19,27 @@[m [mimport android.content.Intent;[m
  import android.content.pm.PackageManager;[m
  import android.net.Uri;[m
@@ -255,11 +255,11 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
  [m
  import com.Clover.prueba.R;[m
 [32m+[m[32mimport com.Clover.prueba.databinding.ProductosFormularioActivityBinding;[m
-[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.AddProductUseCase;[m
-[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetProductById;[m
-[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.GetSecciones;[m
-[32m+[m[32mimport com.Clover.prueba.domain.productos.usecase.UpdateProductUseCase;[m
-[32m+[m[32mimport com.Clover.prueba.domain.productos.viewmodel.FormularioProductosViewModel;[m
+[32m+[m[32mimport com.Clover.prueba.domain.accesorios.usecase.AddProductUseCase;[m
+[32m+[m[32mimport com.Clover.prueba.domain.accesorios.usecase.GetProductById;[m
+[32m+[m[32mimport com.Clover.prueba.domain.accesorios.usecase.GetSecciones;[m
+[32m+[m[32mimport com.Clover.prueba.domain.accesorios.usecase.UpdateProductUseCase;[m
+[32m+[m[32mimport com.Clover.prueba.domain.accesorios.viewmodel.FormularioProductosViewModel;[m
 [32m+[m[32mimport com.Clover.prueba.services.Helpers.BannerError;[m
  import com.Clover.prueba.services.storage.StorageImage;[m
 [31m-import com.google.android.material.switchmaterial.SwitchMaterial;[m
@@ -275,7 +275,7 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
  [m
  import com.Clover.prueba.data.dao.ProductoDAO;[m
  import com.Clover.prueba.data.dao.interfaces.IProducto;[m
-[36m@@ -49,74 +47,56 @@[m [mimport com.Clover.prueba.data.models.productos.Productos;[m
+[36m@@ -49,74 +47,56 @@[m [mimport com.Clover.prueba.data.models.productos.Accesorioss;[m
  import com.Clover.prueba.ui.scanner.EscanerCodeBar;[m
  [m
  public class FormularioProductos extends AppCompatActivity {[m
@@ -511,8 +511,8 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
      //Funcion Boton agregar[m
      public void addProductView(){[m
 [31m-        Spinner sp = findViewById(R.id.spinnerSeccionFP);[m
-[31m-        Productos productos = iProducto.getProductoCode(t.getText().toString());[m
-[31m-        if (productos.getId()!=null){[m
+[31m-        Productos accesorios = iProducto.getProductoCode(t.getText().toString());[m
+[31m-        if (accesorios.getId()!=null){[m
 [31m-            t.setText("");[m
 [31m-            Toast.makeText(this, "El codigo ya esta registrado", Toast.LENGTH_SHORT).show();[m
 [31m-            return;[m
@@ -522,19 +522,19 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [31m-        }[m
 [31m-        if(sp.getSelectedItem().toString().equals("Seleccionar")) {[m
 [31m-            Toast.makeText(this, "Seleccione una seccion", Toast.LENGTH_SHORT).show();[m
-[32m+[m[32m        Productos productos = getProductoOfInputs();[m
-[32m+[m[32m        if (productos == null) {[m
+[32m+[m[32m        Productos accesorios = getProductoOfInputs();[m
+[32m+[m[32m        if (accesorios == null) {[m
              return;[m
          }[m
-[31m-        productos.setSeccion(sp.getSelectedItem().toString());[m
-[31m-        productos = getProductoOfInputs();[m
+[31m-        accesorios.setSeccion(sp.getSelectedItem().toString());[m
+[31m-        accesorios = getProductoOfInputs();[m
 [31m-        String fechaHoy = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());[m
-[31m-        productos.setRutaImagen(rutaGuardada);[m
-[31m-        productos.setUltimoPedido(fechaHoy);[m
-[31m-        iProducto.addProducto(productos);[m
+[31m-        accesorios.setRutaImagen(rutaGuardada);[m
+[31m-        accesorios.setUltimoPedido(fechaHoy);[m
+[31m-        iProducto.addProducto(accesorios);[m
 [31m-        Toast.makeText(this, "Producto Agregado", Toast.LENGTH_SHORT).show();[m
 [31m-        finish();[m
-[32m+[m[32m        viewModel.addProduct(productos, selectedImageUri);[m
+[32m+[m[32m        viewModel.addProduct(accesorios, selectedImageUri);[m
      }[m
 [31m-    ActivityResultLauncher<Intent> launcherActivityGalery;[m
 [31m-[m
@@ -576,28 +576,28 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [31m-    }[m
      //Pasa a un producto todos los inputs del formulario[m
      private Productos getProductoOfInputs(){[m
-         Productos productos = new Productos();[m
+         Productos accesorios = new Productos();[m
 [31m-        TextInputEditText t = findViewById(R.id.codeBartxt);[m
-[31m-        productos.setId(t.getText().toString());[m
+[31m-        accesorios.setId(t.getText().toString());[m
 [31m-        t = findViewById(R.id.nombertxt);[m
-[31m-        productos.setNombre(t.getText().toString().trim());[m
+[31m-        accesorios.setNombre(t.getText().toString().trim());[m
 [31m-        t = findViewById(R.id.marcatxt);[m
-[31m-        productos.setMarca(t.getText().toString().trim());[m
+[31m-        accesorios.setMarca(t.getText().toString().trim());[m
 [31m-        Spinner sp = findViewById(R.id.spinnerSeccionFP);[m
-[31m-        productos.setSeccion(sp.getSelectedItem().toString());[m
+[31m-        accesorios.setSeccion(sp.getSelectedItem().toString());[m
 [31m-        t = findViewById(R.id.p_publicotxt);[m
-[31m-        productos.setPrecioPublico(Double.parseDouble(t.getText().toString()));[m
+[31m-        accesorios.setPrecioPublico(Double.parseDouble(t.getText().toString()));[m
 [31m-        t = findViewById(R.id.p_netotxt);[m
-[31m-        productos.setPrecioNeto(Double.parseDouble(t.getText().toString()));[m
+[31m-        accesorios.setPrecioNeto(Double.parseDouble(t.getText().toString()));[m
 [31m-        t = findViewById(R.id.descripciontxt);[m
-[31m-        productos.setDescripcion(t.getText().toString().trim());[m
+[31m-        accesorios.setDescripcion(t.getText().toString().trim());[m
 [31m-        t = findViewById(R.id.unidadestxt);[m
-[31m-        productos.setStock(Integer.parseInt(t.getText().toString()));[m
+[31m-        accesorios.setStock(Integer.parseInt(t.getText().toString()));[m
 [31m-        t = findViewById(R.id.vendidosInputFP);[m
 [31m-        SwitchMaterial switchVentaGranel = findViewById(R.id.switchVentaGranelFP);[m
-[31m-        productos.setVentaxpeso(switchVentaGranel.isChecked()?1:0);[m
+[31m-        accesorios.setVentaxpeso(switchVentaGranel.isChecked()?1:0);[m
 [31m-        if (t.getVisibility() == VISIBLE)[m
-[31m-            productos.setVendidos(Integer.parseInt(t.getText().toString()));[m
+[31m-            accesorios.setVendidos(Integer.parseInt(t.getText().toString()));[m
 [32m+[m[32m        if (isInvalidInputs(binding.nombertxt, "Ingrese el nombre del producto")) return null;[m
 [32m+[m[32m        if (isInvalidInputs(binding.marcatxt, "Ingrese la marca del producto")) return null;[m
 [32m+[m[32m        if (isInvalidInputs(binding.pPublicotxt, "Ingrese el precio publico del producto")) return null;[m
@@ -605,7 +605,7 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32m        if (isInvalidInputs(binding.descripciontxt, "Ingrese la descripcion del producto")) return null;[m
 [32m+[m[32m        if (isInvalidInputs(binding.unidadestxt, "Ingrese la cantidad del producto")) return null;[m
 [32m+[m[32m        if (binding.vendidosInputFP.getVisibility() == VISIBLE)[m
-[32m+[m[32m            if (isInvalidInputs(binding.vendidosInputFP, "Ingrese la cantidad de productos vendidos")) return null;[m
+[32m+[m[32m            if (isInvalidInputs(binding.vendidosInputFP, "Ingrese la cantidad de accesorios vendidos")) return null;[m
 [32m+[m[32m        if (isInvalidInputs(binding.codeBartxt, "Ingrese el codigo del producto")) return null;[m
 [32m+[m[32m        if (binding.spinnerSeccionFP.getSelectedItemPosition() == 0) {[m
 [32m+[m[32m            BannerError.mostrarError(binding.getRoot(), "Seleccione una seccion");[m
@@ -626,18 +626,18 @@ Date:   Mon Apr 20 21:01:24 2026 -0600
 [32m+[m[32m            BannerError.mostrarError(binding.getRoot(), "Ingrese un numero valido");[m
 [32m+[m[32m            return null;[m
 [32m+[m[32m        }[m
-[32m+[m[32m        productos.setId(binding.codeBartxt.getText().toString());[m
-[32m+[m[32m        productos.setNombre(binding.nombertxt.getText().toString().trim());[m
-[32m+[m[32m        productos.setMarca(binding.marcatxt.getText().toString().trim());[m
-[32m+[m[32m        productos.setSeccion(binding.spinnerSeccionFP.getSelectedItem().toString());[m
-[32m+[m[32m        productos.setPrecioPublico(precioPublico);[m
-[32m+[m[32m        productos.setPrecioNeto(precioNeto);[m
-[32m+[m[32m        productos.setDescripcion(binding.descripciontxt.getText().toString().trim());[m
-[32m+[m[32m        productos.setStock(stock);[m
-[32m+[m[32m        productos.setVentaxpeso(binding.switchVentaGranelFP.isChecked()?1:0);[m
+[32m+[m[32m        accesorios.setId(binding.codeBartxt.getText().toString());[m
+[32m+[m[32m        accesorios.setNombre(binding.nombertxt.getText().toString().trim());[m
+[32m+[m[32m        accesorios.setMarca(binding.marcatxt.getText().toString().trim());[m
+[32m+[m[32m        accesorios.setSeccion(binding.spinnerSeccionFP.getSelectedItem().toString());[m
+[32m+[m[32m        accesorios.setPrecioPublico(precioPublico);[m
+[32m+[m[32m        accesorios.setPrecioNeto(precioNeto);[m
+[32m+[m[32m        accesorios.setDescripcion(binding.descripciontxt.getText().toString().trim());[m
+[32m+[m[32m        accesorios.setStock(stock);[m
+[32m+[m[32m        accesorios.setVentaxpeso(binding.switchVentaGranelFP.isChecked()?1:0);[m
 [32m+[m[32m        if (binding.vendidosInputFP.getVisibility() == VISIBLE)[m
-[32m+[m[32m            productos.setVendidos(vendidos);[m
-         return productos;[m
+[32m+[m[32m            accesorios.setVendidos(vendidos);[m
+         return accesorios;[m
      }[m
 [32m+[m[32m    private boolean isInvalidInputs(TextInputEditText field, String mensaje){[m
 [32m+[m[32m        if(field.getText().toString().trim().isEmpty()){[m

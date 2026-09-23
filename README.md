@@ -20,7 +20,7 @@ El módulo principal permite una gestión fluida de la venta, con cálculo autom
 *(El sistema valida existencias y notifica al usuario si un producto está agotado)*
 
 ### Gestión de Inventario
-Visualización clara de productos con soporte para imágenes y filtros dinámicos.
+Visualización clara de accesorios con soporte para imágenes y filtros dinámicos.
 
 | Catálogo Visual | Filtrado y Búsqueda |
 |:---:|:---:|

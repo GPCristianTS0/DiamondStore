@@ -1,5 +1,7 @@
 package com.Clover.prueba.ui.productos;
 
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +16,7 @@ import com.Clover.prueba.data.dao.ConfiguracionDAO;
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.models.Configuracion;
-import com.Clover.prueba.data.models.productos.Productos;
+import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.databinding.ProductoPerfilBinding;
 import com.Clover.prueba.domain.productos.generators.GenerarEtiquetaProductoUseCase;
 import com.Clover.prueba.domain.productos.usecase.DeleteProductUseCase;
@@ -117,6 +119,12 @@ public class ProductoPerfil extends AppCompatActivity {
         binding.PPTxtDescripcion.setText(producto.getDescripcion());
         binding.PPTxtUltimoPedido.setText(producto.getUltimoPedido());
         if (producto.getRutaImagen()!=null) binding.PPImgProducto.setImageURI(Uri.parse(producto.getRutaImagen()));
+        if(producto.isRefaccion()){
+            binding.PPLayoutDatosRefaccion.setVisibility(VISIBLE);
+            binding.PPTxtModeloRefaccion.setText(producto.getModelo());
+            binding.PPTxtCalidadRefaccion.setText(producto.getCalidad());
+            binding.PPTxtModeloCompRefaccion.setText(producto.getModelosCompatible());
+        }
     }
 
     @Override

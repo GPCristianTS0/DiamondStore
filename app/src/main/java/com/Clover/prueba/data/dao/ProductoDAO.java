@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.database.CloverBD;
-import com.Clover.prueba.data.models.productos.Productos;
+import com.Clover.prueba.data.models.Productos;
 
 public class ProductoDAO implements IProducto {
 
@@ -52,6 +52,7 @@ public class ProductoDAO implements IProducto {
             valuesd.put("id_producto", producto.getId().toUpperCase());
             valuesd.put("nombre_producto", producto.getNombre());
             valuesd.put("marca", producto.getMarca());
+            valuesd.put("modelo", producto.getModelo());
             valuesd.put("seccion", idSeccion);
             valuesd.put("precioPublico", producto.getPrecioPublico());
             valuesd.put("precioNeto", producto.getPrecioNeto());
@@ -60,6 +61,9 @@ public class ProductoDAO implements IProducto {
             valuesd.put("stock", producto.getStock());
             valuesd.put("ventaxpeso", producto.getVentaxpeso());
             valuesd.put("ultimo_pedido", producto.getUltimoPedido());
+            valuesd.put("isRefaccion", producto.isRefaccion()?1:0);
+            valuesd.put("calidad", producto.getCalidad());
+            valuesd.put("modelo_compatible", producto.getModelosCompatible());
             long idProducto = db.insert("productos", null, valuesd);
             if (idProducto==-1){
                 throw new Exception("Error al agregar producto");
@@ -113,6 +117,11 @@ public class ProductoDAO implements IProducto {
                 producto.setVendidos(cursor.getInt(cursor.getColumnIndexOrThrow("vendidos")));
                 producto.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
                 producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
+                producto.setVentaxpeso(cursor.getInt(cursor.getColumnIndexOrThrow("ventaxpeso")));
+                producto.setRefaccion(cursor.getInt(cursor.getColumnIndexOrThrow("isRefaccion"))==1);
+                producto.setModelosCompatible(cursor.getString(cursor.getColumnIndexOrThrow("modelo_compatible")));
+                producto.setCalidad(cursor.getString(cursor.getColumnIndexOrThrow("calidad")));
+                producto.setModelo(cursor.getString(cursor.getColumnIndexOrThrow("modelo")));
                 //return producto;
             }
         } catch (Exception e) {
@@ -122,11 +131,6 @@ public class ProductoDAO implements IProducto {
         return producto;
     }
     private Cursor rawQueryGetProductos(int seccion, String columnaObtencion, String busqueda){
-        String filtroStock = "stock";
-        String filtroVendidos = "vendidos";
-        String filtroPrecio = "precioPublico";
-        String filtroPrecioNeto= "precioNeto";
-
         if (busqueda==null) busqueda="";
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT p.*, s.nombre_seccion AS seccionNombre FROM productos p " +
@@ -141,6 +145,10 @@ public class ProductoDAO implements IProducto {
         if (!busqueda.isEmpty()) {
             sql.append("AND ").append(columnaObtencion).append(" LIKE ?");
             arrgs.add("%"+busqueda+"%");
+            if (columnaObtencion.equals("modelo")) {
+                sql.append(" OR modelo_compatible LIKE ?");
+                arrgs.add("%"+busqueda+"%");
+            }
         }
         sql.append(" ORDER BY seccionNombre ASC");
         return db.rawQuery(sql.toString(), arrgs.toArray(new String[0]));
@@ -163,6 +171,10 @@ public class ProductoDAO implements IProducto {
                 producto.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
                 producto.setVentaxpeso(cursor.getInt(cursor.getColumnIndexOrThrow("ventaxpeso")));
                 producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
+                producto.setRefaccion(cursor.getInt(cursor.getColumnIndexOrThrow("isRefaccion"))==1);
+                producto.setModelosCompatible(cursor.getString(cursor.getColumnIndexOrThrow("modelo_compatible")));
+                producto.setCalidad(cursor.getString(cursor.getColumnIndexOrThrow("calidad")));
+                producto.setModelo(cursor.getString(cursor.getColumnIndexOrThrow("modelo")));
                 Log.e("Clover_App", "Producto: "+producto.toString());
                 productos.add(producto);
             }
@@ -200,6 +212,10 @@ public class ProductoDAO implements IProducto {
                 producto.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
                 producto.setVentaxpeso(cursor.getInt(cursor.getColumnIndexOrThrow("ventaxpeso")));
                 producto.setUltimoPedido(cursor.getString(cursor.getColumnIndexOrThrow("ultimo_pedido")));
+                producto.setRefaccion(cursor.getInt(cursor.getColumnIndexOrThrow("isRefaccion"))==1);
+                producto.setModelosCompatible(cursor.getString(cursor.getColumnIndexOrThrow("modelo_compatible")));
+                producto.setCalidad(cursor.getString(cursor.getColumnIndexOrThrow("calidad")));
+                producto.setModelo(cursor.getString(cursor.getColumnIndexOrThrow("modelo")));
                 productos.add(producto);
             }
             return productos;
@@ -258,6 +274,10 @@ public class ProductoDAO implements IProducto {
             valuesd.put("stock",newProducto.getStock());
             valuesd.put("ventaxpeso",newProducto.getVentaxpeso());
             valuesd.put("ultimo_pedido",newProducto.getUltimoPedido());
+            valuesd.put("modelo", newProducto.getModelo());
+            valuesd.put("modelo_compatible", newProducto.getModelosCompatible());
+            valuesd.put("calidad", newProducto.getCalidad());
+            valuesd.put("isRefaccion", newProducto.isRefaccion()?1:0);
             int filas = db.update("productos", valuesd, "id_producto=?", new String[]{old.getId()});
             db.setTransactionSuccessful();
             if (filas>0 && newProducto.getRutaImagen()!=null){

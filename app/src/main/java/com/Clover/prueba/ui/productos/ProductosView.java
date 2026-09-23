@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
+import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.domain.productos.usecase.GetProductBy;
 import com.Clover.prueba.domain.productos.usecase.GetProductos;
 import com.Clover.prueba.domain.productos.usecase.GetSeccionesUseCase;
@@ -29,13 +30,13 @@ import java.util.List;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
-import com.Clover.prueba.data.models.productos.Productos;
 
 public class ProductosView extends AppCompatActivity {
     private int seccionG;
     private String columnaObtencionG;
     private BusquedaViewModel viewModel;
     private TextInputEditText t ;
+    private ProductosViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +61,12 @@ public class ProductosView extends AppCompatActivity {
         });
         seccionG = 0;
         t = findViewById(R.id.textInputEditText);
+        rellenarTabla(new ArrayList<>());
         rellenarSpinnerSecciones();
         rellenarSpinnerColumnas();
-        rellenarTabla(new ArrayList<>());
         inputBusqueda();
     }
 
-    private ProductosViewAdapter adapter;
     private void rellenarTabla(List<Productos> productos){
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.recyclerProductosView);
@@ -114,7 +114,7 @@ public class ProductosView extends AppCompatActivity {
     //rellenar Spinner columnas
     private void rellenarSpinnerColumnas(){
         Spinner spinerColumnas = findViewById(R.id.spinner2);
-        String[] columnas = {"Codigo Barras","Nombre", "Marca","seccion", "Precio Publico", "Precio Neto", "Descripcion", "Vendidos", "Stock", "Ultimo Pedido"};
+        String[] columnas = {"Codigo Barras","Nombre", "Marca","modelo","seccion", "Precio Publico", "Precio Neto", "Descripcion", "Vendidos", "Stock", "Ultimo Pedido", "calidad"};
         ArrayList<String> columnasBD = Productos.getArrayColumn();
         columnasBD.remove(0);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.productos_spiner_item, columnas);

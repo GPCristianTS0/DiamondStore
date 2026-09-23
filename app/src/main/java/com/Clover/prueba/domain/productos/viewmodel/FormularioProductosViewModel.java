@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.Clover.prueba.data.models.productos.Productos;
+import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.domain.productos.usecase.AddProductUseCase;
 import com.Clover.prueba.domain.productos.usecase.GetProductById;
 import com.Clover.prueba.domain.productos.usecase.GetSecciones;

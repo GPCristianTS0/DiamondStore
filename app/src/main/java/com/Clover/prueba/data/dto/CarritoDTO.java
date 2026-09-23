@@ -7,6 +7,7 @@ import static com.Clover.prueba.domain.ventas.VentasConstantes.VENTA_PENDIENTE;
 import android.content.Context;
 import android.util.Log;
 
+import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.domain.ventas.CorteCajaController;
 import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
@@ -16,7 +17,6 @@ import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.DetalleVenta;
-import com.Clover.prueba.data.models.productos.Productos;
 import com.Clover.prueba.data.models.Ventas;
 import com.Clover.prueba.services.generators.TicketUtils;
 

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 19);
+        super(context, "Clover.db", null, 21);
     }
 
     @Override
@@ -20,6 +20,7 @@ public class CloverBD extends SQLiteOpenHelper{
                 "id_producto TEXT PRIMARY KEY, " +
                 "nombre_producto TEXT," +
                 "marca TEXT," +
+                "modelo TEXT," +
                 "seccion INTEGER," +
                 "precioPublico INTEGER," +
                 "precioNeto INTEGER," +
@@ -27,7 +28,10 @@ public class CloverBD extends SQLiteOpenHelper{
                 "vendidos INTEGER," +
                 "stock INTEGER," +
                 "ventaxpeso INTEGER," +
-                "ultimo_pedido TEXT)");
+                "ultimo_pedido TEXT," +
+                "isRefaccion INTEGER," +
+                "calidad TEXT," +
+                "modelo_compatible TEXT)");
         //Tabla secciones de productos
         db.execSQL("create table secciones (" +
                 "id_seccion INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -288,6 +292,12 @@ public class CloverBD extends SQLiteOpenHelper{
         if (oldVersion<19){
             db.execSQL("ALTER TABLE productos ADD COLUMN ventaxpeso INTEGER DEFAULT 0");
         }
+        if (oldVersion<20){
+            db.execSQL("ALTER TABLE productos ADD COLUMN isRefaccion INTEGER DEFAULT 0");
+            db.execSQL("ALTER TABLE productos ADD COLUMN calidad TEXT");
+            db.execSQL("ALTER TABLE productos ADD COLUMN modelo_compatible TEXT");
+        }
+        if (oldVersion<21) db.execSQL("ALTER TABLE productos ADD COLUMN modelo TEXT");
     }
     public static synchronized CloverBD getInstance(Context context) {
         if (instance == null) {

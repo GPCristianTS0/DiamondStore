@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.view.View;
 
 import com.Clover.prueba.data.models.Configuracion;
-import com.Clover.prueba.data.models.productos.Productos;
+import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.services.generators.ImageGenerator;
 import com.Clover.prueba.services.generators.LabelProductGenerator;
 import com.Clover.prueba.services.storage.StorageImage;

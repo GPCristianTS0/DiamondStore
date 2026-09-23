@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import com.Clover.prueba.domain.productos.usecase.UpdateProductUseCase;
 import com.Clover.prueba.domain.productos.viewmodel.FormularioProductosViewModel;
 import com.Clover.prueba.services.Helpers.BannerError;
 import com.Clover.prueba.services.storage.StorageImage;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -43,7 +45,7 @@ import java.util.ArrayList;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
-import com.Clover.prueba.data.models.productos.Productos;
+import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.ui.scanner.EscanerCodeBar;
 
 public class FormularioProductos extends AppCompatActivity {
@@ -89,7 +91,19 @@ public class FormularioProductos extends AppCompatActivity {
         EscannerCamara();
         rellenarSpiner(); //rellenar el spiner de secciones
         addImage();//para agregar imagenes
+        //watcher para es taller o venta
+        MaterialButtonToggleGroup toggleTipo = binding.FPToggleTipo;
+        LinearLayout containerDetalles = findViewById(R.id.FP_containerDetallesRefaccion);
 
+        toggleTipo.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == R.id.FP_btnTipoRefaccion) {
+                    containerDetalles.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.FP_btnTipoVenta) {
+                    containerDetalles.setVisibility(View.GONE);
+                }
+            }
+        });
 
         //para la modificacion de productos
         Productos producto = (Productos) getIntent().getSerializableExtra("producto");
@@ -140,7 +154,7 @@ public class FormularioProductos extends AppCompatActivity {
 
     //Rellenar Espacios para modificar productos
     private void rellenarEspacios(Productos producto) {
-        binding.switchVentaGranelFP.setChecked(producto.isVentaxpeso());
+        binding.checkVentaGranelFP.setChecked(producto.isVentaxpeso());
         binding.spinnerSeccionFP.setSelection(producto.getId_seccion());
         binding.nombertxt.setText(producto.getNombre());
         binding.marcatxt.setText(producto.getMarca());
@@ -152,11 +166,18 @@ public class FormularioProductos extends AppCompatActivity {
         binding.vendidosInputFP.setVisibility(VISIBLE);
         binding.vendidosInputFP.setVisibility(VISIBLE);
         binding.FPLayoutVendidos.setVisibility(VISIBLE);
+        binding.checkVentaGranelFP.setChecked(producto.getVentaxpeso()!=1);
+        binding.modelotxt.setText(producto.getModelo());
 
         if (producto.getRutaImagen()!=null) {
             binding.imagenFP.setImageURI(Uri.parse(producto.getRutaImagen()));
         }else
             binding.imagenFP.setImageResource(R.drawable.agregar_imgaen);
+        if(producto.isRefaccion()){
+            binding.FPToggleTipo.check(binding.FPBtnTipoRefaccion.getId());
+            binding.calidadtxt.setText(producto.getCalidad());
+            binding.modelosCompatiblestxt.setText(producto.getModelosCompatible());
+        }
         binding.codeBartxt.setText(producto.getId());
         this.codigo = producto.getId();
 
@@ -199,11 +220,9 @@ public class FormularioProductos extends AppCompatActivity {
 
     //Funcion Boton agregar
     public void addProductView(){
-        Productos productos = getProductoOfInputs();
-        if (productos == null) {
-            return;
-        }
-        viewModel.addProduct(productos, selectedImageUri);
+        Productos producto = getProductoOfInputs();
+        if (producto == null) return;
+        viewModel.addProduct(producto, selectedImageUri);
     }
     private ActivityResultLauncher<Intent> launcherActivityGalery;
     public void addImage(){
@@ -232,6 +251,7 @@ public class FormularioProductos extends AppCompatActivity {
         if (isInvalidInputs(binding.pNetotxt, "Ingrese el precio neto del producto")) return null;
         if (isInvalidInputs(binding.descripciontxt, "Ingrese la descripcion del producto")) return null;
         if (isInvalidInputs(binding.unidadestxt, "Ingrese la cantidad del producto")) return null;
+        if (isInvalidInputs(binding.modelotxt, "Ingrese el modelo del producto")) return null;
         if (binding.vendidosInputFP.getVisibility() == VISIBLE)
             if (isInvalidInputs(binding.vendidosInputFP, "Ingrese la cantidad de productos vendidos")) return null;
         if (isInvalidInputs(binding.codeBartxt, "Ingrese el codigo del producto")) return null;
@@ -239,6 +259,11 @@ public class FormularioProductos extends AppCompatActivity {
             BannerError.mostrarError(binding.getRoot(), "Seleccione una seccion");
             return null;
         }
+        if (binding.FPToggleTipo.getCheckedButtonId()==binding.FPBtnTipoRefaccion.getId()){
+            productos.setRefaccion(true);
+            productos.setCalidad(binding.calidadtxt.getText()+"");
+            productos.setModelosCompatible(binding.modelosCompatiblestxt.getText()+"");
+        }else productos.setRefaccion(false);
         //validaciones para numeros
         int stock;
         int vendidos = 0;
@@ -262,9 +287,11 @@ public class FormularioProductos extends AppCompatActivity {
         productos.setPrecioNeto(precioNeto);
         productos.setDescripcion(binding.descripciontxt.getText().toString().trim());
         productos.setStock(stock);
-        productos.setVentaxpeso(binding.switchVentaGranelFP.isChecked()?1:0);
+        productos.setVentaxpeso(binding.checkVentaGranelFP.isChecked()?1:0);
+        productos.setModelo(binding.modelotxt.getText().toString());
         if (binding.vendidosInputFP.getVisibility() == VISIBLE)
             productos.setVendidos(vendidos);
+        //if (binding)
         return productos;
     }
     private boolean isInvalidInputs(TextInputEditText field, String mensaje){

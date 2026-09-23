@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -69,23 +70,43 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Información General"
                     android:textColor="#1976D2"
-                    android:textStyle="bold"
                     android:textSize="14sp"
-                    android:layout_marginBottom="8dp"/>
+                    android:textStyle="bold" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchVentaGranelFP"
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/FP_toggleTipo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="Se vende por peso"
-                    android:textColor="#212121"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:switchPadding="16dp"
-                    app:useMaterialThemeColors="true" />
+                    android:layout_marginBottom="12dp"
+                    app:checkedButton="@+id/FP_btnTipoVenta"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/FP_btnTipoVenta"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Venta Mostrador"
+                        android:textAllCaps="false"
+                        android:textColor="#1976D2"
+                        app:strokeColor="#1976D2" />
+
+                    <Button
+                        android:id="@+id/FP_btnTipoRefaccion"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Refacción Taller"
+                        android:textAllCaps="false"
+                        android:textColor="#1976D2"
+                        app:strokeColor="#1976D2" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/FP_layoutNombre"
@@ -94,51 +115,53 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:hint="@string/nombreFP"
-                    app:hintTextColor="#1976D2"
+                    android:textColorHint="#1976D2"
                     app:boxStrokeColor="#1976D2"
-                    android:textColorHint="#1976D2">
+                    app:hintTextColor="#1976D2">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/nombertxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:inputType="textCapWords"/>
+                        android:inputType="textCapWords"
+                        android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Fila Marca y Spinner Categoría -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="16dp"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/FP_layoutMarca"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         android:hint="@string/marcaFP"
-                        app:hintTextColor="#1976D2"
+                        android:textColorHint="#1976D2"
                         app:boxStrokeColor="#1976D2"
-                        android:textColorHint="#1976D2">
+                        app:hintTextColor="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/marcatxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:inputType="textCapWords" />
+                            android:inputType="textCapWords"
+                            android:textColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <!-- Spinner de Categoría restaurado -->
                     <LinearLayout
                         android:id="@+id/FP_containerSpinner"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:layout_marginStart="8dp"
+                        android:layout_weight="1"
                         android:background="@drawable/button_border"
                         android:backgroundTint="#F5F5F5"
                         android:orientation="vertical"
@@ -149,10 +172,10 @@
                             android:layout_height="wrap_content"
                             android:paddingStart="8dp"
                             android:paddingTop="4dp"
-                            android:text="@string/modeloFP"
+                            android:text="Categoría"
                             android:textColor="#1976D2"
-                            android:textStyle="bold"
-                            android:textSize="10sp" />
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
                         <Spinner
                             android:id="@+id/spinnerSeccionFP"
@@ -163,15 +186,84 @@
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/FP_layoutModelo"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/modeloFP"
+                    android:textColorHint="#1976D2"
+                    app:boxStrokeColor="#1976D2"
+                    app:hintTextColor="#1976D2">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/modelotxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/FP_containerDetallesRefaccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/FP_layoutCalidad"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:hint="Calidad"
+                        android:textColorHint="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        app:hintTextColor="#1976D2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/calidadtxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/FP_layoutModelosCompatibles"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:hint="Compatibilidad"
+                        android:textColorHint="#1976D2"
+                        app:boxStrokeColor="#1976D2"
+                        app:hintTextColor="#1976D2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/modelosCompatiblestxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/FP_layoutDesc"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="@string/descripcionFP"
-                    app:hintTextColor="#1976D2"
+                    android:textColorHint="#1976D2"
                     app:boxStrokeColor="#1976D2"
-                    android:textColorHint="#1976D2">
+                    app:hintTextColor="#1976D2">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/descripciontxt"
@@ -205,30 +297,30 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Precios e Identificación"
                     android:textColor="#1976D2"
-                    android:textStyle="bold"
                     android:textSize="14sp"
-                    android:layout_marginBottom="8dp"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="8dp">
+                    android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/FP_layoutCodeBar"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         android:hint="@string/codigoBarrasFPlabel"
-                        app:hintTextColor="#1976D2"
+                        android:textColorHint="#1976D2"
                         app:boxStrokeColor="#1976D2"
-                        android:textColorHint="#1976D2">
+                        app:hintTextColor="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/codeBartxt"
@@ -241,33 +333,33 @@
                         android:id="@+id/escanearButton"
                         android:layout_width="wrap_content"
                         android:layout_height="55dp"
+                        android:layout_marginTop="2dp"
                         android:backgroundTint="#212121"
                         android:text="Escanear"
                         android:textColor="@color/white"
-                        app:icon="@android:drawable/ic_menu_camera"
-                        app:iconTint="#FFFFFF"
                         app:cornerRadius="8dp"
-                        android:layout_marginTop="2dp"/>
+                        app:icon="@android:drawable/ic_menu_camera"
+                        app:iconTint="#FFFFFF" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/FP_layoutPrecioPub"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         android:hint="@string/p_publicoFP"
-                        app:startIconTint="#1976D2"
-                        app:hintTextColor="#1976D2"
+                        android:textColorHint="#1976D2"
                         app:boxStrokeColor="#1976D2"
-                        android:textColorHint="#1976D2">
+                        app:hintTextColor="#1976D2"
+                        app:startIconTint="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/p_publicotxt"
@@ -282,13 +374,13 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginStart="8dp"
+                        android:layout_weight="1"
                         android:hint="@string/p_netoFP"
-                        app:startIconTint="#1976D2"
-                        app:hintTextColor="#1976D2"
+                        android:textColorHint="#1976D2"
                         app:boxStrokeColor="#1976D2"
-                        android:textColorHint="#1976D2">
+                        app:hintTextColor="#1976D2"
+                        app:startIconTint="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/p_netotxt"
@@ -321,29 +413,29 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Inventario"
                     android:textColor="#1976D2"
-                    android:textStyle="bold"
                     android:textSize="14sp"
-                    android:layout_marginBottom="8dp"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/FP_layoutUnidades"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         android:hint="@string/unidadestxtFP"
-                        app:hintTextColor="#1976D2"
+                        android:textColorHint="#1976D2"
                         app:boxStrokeColor="#1976D2"
-                        android:textColorHint="#1976D2">
+                        app:hintTextColor="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/unidadestxt"
@@ -358,13 +450,13 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginStart="8dp"
+                        android:layout_weight="1"
                         android:enabled="false"
                         android:hint="@string/vendidosFP"
-                        app:hintTextColor="#1976D2"
+                        android:textColorHint="#1976D2"
                         app:boxStrokeColor="#1976D2"
-                        android:textColorHint="#1976D2">
+                        app:hintTextColor="#1976D2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/vendidosInputFP"
@@ -374,16 +466,33 @@
                             android:textColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkVentaGranelFP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Venta por peso"
+                        android:textColor="#616161"
+                        android:textSize="13sp"
+                        app:buttonTint="#1976D2" />
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/cardInventario">
 
             <Button

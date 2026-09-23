@@ -1,7 +1,5 @@
 package com.Clover.prueba.data.models;
 
-import com.Clover.prueba.data.models.productos.Productos;
-
 public class DetalleVenta {
     private int id_detalle;
     private int id_venta;

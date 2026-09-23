@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.ui.productos.ProductosViewAdapter;
 import com.Clover.prueba.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.dao.ProductoDAO;
-import com.Clover.prueba.data.models.productos.Productos;
 
 public class DialogVentasBuscarProducto extends DialogFragment {
     private int seccionG = 0;

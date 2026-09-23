@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.productos.ProductosActualizarStock">
+    tools:context=".ui.accesorios.ProductosActualizarStock">
 
     <Button
         android:id="@+id/acst_btnActualizar"

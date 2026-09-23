@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.Clover.prueba.R;
 import com.Clover.prueba.data.models.Configuracion;
-import com.Clover.prueba.data.models.productos.Productos;
+import com.Clover.prueba.data.models.Productos;
 
 public class LabelProductGenerator {
     private final GeneradorQR qr;
@@ -22,7 +22,7 @@ public class LabelProductGenerator {
     }
 
     //Funcion para generar el view de la etiqueta del producto
-    public View getView(Productos productos, Configuracion conf) {
+    public View getView(Productos accesorios, Configuracion conf) {
         View view = layoutInflater.inflate(R.layout.productos_etiqueta, null);
 
         //Inicializacion
@@ -36,13 +36,13 @@ public class LabelProductGenerator {
 
         //Bind de datos
         String importe = "$ ";
-        txtNombre.setText(productos.getNombre());
-        txtCodigo.setText(productos.getId());
-        txtPrecio.setText(importe.concat(productos.getPrecioPublico()+""));
+        txtNombre.setText(accesorios.getNombre());
+        txtCodigo.setText(accesorios.getId());
+        txtPrecio.setText(importe.concat(accesorios.getPrecioPublico()+""));
         if (conf.getRutaLogo()!=null) imgLogo.setImageURI(Uri.parse(conf.getRutaLogo()));
         txtEmpresa.setText(conf.getNombreNegocio());
         txtTelefono.setText(conf.getTelefono());
-        image.setImageBitmap(qr.generarQR(productos.getId()));
+        image.setImageBitmap(qr.generarQR(accesorios.getId()));
 
         return view;
     }
