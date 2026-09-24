@@ -32,6 +32,7 @@ import com.Clover.prueba.ui.historialventas.HistorialVentasView;
 import com.Clover.prueba.ui.productos.ProductosView;
 import com.Clover.prueba.ui.productos.ProductosActualizarStock;
 import com.Clover.prueba.ui.proveedores.ProveedorView;
+import com.Clover.prueba.ui.reparaciones.ReparacionRapidaDialog;
 import com.Clover.prueba.ui.ventas.VentaView;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
@@ -109,6 +110,11 @@ public class MenuPrincipal extends AppCompatActivity {
     public void onClickAgregarGasto(View v){
         GastoFormulario dialog = new GastoFormulario();
         dialog.show(getSupportFragmentManager(), "dialog");
+    }
+    //Accion boton Registrar Reparacion Rapida
+    public void onClickReparacionRapida(View v){
+        ReparacionRapidaDialog dialog = new ReparacionRapidaDialog();
+        dialog.show(getSupportFragmentManager(), "dialog_reparacion");
     }
     //Accion cerrar turno
     public void onClickCerrarTurno(View v){

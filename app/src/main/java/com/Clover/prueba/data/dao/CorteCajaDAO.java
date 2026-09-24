@@ -53,17 +53,25 @@ public class CorteCajaDAO implements ICorteCaja {
 
     @Override
     public double getVentasTotalesCorte(String fechaHora) {
-        String sql = "SELECT SUM(monto) FROM ventas WHERE fecha_Hora >= ?";
-        Log.d("Clover_App", "fechaHora: " + fechaHora);
-        try (Cursor cursor = db.rawQuery(sql, new String[]{fechaHora})){
+        String sqlVentas = "SELECT IFNULL(SUM(monto), 0) FROM ventas WHERE fecha_Hora >= ?";
+        String sqlRep = "SELECT IFNULL(SUM(monto_total), 0) FROM reparaciones WHERE estado = 'ENTREGADO' AND fecha_entrega >= ?";
+        double totalVentas = 0;
+        double totalRep = 0;
+        try (Cursor cursor = db.rawQuery(sqlVentas, new String[]{fechaHora})){
             if (cursor.moveToFirst()) {
-                Log.d("Clover_App", "Ventas totales: " + cursor.getDouble(0));
-                return cursor.getDouble(0);
+                totalVentas = cursor.getDouble(0);
             }
         } catch (Exception e) {
             Log.e("Clover_App", "Error en getVentasTotales: " + e.getMessage());
         }
-        return 0;
+        try (Cursor cursor = db.rawQuery(sqlRep, new String[]{fechaHora})){
+            if (cursor.moveToFirst()) {
+                totalRep = cursor.getDouble(0);
+            }
+        } catch (Exception e) {
+            Log.e("Clover_App", "Error en getVentasTotalesRep: " + e.getMessage());
+        }
+        return totalVentas + totalRep;
     }
 
     @Override

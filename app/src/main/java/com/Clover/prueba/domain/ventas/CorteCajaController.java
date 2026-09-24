@@ -8,9 +8,11 @@ import android.content.Context;
 
 import com.Clover.prueba.data.dao.CorteCajaDAO;
 import com.Clover.prueba.data.dao.GastosDAO;
+import com.Clover.prueba.data.dao.ReparacionesDAO;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.dao.interfaces.ICorteCaja;
 import com.Clover.prueba.data.dao.interfaces.IGastos;
+import com.Clover.prueba.data.dao.interfaces.IReparaciones;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.models.CorteCaja;
 
@@ -26,11 +28,13 @@ public class CorteCajaController {
     private final IGastos gastosDAO;
     private CorteCaja corteCaja;
     private final IVentas ventasDAO;
+    private final IReparaciones reparacionesDAO;
 
     public CorteCajaController(Context context) {
         daoCorteCaja = new CorteCajaDAO(context);
         gastosDAO = new GastosDAO(context);
         ventasDAO = new VentasDAO(context);
+        reparacionesDAO = new ReparacionesDAO(context);
     }
 
     public void iniciarTurno(double montoInicial) {
@@ -50,10 +54,17 @@ public class CorteCajaController {
     }
     public CorteCaja getCorteActual() {
         corteCaja = daoCorteCaja.getCorteActual();
-        corteCaja.setVentas_totales(daoCorteCaja.getVentasTotalesCorte(corteCaja.getFecha_apertura()));
-        corteCaja.setVentas_efectivo(ventasDAO.getVentasMetodoPago(CONST_METODO_EFECTIVO, corteCaja.getId_corte()));
-        corteCaja.setVentas_tarjeta(ventasDAO.getVentasMetodoPago(CONST_METODO_TARJETA, corteCaja.getId_corte()));
-        corteCaja.setVentas_transferencia(ventasDAO.getVentasMetodoPago(CONST_METODO_TRANSFERENCIA, corteCaja.getId_corte()));
+        if (corteCaja == null) return null;
+
+        double ingRepEfectivo = reparacionesDAO.getIngresosReparacionesByCorte(corteCaja.getId_corte(), CONST_METODO_EFECTIVO);
+        double ingRepTarjeta = reparacionesDAO.getIngresosReparacionesByCorte(corteCaja.getId_corte(), CONST_METODO_TARJETA);
+        double ingRepTransferencia = reparacionesDAO.getIngresosReparacionesByCorte(corteCaja.getId_corte(), CONST_METODO_TRANSFERENCIA);
+
+        corteCaja.setVentas_efectivo(ventasDAO.getVentasMetodoPago(CONST_METODO_EFECTIVO, corteCaja.getId_corte()) + ingRepEfectivo);
+        corteCaja.setVentas_tarjeta(ventasDAO.getVentasMetodoPago(CONST_METODO_TARJETA, corteCaja.getId_corte()) + ingRepTarjeta);
+        corteCaja.setVentas_transferencia(ventasDAO.getVentasMetodoPago(CONST_METODO_TRANSFERENCIA, corteCaja.getId_corte()) + ingRepTransferencia);
+        corteCaja.setVentas_totales(daoCorteCaja.getVentasTotalesCorte(corteCaja.getFecha_apertura()) + ingRepEfectivo + ingRepTarjeta + ingRepTransferencia);
+
         double d = gastosDAO.sumarTotalGastosByCorte(corteCaja.getId_corte(), CONST_METODO_EFECTIVO);
         corteCaja.setGastos_totales(d);
         double esperado = corteCaja.getMonto_inicial() + corteCaja.getVentas_efectivo() + corteCaja.getAbonos_totales() - d;
@@ -78,11 +89,18 @@ public class CorteCajaController {
 
     public CorteCaja getCorteCaja(int id_corte){
         CorteCaja corteCaja = daoCorteCaja.getCorte(id_corte);
-        corteCaja.setGastos_efectivo(gastosDAO.sumarTotalGastosByCorte(id_corte, "Efectivo"));
-        corteCaja.setGastos_transferencia(gastosDAO.sumarTotalGastosByCorte(id_corte, "Transferencia"));
-        corteCaja.setVentas_efectivo(ventasDAO.getVentasMetodoPago("Efectivo", id_corte));
-        corteCaja.setVentas_tarjeta(ventasDAO.getVentasMetodoPago("Tarjeta", id_corte));
-        corteCaja.setVentas_totales(corteCaja.getMonto_inicial() + corteCaja.getVentas_totales() + corteCaja.getAbonos_totales() - corteCaja.getGastos_totales());
+        if (corteCaja == null) return null;
+
+        double ingRepEfectivo = reparacionesDAO.getIngresosReparacionesByCorte(id_corte, CONST_METODO_EFECTIVO);
+        double ingRepTarjeta = reparacionesDAO.getIngresosReparacionesByCorte(id_corte, CONST_METODO_TARJETA);
+        double ingRepTransferencia = reparacionesDAO.getIngresosReparacionesByCorte(id_corte, CONST_METODO_TRANSFERENCIA);
+
+        corteCaja.setGastos_efectivo(gastosDAO.sumarTotalGastosByCorte(id_corte, CONST_METODO_EFECTIVO));
+        corteCaja.setGastos_transferencia(gastosDAO.sumarTotalGastosByCorte(id_corte, CONST_METODO_TRANSFERENCIA));
+        corteCaja.setVentas_efectivo(ventasDAO.getVentasMetodoPago(CONST_METODO_EFECTIVO, id_corte) + ingRepEfectivo);
+        corteCaja.setVentas_tarjeta(ventasDAO.getVentasMetodoPago(CONST_METODO_TARJETA, id_corte) + ingRepTarjeta);
+        corteCaja.setVentas_transferencia(ventasDAO.getVentasMetodoPago(CONST_METODO_TRANSFERENCIA, id_corte) + ingRepTransferencia);
+        corteCaja.setVentas_totales(corteCaja.getMonto_inicial() + corteCaja.getVentas_efectivo() + corteCaja.getVentas_tarjeta() + corteCaja.getVentas_transferencia() + corteCaja.getAbonos_totales() - corteCaja.getGastos_totales());
         return corteCaja;
     }
 }

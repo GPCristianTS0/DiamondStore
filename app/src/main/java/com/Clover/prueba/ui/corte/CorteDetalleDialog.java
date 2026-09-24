@@ -40,6 +40,8 @@ public class CorteDetalleDialog extends BottomSheetDialogFragment {
         TextView TC_txtGastosTransf = v.findViewById(R.id.DC_txtGastosTransf);
         TextView TC_txtVentasEfectivo = v.findViewById(R.id.DC_txtVentasEfectivo);
         TextView TC_txtVentasTarjeta = v.findViewById(R.id.DC_txtVentasTarjeta);
+        TextView TC_txtVentasTransf = v.findViewById(R.id.DC_txtVentasTransf);
+        TextView TC_txtReparaciones = v.findViewById(R.id.DC_txtReparaciones);
         TextView TC_txtAbonos = v.findViewById(R.id.DC_txtAbonos);
         TextView TC_txtFecha = v.findViewById(R.id.DC_txtFecha);
         TextView DC_monto = v.findViewById(R.id.DC_txtMontoInicial);
@@ -60,6 +62,8 @@ public class CorteDetalleDialog extends BottomSheetDialogFragment {
         TC_txtGastosEfectivo.setText("- $ "+corteCaja.getGastos_efectivo());
         TC_txtVentasEfectivo.setText("$ "+corteCaja.getVentas_efectivo());
         TC_txtVentasTarjeta.setText("$ "+corteCaja.getVentas_tarjeta());
+        TC_txtVentasTransf.setText("$ "+corteCaja.getVentas_transferencia());
+        TC_txtReparaciones.setText("$ "+corteCaja.getReparaciones_totales());
         TC_txtAbonos.setText("$ "+corteCaja.getAbonos_totales());
         TC_txtGastosTransf.setText("- $ "+corteCaja.getGastos_transferencia());
         TC_txtFecha.setText(corteCaja.getFecha_apertura());

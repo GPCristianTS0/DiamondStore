@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class CloverBD extends SQLiteOpenHelper{
     private static CloverBD instance;
     private CloverBD(@Nullable Context context) {
-        super(context, "Clover.db", null, 21);
+        super(context, "Clover.db", null, 23);
     }
 
     @Override
@@ -147,6 +147,26 @@ public class CloverBD extends SQLiteOpenHelper{
                 "tipo_pago TEXT," +
                 "observaciones TEXT)");
 
+        //Tabla para las reparaciones
+        db.execSQL("create table IF NOT EXISTS reparaciones (" +
+                "id_reparacion INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "tipo_servicio TEXT, " +
+                "id_cliente TEXT, " +
+                "equipo TEXT, " +
+                "color TEXT, " +
+                "falla_reportada TEXT, " +
+                "diagnostico TEXT, " +
+                "costo_refacciones REAL, " +
+                "monto_total REAL, " +
+                "anticipo REAL DEFAULT 0, " +
+                "monto_pendiente REAL, " +
+                "tipo_pago TEXT, " +
+                "estado TEXT, " +
+                "fecha_ingreso TEXT, " +
+                "fecha_promesa TEXT, " +
+                "fecha_entrega TEXT, " +
+                "id_corte INTEGER)");
+
         //Index
         db.execSQL("CREATE INDEX idx_ventas_id_cliente ON ventas (id_cliente)");
         db.execSQL("CREATE INDEX idx_ventas_id_corte ON ventas (id_corte)");
@@ -161,6 +181,9 @@ public class CloverBD extends SQLiteOpenHelper{
         db.execSQL("CREATE INDEX idx_abonos_id_cliente ON abonos (id_cliente)");
         db.execSQL("CREATE INDEX idx_abonos_id_corte ON abonos (id_corte)");
         db.execSQL("CREATE INDEX idx_clientes_saldo ON clientes (saldo)");
+        db.execSQL("CREATE INDEX idx_reparaciones_id_corte ON reparaciones (id_corte)");
+        db.execSQL("CREATE INDEX idx_reparaciones_id_cliente ON reparaciones (id_cliente)");
+        db.execSQL("CREATE INDEX idx_reparaciones_estado ON reparaciones (estado)");
     }
 
     @Override
@@ -298,6 +321,30 @@ public class CloverBD extends SQLiteOpenHelper{
             db.execSQL("ALTER TABLE productos ADD COLUMN modelo_compatible TEXT");
         }
         if (oldVersion<21) db.execSQL("ALTER TABLE productos ADD COLUMN modelo TEXT");
+        if (oldVersion<23){
+            db.execSQL("DROP TABLE IF EXISTS reparaciones");
+            db.execSQL("create table IF NOT EXISTS reparaciones (" +
+                    "id_reparacion INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "tipo_servicio TEXT, " +
+                    "id_cliente TEXT, " +
+                    "equipo TEXT, " +
+                    "color TEXT, " +
+                    "falla_reportada TEXT, " +
+                    "diagnostico TEXT, " +
+                    "costo_refacciones REAL, " +
+                    "monto_total REAL, " +
+                    "anticipo REAL DEFAULT 0, " +
+                    "monto_pendiente REAL, " +
+                    "tipo_pago TEXT, " +
+                    "estado TEXT, " +
+                    "fecha_ingreso TEXT, " +
+                    "fecha_promesa TEXT, " +
+                    "fecha_entrega TEXT, " +
+                    "id_corte INTEGER)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS idx_reparaciones_id_corte ON reparaciones (id_corte)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS idx_reparaciones_id_cliente ON reparaciones (id_cliente)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS idx_reparaciones_estado ON reparaciones (estado)");
+        }
     }
     public static synchronized CloverBD getInstance(Context context) {
         if (instance == null) {

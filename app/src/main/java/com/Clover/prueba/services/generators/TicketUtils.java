@@ -25,8 +25,10 @@ import com.Clover.prueba.R;
 import com.Clover.prueba.domain.configuracion.ConfiguracionControl;
 import com.Clover.prueba.data.dao.ConfiguracionDAO;
 import com.Clover.prueba.data.models.Abonos;
+import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.DetalleVenta;
+import com.Clover.prueba.data.models.Reparaciones;
 import com.Clover.prueba.data.models.Ventas;
 
 import java.io.File;
@@ -184,6 +186,81 @@ public class TicketUtils {
         generarYCompartirTicket(view, context, configuracion, waoOrGeneric);
 
     }
+
+    public void generarTicketReparacion(Context context, Reparaciones reparacion, Clientes cliente, boolean waoOrGeneric) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.ticket_reparacion_virtual, null);
+
+        Configuracion configuracion = configuracionControl.getConfiguracion();
+
+        ImageView imgLogo = view.findViewById(R.id.imgLogoReparacion);
+        TextView txtNombreNegocio = view.findViewById(R.id.txtNombreNegocioRep);
+        TextView txtEslogan = view.findViewById(R.id.txtEsloganRep);
+        TextView txtTelefonoNegocio = view.findViewById(R.id.txtTelefonoNegocioRep);
+        TextView txtFolio = view.findViewById(R.id.txtFolioRep);
+        TextView txtFecha = view.findViewById(R.id.txtFechaRep);
+        TextView txtNombreCliente = view.findViewById(R.id.txtNombreClienteRep);
+        TextView txtTelefonoCliente = view.findViewById(R.id.txtTelefonoClienteRep);
+        TextView txtEquipo = view.findViewById(R.id.txtEquipoRep);
+        TextView txtColor = view.findViewById(R.id.txtColorRep);
+        TextView txtFalla = view.findViewById(R.id.txtFallaRep);
+        TextView txtBadgeEstado = view.findViewById(R.id.txtBadgeEstadoRep);
+        TextView txtMontoTotal = view.findViewById(R.id.txtMontoTotalRep);
+        TextView txtGarantia = view.findViewById(R.id.txtGarantiaRep);
+
+        if (configuracion.getRutaLogo() != null && !configuracion.getRutaLogo().isEmpty()) {
+            try {
+                imgLogo.setImageURI(Uri.parse(configuracion.getRutaLogo()));
+            } catch (Exception ignored) {}
+        }
+
+        if (configuracion.getNombreNegocio() != null && !configuracion.getNombreNegocio().isEmpty()) {
+            txtNombreNegocio.setText(configuracion.getNombreNegocio());
+        }
+        if (configuracion.getEslogan() != null && !configuracion.getEslogan().trim().isEmpty()) {
+            txtEslogan.setText(configuracion.getEslogan());
+        }
+        StringBuilder infoContacto = new StringBuilder();
+        if (configuracion.getTelefono() != null && !configuracion.getTelefono().isEmpty()) {
+            infoContacto.append("Tel: ").append(configuracion.getTelefono());
+        }
+        if (configuracion.getDireccion() != null && !configuracion.getDireccion().isEmpty()) {
+            if (infoContacto.length() > 0) infoContacto.append(" | ");
+            infoContacto.append("Dir: ").append(configuracion.getDireccion());
+        }
+        if (infoContacto.length() > 0) {
+            txtTelefonoNegocio.setText(infoContacto.toString());
+        }
+
+        txtFolio.setText("Folio: #CV-" + reparacion.getId_reparacion());
+        String fechaIng = reparacion.getFecha_ingreso();
+        if (fechaIng != null && fechaIng.contains(" ")) {
+            txtFecha.setText("Fecha: " + fechaIng.split(" ")[0]);
+        } else {
+            txtFecha.setText("Fecha: " + (fechaIng != null ? fechaIng : ""));
+        }
+
+        if (cliente != null) {
+            txtNombreCliente.setText("Nombre: " + cliente.getNombre_cliente());
+            String tel = cliente.getId_cliente() != null && !cliente.getId_cliente().isEmpty() ? cliente.getId_cliente() : "---";
+            txtTelefonoCliente.setText("Teléfono: " + tel);
+        } else {
+            txtNombreCliente.setText("Nombre: Público General");
+            txtTelefonoCliente.setText("Teléfono: ---");
+        }
+
+        txtEquipo.setText("Modelo: " + (reparacion.getEquipo() != null ? reparacion.getEquipo() : "---"));
+        txtColor.setText("Color: " + (reparacion.getColor() != null && !reparacion.getColor().isEmpty() ? reparacion.getColor() : "---"));
+        txtFalla.setText(reparacion.getFalla_reportada() != null ? reparacion.getFalla_reportada() : "---");
+        txtBadgeEstado.setText("Estado: " + (reparacion.getEstado() != null ? reparacion.getEstado() : "Entregado"));
+        txtMontoTotal.setText("$" + reparacion.getMonto_total());
+
+        if (configuracion.getNotaGarantia() != null && !configuracion.getNotaGarantia().isEmpty()) {
+            txtGarantia.setText("* " + configuracion.getNotaGarantia());
+        }
+
+        generarYCompartirTicket(view, context, configuracion, waoOrGeneric);
+    }
     private void generarYCompartirTicket(View view, Context context, Configuracion configuracion, boolean waoOrGeneric) {
 
         //Medicion de la pantalla
@@ -202,8 +279,8 @@ public class TicketUtils {
         view.layout(0, 0, view.getMeasuredWidth(), altoFinal);
 
         // 5. DIBUJAR (DRAW): Creamos el Bitmap y le decimos a la vista "dibújate aquí"
-        float escala = 2.0f;
-        CreacionImagen(view, context, configuracion,altoFinal, escala, waoOrGeneric);
+        float escala = 2.5f;
+        CreacionImagen(view, context, configuracion, altoFinal, escala, waoOrGeneric);
     }
 
     private void CreacionImagen(View view, Context context, Configuracion configuracion,int altoFinal, float escala, boolean waoOrGeneric) {
@@ -213,8 +290,7 @@ public class TicketUtils {
         Bitmap bitmap = Bitmap.createBitmap(anchoReal, altoReal, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         try {
-            // Pintamos fondo blanco por si acaso
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(Color.parseColor("#0D111E"));
             canvas.scale(escala, escala);
             view.draw(canvas);
             // 6. COMPARTIR: Guardamos temporalmente y lanzamos WhatsApp
