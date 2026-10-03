@@ -1,6 +1,8 @@
 package com.Clover.prueba.ui.corte;
 
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +16,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.domain.ventas.CorteCajaController;
+import com.Clover.prueba.data.dao.CorteCajaDAO;
+import com.Clover.prueba.data.dao.interfaces.ICorteCaja;
+import com.Clover.prueba.domain.corteCaja.CorteCajaController;
+import com.Clover.prueba.domain.corteCaja.CorteViewModel;
+import com.Clover.prueba.domain.corteCaja.usecase.IniciarTurnoUseCase;
+import com.Clover.prueba.services.Helpers.BannerError;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class DialogAbrirCorte extends DialogFragment {
+    private CorteViewModel viewModel;
     public interface OnMontoConfirmado {
+
         void onMontoConfirmado();
     }
     private OnMontoConfirmado onMontoConfirmado;
@@ -30,22 +39,14 @@ public class DialogAbrirCorte extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ventas_inicio_corte, container, false);
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
         View rootView = requireActivity().findViewById(android.R.id.content);
 
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             Rect r = new Rect();
             rootView.getWindowVisibleDisplayFrame(r);
-            int screenHeight = rootView.getRootView().getHeight();
-            int keypadHeight = screenHeight - r.bottom;
-
-            // Si el teclado está visible (ocupa más del 15% de la pantalla)
-            if (keypadHeight > screenHeight * 0.15) {
-                // Subir el fragment unos píxeles
-                view.animate().translationY((float) -keypadHeight).setDuration(200).start();
-            } else {
-                // Volver a la posición original
-                view.animate().translationY(0).setDuration(200).start();
-            }
         });
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -56,23 +57,13 @@ public class DialogAbrirCorte extends DialogFragment {
                 }
             }
         };
-        Button b = view.findViewById(R.id.VCorte_boton);
-        TextInputEditText t = view.findViewById(R.id.VCorte_montotxt);
-        CorteCajaController corteCajaController = new CorteCajaController(getContext());
+        //viewModel
+        ICorteCaja repositoryCorte = new CorteCajaDAO(view.getContext());
+        IniciarTurnoUseCase usecase = new IniciarTurnoUseCase(repositoryCorte);
 
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (t.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), "Ingrese monto", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                double monto = Double.parseDouble(t.getText().toString());
-                if (monto <= 0){
-                    Toast.makeText(getContext(), "Ingrese monto", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                corteCajaController.iniciarTurno(monto);
+        viewModel = new CorteViewModel(usecase);
+        viewModel.getEstadoCorteActual().observe(this, estado -> {
+            if (estado){
                 if (onMontoConfirmado != null) {
                     onMontoConfirmado.onMontoConfirmado();
                 }
@@ -80,6 +71,13 @@ public class DialogAbrirCorte extends DialogFragment {
                 dismiss();
             }
         });
+        viewModel.getError().observe(this, mensaje ->{
+            BannerError.mostrarError(view, mensaje);
+        });
+        Button b = view.findViewById(R.id.VCorte_boton);
+        TextInputEditText t = view.findViewById(R.id.VCorte_montotxt);
+
+        b.setOnClickListener(v -> viewModel.iniciarTurno(t.getText().toString()));
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         return view;
     }

@@ -20,7 +20,7 @@ import com.Clover.prueba.data.dao.ReparacionesDAO;
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.CorteCaja;
 import com.Clover.prueba.data.models.Reparaciones;
-import com.Clover.prueba.domain.ventas.CorteCajaController;
+import com.Clover.prueba.domain.corteCaja.CorteCajaController;
 import com.Clover.prueba.services.Helpers.ConfirmDialog;
 import com.Clover.prueba.services.generators.TicketUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;

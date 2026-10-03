@@ -1,4 +1,4 @@
-package com.Clover.prueba.domain.ventas;
+package com.Clover.prueba.domain.corteCaja;
 
 import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_EFECTIVO;
 import static com.Clover.prueba.domain.ventas.VentasConstantes.CONST_METODO_TARJETA;
@@ -37,14 +37,6 @@ public class CorteCajaController {
         reparacionesDAO = new ReparacionesDAO(context);
     }
 
-    public void iniciarTurno(double montoInicial) {
-        CorteCaja corteCaja = new CorteCaja();
-        corteCaja.setMonto_inicial(montoInicial);
-        String fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-        corteCaja.setFecha_apertura(fechaHora);
-        corteCaja.setEstado(ABIERTO_CONST);
-        daoCorteCaja.iniciarCorte(corteCaja);
-    }
     public boolean cerrarTurno(double dineroEnCaja) {
         String fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
         corteCaja.setFecha_cierre(fechaHora);

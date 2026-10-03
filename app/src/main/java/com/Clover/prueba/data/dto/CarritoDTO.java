@@ -8,7 +8,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.Clover.prueba.data.models.Productos;
-import com.Clover.prueba.domain.ventas.CorteCajaController;
+import com.Clover.prueba.domain.corteCaja.CorteCajaController;
 import com.Clover.prueba.data.dao.interfaces.IClient;
 import com.Clover.prueba.data.dao.interfaces.IProducto;
 import com.Clover.prueba.data.dao.interfaces.IVentas;

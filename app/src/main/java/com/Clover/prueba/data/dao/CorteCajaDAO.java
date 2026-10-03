@@ -142,16 +142,20 @@ public class CorteCajaDAO implements ICorteCaja {
         try (Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(id_corte)})){
             if (cursor.moveToFirst()) {
                 CorteCaja corteCaja = new CorteCaja();
-                corteCaja.setId_corte(cursor.getInt(0));
-                corteCaja.setFecha_apertura(cursor.getString(1));
-                corteCaja.setFecha_cierre(cursor.getString(2));
-                corteCaja.setMonto_inicial(cursor.getDouble(3));
-                corteCaja.setVentas_totales(cursor.getDouble(4));
-                corteCaja.setAbonos_totales(cursor.getDouble(5));
-                corteCaja.setGastos_totales(cursor.getDouble(6));
-                corteCaja.setDinero_en_caja(cursor.getDouble(7));
-                corteCaja.setDiferencia(cursor.getDouble(8));
-                corteCaja.setEstado(cursor.getString(9));
+                corteCaja.setId_corte(cursor.getInt(cursor.getColumnIndexOrThrow("id_corte")));
+                corteCaja.setFecha_apertura(cursor.getString(cursor.getColumnIndexOrThrow("fecha_apertura")));
+                corteCaja.setFecha_cierre(cursor.getString(cursor.getColumnIndexOrThrow("fecha_cierre")));
+                corteCaja.setMonto_inicial(cursor.getDouble(cursor.getColumnIndexOrThrow("monto_inicial")));
+                corteCaja.setVentas_totales(cursor.getDouble(cursor.getColumnIndexOrThrow("ventas_totales")));
+                corteCaja.setVentas_efectivo(cursor.getDouble(cursor.getColumnIndexOrThrow("ventas_efectivo")));
+                corteCaja.setVentas_tarjeta(cursor.getDouble(cursor.getColumnIndexOrThrow("ventas_tarjeta")));
+                corteCaja.setAbonos_totales(cursor.getDouble(cursor.getColumnIndexOrThrow("abonos_totales")));
+                corteCaja.setGastos_totales(cursor.getDouble(cursor.getColumnIndexOrThrow("gastos_totales")));
+                corteCaja.setGastos_efectivo(cursor.getDouble(cursor.getColumnIndexOrThrow("gastos_efectivo")));
+                corteCaja.setGastos_transferencia(cursor.getDouble(cursor.getColumnIndexOrThrow("gastos_transferencia")));
+                corteCaja.setDinero_en_caja(cursor.getDouble(cursor.getColumnIndexOrThrow("dinero_en_caja")));
+                corteCaja.setDiferencia(cursor.getDouble(cursor.getColumnIndexOrThrow("diferencia")));
+                corteCaja.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("estado")));
                 return corteCaja;
             }
         } catch (Exception e) {

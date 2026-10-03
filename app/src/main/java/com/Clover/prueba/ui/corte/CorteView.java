@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.domain.ventas.CorteCajaController;
+import com.Clover.prueba.domain.corteCaja.CorteCajaController;
 import com.Clover.prueba.data.models.CorteCaja;
 
 import java.util.ArrayList;
