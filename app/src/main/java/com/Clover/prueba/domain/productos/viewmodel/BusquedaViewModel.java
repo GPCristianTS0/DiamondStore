@@ -20,6 +20,11 @@ public class BusquedaViewModel extends ViewModel {
     private final GetProductBy productosByUseCase;
     private final GetProductos productosUseCase;
 
+    private List<Productos> listaBaseProductos = new ArrayList<>();
+    private boolean filtroRefaccion = false;
+    private boolean filtroVenta = false;
+    private boolean filtroNoVenta = false;
+    private boolean filtroDisponible = true;
 
     public BusquedaViewModel(GetSeccionesUseCase seccionesUseCase, GetProductBy productosByUseCase, GetProductos productosUseCase) {
         this.seccionesUseCase = seccionesUseCase;
@@ -27,21 +32,68 @@ public class BusquedaViewModel extends ViewModel {
         this.productosUseCase = productosUseCase;
     }
 
-    public ArrayList<String> getSecciones(){
+    public ArrayList<String> getSecciones() {
         return seccionesUseCase.execute();
     }
-    public void getProductos(){
-        try {
-            _productos.setValue(productosUseCase.execute());
-        } catch (Exception e) {
 
+    public void setFiltrosChips(boolean refaccion, boolean venta, boolean noVenta, boolean disponible) {
+        this.filtroRefaccion = refaccion;
+        this.filtroVenta = venta;
+        this.filtroNoVenta = noVenta;
+        this.filtroDisponible = disponible;
+        filtrarYEmitir();
+    }
+
+    public void getProductos() {
+        try {
+            listaBaseProductos = productosUseCase.execute();
+            if (listaBaseProductos == null) listaBaseProductos = new ArrayList<>();
+            filtrarYEmitir();
+        } catch (Exception e) {
+            _productos.setValue(new ArrayList<>());
         }
     }
-    public void buscarProductoPor(int seccion, String columnaObtencion, String busqueda){
-        try {
-            _productos.setValue(productosByUseCase.execute(seccion, columnaObtencion, busqueda));
-        } catch (Exception e) {
 
+    public void buscarProductoPor(int seccion, String columnaObtencion, String busqueda) {
+        try {
+            listaBaseProductos = productosByUseCase.execute(seccion, columnaObtencion, busqueda);
+            if (listaBaseProductos == null) listaBaseProductos = new ArrayList<>();
+            filtrarYEmitir();
+        } catch (Exception e) {
+            _productos.setValue(new ArrayList<>());
         }
+    }
+
+    private void filtrarYEmitir() {
+        if (listaBaseProductos == null) {
+            _productos.setValue(new ArrayList<>());
+            return;
+        }
+
+        List<Productos> filtrados = new ArrayList<>();
+        for (Productos p : listaBaseProductos) {
+            boolean cumpleTipo = true;
+            if (filtroRefaccion) {
+                cumpleTipo = p.isRefaccion();
+            } else if (filtroVenta) {
+                cumpleTipo = !p.isRefaccion();
+            }
+
+            boolean cumpleVisibilidad = true;
+            if (filtroNoVenta) {
+                cumpleVisibilidad = p.isVisible();
+            }
+
+            boolean cumpleDisponible = true;
+            if (filtroDisponible) {
+                cumpleDisponible = p.getStock() > 0;
+            }
+
+            if (cumpleTipo && cumpleVisibilidad && cumpleDisponible) {
+                filtrados.add(p);
+            }
+        }
+
+        _productos.setValue(filtrados);
     }
 }

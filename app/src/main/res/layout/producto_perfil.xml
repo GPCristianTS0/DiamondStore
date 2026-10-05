@@ -482,10 +482,78 @@
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/PP_LayCondicio"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="8dp"
+                    android:visibility="gone"
                     android:background="#EEEEEE" />
+
+                <LinearLayout
+                    android:id="@+id/PP_LayCondicion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Condición:"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/PP_txtCondicion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        tools:text="Nuevo" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:id="@+id/PP_LayCondicio1"
+                    android:layout_height="1dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="8dp"
+                    android:background="#EEEEEE" />
+
+                <LinearLayout
+                    android:id="@+id/PP_LayEstetico"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Estado Estético:"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/PP_txtGradoEstetico"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        tools:text="Excelente (Grado A)" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/PP_LayCondicio2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone"
+                    android:background="#EEEEEE" />
+
 
                 <TextView
                     android:layout_width="wrap_content"

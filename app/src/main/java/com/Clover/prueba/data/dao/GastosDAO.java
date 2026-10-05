@@ -14,9 +14,11 @@ import java.util.ArrayList;
 
 public class GastosDAO implements IGastos {
     private SQLiteDatabase db;
+
     public GastosDAO(Context context){
         db = CloverBD.getInstance(context).getWritableDatabase();
     }
+
     @Override
     public boolean addGasto(Gastos gasto) {
         try {
@@ -27,6 +29,9 @@ public class GastosDAO implements IGastos {
             values.put("metodo_pago", gasto.getMetodo_pago());
             values.put("id_corte", gasto.getId_corte());
             values.put("id_proveedor", gasto.getId_proveedor());
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+            values.put("eliminado", 0);
             long result = db.insert("gastos", null, values);
             return result != -1;
         } catch (Exception e) {
@@ -38,7 +43,11 @@ public class GastosDAO implements IGastos {
     @Override
     public boolean deleteGasto(int gasto) {
         try {
-            int result = db.delete("gastos", "id_gasto = ?", new String[]{String.valueOf(gasto)});
+            ContentValues values = new ContentValues();
+            values.put("eliminado", 1);
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+            int result = db.update("gastos", values, "id_gasto = ?", new String[]{String.valueOf(gasto)});
             return result > 0;
         } catch (Exception e) {
             Log.e("Clover_App", "Error al eliminar gasto: " + e.getMessage());
@@ -67,14 +76,15 @@ public class GastosDAO implements IGastos {
         }
         return gastos;
     }
+
     private Cursor rawQuery(String columna, String valor){
-        if (columna == null) columna ="";
-        if (valor == null) valor ="";
+        if (columna == null) columna = "";
+        if (valor == null) valor = "";
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT * FROM gastos");
-        ArrayList<String> args = new ArrayList<String>();
+        sql.append("SELECT * FROM gastos WHERE eliminado = 0");
+        ArrayList<String> args = new ArrayList<>();
         if (!columna.isEmpty()){
-            sql.append(" WHERE ");
+            sql.append(" AND ");
             sql.append(columna);
             sql.append(" = ?");
             args.add(valor);
@@ -82,9 +92,10 @@ public class GastosDAO implements IGastos {
         sql.append(" ORDER BY id_gasto DESC");
         return db.rawQuery(sql.toString(), args.toArray(new String[0]));
     }
+
     @Override
     public double getMontoTotalGastos(){
-        String sql = "SELECT SUM(monto) FROM gastos";
+        String sql = "SELECT IFNULL(SUM(monto), 0) FROM gastos WHERE eliminado = 0";
         try (Cursor cursor = db.rawQuery(sql, null)) {
             if (cursor.moveToFirst()) {
                 return cursor.getDouble(0);
@@ -94,10 +105,11 @@ public class GastosDAO implements IGastos {
         }
         return 0;
     }
+
     @Override
     public ArrayList<Gastos> getGastosByCorte(int id_corte) {
         ArrayList<Gastos> gastos = new ArrayList<>();
-        String sql = "SELECT * FROM gastos WHERE id_corte = ?";
+        String sql = "SELECT * FROM gastos WHERE id_corte = ? AND eliminado = 0";
         try (Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(id_corte)})){
             while (cursor.moveToNext()){
                 Gastos gasto = new Gastos();
@@ -119,12 +131,12 @@ public class GastosDAO implements IGastos {
 
     @Override
     public double sumarTotalGastosByCorte(int id_corte, String metodoPago) {
-        String sql = "SELECT SUM(monto) FROM gastos WHERE id_corte = ? AND metodo_pago = ?";
-        ArrayList<String> args = new ArrayList<String>();
+        String sql = "SELECT IFNULL(SUM(monto), 0) FROM gastos WHERE id_corte = ? AND metodo_pago = ? AND eliminado = 0";
+        ArrayList<String> args = new ArrayList<>();
         args.add(String.valueOf(id_corte));
         args.add(metodoPago);
         try (Cursor cursor = db.rawQuery(sql, args.toArray(new String[0]))){
-            if (cursor.moveToNext()){
+            if (cursor.moveToFirst()){
                 return cursor.getDouble(0);
             }
         } catch (Exception e) {

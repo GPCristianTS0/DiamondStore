@@ -21,6 +21,9 @@ public class Productos implements Serializable {
     //Refaccion
     private String calidad;
     private String modelosCompatible;
+    private String condicion;
+    private String estado;
+    private boolean visible;
 
     private int id_seccion;
 
@@ -39,6 +42,30 @@ public class Productos implements Serializable {
         this.vendidos = vendidos;
         this.stock = stock;
         this.ultimoPedido = ultimoPedido;
+    }
+
+    public String getCondicion() {
+        return condicion;
+    }
+
+    public void setCondicion(String condicion) {
+        this.condicion = condicion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public int getId_seccion() {
@@ -170,6 +197,9 @@ public class Productos implements Serializable {
         array.add("ultimo_Pedido");
         array.add("calidad");
         array.add("modelo_compatible");
+        array.add("condicion");
+        array.add("grado_estetico");
+        array.add("visible_en_busqueda");
         return array;
     }
 
@@ -224,6 +254,9 @@ public class Productos implements Serializable {
                 ", isRefaccion=" + isRefaccion +
                 ", calidad='" + calidad + '\'' +
                 ", modelosCompatible='" + modelosCompatible + '\'' +
+                ", condicion='" + condicion + '\'' +
+                ", estado='" + estado + '\'' +
+                ", visible=" + visible +
                 ", id_seccion=" + id_seccion +
                 '}';
     }

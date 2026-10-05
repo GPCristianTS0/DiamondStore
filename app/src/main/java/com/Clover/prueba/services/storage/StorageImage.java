@@ -30,30 +30,29 @@ public class StorageImage {
             InputStream inputStream = context.getContentResolver().openInputStream(uriImagen);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
-            int maxSize = 800;
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
+            if (bitmap == null) return null;
 
-            if (width > maxSize || height > maxSize) {
-                float ratio = (float) width / height;
-                if (ratio > 1) {
-                    width = maxSize;
-                    height = (int) (width / ratio);
-                } else {
-                    height = maxSize;
-                    width = (int) (height * ratio);
-                }
-                bitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
+            // Recortar en formato cuadrado (1:1)
+            int minSize = Math.min(bitmap.getWidth(), bitmap.getHeight());
+            int startX = (bitmap.getWidth() - minSize) / 2;
+            int startY = (bitmap.getHeight() - minSize) / 2;
+            Bitmap squareBitmap = Bitmap.createBitmap(bitmap, startX, startY, minSize, minSize);
+
+            int maxSize = 800;
+            if (minSize > maxSize) {
+                squareBitmap = Bitmap.createScaledBitmap(squareBitmap, maxSize, maxSize, true);
             }
 
             String nombreArchivo = "img_" + System.currentTimeMillis() + ".jpg";
             File archivo = new File(context.getExternalFilesDir(null), nombreArchivo);
 
-
             FileOutputStream outputStream = new FileOutputStream(archivo);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
+            squareBitmap.compress(Bitmap.CompressFormat.JPEG, 85, outputStream);
 
             outputStream.close();
+            if (squareBitmap != bitmap) {
+                squareBitmap.recycle();
+            }
             bitmap.recycle();
             inputStream.close();
 

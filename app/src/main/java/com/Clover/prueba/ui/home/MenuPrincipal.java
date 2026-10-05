@@ -3,6 +3,7 @@ package com.Clover.prueba.ui.home;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Clover.prueba.data.database.SyncCallback;
+import com.Clover.prueba.data.database.SyncManager;
+import com.Clover.prueba.services.Helpers.BannerError;
 import com.Clover.prueba.ui.credito.CreditoDarAbono;
 import com.Clover.prueba.ui.credito.CreditoPrincipalView;
 import com.Clover.prueba.ui.financiero.DashboardFinanciero;
@@ -43,6 +47,7 @@ public class MenuPrincipal extends AppCompatActivity {
     private IVentas iVentas;
     private IProducto iProductos;
     private TextView co ;
+    private SyncManager sync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class MenuPrincipal extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Callback FireBase
+        sync = new SyncManager(this);
         IProducto iProducto = new ProductoDAO(this);
         iVentas = new VentasDAO(this);
         iProductos = new ProductoDAO(this);
@@ -178,5 +185,6 @@ public class MenuPrincipal extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         rellenarDatos();
+        sync.sincronizarTodo(null);
     }
 }

@@ -41,8 +41,8 @@ public class ProductosView extends AppCompatActivity {
     private Chip chipTodo;
     private Chip chipRefaccion;
     private Chip chipVenta;
+    private Chip chipNoVenta;
     private Chip chipDisponible;
-    private List<Productos> listaProductosOriginal = new ArrayList<>();
     private boolean isUpdatingChips = false;
 
     @Override
@@ -65,8 +65,10 @@ public class ProductosView extends AppCompatActivity {
         viewModel = new BusquedaViewModel(seccionesUseCase, productosByUseCase, productosUseCase);
 
         viewModel.productos.observe(this, productos -> {
-            listaProductosOriginal = productos != null ? productos : new ArrayList<>();
-            aplicarFiltrosChips();
+            if (adapter != null) {
+                adapter.setProductos(productos != null ? productos : new ArrayList<>());
+                adapter.notifyDataSetChanged();
+            }
         });
 
         seccionG = 0;
@@ -82,6 +84,7 @@ public class ProductosView extends AppCompatActivity {
         chipTodo = findViewById(R.id.chipTodo);
         chipRefaccion = findViewById(R.id.chipRefaccion);
         chipVenta = findViewById(R.id.chipVenta);
+        chipNoVenta = findViewById(R.id.chipNoVenta);
         chipDisponible = findViewById(R.id.chipDisponible);
 
         if (chipTodo == null || chipRefaccion == null || chipVenta == null || chipDisponible == null) {
@@ -91,6 +94,7 @@ public class ProductosView extends AppCompatActivity {
         isUpdatingChips = true;
         chipTodo.setChecked(true);
         chipDisponible.setChecked(true);
+        chipNoVenta.setChecked(true);
         isUpdatingChips = false;
 
         chipTodo.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -101,7 +105,7 @@ public class ProductosView extends AppCompatActivity {
                 chipVenta.setChecked(false);
                 isUpdatingChips = false;
             }
-            aplicarFiltrosChips();
+            notificarFiltrosAViewModel();
         });
 
         chipRefaccion.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -112,7 +116,7 @@ public class ProductosView extends AppCompatActivity {
                 chipTodo.setChecked(false);
                 isUpdatingChips = false;
             }
-            aplicarFiltrosChips();
+            notificarFiltrosAViewModel();
         });
 
         chipVenta.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -123,44 +127,32 @@ public class ProductosView extends AppCompatActivity {
                 chipTodo.setChecked(false);
                 isUpdatingChips = false;
             }
-            aplicarFiltrosChips();
+            notificarFiltrosAViewModel();
         });
+
+        if (chipNoVenta != null) {
+            chipNoVenta.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isUpdatingChips) return;
+                notificarFiltrosAViewModel();
+            });
+        }
 
         chipDisponible.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isUpdatingChips) return;
-            aplicarFiltrosChips();
+            notificarFiltrosAViewModel();
         });
+
+        notificarFiltrosAViewModel();
     }
 
-    private void aplicarFiltrosChips() {
-        if (listaProductosOriginal == null) return;
-
-        boolean filtroRefaccion = chipRefaccion != null && chipRefaccion.isChecked();
-        boolean filtroVenta = chipVenta != null && chipVenta.isChecked();
-        boolean filtroDisponible = chipDisponible != null && chipDisponible.isChecked();
-
-        List<Productos> filtrados = new ArrayList<>();
-        for (Productos p : listaProductosOriginal) {
-            boolean cumpleTipo = true;
-            if (filtroRefaccion) {
-                cumpleTipo = p.isRefaccion();
-            } else if (filtroVenta) {
-                cumpleTipo = !p.isRefaccion();
-            }
-
-            boolean cumpleDisponible = true;
-            if (filtroDisponible) {
-                cumpleDisponible = p.getStock() > 0;
-            }
-
-            if (cumpleTipo && cumpleDisponible) {
-                filtrados.add(p);
-            }
-        }
-
-        if (adapter != null) {
-            adapter.setProductos(filtrados);
-            adapter.notifyDataSetChanged();
+    private void notificarFiltrosAViewModel() {
+        if (viewModel != null) {
+            viewModel.setFiltrosChips(
+                    chipRefaccion != null && chipRefaccion.isChecked(),
+                    chipVenta != null && chipVenta.isChecked(),
+                    chipNoVenta != null && chipNoVenta.isChecked(),
+                    chipDisponible != null && chipDisponible.isChecked()
+            );
         }
     }
 

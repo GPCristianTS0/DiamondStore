@@ -40,6 +40,9 @@ public class ConfiguracionDAO implements IConfiguracion {
         values.put("bank_name", configuracion.getBanco());
         values.put("bank_account", configuracion.getCuenta());
         values.put("bank_account_name", configuracion.getBeneficiario());
+        values.put("fecha_actualizacion", System.currentTimeMillis());
+        values.put("sincronizado", 0);
+        values.put("eliminado", 0);
         return db.update("configuracion", values, "id_config = ?", new String[]{"1"}) > 0;
     }
 
@@ -69,7 +72,6 @@ public class ConfiguracionDAO implements IConfiguracion {
                 configuracion.setBeneficiario(cursor.getString(cursor.getColumnIndexOrThrow("bank_account_name")));
                 return configuracion;
             }
-
         } catch (Exception e) {
             Log.e("ConfiguracionDAO", "Error al obtener la configuración: " + e.getMessage());
         }

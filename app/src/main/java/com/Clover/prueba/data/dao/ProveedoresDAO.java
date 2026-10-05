@@ -35,6 +35,9 @@ public class ProveedoresDAO implements IProveedores {
             values.put("observaciones", proveedor.getObservaciones());
             values.put("fecha_registro", proveedor.getFecha_registro());
             values.put("diasPago", proveedor.getDiasPago());
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+            values.put("eliminado", 0);
             long id = db.insert("proveedores", null, values);
             return id != -1;
         } catch (Exception e) {
@@ -57,7 +60,9 @@ public class ProveedoresDAO implements IProveedores {
             values.put("observaciones", proveedor.getObservaciones());
             values.put("fecha_registro", proveedor.getFecha_registro());
             values.put("diasPago", proveedor.getDiasPago());
-            int d = db.update("proveedores", values, "id_proveedor=?", new String[]{String.valueOf(proveedorOld.getId_proveedor())});
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+            int d = db.update("proveedores", values, "id_proveedor = ?", new String[]{String.valueOf(proveedorOld.getId_proveedor())});
             return d > 0;
         } catch (Exception e) {
             Log.e("Clover_App", "Error en actualizar proveedor: " + e.getMessage());
@@ -68,7 +73,11 @@ public class ProveedoresDAO implements IProveedores {
     @Override
     public boolean deleteProveedor(int id_proveedor) {
         try {
-            int d = db.delete("proveedores", "id_proveedor=?", new String[]{String.valueOf(id_proveedor)});
+            ContentValues values = new ContentValues();
+            values.put("eliminado", 1);
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+            int d = db.update("proveedores", values, "id_proveedor = ?", new String[]{String.valueOf(id_proveedor)});
             return d > 0;
         } catch (Exception e) {
             Log.e("Clover_App", "Error en eliminar proveedor: " + e.getMessage());
@@ -78,7 +87,7 @@ public class ProveedoresDAO implements IProveedores {
 
     @Override
     public Proveedor getProveedor(int id_proveedor) {
-        String sql = "SELECT * FROM proveedores WHERE id_proveedor=?";
+        String sql = "SELECT * FROM proveedores WHERE id_proveedor = ? AND eliminado = 0";
         try (Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(id_proveedor)})) {
             if (cursor.moveToFirst()) {
                 Proveedor proveedor = new Proveedor();
@@ -103,8 +112,8 @@ public class ProveedoresDAO implements IProveedores {
 
     @Override
     public int getIdProveedor(String nombre_proveedor) {
-        String sql = "SELECT id_proveedor FROM proveedores WHERE nombre_proveedor=?";
-        try (Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(nombre_proveedor)})) {
+        String sql = "SELECT id_proveedor FROM proveedores WHERE nombre_proveedor = ? AND eliminado = 0";
+        try (Cursor cursor = db.rawQuery(sql, new String[]{nombre_proveedor})) {
             if (cursor.moveToFirst()) {
                 return cursor.getInt(cursor.getColumnIndexOrThrow("id_proveedor"));
             }
@@ -137,7 +146,6 @@ public class ProveedoresDAO implements IProveedores {
         } catch (Exception e) {
             Log.e("Clover_App", "Error en obtener proveedor by column: " + e.getMessage());
         }
-
         return proveedores;
     }
 
@@ -149,10 +157,10 @@ public class ProveedoresDAO implements IProveedores {
         busqueda = busqueda.trim();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT * FROM proveedores");
+        sql.append("SELECT * FROM proveedores WHERE eliminado = 0");
         ArrayList<String> args = new ArrayList<>();
         if (!busqueda.isEmpty() && !columnBusqueda.isEmpty()) {
-            sql.append(" WHERE ");
+            sql.append(" AND ");
             sql.append(columnBusqueda).append(" LIKE ?");
             args.add("%" + busqueda + "%");
         }

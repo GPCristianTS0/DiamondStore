@@ -1,5 +1,6 @@
 package com.Clover.prueba.ui.productos;
 
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 import android.net.Uri;
@@ -61,10 +62,18 @@ public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdap
             holder.calidad.setVisibility(VISIBLE);
             holder.txtCompatible.setVisibility(VISIBLE);
             holder.txtModelo.setVisibility(VISIBLE);
-
+            holder.txtcondicion.setVisibility(VISIBLE);
+            if(productod.getCondicion()!=null)
+                holder.txtcondicion.setText(productod.getCondicion().toUpperCase());
             holder.calidad.setText(productod.getCalidad().toUpperCase());
             holder.txtModelo.setText(productod.getModelo());
             holder.txtCompatible.setText("Compat: "+productod.getModelosCompatible());
+        }else{
+            holder.calidad.setVisibility(INVISIBLE);
+            holder.txtCompatible.setVisibility(INVISIBLE);
+            holder.txtModelo.setVisibility(INVISIBLE);
+            holder.txtcondicion.setVisibility(INVISIBLE);
+
         }
         holder.c.setOnClickListener(v -> {
             if (listener != null) {
@@ -80,7 +89,7 @@ public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdap
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtPrecio, txtCodigo, txtNombre, txtMarca, txtSeccion, txtModelo,
-        txtCompatible, calidad;
+        txtCompatible, calidad, txtcondicion;
         CardView c;
         ImageView imagen;
         public ViewHolder(View itemView) {
@@ -95,6 +104,7 @@ public class ProductosViewAdapter extends RecyclerView.Adapter<ProductosViewAdap
             txtCompatible = itemView.findViewById(R.id.compatiblesItemProducto);
             txtModelo = itemView.findViewById(R.id.modeloItemProducto);
             calidad = itemView.findViewById(R.id.calidadItemProducto);
+            txtcondicion = itemView.findViewById(R.id.condicionItemProducto);
         }
     }
 }

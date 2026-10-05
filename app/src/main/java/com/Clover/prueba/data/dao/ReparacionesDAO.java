@@ -39,6 +39,9 @@ public class ReparacionesDAO implements IReparaciones {
             values.put("fecha_promesa", reparacion.getFecha_promesa());
             values.put("fecha_entrega", reparacion.getFecha_entrega());
             values.put("id_corte", reparacion.getId_corte());
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+            values.put("eliminado", 0);
 
             long result = db.insert("reparaciones", null, values);
             if (result != -1) {
@@ -70,6 +73,8 @@ public class ReparacionesDAO implements IReparaciones {
             values.put("fecha_promesa", reparacion.getFecha_promesa());
             values.put("fecha_entrega", reparacion.getFecha_entrega());
             values.put("id_corte", reparacion.getId_corte());
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
 
             int result = db.update("reparaciones", values, "id_reparacion = ?", new String[]{String.valueOf(reparacion.getId_reparacion())});
             return result > 0;
@@ -90,6 +95,9 @@ public class ReparacionesDAO implements IReparaciones {
             if (idCorte > 0) {
                 values.put("id_corte", idCorte);
             }
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+
             int result = db.update("reparaciones", values, "id_reparacion = ?", new String[]{String.valueOf(idReparacion)});
             return result > 0;
         } catch (Exception e) {
@@ -101,7 +109,12 @@ public class ReparacionesDAO implements IReparaciones {
     @Override
     public boolean deleteReparacion(int idReparacion) {
         try {
-            int result = db.delete("reparaciones", "id_reparacion = ?", new String[]{String.valueOf(idReparacion)});
+            ContentValues values = new ContentValues();
+            values.put("eliminado", 1);
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+
+            int result = db.update("reparaciones", values, "id_reparacion = ?", new String[]{String.valueOf(idReparacion)});
             return result > 0;
         } catch (Exception e) {
             Log.e("Clover_App", "Error al eliminar reparacion: " + e.getMessage());
@@ -111,7 +124,7 @@ public class ReparacionesDAO implements IReparaciones {
 
     @Override
     public Reparaciones getReparacionById(int idReparacion) {
-        String sql = "SELECT * FROM reparaciones WHERE id_reparacion = ?";
+        String sql = "SELECT * FROM reparaciones WHERE id_reparacion = ? AND eliminado = 0";
         try (Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(idReparacion)})) {
             if (cursor.moveToFirst()) {
                 return mapCursorToReparacion(cursor);
@@ -125,7 +138,7 @@ public class ReparacionesDAO implements IReparaciones {
     @Override
     public ArrayList<Reparaciones> getReparacionesByEstado(String estado) {
         ArrayList<Reparaciones> lista = new ArrayList<>();
-        String sql = "SELECT * FROM reparaciones WHERE estado = ? ORDER BY id_reparacion DESC";
+        String sql = "SELECT * FROM reparaciones WHERE estado = ? AND eliminado = 0 ORDER BY id_reparacion DESC";
         try (Cursor cursor = db.rawQuery(sql, new String[]{estado})) {
             while (cursor.moveToNext()) {
                 lista.add(mapCursorToReparacion(cursor));
@@ -139,7 +152,7 @@ public class ReparacionesDAO implements IReparaciones {
     @Override
     public ArrayList<Reparaciones> getReparacionesByTipoServicio(String tipoServicio) {
         ArrayList<Reparaciones> lista = new ArrayList<>();
-        String sql = "SELECT * FROM reparaciones WHERE tipo_servicio = ? ORDER BY id_reparacion DESC";
+        String sql = "SELECT * FROM reparaciones WHERE tipo_servicio = ? AND eliminado = 0 ORDER BY id_reparacion DESC";
         try (Cursor cursor = db.rawQuery(sql, new String[]{tipoServicio})) {
             while (cursor.moveToNext()) {
                 lista.add(mapCursorToReparacion(cursor));
@@ -153,7 +166,7 @@ public class ReparacionesDAO implements IReparaciones {
     @Override
     public ArrayList<Reparaciones> getReparacionesByCorte(int idCorte) {
         ArrayList<Reparaciones> lista = new ArrayList<>();
-        String sql = "SELECT * FROM reparaciones WHERE id_corte = ? ORDER BY id_reparacion DESC";
+        String sql = "SELECT * FROM reparaciones WHERE id_corte = ? AND eliminado = 0 ORDER BY id_reparacion DESC";
         try (Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(idCorte)})) {
             while (cursor.moveToNext()) {
                 lista.add(mapCursorToReparacion(cursor));
@@ -167,7 +180,7 @@ public class ReparacionesDAO implements IReparaciones {
     @Override
     public ArrayList<Reparaciones> getAllReparaciones() {
         ArrayList<Reparaciones> lista = new ArrayList<>();
-        String sql = "SELECT * FROM reparaciones ORDER BY id_reparacion DESC";
+        String sql = "SELECT * FROM reparaciones WHERE eliminado = 0 ORDER BY id_reparacion DESC";
         try (Cursor cursor = db.rawQuery(sql, null)) {
             while (cursor.moveToNext()) {
                 lista.add(mapCursorToReparacion(cursor));
@@ -183,10 +196,10 @@ public class ReparacionesDAO implements IReparaciones {
         String sql;
         String[] args;
         if (tipoPago == null || tipoPago.isEmpty()) {
-            sql = "SELECT IFNULL(SUM(monto_total), 0) FROM reparaciones WHERE id_corte = ? AND estado = 'ENTREGADO'";
+            sql = "SELECT IFNULL(SUM(monto_total), 0) FROM reparaciones WHERE id_corte = ? AND estado = 'ENTREGADO' AND eliminado = 0";
             args = new String[]{String.valueOf(idCorte)};
         } else {
-            sql = "SELECT IFNULL(SUM(monto_total), 0) FROM reparaciones WHERE id_corte = ? AND tipo_pago = ? AND estado = 'ENTREGADO'";
+            sql = "SELECT IFNULL(SUM(monto_total), 0) FROM reparaciones WHERE id_corte = ? AND tipo_pago = ? AND estado = 'ENTREGADO' AND eliminado = 0";
             args = new String[]{String.valueOf(idCorte), tipoPago};
         }
         try (Cursor cursor = db.rawQuery(sql, args)) {
@@ -201,7 +214,7 @@ public class ReparacionesDAO implements IReparaciones {
 
     @Override
     public double getIngresosTotalesReparaciones(String fechaInicio, String fechaFin) {
-        String sql = "SELECT IFNULL(SUM(monto_total), 0) FROM reparaciones WHERE estado = 'ENTREGADO' AND fecha_entrega BETWEEN ? AND ?";
+        String sql = "SELECT IFNULL(SUM(monto_total), 0) FROM reparaciones WHERE estado = 'ENTREGADO' AND eliminado = 0 AND fecha_entrega BETWEEN ? AND ?";
         try (Cursor cursor = db.rawQuery(sql, new String[]{fechaInicio, fechaFin})) {
             if (cursor.moveToFirst()) {
                 return cursor.getDouble(0);
