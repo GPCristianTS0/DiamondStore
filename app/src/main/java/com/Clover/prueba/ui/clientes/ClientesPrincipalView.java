@@ -88,7 +88,7 @@ public class ClientesPrincipalView extends AppCompatActivity {
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.CP_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        ShareManager shareManager = new ShareManager();
+        ShareManager shareManager = new ShareManager(ClientesPrincipalView.this);
         adapter = new ClientesPrincipalAdapter(new ArrayList<Clientes> (), new ClientesPrincipalAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Clientes cliente, int position) {

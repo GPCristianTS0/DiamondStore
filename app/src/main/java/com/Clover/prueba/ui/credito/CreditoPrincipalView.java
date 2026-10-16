@@ -50,7 +50,7 @@ public class CreditoPrincipalView extends AppCompatActivity {
         txtTotal.setText(importes.concat(controllerCredito.getSaldoTotal()+""));
         TextView txtClientes = findViewById(R.id.CPC_txtClientesCount);
         txtClientes.setText(clientes.size()+" Clientes con Deuda");
-        ShareManager shareManager = new ShareManager();
+        ShareManager shareManager = new ShareManager(CreditoPrincipalView.this);
         CreditoAdapterMain adapter = new CreditoAdapterMain(clientes, new CreditoAdapterMain.ListenerCreditoMain() {
             @Override
             public void onLlamar(Clientes cliente) {

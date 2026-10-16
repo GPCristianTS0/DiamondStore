@@ -12,7 +12,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class ShareManager {
-    public ShareManager() {
+    private Context context;
+    public ShareManager(Context context) {
+        this.context = context;
     }
 
     public void abrirLlamada(Context context, String numero) {
@@ -53,14 +55,14 @@ public class ShareManager {
         }
         return false;
     }
-    public void compartirImagen(Context context, String mensaje, Uri contentUri) {
+    public Intent compartirImagen(String mensaje, Uri contentUri) {
         Intent intent = new Intent(Intent.ACTION_SEND);
 
         intent.setDataAndType(contentUri, context.getContentResolver().getType(contentUri));
         intent.putExtra(Intent.EXTRA_STREAM, contentUri);
         intent.setType("image/png");
         intent.putExtra(Intent.EXTRA_TEXT, mensaje);
-        context.startActivity(Intent.createChooser(intent, "Compartir Imagen Via...."));
+        return intent;
     }
     public void compartirImagenWhatsapp(Context context, Configuracion configuracion, Uri contentUri) {
         Intent intent = new Intent(Intent.ACTION_SEND);

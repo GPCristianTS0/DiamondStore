@@ -31,8 +31,8 @@ public class CompartirCardUseCase {
         Bitmap bitmapa = imageGenerator.getImageBitmap(viewCard, 0);
         Uri rutaImagen = storageImage.guardarImagenTemporal(bitmapa);
         //Compartir imagen
-        ShareManager shareManager = new ShareManager();
-        shareManager.compartirImagen(context, "Gracias por ser parte de nosotros", rutaImagen);
+        ShareManager shareManager = new ShareManager(context);
+        shareManager.compartirImagen("Gracias por ser parte de nosotros", rutaImagen);
         return false;
     }
 }

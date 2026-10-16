@@ -3,7 +3,6 @@ package com.Clover.prueba.ui.home;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,9 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.Clover.prueba.data.database.SyncCallback;
 import com.Clover.prueba.data.database.SyncManager;
-import com.Clover.prueba.services.Helpers.BannerError;
 import com.Clover.prueba.ui.credito.CreditoDarAbono;
 import com.Clover.prueba.ui.credito.CreditoPrincipalView;
 import com.Clover.prueba.ui.financiero.DashboardFinanciero;
@@ -36,7 +33,8 @@ import com.Clover.prueba.ui.historialventas.HistorialVentasView;
 import com.Clover.prueba.ui.productos.ProductosView;
 import com.Clover.prueba.ui.productos.ProductosActualizarStock;
 import com.Clover.prueba.ui.proveedores.ProveedorView;
-import com.Clover.prueba.ui.reparaciones.ReparacionRapidaDialog;
+import com.Clover.prueba.ui.reparaciones.view.ReparacionRapidaDialog;
+import com.Clover.prueba.ui.reparaciones.view.reparcionesView;
 import com.Clover.prueba.ui.ventas.VentaView;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
@@ -117,6 +115,11 @@ public class MenuPrincipal extends AppCompatActivity {
     public void onClickAgregarGasto(View v){
         GastoFormulario dialog = new GastoFormulario();
         dialog.show(getSupportFragmentManager(), "dialog");
+    }
+    //Accion ver reparaciones
+    public void onClickVerReparaciones(View v){
+        Intent intent = new Intent(MenuPrincipal.this, reparcionesView.class);
+        startActivity(intent);
     }
     //Accion boton Registrar Reparacion Rapida
     public void onClickReparacionRapida(View v){

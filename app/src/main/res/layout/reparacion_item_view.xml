@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardReparacionItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="6dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="14dp">
+
+        <!-- ID Folio / Ticket -->
+        <TextView
+            android:id="@+id/tvFolioReparacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#1565C0"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="#REP-001" />
+
+        <!-- Fecha de Ingreso -->
+        <TextView
+            android:id="@+id/tvFechaIngreso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="#757575"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvFolioReparacion"
+            app:layout_constraintStart_toEndOf="@id/tvFolioReparacion"
+            app:layout_constraintTop_toTopOf="@id/tvFolioReparacion"
+            tools:text="• 05/10/2026" />
+
+        <!-- Status Badge -->
+        <TextView
+            android:id="@+id/tvEstadoBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#E3F2FD"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:textColor="#1976D2"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="RECIBIDO" />
+
+        <!-- Divider -->
+        <View
+            android:id="@+id/dividerHeader"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#F0F0F0"
+            app:layout_constraintTop_toBottomOf="@id/tvFolioReparacion" />
+
+        <!-- Equipo y Color -->
+        <TextView
+            android:id="@+id/tvEquipoModelo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerHeader"
+            tools:text="iPhone 13 Pro Max - Azul Sierra" />
+
+        <!-- Cliente -->
+        <TextView
+            android:id="@+id/tvClienteNombre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#616161"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEquipoModelo"
+            tools:text="Cliente: Juan Carlos Pérez" />
+
+        <!-- Falla Reportada -->
+        <TextView
+            android:id="@+id/tvFallaReportada"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#757575"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvClienteNombre"
+            tools:text="Falla: No enciende y pantalla estrellada" />
+
+        <!-- Diagnóstico (si existe) -->
+        <TextView
+            android:id="@+id/tvDiagnostico"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="sans-serif-italic"
+            android:textColor="#9E9E9E"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFallaReportada"
+            tools:text="Diag: Cambio de pantalla OLED y centro de carga" />
+
+        <!-- Divider Footer -->
+        <View
+            android:id="@+id/dividerFooter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#F0F0F0"
+            app:layout_constraintTop_toBottomOf="@id/tvDiagnostico" />
+
+        <!-- Informacion Financiera -->
+        <LinearLayout
+            android:id="@+id/layoutCostosRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintTop_toBottomOf="@id/dividerFooter">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total"
+                    android:textColor="#9E9E9E"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvMontoTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#212121"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="$1,500.00" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Anticipo"
+                    android:textColor="#9E9E9E"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvAnticipo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#388E3C"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="$500.00" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pendiente"
+                    android:textColor="#9E9E9E"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvMontoPendiente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#D32F2F"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="$1,000.00" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

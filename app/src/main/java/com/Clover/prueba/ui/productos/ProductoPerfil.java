@@ -98,7 +98,11 @@ public class ProductoPerfil extends AppCompatActivity {
                     "Eliminar Producto", "Esta acción no se puede deshacer. ¿Estás seguro de que deseas eliminar este producto?",
                     "Eliminar", true, () -> {
                         viewModel.eliminarProducto();
-                    });
+                    },
+                    ()-> {
+
+                    }
+                    );
         });
         binding.PPBtnGenerarEtiqueta.setOnClickListener(v -> {
             Configuracion conf = new ConfiguracionDAO(this).getConfiguracion();

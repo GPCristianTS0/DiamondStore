@@ -20,10 +20,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class StorageImage {
-    Context context;
+    private final Context context;
+
     public StorageImage(Context context) {
         this.context = context;
     }
+
     @Nullable
     public String guardarImagenInterno(Uri uriImagen) {
         try {
@@ -32,24 +34,32 @@ public class StorageImage {
 
             if (bitmap == null) return null;
 
-            // Recortar en formato cuadrado (1:1)
             int minSize = Math.min(bitmap.getWidth(), bitmap.getHeight());
             int startX = (bitmap.getWidth() - minSize) / 2;
             int startY = (bitmap.getHeight() - minSize) / 2;
             Bitmap squareBitmap = Bitmap.createBitmap(bitmap, startX, startY, minSize, minSize);
 
             int maxSize = 800;
+            Bitmap finalBitmap = squareBitmap;
             if (minSize > maxSize) {
-                squareBitmap = Bitmap.createScaledBitmap(squareBitmap, maxSize, maxSize, true);
+                finalBitmap = Bitmap.createScaledBitmap(squareBitmap, maxSize, maxSize, true);
+            }
+
+            File directorio = new File(context.getFilesDir(), "fotos_clover");
+            if (!directorio.exists()) {
+                directorio.mkdirs();
             }
 
             String nombreArchivo = "img_" + System.currentTimeMillis() + ".jpg";
-            File archivo = new File(context.getExternalFilesDir(null), nombreArchivo);
+            File archivo = new File(directorio, nombreArchivo);
 
             FileOutputStream outputStream = new FileOutputStream(archivo);
-            squareBitmap.compress(Bitmap.CompressFormat.JPEG, 85, outputStream);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 85, outputStream);
 
             outputStream.close();
+            if (finalBitmap != squareBitmap) {
+                finalBitmap.recycle();
+            }
             if (squareBitmap != bitmap) {
                 squareBitmap.recycle();
             }
@@ -59,64 +69,70 @@ public class StorageImage {
             return archivo.getAbsolutePath();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Clover_App", "Error al guardar imagen interna: " + e.getMessage());
             return null;
         }
     }
+
     public Uri guardarImagenTemporal(Bitmap bitmap) {
         try {
-            //Busca la carpeta y si no existe la crea
             File cache = new File(context.getCacheDir(), "tickets");
             if (!cache.exists()) cache.mkdirs();
 
-            //Se borrar tickets Antiguos
             File[] files = cache.listFiles();
-            if (files != null)
+            if (files != null) {
                 for (File file : files) file.delete();
+            }
 
-            //Se crea una archivo temporal para guardar el ticket
             File newFile = new File(cache, "ticket.png");
             FileOutputStream stream = new FileOutputStream(newFile);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             stream.close();
 
-            //Se genera la Uri
             Uri contentUri = FileProvider.getUriForFile(context, "com.Clover.prueba.fileprovider", newFile);
 
             if (contentUri == null) {
-                Log.e("Clover_App", "Error al generar la URI");
+                Log.e("Clover_App", "Error al generar la URI del ticket");
                 return null;
             }
             return contentUri;
+
         } catch (Exception e) {
-            Log.e("Clover_App", "Error al compartir ticket"+e.getMessage());
+            Log.e("Clover_App", "Error al compartir ticket: " + e.getMessage());
             return null;
         }
     }
+
     public Uri guardarImagenExterno(Bitmap bitmap) {
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.DISPLAY_NAME, "etiqueta_"+System.currentTimeMillis()+".jpg");
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, "etiqueta_" + System.currentTimeMillis() + ".jpg");
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES+"/DiamondStore");
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/DiamondStore");
         values.put(MediaStore.Images.Media.IS_PENDING, 1);
 
         ContentResolver contentResolver = context.getContentResolver();
         Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
+        if (uri == null) return null;
+
         try {
             OutputStream outputStream = contentResolver.openOutputStream(uri);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
-            outputStream.close();
+            if (outputStream != null) {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+                outputStream.close();
+            }
 
             values.clear();
             values.put(MediaStore.Images.Media.IS_PENDING, 0);
             contentResolver.update(uri, values, null, null);
             return uri;
+
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Clover_App", "Error al guardar imagen externa: " + e.getMessage());
             return null;
         }
     }
+
     public boolean eliminarImagen(String rutaImagen) {
         if (rutaImagen == null || rutaImagen.isEmpty()) {
             return false;
@@ -127,20 +143,18 @@ public class StorageImage {
 
             if (archivo.exists()) {
                 boolean eliminado = archivo.delete();
-
                 if (eliminado) {
                     Log.d("Clover_App", "Imagen eliminada correctamente: " + rutaImagen);
                 } else {
                     Log.e("Clover_App", "No se pudo eliminar el archivo: " + rutaImagen);
                 }
-
                 return eliminado;
             } else {
                 return true;
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("Clover_App", "Error al eliminar imagen: " + e.getMessage());
             return false;
         }
     }

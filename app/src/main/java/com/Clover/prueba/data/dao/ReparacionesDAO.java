@@ -48,6 +48,7 @@ public class ReparacionesDAO implements IReparaciones {
                 reparacion.setId_reparacion((int) result);
                 return true;
             }
+            return true;
         } catch (Exception e) {
             Log.e("Clover_App", "Error al agregar reparacion: " + e.getMessage(), e);
         }
@@ -234,10 +235,10 @@ public class ReparacionesDAO implements IReparaciones {
         r.setColor(cursor.getString(cursor.getColumnIndexOrThrow("color")));
         r.setFalla_reportada(cursor.getString(cursor.getColumnIndexOrThrow("falla_reportada")));
         r.setDiagnostico(cursor.getString(cursor.getColumnIndexOrThrow("diagnostico")));
-        r.setCosto_refacciones(cursor.getDouble(cursor.getColumnIndexOrThrow("costo_refacciones")));
-        r.setMonto_total(cursor.getDouble(cursor.getColumnIndexOrThrow("monto_total")));
-        r.setAnticipo(cursor.getDouble(cursor.getColumnIndexOrThrow("anticipo")));
-        r.setMonto_pendiente(cursor.getDouble(cursor.getColumnIndexOrThrow("monto_pendiente")));
+        r.setCosto_refacciones(cursor.getInt(cursor.getColumnIndexOrThrow("costo_refacciones")));
+        r.setMonto_total(cursor.getInt(cursor.getColumnIndexOrThrow("monto_total")));
+        r.setAnticipo(cursor.getInt(cursor.getColumnIndexOrThrow("anticipo")));
+        r.setMonto_pendiente(cursor.getInt(cursor.getColumnIndexOrThrow("monto_pendiente")));
         r.setTipo_pago(cursor.getString(cursor.getColumnIndexOrThrow("tipo_pago")));
         r.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("estado")));
         r.setFecha_ingreso(cursor.getString(cursor.getColumnIndexOrThrow("fecha_ingreso")));

@@ -11,10 +11,10 @@ public class Reparaciones implements Serializable {
     private String color;
     private String falla_reportada;
     private String diagnostico;
-    private double costo_refacciones;
-    private double monto_total;
-    private double anticipo;
-    private double monto_pendiente;
+    private int costo_refacciones;
+    private int monto_total;
+    private int anticipo;
+    private int monto_pendiente;
     private String tipo_pago;
     private String estado;
     private String fecha_ingreso;
@@ -25,7 +25,7 @@ public class Reparaciones implements Serializable {
     public Reparaciones() {
     }
 
-    public Reparaciones(int id_reparacion, String tipo_servicio, String id_cliente, String equipo, String color, String falla_reportada, String diagnostico, double costo_refacciones, double monto_total, double anticipo, double monto_pendiente, String tipo_pago, String estado, String fecha_ingreso, String fecha_promesa, String fecha_entrega, int id_corte) {
+    public Reparaciones(int id_reparacion, String tipo_servicio, String id_cliente, String equipo, String color, String falla_reportada, String diagnostico, int costo_refacciones, int monto_total, int anticipo, int monto_pendiente, String tipo_pago, String estado, String fecha_ingreso, String fecha_promesa, String fecha_entrega, int id_corte) {
         this.id_reparacion = id_reparacion;
         this.tipo_servicio = tipo_servicio;
         this.id_cliente = id_cliente;
@@ -101,35 +101,35 @@ public class Reparaciones implements Serializable {
         this.diagnostico = diagnostico;
     }
 
-    public double getCosto_refacciones() {
+    public int getCosto_refacciones() {
         return costo_refacciones;
     }
 
-    public void setCosto_refacciones(double costo_refacciones) {
+    public void setCosto_refacciones(int costo_refacciones) {
         this.costo_refacciones = costo_refacciones;
     }
 
-    public double getMonto_total() {
+    public int getMonto_total() {
         return monto_total;
     }
 
-    public void setMonto_total(double monto_total) {
+    public void setMonto_total(int monto_total) {
         this.monto_total = monto_total;
     }
 
-    public double getAnticipo() {
+    public int getAnticipo() {
         return anticipo;
     }
 
-    public void setAnticipo(double anticipo) {
+    public void setAnticipo(int anticipo) {
         this.anticipo = anticipo;
     }
 
-    public double getMonto_pendiente() {
+    public int getMonto_pendiente() {
         return monto_pendiente;
     }
 
-    public void setMonto_pendiente(double monto_pendiente) {
+    public void setMonto_pendiente(int monto_pendiente) {
         this.monto_pendiente = monto_pendiente;
     }
 

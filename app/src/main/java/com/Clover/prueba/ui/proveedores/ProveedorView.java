@@ -60,7 +60,7 @@ public class ProveedorView extends AppCompatActivity {
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.PrV_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ShareManager shareManager = new ShareManager();
+        ShareManager shareManager = new ShareManager(ProveedorView.this);
         adapter = new ProveedorViewAdapter(proveedores, new ProveedorViewAdapter.OnClickListener(){
             @Override
             public void onClickLlamar(String numero, int position) {
