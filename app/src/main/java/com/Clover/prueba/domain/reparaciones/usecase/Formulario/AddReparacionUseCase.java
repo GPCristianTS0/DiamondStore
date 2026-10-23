@@ -1,4 +1,4 @@
-package com.Clover.prueba.domain.reparaciones.usecase;
+package com.Clover.prueba.domain.reparaciones.usecase.Formulario;
 
 import com.Clover.prueba.data.dao.interfaces.ICorteCaja;
 import com.Clover.prueba.data.dao.interfaces.IReparaciones;

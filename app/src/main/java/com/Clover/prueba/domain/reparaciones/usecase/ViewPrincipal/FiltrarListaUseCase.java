@@ -1,4 +1,4 @@
-package com.Clover.prueba.domain.reparaciones.usecase;
+package com.Clover.prueba.domain.reparaciones.usecase.ViewPrincipal;
 
 import com.Clover.prueba.data.models.Reparaciones;
 

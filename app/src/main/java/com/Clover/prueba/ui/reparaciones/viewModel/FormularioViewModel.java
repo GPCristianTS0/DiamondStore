@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Reparaciones;
-import com.Clover.prueba.domain.reparaciones.usecase.AddClientReparaciones;
-import com.Clover.prueba.domain.reparaciones.usecase.AddReparacionUseCase;
-import com.Clover.prueba.domain.reparaciones.usecase.GetAllClient;
+import com.Clover.prueba.domain.reparaciones.usecase.Formulario.AddClientReparaciones;
+import com.Clover.prueba.domain.reparaciones.usecase.Formulario.AddReparacionUseCase;
+import com.Clover.prueba.domain.reparaciones.usecase.Formulario.GetAllClient;
 import com.Clover.prueba.services.generators.TicketUtils;
 import com.Clover.prueba.services.sharing.ShareManager;
 

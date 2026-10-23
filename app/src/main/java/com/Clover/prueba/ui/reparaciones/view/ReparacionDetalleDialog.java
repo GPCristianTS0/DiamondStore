@@ -5,32 +5,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.Clover.prueba.R;
-import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Reparaciones;
+import com.Clover.prueba.databinding.ReparacionDetalleViewBinding;
+import com.Clover.prueba.domain.reparaciones.constantes.EstadoReparcion;
+import com.Clover.prueba.services.Helpers.ConfirmDialog;
+import com.Clover.prueba.ui.reparaciones.DTO.DetalleReparacionStateUI;
+import com.Clover.prueba.ui.reparaciones.viewModel.DetallesReparacionVM;
 import com.Clover.prueba.ui.reparaciones.viewModel.ReparacionesFactory;
-import com.Clover.prueba.ui.reparaciones.viewModel.ReparacionesViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Locale;
 
 public class ReparacionDetalleDialog extends BottomSheetDialogFragment {
 
-    private ReparacionesViewModel viewModel;
-
-    private TextView tvFolio, tvEstadoBadge, tvClienteNombre, tvEquipo, tvFalla, tvDiagnostico;
-    private TextView tvFechaIngreso, tvFechaEntrega, tvMontoTotal, tvAnticipo, tvMontoPendiente;
-    private Button btnCambiarEstado, btnCompartirTicket, btnEliminar;
-
+    private DetallesReparacionVM viewModel;
+    private ReparacionDetalleViewBinding binding;
     public static ReparacionDetalleDialog newInstance(Reparaciones reparacion) {
         ReparacionDetalleDialog fragment = new ReparacionDetalleDialog();
         Bundle args = new Bundle();
@@ -42,41 +38,35 @@ public class ReparacionDetalleDialog extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.reparacion_detalle_view, container, false);
-        initViews(view);
-        return view;
-    }
-
-    private void initViews(View v) {
-        tvFolio = v.findViewById(R.id.tvDetalleFolio);
-        tvEstadoBadge = v.findViewById(R.id.tvDetalleEstadoBadge);
-        tvClienteNombre = v.findViewById(R.id.tvDetalleClienteNombre);
-        tvEquipo = v.findViewById(R.id.tvDetalleEquipo);
-        tvFalla = v.findViewById(R.id.tvDetalleFalla);
-        tvDiagnostico = v.findViewById(R.id.tvDetalleDiagnostico);
-        tvFechaIngreso = v.findViewById(R.id.tvDetalleFechaIngreso);
-        tvFechaEntrega = v.findViewById(R.id.tvDetalleFechaEntrega);
-        tvMontoTotal = v.findViewById(R.id.tvDetalleMontoTotal);
-        tvAnticipo = v.findViewById(R.id.tvDetalleAnticipo);
-        tvMontoPendiente = v.findViewById(R.id.tvDetalleMontoPendiente);
-
-        btnCambiarEstado = v.findViewById(R.id.btnDetalleCambiarEstado);
-        btnCompartirTicket = v.findViewById(R.id.btnDetalleCompartirTicket);
-        btnEliminar = v.findViewById(R.id.btnDetalleEliminar);
+        binding = ReparacionDetalleViewBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ReparacionesFactory reparacionesFactory = new ReparacionesFactory(requireContext());
-        viewModel = new ViewModelProvider(this, reparacionesFactory).get(ReparacionesViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity(), reparacionesFactory).get(DetallesReparacionVM.class);
 
-        setupObservers();
+        viewModel.detallesReparacion.observe(getViewLifecycleOwner(), this::mostrarDatosReparacion);
+        viewModel.eliminado.observe(getViewLifecycleOwner(), eliminado -> {
+            if (Boolean.TRUE.equals(eliminado)) {
+                notificarCambioYSalir();
+                viewModel.resetEvent();
+            }
+        });
+        viewModel.exito.observe(getViewLifecycleOwner(), exito ->{
+            if (exito) {
+                notificarCambioYSalir();
+                viewModel.resetEvent();
+            }
+        });
         setupClickListeners();
 
         if (getArguments() != null && getArguments().containsKey("reparacion")) {
             Reparaciones rep = (Reparaciones) getArguments().getSerializable("reparacion");
-            viewModel.setReparacion(rep);
+            assert rep != null;
+            viewModel.setReparacion(rep.getId_reparacion());
         }
     }
 
@@ -94,116 +84,96 @@ public class ReparacionDetalleDialog extends BottomSheetDialogFragment {
         }
     }
 
-    private void setupObservers() {
-        viewModel.reparacion.observe(getViewLifecycleOwner(), this::mostrarDatosReparacion);
 
-        viewModel.cliente.observe(getViewLifecycleOwner(), this::mostrarDatosCliente);
-
-        viewModel.mensaje.observe(getViewLifecycleOwner(), mensaje -> {
-            if (mensaje != null && !mensaje.isEmpty()) {
-                Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        viewModel.eliminado.observe(getViewLifecycleOwner(), eliminado -> {
-            if (Boolean.TRUE.equals(eliminado)) {
-                notificarCambioYSalir();
-            }
-        });
-    }
-
-    private void mostrarDatosReparacion(Reparaciones rep) {
+    private void mostrarDatosReparacion(DetalleReparacionStateUI rep) {
         if (rep == null) return;
-
-        tvFolio.setText(String.format(Locale.getDefault(), "Folio #REP-%03d", rep.getId_reparacion()));
-
+        int folio = Integer.parseInt(rep.getFolio());
+        binding.tvDetalleFolio.setText(String.format(Locale.getDefault(), "Folio #REP-%03d", folio));
         String estado = rep.getEstado() != null ? rep.getEstado().toUpperCase() : "RECIBIDO";
-        tvEstadoBadge.setText(estado);
-        aplicarColorEstado(tvEstadoBadge, estado);
+        binding.tvDetalleEstadoBadge.setText(estado);
+        aplicarColorEstado(binding.tvDetalleEstadoBadge, estado);
 
         String equipoYColor = rep.getEquipo() != null ? rep.getEquipo() : "Equipo Sin Especificar";
         if (rep.getColor() != null && !rep.getColor().trim().isEmpty()) {
             equipoYColor += " - " + rep.getColor();
         }
-        tvEquipo.setText(equipoYColor);
+        binding.tvDetalleEquipo.setText(equipoYColor);
 
-        String fallaText = rep.getFalla_reportada() != null && !rep.getFalla_reportada().isEmpty()
-                ? "Falla reportada: " + rep.getFalla_reportada()
+        String fallaText = rep.getFallaReportada() != null && !rep.getFallaReportada().isEmpty()
+                ? "Falla reportada: " + rep.getFallaReportada()
                 : "Falla reportada: Sin detalle";
-        tvFalla.setText(fallaText);
+        binding.tvDetalleFalla.setText(fallaText);
+
+        String text = "Diagnóstico: ";
 
         if (rep.getDiagnostico() != null && !rep.getDiagnostico().trim().isEmpty()) {
-            tvDiagnostico.setText("Diagnóstico: " + rep.getDiagnostico());
-            tvDiagnostico.setVisibility(View.VISIBLE);
+            binding.tvDetalleDiagnostico.setText(text.concat(rep.getDiagnostico()));
+            binding.tvDetalleDiagnostico.setVisibility(View.VISIBLE);
         } else {
-            tvDiagnostico.setVisibility(View.GONE);
+            binding.tvDetalleDiagnostico.setVisibility(View.GONE);
         }
+        text = "Ingreso: ";
+        String fechaIng = rep.getFechaIngreso() != null ? rep.getFechaIngreso() : "No especificada";
+        binding.tvDetalleFechaIngreso.setText(text.concat(fechaIng));
 
-        String fechaIng = rep.getFecha_ingreso() != null ? rep.getFecha_ingreso() : "No especificada";
-        tvFechaIngreso.setText("Ingreso: " + fechaIng);
-
-        String fechaEnt = rep.getFecha_entrega() != null && !rep.getFecha_entrega().isEmpty()
-                ? rep.getFecha_entrega()
+        String fechaEnt = rep.getFechaEntrega() != null && !rep.getFechaEntrega().isEmpty()
+                ? rep.getFechaEntrega()
                 : "Pendiente";
-        tvFechaEntrega.setText("Entrega: " + fechaEnt);
+        text = "Entrega: ";
+        binding.tvDetalleFechaEntrega.setText(text.concat(fechaEnt));
 
-        tvMontoTotal.setText(String.valueOf(rep.getMonto_total()));
-        tvAnticipo.setText(String.valueOf(rep.getAnticipo()));
-        tvMontoPendiente.setText(String.valueOf(rep.getMonto_pendiente()));
-    }
-
-    private void mostrarDatosCliente(Clientes cliente) {
-        if (cliente != null) {
-            String nombreText = cliente.getNombre_cliente();
-            if (cliente.getApodo() != null && !cliente.getApodo().trim().isEmpty()) {
-                nombreText += " (" + cliente.getApodo() + ")";
-            }
-            tvClienteNombre.setText(nombreText);
+        binding.tvDetalleMontoTotal.setText(String.valueOf(rep.getMontoTotal()));
+        binding.tvDetalleAnticipo.setText(String.valueOf(rep.getAnticipo()));
+        binding.tvDetalleMontoPendiente.setText(String.valueOf(rep.getMontoPendiente()));
+        //Datos Clientes
+        text = rep.getNombreCliente();
+        if (text != null) {
+            if (rep.getIdCliente() != null && !rep.getIdCliente().trim().isEmpty())
+                text+=" ("+rep.getIdCliente()+") ";
         }
+        binding.tvDetalleClienteNombre.setText(text);
+        folioReparacion = rep.getFolio();
     }
 
-    private void setupClickListeners() {
-        btnCambiarEstado.setOnClickListener(v -> mostrarDialogoCambiarEstado());
+    private void setupClickListeners(){
+        binding.btnDetalleCambiarEstado.setOnClickListener(v -> mostrarDialogoCambiarEstado());
 
-        //btnCompartirTicket.setOnClickListener(v -> viewModel.compartirComprobante(requireContext()));
+        binding.btnDetalleCompartirTicket.setOnClickListener(v -> {});
 
-        btnEliminar.setOnClickListener(v -> confirmarEliminacion());
+        binding.btnDetalleEliminar.setOnClickListener(v -> confirmarEliminacion());
     }
 
     private void mostrarDialogoCambiarEstado() {
-        String[] estados = {"RECIBIDO", "EN REPARACION", "LISTO", "ENTREGADO", "CANCELADO"};
         new AlertDialog.Builder(requireContext())
                 .setTitle("Seleccionar Nuevo Estado")
-                .setItems(estados, (dialog, which) -> {
-                    String nuevoEstado = estados[which];
-                    if ("LISTO".equalsIgnoreCase(nuevoEstado)) {
-                        Reparaciones repActual = viewModel.reparacion.getValue();
-                        if (repActual != null) {
-                            DialogDiagnosticoRefacciones diagDialog = DialogDiagnosticoRefacciones.newInstance(repActual, this::notificarCambioYSalir);
-                            diagDialog.show(getParentFragmentManager(), "DialogDiagnosticoRefacciones");
-                        }
-                    } else {
-                        //viewModel.actualizarEstado(nuevoEstado);
-                        notificarCambioYSalir();
+                .setItems(EstadoReparcion.getArray(), (dialog, which) -> {
+                    String nuevoEstado = EstadoReparcion.getArray()[which];
+                    if (nuevoEstado.equals(EstadoReparcion.LISTO.getEstado())) {
+                        DialogDiagnosticoRefacciones diagDialog = DialogDiagnosticoRefacciones.newInstance();
+                        diagDialog.show(getParentFragmentManager(), "DialogDiagnosticoRefacciones");
                     }
+                    else viewModel.updateEstado(EstadoReparcion.fromString(nuevoEstado));
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
 
     private void confirmarEliminacion() {
-        /*new AlertDialog.Builder(requireContext())
-                .setTitle("Eliminar Reparación")
-                .setMessage("¿Estás seguro de que deseas eliminar esta reparación?")
-                .setPositiveButton("Eliminar", (dialog, which) -> viewModel.eliminarReparacion(requireContext()))
-                .setNegativeButton("Cancelar", null)
-                .show();*/
+        ConfirmDialog.mostrarDialogoConfirmacion(requireContext(),
+                "Eliminar reparación",
+                "¿Estás seguro de que deseas eliminar esta reparación?",
+                "Eliminar",
+                true,
+                ()->viewModel.eliminarReparacion(),
+                ()->{});
     }
 
     private void notificarCambioYSalir() {
-        if (getActivity() instanceof reparcionesView) {
-            ((reparcionesView) getActivity()).cargarReparaciones();
-        }
+        Bundle result = new Bundle();
+        result.putBoolean("actualizarLista", true);
+
+        getParentFragmentManager().setFragmentResult("request_reparaciones", result);
+
         dismiss();
     }
 
@@ -239,5 +209,11 @@ public class ReparacionDetalleDialog extends BottomSheetDialogFragment {
     @Override
     public int getTheme() {
         return com.google.android.material.R.style.Theme_MaterialComponents_Light_BottomSheetDialog;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

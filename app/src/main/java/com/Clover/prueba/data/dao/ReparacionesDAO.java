@@ -9,6 +9,7 @@ import android.util.Log;
 import com.Clover.prueba.data.dao.interfaces.IReparaciones;
 import com.Clover.prueba.data.database.CloverBD;
 import com.Clover.prueba.data.models.Reparaciones;
+import com.Clover.prueba.domain.reparaciones.constantes.EstadoReparcion;
 
 import java.util.ArrayList;
 
@@ -86,16 +87,27 @@ public class ReparacionesDAO implements IReparaciones {
     }
 
     @Override
-    public boolean updateEstadoReparacion(int idReparacion, String estado, String fechaEntrega, int idCorte) {
+    public boolean updateEstateReparacion(String folio,EstadoReparcion estado) throws Exception {
+        try{
+            ContentValues values = new ContentValues();
+            values.put("estado", estado.getEstado());
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+
+            int result = db.update("reparaciones",values,"id_reparacion = ?",new String[]{String.valueOf(folio)});
+            return result>0;
+        } catch (Exception e) {
+            Log.e("Clover_App", "updateEstateReparacion: "+e.getMessage());
+            throw new Exception("Error al actualizar el estado");
+        }
+    }
+
+    @Override
+    public boolean updateListoReparacion(String idReparacion, String diagnostico, int costoRefacciones) throws Exception {
         try {
             ContentValues values = new ContentValues();
-            values.put("estado", estado);
-            if (fechaEntrega != null && !fechaEntrega.isEmpty()) {
-                values.put("fecha_entrega", fechaEntrega);
-            }
-            if (idCorte > 0) {
-                values.put("id_corte", idCorte);
-            }
+            values.put("diagnostico",diagnostico);
+            values.put("costo_refacciones", costoRefacciones);
             values.put("fecha_actualizacion", System.currentTimeMillis());
             values.put("sincronizado", 0);
 
@@ -103,8 +115,8 @@ public class ReparacionesDAO implements IReparaciones {
             return result > 0;
         } catch (Exception e) {
             Log.e("Clover_App", "Error al actualizar estado de reparacion: " + e.getMessage());
+            throw new Exception(e.getMessage());
         }
-        return false;
     }
 
     @Override

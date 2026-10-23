@@ -47,7 +47,7 @@ public class reparcionesView extends AppCompatActivity {
         viewModel = new ViewModelProvider(this,factory).get(ReparacionesViewModel.class);
         viewModel.reparacionesAMostrar.observe(this, lista->{
             adapter.setLista(lista);
-
+            //Vista sin datos o con datos
             if (lista.isEmpty()) {
                 binding.rvReparaciones.setVisibility(View.GONE);
                 binding.layoutEmptyState.setVisibility(View.VISIBLE);
@@ -64,7 +64,13 @@ public class reparcionesView extends AppCompatActivity {
         viewModel.error.observe(this, error->{
             BannerError.mostrarError(binding.getRoot(), error);
         });
-
+        //Result Actualizar Lista
+        getSupportFragmentManager().setFragmentResultListener("request_reparaciones", this,(requestKey, bundle)->{
+            boolean recargar = bundle.getBoolean("actualizarLista", false);
+            if (recargar){
+                aplicarFiltros();
+            }
+        });
         setupRecyclerView(new ArrayList<>());
         setupSpinners();
         setupSearch();
@@ -163,10 +169,5 @@ public class reparcionesView extends AppCompatActivity {
         viewModel.aplicarFiltros(query, estadoSel, servicioSel);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        cargarReparaciones();
-    }
 
 }
