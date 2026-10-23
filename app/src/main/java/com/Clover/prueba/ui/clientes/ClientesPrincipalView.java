@@ -99,12 +99,12 @@ public class ClientesPrincipalView extends AppCompatActivity {
 
             @Override
             public void OnWhatsappClick(String numero, int position) {
-                shareManager.abrirWhatsapp(ClientesPrincipalView.this, numero, null);
+                shareManager.abrirWhatsapp(numero, null);
             }
 
             @Override
             public void OnLlamarClick(String numero, int position) {
-                shareManager.abrirLlamada(ClientesPrincipalView.this, numero);
+                shareManager.abrirLlamada(numero);
             }
         });
         recyclerView.setAdapter(adapter);

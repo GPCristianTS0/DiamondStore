@@ -132,7 +132,6 @@ public class ReparacionDetalleDialog extends BottomSheetDialogFragment {
                 text+=" ("+rep.getIdCliente()+") ";
         }
         binding.tvDetalleClienteNombre.setText(text);
-        folioReparacion = rep.getFolio();
     }
 
     private void setupClickListeners(){

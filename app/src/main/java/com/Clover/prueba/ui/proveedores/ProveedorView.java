@@ -65,7 +65,7 @@ public class ProveedorView extends AppCompatActivity {
             @Override
             public void onClickLlamar(String numero, int position) {
                 if (numero != null && !numero.isEmpty()) {
-                    shareManager.abrirLlamada(ProveedorView.this, numero);
+                    shareManager.abrirLlamada(numero);
                 } else {
                     Toast.makeText(null, "Sin número registrado", Toast.LENGTH_SHORT).show();
                 }
@@ -73,7 +73,7 @@ public class ProveedorView extends AppCompatActivity {
             @Override
             public void onClickWhatsapp(String numero, int position) {
                 if (numero != null && !numero.isEmpty()) {
-                    shareManager.abrirWhatsapp(ProveedorView.this, numero, null);
+                    shareManager.abrirWhatsapp( numero, null);
                 } else {
                     android.widget.Toast.makeText(null, "Sin número para WhatsApp", android.widget.Toast.LENGTH_SHORT).show();
                 }

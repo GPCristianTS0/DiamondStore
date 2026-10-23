@@ -54,12 +54,12 @@ public class CreditoPrincipalView extends AppCompatActivity {
         CreditoAdapterMain adapter = new CreditoAdapterMain(clientes, new CreditoAdapterMain.ListenerCreditoMain() {
             @Override
             public void onLlamar(Clientes cliente) {
-                shareManager.abrirLlamada(CreditoPrincipalView.this, cliente.getId_cliente());
+                shareManager.abrirLlamada( cliente.getId_cliente());
             }
             @Override
             public void onWhatsapp(Clientes cliente) {
                 String telefono = cliente.getId_cliente();
-                shareManager.abrirWhatsapp(CreditoPrincipalView.this, telefono,"");
+                shareManager.abrirWhatsapp(telefono,"");
             }
             @Override
             public void onAbonar(Clientes cliente) {
