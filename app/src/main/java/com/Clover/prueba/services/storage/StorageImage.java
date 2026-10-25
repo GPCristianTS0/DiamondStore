@@ -118,7 +118,7 @@ public class StorageImage {
         try {
             OutputStream outputStream = contentResolver.openOutputStream(uri);
             if (outputStream != null) {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                 outputStream.close();
             }
 

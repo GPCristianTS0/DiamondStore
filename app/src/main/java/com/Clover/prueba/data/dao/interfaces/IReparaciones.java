@@ -6,7 +6,7 @@ import com.Clover.prueba.domain.reparaciones.constantes.EstadoReparcion;
 import java.util.ArrayList;
 
 public interface IReparaciones {
-    boolean addReparacion(Reparaciones reparacion);
+    int addReparacion(Reparaciones reparacion) throws Exception;
     boolean updateReparacion(Reparaciones reparacion);
     boolean updateEstateReparacion(String folio, EstadoReparcion estado) throws Exception;
     public boolean updateListoReparacion(String idReparacion, String diagnostico, int costoRefacciones) throws Exception;

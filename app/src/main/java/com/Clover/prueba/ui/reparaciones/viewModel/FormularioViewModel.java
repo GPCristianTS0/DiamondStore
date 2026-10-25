@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Reparaciones;
+import com.Clover.prueba.domain.reparaciones.usecase.DetalleReparacion.NotaReparacionUC;
 import com.Clover.prueba.domain.reparaciones.usecase.Formulario.AddClientReparaciones;
 import com.Clover.prueba.domain.reparaciones.usecase.Formulario.AddReparacionUseCase;
 import com.Clover.prueba.domain.reparaciones.usecase.Formulario.GetAllClient;
@@ -32,16 +33,13 @@ public class FormularioViewModel extends ViewModel{
     private final GetAllClient getAllClient ;
     private final AddClientReparaciones addClientUseCase;
     private final AddReparacionUseCase addReparacionUseCase;
-    //Services
-    private final TicketUtils ticketUtils;
-    private final ShareManager shareManager;
+    private final NotaReparacionUC notaReparacionUC;
 
-    public FormularioViewModel(GetAllClient getAllClient, AddClientReparaciones addClientUseCase, AddReparacionUseCase addReparacionUseCase, TicketUtils ticketUtils, ShareManager shareManager) {
+    public FormularioViewModel(GetAllClient getAllClient, AddClientReparaciones addClientUseCase, AddReparacionUseCase addReparacionUseCase, NotaReparacionUC notaReparacionUC, TicketUtils ticketUtils, ShareManager shareManager) {
         this.getAllClient = getAllClient;
         this.addClientUseCase = addClientUseCase;
         this.addReparacionUseCase = addReparacionUseCase;
-        this.ticketUtils = ticketUtils;
-        this.shareManager = shareManager;
+        this.notaReparacionUC = notaReparacionUC;
     }
 
     public void getClient(){
@@ -66,8 +64,9 @@ public class FormularioViewModel extends ViewModel{
     }
     public void addReparacion(Reparaciones reparacion){
         try{
-            addReparacionUseCase.execute(reparacion);
+            int folio = addReparacionUseCase.execute(reparacion);
             rep = reparacion;
+            reparacion.setId_reparacion(folio);
             _exito.setValue(true);
         } catch (Exception e) {
             _error.setValue(e.getMessage());
@@ -76,11 +75,9 @@ public class FormularioViewModel extends ViewModel{
     public void setClient(Clientes cliente){
         clienteSeleccionado = cliente;
     }
-    public void generarTicket(){
-        /*
-        * Refactorizar ticketutils*/
+    public void generarTicket(boolean whatsapp){
         try{
-            _intetTicket.setValue(shareManager.compartirImagen("Compartir Via...",ticketUtils.generarTicketReparacion(rep, clienteSeleccionado, true)));
+            _intetTicket.setValue(notaReparacionUC.execute(rep, clienteSeleccionado, whatsapp));
         } catch (Exception e){
             _error.setValue(e.getMessage());
         }

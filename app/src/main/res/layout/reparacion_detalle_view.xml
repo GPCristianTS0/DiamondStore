@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#F5F5F5"
+    android:background="#F8F9FA"
     android:fillViewport="true">
 
     <LinearLayout
@@ -12,31 +12,44 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Header / Barra Superior -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardTopBar"
+        <!-- Handle de Arrastre (Indicador visual de Bottom Sheet) -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="#FFFFFF"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="2dp">
+            android:gravity="center"
+            android:paddingTop="12dp">
+            <androidx.cardview.widget.CardView
+                android:layout_width="36dp"
+                android:layout_height="4dp"
+                app:cardBackgroundColor="#E0E0E0"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp" />
+        </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+        <!-- Cabecera Limpia (Sin tarjeta para fusionarse con el diálogo) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp">
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/cardBadgeEstado"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvDetalleTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Detalles de Reparación"
-                    android:textColor="#1565C0"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:text="Detalle de Reparación"
+                    android:textColor="#1976D2"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvDetalleFolio"
@@ -44,35 +57,41 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:textColor="#757575"
-                    android:textSize="13sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDetalleTitulo"
-                    tools:text="Folio #REP-001" />
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="#REP-001" />
+            </LinearLayout>
+
+            <!-- Badge de Estado redondeado -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardBadgeEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:cardBackgroundColor="#E3F2FD"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
                 <TextView
                     android:id="@+id/tvDetalleEstadoBadge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#E3F2FD"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="6dp"
-                    android:textColor="#1976D2"
+                    android:textColor="#1565C0"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="RECIBIDO" />
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Contenido -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="16dp">
 
             <!-- Card 1: Información de Cliente y Equipo -->
             <androidx.cardview.widget.CardView
@@ -81,8 +100,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,8 +113,9 @@
                         android:id="@+id/lblSeccionCliente"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="INFORMACIÓN DE CLIENTE Y EQUIPO"
-                        android:textColor="#1565C0"
+                        android:letterSpacing="0.05"
+                        android:text="CLIENTE Y EQUIPO"
+                        android:textColor="#9E9E9E"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -103,17 +123,11 @@
                         android:id="@+id/tvDetalleClienteNombre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="4dp"
                         android:textColor="#212121"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
-                        tools:text="Juan Carlos Pérez" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="10dp"
-                        android:background="#F0F0F0" />
+                        tools:text="Cristian Uriel Tobar" />
 
                     <TextView
                         android:id="@+id/tvDetalleEquipo"
@@ -124,70 +138,115 @@
                         android:textStyle="bold"
                         tools:text="iPhone 13 Pro Max - Azul Sierra" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#F0F0F0" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Falla Reportada:"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
+
                     <TextView
                         android:id="@+id/tvDetalleFalla"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="#424242"
-                        android:textSize="13sp"
-                        tools:text="Falla reportada: El equipo no enciende tras caída." />
+                        android:layout_marginTop="2dp"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        tools:text="El equipo no enciende tras caída." />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Diagnóstico Técnico:"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tvDetalleDiagnostico"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="#424242"
-                        android:textSize="13sp"
-                        tools:text="Diagnóstico: Se requiere reemplazo de centro de carga." />
+                        android:layout_marginTop="2dp"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        tools:text="Se requiere reemplazo de display OLED y revisión de flexor." />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Card 2: Fechas y Seguimiento -->
+            <!-- Card 2: Fechas (Lado a Lado) -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardFechasDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:weightSum="2">
 
-                    <TextView
-                        android:id="@+id/lblSeccionFechas"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="FECHAS Y SEGUIMIENTO"
-                        android:textColor="#1565C0"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvDetalleFechaIngreso"
-                        android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FECHA DE INGRESO"
+                            android:textColor="#9E9E9E"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDetalleFechaIngreso"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="05/10/2026" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="#616161"
-                        android:textSize="13sp"
-                        tools:text="Ingreso: 05/10/2026 14:30" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvDetalleFechaEntrega"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="#616161"
-                        android:textSize="13sp"
-                        tools:text="Entrega: Pendiente" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FECHA PROMETIDA"
+                            android:textColor="#9E9E9E"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
+                        <TextView
+                            android:id="@+id/tvDetalleFechaEntrega"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="#1976D2"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="07/10/2026" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -196,147 +255,173 @@
                 android:id="@+id/cardFinancieraDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
                 app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    <TextView
-                        android:id="@+id/lblSeccionFinanciera"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DESGLOSE FINANCIERO"
-                        android:textColor="#1565C0"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-
+                    <!-- Total -->
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:text="TOTAL"
+                            android:textColor="#9E9E9E"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Total"
-                                android:textColor="#9E9E9E"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:id="@+id/tvDetalleMontoTotal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#212121"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                tools:text="$1,500.00" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/tvDetalleMontoTotal"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Anticipo"
-                                android:textColor="#9E9E9E"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:id="@+id/tvDetalleAnticipo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#388E3C"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                tools:text="$500.00" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Pendiente"
-                                android:textColor="#9E9E9E"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:id="@+id/tvDetalleMontoPendiente"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#D32F2F"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                tools:text="$1,000.00" />
-                        </LinearLayout>
-
+                            android:layout_marginTop="4dp"
+                            android:textColor="#212121"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            tools:text="$1,500.00" />
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="12dp"
+                        android:background="#F0F0F0" />
+
+                    <!-- Anticipo -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ANTICIPO"
+                            android:textColor="#9E9E9E"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDetalleAnticipo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="#388E3C"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            tools:text="$500.00" />
+                    </LinearLayout>
+
+                    <!-- Pestaña Roja de Pendiente -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#FFF5F5"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="POR PAGAR"
+                            android:textColor="#D32F2F"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDetalleMontoPendiente"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="#D32F2F"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="$1,000.00" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Acciones Rápidas -->
+            <!-- Zona de Botones -->
             <LinearLayout
                 android:id="@+id/layoutAccionesDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="24dp">
+                android:paddingBottom="16dp">
 
+                <!-- Botón de Estado -->
                 <Button
                     android:id="@+id/btnDetalleCambiarEstado"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    android:layout_height="56dp"
                     android:backgroundTint="#1976D2"
-                    android:text="Cambiar Estado"
+                    android:letterSpacing="0.02"
+                    android:text="ACTUALIZAR ESTADO"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    app:cornerRadius="10dp" />
+                    app:cornerRadius="12dp" />
 
-                <Button
-                    android:id="@+id/btnDetalleCompartirTicket"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                <!-- Fila Híbrida de Compartir -->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Compartir Comprobante (WhatsApp)"
-                    android:textColor="#1976D2"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="#1976D2" />
+                    android:orientation="horizontal">
 
+                    <!-- Botón Principal: WhatsApp -->
+                    <Button
+                        android:id="@+id/btnDetalleCompartirWhatsApp"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#25D366"
+                        android:text="ENVIAR TICKET"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="12dp" />
+
+                    <!-- Botón Secundario: Genérico (Share Sheet) -->
+                    <Button
+                        android:id="@+id/btnDetalleCompartirGenerico"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="56dp"
+                        android:text="OTRO..."
+                        android:textColor="#757575"
+                        android:textSize="13sp"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="#E0E0E0" />
+                </LinearLayout>
+
+                <!-- Botón de Eliminar (Texto discreto al final) -->
                 <Button
                     android:id="@+id/btnDetalleEliminar"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
                     android:text="Eliminar Reparación"
                     android:textColor="#D32F2F"
                     android:textSize="13sp" />

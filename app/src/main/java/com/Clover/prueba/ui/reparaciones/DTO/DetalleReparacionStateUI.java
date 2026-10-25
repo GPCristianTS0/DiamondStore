@@ -169,8 +169,14 @@ public class DetalleReparacionStateUI {
         this.anticipo = reparacion.getAnticipo();
         this.montoPendiente = reparacion.getMonto_pendiente();
     }
+    public Reparaciones getReparacion(){
+        return new Reparaciones(Integer.parseInt(folio),estado, equipo, color, fallaReportada, "", fechaIngreso, fechaPromesa, "", "", montoPendiente, anticipo, montoTotal,0, "");
+    }
     public void setCliente(Clientes cliente) {
         this.nombreCliente = cliente.getNombre_cliente();
         this.idCliente = cliente.getId_cliente();
+    }
+    public Clientes getCliente(){
+        return new Clientes(idCliente, nombreCliente);
     }
 }

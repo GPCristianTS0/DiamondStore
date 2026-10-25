@@ -46,7 +46,7 @@ public class TicketUtils {
         this.context = context;
         configuracionControl = new ConfiguracionControl(context);
     }
-
+/*
     public void generarTicketVenta(Context context,String nombreCliente, Ventas venta, ArrayList<DetalleVenta>listaProductos, boolean waoOrGeneric){
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.ticket_virtual, null);
@@ -151,7 +151,7 @@ public class TicketUtils {
             txtCambio.setText(importes.concat("0.00"));
             txtImportePago.setText(importes.concat(String.valueOf(venta.getMonto())));
         }
-        generarYCompartirTicket(view, configuracion, waoOrGeneric);
+        generarYCompartirTicket(view, configuracion);
     }
     public void generarTicketAbono(Context context, Abonos abono, String nombreCliente, boolean waoOrGeneric){
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -189,81 +189,8 @@ public class TicketUtils {
 
     }
 
-    public Uri generarTicketReparacion(Reparaciones reparacion, Clientes cliente, boolean waoOrGeneric) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.ticket_reparacion_virtual, null);
-
-        Configuracion configuracion = configuracionControl.getConfiguracion();
-
-        ImageView imgLogo = view.findViewById(R.id.imgLogoReparacion);
-        TextView txtNombreNegocio = view.findViewById(R.id.txtNombreNegocioRep);
-        TextView txtEslogan = view.findViewById(R.id.txtEsloganRep);
-        TextView txtTelefonoNegocio = view.findViewById(R.id.txtTelefonoNegocioRep);
-        TextView txtFolio = view.findViewById(R.id.txtFolioRep);
-        TextView txtFecha = view.findViewById(R.id.txtFechaRep);
-        TextView txtNombreCliente = view.findViewById(R.id.txtNombreClienteRep);
-        TextView txtTelefonoCliente = view.findViewById(R.id.txtTelefonoClienteRep);
-        TextView txtEquipo = view.findViewById(R.id.txtEquipoRep);
-        TextView txtColor = view.findViewById(R.id.txtColorRep);
-        TextView txtFalla = view.findViewById(R.id.txtFallaRep);
-        TextView txtBadgeEstado = view.findViewById(R.id.txtBadgeEstadoRep);
-        TextView txtMontoTotal = view.findViewById(R.id.txtMontoTotalRep);
-        TextView txtGarantia = view.findViewById(R.id.txtGarantiaRep);
-
-        if (configuracion.getRutaLogo() != null && !configuracion.getRutaLogo().isEmpty()) {
-            try {
-                imgLogo.setImageURI(Uri.parse(configuracion.getRutaLogo()));
-            } catch (Exception ignored) {}
-        }
-
-        if (configuracion.getNombreNegocio() != null && !configuracion.getNombreNegocio().isEmpty()) {
-            txtNombreNegocio.setText(configuracion.getNombreNegocio());
-        }
-        if (configuracion.getEslogan() != null && !configuracion.getEslogan().trim().isEmpty()) {
-            txtEslogan.setText(configuracion.getEslogan());
-        }
-        StringBuilder infoContacto = new StringBuilder();
-        if (configuracion.getTelefono() != null && !configuracion.getTelefono().isEmpty()) {
-            infoContacto.append("Tel: ").append(configuracion.getTelefono());
-        }
-        if (configuracion.getDireccion() != null && !configuracion.getDireccion().isEmpty()) {
-            if (infoContacto.length() > 0) infoContacto.append(" | ");
-            infoContacto.append("Dir: ").append(configuracion.getDireccion());
-        }
-        if (infoContacto.length() > 0) {
-            txtTelefonoNegocio.setText(infoContacto.toString());
-        }
-
-        txtFolio.setText(String.format(Locale.getDefault(), "#REP-%03d", reparacion.getId_reparacion()));
-        String fechaIng = reparacion.getFecha_ingreso();
-        if (fechaIng != null && fechaIng.contains(" ")) {
-            txtFecha.setText("Fecha: " + fechaIng.split(" ")[0]);
-        } else {
-            txtFecha.setText("Fecha: " + (fechaIng != null ? fechaIng : ""));
-        }
-
-        if (cliente != null) {
-            txtNombreCliente.setText("Nombre: " + cliente.getNombre_cliente());
-            String tel = cliente.getId_cliente() != null && !cliente.getId_cliente().isEmpty() ? cliente.getId_cliente() : "---";
-            txtTelefonoCliente.setText("Teléfono: " + tel);
-        } else {
-            txtNombreCliente.setText("Nombre: Público General");
-            txtTelefonoCliente.setText("Teléfono: ---");
-        }
-
-        txtEquipo.setText("Modelo: " + (reparacion.getEquipo() != null ? reparacion.getEquipo() : "---"));
-        txtColor.setText("Color: " + (reparacion.getColor() != null && !reparacion.getColor().isEmpty() ? reparacion.getColor() : "---"));
-        txtFalla.setText(reparacion.getFalla_reportada() != null ? reparacion.getFalla_reportada() : "---");
-        txtBadgeEstado.setText("Estado: " + (reparacion.getEstado() != null ? reparacion.getEstado() : "Entregado"));
-        txtMontoTotal.setText("$" + reparacion.getMonto_total());
-
-        if (configuracion.getNotaGarantia() != null && !configuracion.getNotaGarantia().isEmpty()) {
-            txtGarantia.setText("* " + configuracion.getNotaGarantia());
-        }
-
-        return generarYCompartirTicket(view, configuracion, waoOrGeneric);
-    }
-    private Uri generarYCompartirTicket(View view, Configuracion configuracion, boolean waoOrGeneric) {
+/*
+    private Uri generarYCompartirTicket(View view, Configuracion configuracion) {
 
         //Medicion de la pantalla
         int widthSpec = View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY); // Ancho fijo
@@ -282,10 +209,10 @@ public class TicketUtils {
 
         // 5. DIBUJAR (DRAW): Creamos el Bitmap y le decimos a la vista "dibújate aquí"
         float escala = 2.5f;
-        return CreacionImagen(view, configuracion, altoFinal, escala, waoOrGeneric);
+        return CreacionImagen(view, configuracion, altoFinal, escala);
     }
-
-    private Uri CreacionImagen(View view, Configuracion configuracion,int altoFinal, float escala, boolean waoOrGeneric) {
+/*
+    private Uri CreacionImagen(View view, Configuracion configuracion,int altoFinal, float escala) {
         int anchoReal = (int) (view.getMeasuredWidth() * escala);
         int altoReal = (int) (altoFinal * escala);
 
@@ -296,7 +223,7 @@ public class TicketUtils {
             canvas.scale(escala, escala);
             view.draw(canvas);
             // 6. COMPARTIR: Guardamos temporalmente y lanzamos WhatsApp
-            return compartirBitmap(bitmap, configuracion, waoOrGeneric);
+            return compartirBitmap(bitmap, configuracion);
         } catch (OutOfMemoryError|Exception e) {
             Log.e("Clover_App", "Error al generar ticket: "+e.getMessage());
 
@@ -305,11 +232,11 @@ public class TicketUtils {
                 return null;
             }
 
-            CreacionImagen(view, configuracion, altoReal, 1.0f, waoOrGeneric);
+            CreacionImagen(view, configuracion, altoReal, 1.0f);
         }
         return null;
     }
-
+*/
     private Uri compartirBitmap(Bitmap bitmap, Configuracion configuracion, boolean wapOrGeneric) {
         Uri contentUri = null;
         try {
@@ -339,37 +266,6 @@ public class TicketUtils {
             Log.e("Clover_App", "Error al compartir ticket"+e.getMessage());
         }
         return contentUri;
-    }
-    private Intent compartir(Configuracion configuracion, Uri contentUri) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-
-        intent.setDataAndType(contentUri, context.getContentResolver().getType(contentUri));
-        intent.putExtra(Intent.EXTRA_STREAM, contentUri);
-        intent.setType("image/png");
-        intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare());
-        return intent;
-    }
-    private void compartirWhatsapp(Context context, Configuracion configuracion, Uri contentUri) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("image/jpeg");
-        intent.putExtra(Intent.EXTRA_STREAM, contentUri);
-        intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare());
-
-        // ESTA ES LA CLAVE: Forzamos a que solo use WhatsApp
-        intent.setPackage("com.whatsapp");
-
-        // Evitamos que crashee si no tiene WA instalado
-        try {
-            context.startActivity(intent);
-        } catch (android.content.ActivityNotFoundException ex) {
-            // Si tiene WhatsApp Business, el paquete cambia
-            try {
-                intent.setPackage("com.whatsapp.w4b");
-                context.startActivity(intent);
-            } catch (android.content.ActivityNotFoundException e2) {
-                Toast.makeText(context, "No tienes WhatsApp instalado", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     private String getFecha(String fecha){

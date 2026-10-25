@@ -40,26 +40,21 @@ public class ShareManager {
         else return null;
         return intent;
     }
-    public Intent compartirImagen(String mensaje, Uri contentUri) {
+    public Intent compartirImagen( String mensaje, Uri contentUri, boolean whatsapp) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-
-        intent.setDataAndType(contentUri, context.getContentResolver().getType(contentUri));
-        intent.putExtra(Intent.EXTRA_STREAM, contentUri);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("image/png");
-        intent.putExtra(Intent.EXTRA_TEXT, mensaje);
-        return intent;
-    }
-    public Intent compartirImagenWhatsapp( Configuracion configuracion, Uri contentUri) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("image/jpeg");
         intent.putExtra(Intent.EXTRA_STREAM, contentUri);
-        intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare());
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.putExtra(Intent.EXTRA_TEXT, mensaje);
 
-        if (isPackageInstalled("com.whatsapp.w4b"))  intent.setPackage("com.whatsapp.w4b");
-        else if (isPackageInstalled("com.whatsapp")) intent.setPackage("com.whatsapp");
-        else return null;
+        if (!whatsapp) return intent;
+
+        if (isPackageInstalled("com.whatsapp.w4b"))
+            intent.setPackage("com.whatsapp.w4b");
+        else if (isPackageInstalled("com.whatsapp"))
+            intent.setPackage("com.whatsapp");
+        else
+            return null;
         return intent;
     }
     private boolean isPackageInstalled(String packageName) {

@@ -1,4 +1,4 @@
-package com.Clover.prueba.domain.reparaciones.usecase.ViewPrincipal;
+package com.Clover.prueba.domain.reparaciones.usecase.DetalleReparacion;
 
 import com.Clover.prueba.data.dao.interfaces.IReparaciones;
 import com.Clover.prueba.domain.reparaciones.constantes.EstadoReparcion;

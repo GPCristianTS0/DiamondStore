@@ -32,7 +32,7 @@ public class CompartirCardUseCase {
         Uri rutaImagen = storageImage.guardarImagenTemporal(bitmapa);
         //Compartir imagen
         ShareManager shareManager = new ShareManager(context);
-        shareManager.compartirImagen("Gracias por ser parte de nosotros", rutaImagen);
+        shareManager.compartirImagen("Gracias por ser parte de nosotros", rutaImagen, false);
         return false;
     }
 }

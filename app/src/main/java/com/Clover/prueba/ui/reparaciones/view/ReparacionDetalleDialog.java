@@ -52,13 +52,19 @@ public class ReparacionDetalleDialog extends BottomSheetDialogFragment {
         viewModel.eliminado.observe(getViewLifecycleOwner(), eliminado -> {
             if (Boolean.TRUE.equals(eliminado)) {
                 notificarCambioYSalir();
-                viewModel.resetEvent();
+                viewModel.resetEliminado();
             }
         });
         viewModel.exito.observe(getViewLifecycleOwner(), exito ->{
             if (exito) {
                 notificarCambioYSalir();
-                viewModel.resetEvent();
+                viewModel.resetExito();
+            }
+        });
+        viewModel.nota.observe(getViewLifecycleOwner(), intent->{
+            if (intent!=null) {
+                startActivity(intent);
+                viewModel.resetIntent();
             }
         });
         setupClickListeners();
@@ -100,33 +106,29 @@ public class ReparacionDetalleDialog extends BottomSheetDialogFragment {
         binding.tvDetalleEquipo.setText(equipoYColor);
 
         String fallaText = rep.getFallaReportada() != null && !rep.getFallaReportada().isEmpty()
-                ? "Falla reportada: " + rep.getFallaReportada()
+                ? rep.getFallaReportada()
                 : "Falla reportada: Sin detalle";
         binding.tvDetalleFalla.setText(fallaText);
 
-        String text = "Diagnóstico: ";
-
         if (rep.getDiagnostico() != null && !rep.getDiagnostico().trim().isEmpty()) {
-            binding.tvDetalleDiagnostico.setText(text.concat(rep.getDiagnostico()));
+            binding.tvDetalleDiagnostico.setText((rep.getDiagnostico()));
             binding.tvDetalleDiagnostico.setVisibility(View.VISIBLE);
         } else {
             binding.tvDetalleDiagnostico.setVisibility(View.GONE);
         }
-        text = "Ingreso: ";
         String fechaIng = rep.getFechaIngreso() != null ? rep.getFechaIngreso() : "No especificada";
-        binding.tvDetalleFechaIngreso.setText(text.concat(fechaIng));
+        binding.tvDetalleFechaIngreso.setText((fechaIng));
 
         String fechaEnt = rep.getFechaEntrega() != null && !rep.getFechaEntrega().isEmpty()
                 ? rep.getFechaEntrega()
                 : "Pendiente";
-        text = "Entrega: ";
-        binding.tvDetalleFechaEntrega.setText(text.concat(fechaEnt));
+        binding.tvDetalleFechaEntrega.setText((fechaEnt));
 
         binding.tvDetalleMontoTotal.setText(String.valueOf(rep.getMontoTotal()));
         binding.tvDetalleAnticipo.setText(String.valueOf(rep.getAnticipo()));
         binding.tvDetalleMontoPendiente.setText(String.valueOf(rep.getMontoPendiente()));
         //Datos Clientes
-        text = rep.getNombreCliente();
+        String text = rep.getNombreCliente();
         if (text != null) {
             if (rep.getIdCliente() != null && !rep.getIdCliente().trim().isEmpty())
                 text+=" ("+rep.getIdCliente()+") ";
@@ -137,7 +139,9 @@ public class ReparacionDetalleDialog extends BottomSheetDialogFragment {
     private void setupClickListeners(){
         binding.btnDetalleCambiarEstado.setOnClickListener(v -> mostrarDialogoCambiarEstado());
 
-        binding.btnDetalleCompartirTicket.setOnClickListener(v -> {});
+        binding.btnDetalleCompartirWhatsApp.setOnClickListener(v -> {viewModel.compartirTicket(true);});
+
+        binding.btnDetalleCompartirGenerico.setOnClickListener(view -> {viewModel.compartirTicket(false);});
 
         binding.btnDetalleEliminar.setOnClickListener(v -> confirmarEliminacion());
     }

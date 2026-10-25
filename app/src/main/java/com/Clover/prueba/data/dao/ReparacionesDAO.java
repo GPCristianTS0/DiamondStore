@@ -21,7 +21,8 @@ public class ReparacionesDAO implements IReparaciones {
     }
 
     @Override
-    public boolean addReparacion(Reparaciones reparacion) {
+    public int addReparacion(Reparaciones reparacion) throws Exception {
+        long result;
         try {
             ContentValues values = new ContentValues();
             values.put("tipo_servicio", reparacion.getTipo_servicio());
@@ -44,16 +45,15 @@ public class ReparacionesDAO implements IReparaciones {
             values.put("sincronizado", 0);
             values.put("eliminado", 0);
 
-            long result = db.insert("reparaciones", null, values);
-            if (result != -1) {
-                reparacion.setId_reparacion((int) result);
-                return true;
+            result = db.insert("reparaciones", null, values);
+            if (result == -1) {
+                throw new Exception("Error al agregar reparacion");
             }
-            return true;
         } catch (Exception e) {
             Log.e("Clover_App", "Error al agregar reparacion: " + e.getMessage(), e);
+            throw new Exception("Error al agregar Reparacion");
         }
-        return false;
+        return (int) result;
     }
 
     @Override

@@ -25,6 +25,24 @@ public class Reparaciones implements Serializable {
     public Reparaciones() {
     }
 
+    public Reparaciones(int id_reparacion, String estado, String equipo, String color, String falla_reportada, String diagnostico, String fecha_ingreso, String fecha_promesa, String fecha_entrega, String tipo_pago, int monto_pendiente, int anticipo, int monto_total, int costo_refacciones, String tipo_servicio) {
+        this.id_reparacion = id_reparacion;
+        this.estado = estado;
+        this.equipo = equipo;
+        this.color = color;
+        this.falla_reportada = falla_reportada;
+        this.diagnostico = diagnostico;
+        this.fecha_ingreso = fecha_ingreso;
+        this.fecha_promesa = fecha_promesa;
+        this.fecha_entrega = fecha_entrega;
+        this.tipo_pago = tipo_pago;
+        this.monto_pendiente = monto_pendiente;
+        this.anticipo = anticipo;
+        this.monto_total = monto_total;
+        this.costo_refacciones = costo_refacciones;
+        this.tipo_servicio = tipo_servicio;
+    }
+
     public Reparaciones(int id_reparacion, String tipo_servicio, String id_cliente, String equipo, String color, String falla_reportada, String diagnostico, int costo_refacciones, int monto_total, int anticipo, int monto_pendiente, String tipo_pago, String estado, String fecha_ingreso, String fecha_promesa, String fecha_entrega, int id_corte) {
         this.id_reparacion = id_reparacion;
         this.tipo_servicio = tipo_servicio;

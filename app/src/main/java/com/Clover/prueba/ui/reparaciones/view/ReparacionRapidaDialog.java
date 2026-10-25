@@ -48,7 +48,7 @@ public class ReparacionRapidaDialog extends BottomSheetDialogFragment {
                         "Enviar Comprobante",
                         false,
                         () -> {
-                            viewModel.generarTicket();
+                            viewModel.generarTicket(true);
                         },
                         this::dismiss
                 );
