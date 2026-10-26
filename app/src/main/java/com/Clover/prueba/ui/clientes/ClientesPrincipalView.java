@@ -88,7 +88,7 @@ public class ClientesPrincipalView extends AppCompatActivity {
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.CP_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        ShareManager shareManager = new ShareManager();
+        ShareManager shareManager = new ShareManager(ClientesPrincipalView.this);
         adapter = new ClientesPrincipalAdapter(new ArrayList<Clientes> (), new ClientesPrincipalAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Clientes cliente, int position) {
@@ -99,12 +99,12 @@ public class ClientesPrincipalView extends AppCompatActivity {
 
             @Override
             public void OnWhatsappClick(String numero, int position) {
-                shareManager.abrirWhatsapp(ClientesPrincipalView.this, numero, null);
+                shareManager.abrirWhatsapp(numero, null);
             }
 
             @Override
             public void OnLlamarClick(String numero, int position) {
-                shareManager.abrirLlamada(ClientesPrincipalView.this, numero);
+                shareManager.abrirLlamada(numero);
             }
         });
         recyclerView.setAdapter(adapter);

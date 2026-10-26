@@ -16,13 +16,17 @@ public class ConfirmDialog {
     public interface OnConfirmarClickListener {
         void onConfirmarClick();
     }
+    public interface OnCancelClickListener{
+        void onCancelar();
+    }
     public static void mostrarDialogoConfirmacion(
             Context context,
             String titulo,
             String mensaje,
             String textoBotonConfirmar,
             boolean esAccionPeligrosa,
-            OnConfirmarClickListener listener) {
+            OnConfirmarClickListener listener,
+            OnCancelClickListener listenerCancel) {
 
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.confirm_dialog);
@@ -48,8 +52,10 @@ public class ConfirmDialog {
             btnConfirmar.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1976D2")));
         }
 
-        btnCancelar.setOnClickListener(v -> dialog.dismiss());
-
+        btnCancelar.setOnClickListener(v -> {
+            listenerCancel.onCancelar();
+            dialog.dismiss();
+        });
         btnConfirmar.setOnClickListener(v -> {
             listener.onConfirmarClick();
             dialog.dismiss();

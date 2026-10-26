@@ -72,7 +72,7 @@ public class HistorialVentasDetalleVenta extends AppCompatActivity {
         Button btnCompartir = findViewById(R.id.HV_btnCompartir);
         btnCompartir.setOnClickListener(v -> {
             TicketUtils ticketUtils = new TicketUtils(this);
-            ticketUtils.generarTicketVenta(this, nombreCliente, venta, iVentas.getDetalleVentas(venta.getId_venta()), false);
+            //ticketUtils.generarTicketVenta(this, nombreCliente, venta, iVentas.getDetalleVentas(venta.getId_venta()), false);
         });
 
     }

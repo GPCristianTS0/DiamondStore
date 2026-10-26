@@ -201,6 +201,51 @@
             app:layout_constraintStart_toEndOf="@+id/venderBtn"
             app:layout_constraintTop_toTopOf="@+id/venderBtn" />
 
+        <LinearLayout
+            android:id="@+id/layoutReparacionesBtns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/venderBtn">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnVerReparaciones"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:onClick="onClickVerReparaciones"
+                android:text="VER REPARACIONES"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:backgroundTint="#0D47A1"
+                app:cornerRadius="16dp"
+                app:icon="@android:drawable/ic_menu_search"
+                app:iconGravity="textStart"
+                app:iconSize="22dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRegistrarReparacion"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:onClick="onClickReparacionRapida"
+                android:text="REGISTRAR REPARACIÓN"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:backgroundTint="#1565C0"
+                app:cornerRadius="16dp"
+                app:icon="@android:drawable/ic_menu_manage"
+                app:iconGravity="textStart"
+                app:iconSize="22dp" />
+        </LinearLayout>
+
         <View
             android:id="@+id/sepCatalogos"
             android:layout_width="match_parent"
@@ -208,7 +253,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:background="#E0E0E0"
-            app:layout_constraintTop_toBottomOf="@+id/venderBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutReparacionesBtns" />
 
         <TextView
             android:id="@+id/lblCatalogos"

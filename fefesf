@@ -2,13 +2,13 @@
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Mon Apr 20 21:01:24 2026 -0600
 
-    refactor: limpieza y mejora del flujo en formulario de productos
+    refactor: limpieza y mejora del flujo en formulario de accesorios
 
 [33mcommit e84ecd5518a2bfc0850976f575d2292439d9c39c[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Sun Apr 19 15:04:40 2026 -0600
 
-    feature: implementar flujo reactivo con Livedata en perfil de productos
+    feature: implementar flujo reactivo con Livedata en perfil de accesorios
 
 [33mcommit 369b028460027d072cc1a18da16ccc59d42bc809[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>
@@ -62,7 +62,7 @@ Date:   Sat Feb 14 16:59:56 2026 -0600
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Sat Feb 14 01:23:46 2026 -0600
 
-    Se agrego el generador de view para las etiquetas de los productos
+    Se agrego el generador de view para las etiquetas de los accesorios
 
 [33mcommit e6568167110648b55d0becd719308226206d068a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>
@@ -86,13 +86,13 @@ Date:   Mon Feb 9 11:19:17 2026 -0600
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Sun Feb 8 18:29:06 2026 -0600
 
-    Se integro una nuevo activity para el perfil del cliente con metricas y top productos mas comprados
+    Se integro una nuevo activity para el perfil del cliente con metricas y top accesorios mas comprados
 
 [33mcommit 5a91954083ab9643b17f5471f50c5713ad5ef5e1[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Sun Feb 8 13:51:15 2026 -0600
 
-    Se arreglo el bug de secciones en productos principal
+    Se arreglo el bug de secciones en accesorios principal
 
 [33mcommit c459e3fc5ee688081f74c84d7deabd2b2eb98781[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>
@@ -251,7 +251,7 @@ Date:   Mon Jan 12 16:11:18 2026 -0600
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Sun Jan 11 16:35:19 2026 -0600
 
-    Refactorice estructura de carpetas y se agrego funcion en ventas, buscar productos
+    Refactorice estructura de carpetas y se agrego funcion en ventas, buscar accesorios
 
 [33mcommit 35934e9cd81b5c0b4ee4b3862fa0b2771557b6d6[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>
@@ -281,7 +281,7 @@ Date:   Tue Dec 30 18:52:12 2025 -0600
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Tue Dec 16 17:15:15 2025 -0600
 
-    se arreglaron los problemas al agregar productos y al actualizar. Tambien se terminaron de agregar funciones del spinner
+    se arreglaron los problemas al agregar accesorios y al actualizar. Tambien se terminaron de agregar funciones del spinner
 
 [33mcommit a90bfb17f49ddf24570d11096fd1ad044a6b1dad[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>
@@ -317,7 +317,7 @@ Date:   Sun Dec 7 01:48:37 2025 -0600
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Sat Nov 15 03:32:08 2025 -0600
 
-    Funcion busqueda de productos view en funcionamiento, faltan pruebas
+    Funcion busqueda de accesorios view en funcionamiento, faltan pruebas
 
 [33mcommit fe0e9b7465f49432441488d924ceb90f4fb128ad[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>
@@ -335,7 +335,7 @@ Date:   Sun Nov 9 20:36:52 2025 -0600
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Sun Nov 9 14:31:31 2025 -0600
 
-    Funcion de actualizacion de productos terminada
+    Funcion de actualizacion de accesorios terminada
 
 [33mcommit ff379d83f03ecbceaa30455a89eb76778b4e00cb[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>
@@ -347,7 +347,7 @@ Date:   Tue Nov 4 19:57:18 2025 -0600
 Author: GPCristianTS <gpcristiantstn@gmail.com>
 Date:   Sun Nov 2 17:29:34 2025 -0600
 
-    Funcionando antes de mover el items productos
+    Funcionando antes de mover el items accesorios
 
 [33mcommit ea74655906e220d535b0e4d75710fdc3503eb394[m
 Author: GPCristianTS <gpcristiantstn@gmail.com>

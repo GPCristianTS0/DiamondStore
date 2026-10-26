@@ -8,6 +8,7 @@ public class Productos implements Serializable {
     private String id;
     private String nombre;
     private String marca;
+    private String modelo;
     private String seccion;
     private int precioPublico;
     private int precioNeto;
@@ -16,6 +17,13 @@ public class Productos implements Serializable {
     private int stock;
     private int ventaxpeso;
     private String ultimoPedido;
+    private boolean isRefaccion;
+    //Refaccion
+    private String calidad;
+    private String modelosCompatible;
+    private String condicion;
+    private String estado;
+    private boolean visible;
 
     private int id_seccion;
 
@@ -34,6 +42,30 @@ public class Productos implements Serializable {
         this.vendidos = vendidos;
         this.stock = stock;
         this.ultimoPedido = ultimoPedido;
+    }
+
+    public String getCondicion() {
+        return condicion;
+    }
+
+    public void setCondicion(String condicion) {
+        this.condicion = condicion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public int getId_seccion() {
@@ -155,6 +187,7 @@ public class Productos implements Serializable {
         array.add("id_producto");
         array.add("nombre_producto");
         array.add("marca");
+        array.add("modelo");
         array.add("seccion");
         array.add("precioPublico");
         array.add("precioNeto");
@@ -162,7 +195,44 @@ public class Productos implements Serializable {
         array.add("vendidos");
         array.add("stock");
         array.add("ultimo_Pedido");
+        array.add("calidad");
+        array.add("modelo_compatible");
+        array.add("condicion");
+        array.add("grado_estetico");
+        array.add("visible_en_busqueda");
         return array;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public boolean isRefaccion() {
+        return isRefaccion;
+    }
+
+    public void setRefaccion(boolean refaccion) {
+        isRefaccion = refaccion;
+    }
+
+    public String getCalidad() {
+        return calidad;
+    }
+
+    public void setCalidad(String calidad) {
+        this.calidad = calidad;
+    }
+
+    public String getModelosCompatible() {
+        return modelosCompatible;
+    }
+
+    public void setModelosCompatible(String modelosCompatible) {
+        this.modelosCompatible = modelosCompatible;
     }
 
     @Override
@@ -172,6 +242,7 @@ public class Productos implements Serializable {
                 ", id='" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", marca='" + marca + '\'' +
+                ", modelo='" + modelo + '\'' +
                 ", seccion='" + seccion + '\'' +
                 ", precioPublico=" + precioPublico +
                 ", precioNeto=" + precioNeto +
@@ -180,6 +251,13 @@ public class Productos implements Serializable {
                 ", stock=" + stock +
                 ", ventaxpeso=" + ventaxpeso +
                 ", ultimoPedido='" + ultimoPedido + '\'' +
+                ", isRefaccion=" + isRefaccion +
+                ", calidad='" + calidad + '\'' +
+                ", modelosCompatible='" + modelosCompatible + '\'' +
+                ", condicion='" + condicion + '\'' +
+                ", estado='" + estado + '\'' +
+                ", visible=" + visible +
+                ", id_seccion=" + id_seccion +
                 '}';
     }
 }

@@ -63,7 +63,7 @@ public class ControllerCredito {
             abono = abonoLocal;
             nombre = clientesDAO.getNombreCliente(abonoLocal.getIdCliente());
         }
-        ticketUtils.generarTicketAbono(context, abono, nombre, reimprimir);
+        //ticketUtils.generarTicketAbono(context, abono, nombre, reimprimir);
     }
     public Abonos getAbono(String idAbono){
         return abonosDAO.getAbono(idAbono);

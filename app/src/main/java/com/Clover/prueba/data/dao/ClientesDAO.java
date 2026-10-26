@@ -16,6 +16,7 @@ import com.Clover.prueba.data.models.Clientes;
 
 public class ClientesDAO implements IClient {
     private SQLiteDatabase db;
+
     public ClientesDAO(Context context){
         db = CloverBD.getInstance(context).getWritableDatabase();
     }
@@ -31,14 +32,17 @@ public class ClientesDAO implements IClient {
             values.put("direccion", cliente.getDireccion());
             values.put("puntos", cliente.getPuntos());
             values.put("fecha_registro", cliente.getFecha_registro());
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+            values.put("eliminado", 0);
             long a = db.insert("clientes", null, values);
             return a != -1;
-        }catch (Exception e){
-            Log.e("Clover_App", "addClient: "+e.getMessage());
+        } catch (Exception e){
+            Log.e("Clover_App", "addClient: " + e.getMessage());
             return false;
         }
-
     }
+
     @Override
     public ArrayList<Clientes> getClient(String filtro, String valor, boolean deudores) {
         ArrayList<Clientes> clientes = new ArrayList<>();
@@ -57,39 +61,38 @@ public class ClientesDAO implements IClient {
             }
             cursor.close();
         } catch (Exception e) {
-            Log.e("Clover_App", "getClient: "+e.getMessage());
+            Log.e("Clover_App", "getClient: " + e.getMessage());
         }
         return clientes;
     }
+
     private Cursor rawQueryGetClientes(String filtro, String valor, boolean deudores){
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT * FROM clientes ");
+        sql.append("SELECT * FROM clientes WHERE eliminado = 0 ");
         ArrayList<String> arrgs = new ArrayList<>();
-        boolean all = false;
+
         if (deudores) {
-            sql.append("WHERE saldo > 0 ");
-            all = true;
+            sql.append("AND saldo > 0 ");
         }
+
         if (!valor.isEmpty()){
-            if (all)
-                sql.append("AND ");
-            else
-                sql.append("WHERE ");
+            sql.append("AND ");
             sql.append(filtro);
-            if (filtro.equals("saldo")||filtro.equals("puntos")) {
+            if (filtro.equals("saldo") || filtro.equals("puntos")) {
                 sql.append(" = ? ");
                 arrgs.add(valor);
-            }else {
+            } else {
                 sql.append(" LIKE ? ");
-                arrgs.add("%"+valor+"%");
+                arrgs.add("%" + valor + "%");
             }
         }
         return db.rawQuery(sql.toString(), arrgs.toArray(new String[0]));
     }
+
     @Override
     public Clientes getClient(String idCliente) {
         Clientes clientee = new Clientes();
-        String query = "SELECT * FROM clientes WHERE id_cliente = ?";
+        String query = "SELECT * FROM clientes WHERE id_cliente = ? AND eliminado = 0";
         String[] args = {String.valueOf(idCliente)};
         try (Cursor cursor = db.rawQuery(query, args)){
             if (cursor.moveToFirst()) {
@@ -103,17 +106,18 @@ public class ClientesDAO implements IClient {
                 return clientee;
             }
         } catch (Exception e) {
-            Log.e("Clover_App", "getClient: "+e.getMessage());
+            Log.e("Clover_App", "getClient: " + e.getMessage());
         }
         return null;
     }
+
     @Override
     public ArrayList<Clientes> getDeudores(){
         ArrayList<Clientes> clientes = new ArrayList<>();
         String query = "SELECT cl.*, " +
-                "(SELECT MIN(fecha_limite) FROM ventas WHERE id_cliente = cl.id_cliente AND estado = '"+VENTA_PENDIENTE+"') AS fecha_limiteCl, " +
-                "(SELECT MAX(fecha_hora) FROM abonos WHERE id_cliente = cl.id_cliente) AS ultimo_abono FROM clientes cl " +
-                "WHERE cl.saldo > 0";
+                "(SELECT MIN(fecha_limite) FROM ventas WHERE id_cliente = cl.id_cliente AND estado = '" + VENTA_PENDIENTE + "' AND eliminado = 0) AS fecha_limiteCl, " +
+                "(SELECT MAX(fecha_hora) FROM abonos WHERE id_cliente = cl.id_cliente AND eliminado = 0) AS ultimo_abono FROM clientes cl " +
+                "WHERE cl.saldo > 0 AND cl.eliminado = 0";
         try (Cursor cursor = db.rawQuery(query, null)){
             while (cursor.moveToNext()){
                 Clientes cliente = new Clientes();
@@ -130,29 +134,30 @@ public class ClientesDAO implements IClient {
             }
             return clientes;
         } catch (Exception e) {
-            Log.e("Clover_App", "getDeudores: "+e.getMessage());
+            Log.e("Clover_App", "getDeudores: " + e.getMessage());
         }
         return clientes;
     }
+
     @Override
     public String getNombreCliente(String idCliente){
-        String sql = "SELECT nombre_cliente FROM clientes WHERE id_cliente = ?";
+        String sql = "SELECT nombre_cliente FROM clientes WHERE id_cliente = ? AND eliminado = 0";
         String[] args = {idCliente};
         try (Cursor cursor = db.rawQuery(sql, args)){
             if (cursor.moveToFirst()){
                 return cursor.getString(0);
             }
         } catch (Exception e) {
-            Log.e("Clover_App", "getNombreCliente: "+e.getMessage());
+            Log.e("Clover_App", "getNombreCliente: " + e.getMessage());
         }
         return "";
     }
+
     @Override
     public ArrayList<Clientes> getClients() {
         ArrayList<Clientes> clientes = new ArrayList<>();
-        try {
-            String query = "SELECT * FROM clientes";
-            Cursor cursor = db.rawQuery(query, null);
+        String query = "SELECT * FROM clientes WHERE eliminado = 0";
+        try (Cursor cursor = db.rawQuery(query, null)) {
             while (cursor.moveToNext()){
                 Clientes cliente = new Clientes();
                 cliente.setId_cliente(cursor.getString(0));
@@ -166,21 +171,20 @@ public class ClientesDAO implements IClient {
             }
             return clientes;
         } catch (Exception e) {
-            Log.e("Clover_App", "getClients: "+e.getMessage());
+            Log.e("Clover_App", "getClients: " + e.getMessage());
         }
         return clientes;
     }
 
     @Override
     public double getSaldoTotal() {
-        String sql = "SELECT SUM(saldo) FROM clientes";
+        String sql = "SELECT SUM(saldo) FROM clientes WHERE eliminado = 0";
         try (Cursor cursor = db.rawQuery(sql, null)){
             if (cursor.moveToFirst()){
                 return cursor.getDouble(0);
-
             }
         } catch (Exception e) {
-            Log.e("Clover_App", "getSaldoTotal: "+e.getMessage());
+            Log.e("Clover_App", "getSaldoTotal: " + e.getMessage());
         }
         return 0;
     }
@@ -188,17 +192,21 @@ public class ClientesDAO implements IClient {
     @Override
     public boolean deleteClient(Clientes cliente) {
         try {
-            int filas = db.delete("clientes", "id_cliente=?", new String[]{cliente.getId_cliente()});
-            if (filas!=0) return true;
-        }catch (Exception e){
-            Log.e("Clover_App", "deleteClient: "+e.getMessage());
+            ContentValues values = new ContentValues();
+            values.put("eliminado", 1);
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
+            int filas = db.update("clientes", values, "id_cliente=?", new String[]{cliente.getId_cliente()});
+            return filas != 0;
+        } catch (Exception e){
+            Log.e("Clover_App", "deleteClient: " + e.getMessage());
         }
         return false;
     }
 
     @Override
     public boolean updateClient(Clientes oldClient, Clientes newClient) {
-        try{
+        try {
             ContentValues values = new ContentValues();
             values.put("id_cliente", newClient.getId_cliente());
             values.put("nombre_cliente", newClient.getNombre_cliente());
@@ -206,10 +214,12 @@ public class ClientesDAO implements IClient {
             values.put("saldo", newClient.getSaldo());
             values.put("direccion", newClient.getDireccion());
             values.put("puntos", newClient.getPuntos());
+            values.put("fecha_actualizacion", System.currentTimeMillis());
+            values.put("sincronizado", 0);
             int filas = db.update("clientes", values, "id_cliente=?", new String[]{oldClient.getId_cliente()});
-            if (filas!=0) return true;
+            return filas != 0;
         } catch (Exception e){
-            Log.e("Clover_App", "updateClient: "+e.getMessage());
+            Log.e("Clover_App", "updateClient: " + e.getMessage());
         }
         return false;
     }

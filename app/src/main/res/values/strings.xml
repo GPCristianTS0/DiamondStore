@@ -49,7 +49,7 @@
     <string name="tittleFP">Agregar Prodcuto</string>
     <string name="nombreFP">Nombre:</string>
     <string name="marcaFP">Marca:</string>
-    <string name="modeloFP">Seccion:</string>
+    <string name="modeloFP">Modelo:</string>
     <string name="descripcionFP">Descripcion:</string>
     <string name="p_publicoFP">Precio Publico:</string>
     <string name="p_netoFP">Precio Neto:</string>

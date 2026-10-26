@@ -48,7 +48,8 @@
         android:clipToPadding="false"
         android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerBg" />
+        app:layout_constraintTop_toBottomOf="@+id/headerBg"
+        tools:listitem="@layout/corte_item_view"/>
 
     <LinearLayout
         android:id="@+id/HC_emptyState"

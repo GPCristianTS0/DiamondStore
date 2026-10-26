@@ -1,5 +1,7 @@
 package com.Clover.prueba.ui.productos;
 
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -96,7 +98,11 @@ public class ProductoPerfil extends AppCompatActivity {
                     "Eliminar Producto", "Esta acción no se puede deshacer. ¿Estás seguro de que deseas eliminar este producto?",
                     "Eliminar", true, () -> {
                         viewModel.eliminarProducto();
-                    });
+                    },
+                    ()-> {
+
+                    }
+                    );
         });
         binding.PPBtnGenerarEtiqueta.setOnClickListener(v -> {
             Configuracion conf = new ConfiguracionDAO(this).getConfiguracion();
@@ -113,10 +119,23 @@ public class ProductoPerfil extends AppCompatActivity {
         binding.PPTxtSeccion.setText(producto.getSeccion());
         binding.PPTxtCodigo.setText(producto.getId());
         binding.PPTxtCostoNeto.setText(importes.concat(producto.getPrecioNeto()+""));
-        binding.PPTxtMargen.setText(producto.getMargenGanacia()+"%");
+        //binding.PPTxtMargen.setText(producto.getMargenGanacia()+"%");
         binding.PPTxtDescripcion.setText(producto.getDescripcion());
         binding.PPTxtUltimoPedido.setText(producto.getUltimoPedido());
         if (producto.getRutaImagen()!=null) binding.PPImgProducto.setImageURI(Uri.parse(producto.getRutaImagen()));
+        if(producto.isRefaccion()){
+            binding.PPLayoutDatosRefaccion.setVisibility(VISIBLE);
+            binding.PPLayCondicio.setVisibility(VISIBLE);
+            binding.PPLayCondicion.setVisibility(VISIBLE);
+            binding.PPLayEstetico.setVisibility(VISIBLE);
+            binding.PPLayCondicio1.setVisibility(VISIBLE);
+            binding.PPLayCondicio2.setVisibility(VISIBLE);
+            binding.PPTxtGradoEstetico.setText(producto.getEstado());
+            binding.PPTxtCondicion.setText(producto.getCondicion());
+            binding.PPTxtModeloRefaccion.setText(producto.getModelo());
+            binding.PPTxtCalidadRefaccion.setText(producto.getCalidad());
+            binding.PPTxtModeloCompRefaccion.setText(producto.getModelosCompatible());
+        }
     }
 
     @Override

@@ -14,12 +14,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Clover.prueba.data.database.SyncManager;
 import com.Clover.prueba.ui.credito.CreditoDarAbono;
 import com.Clover.prueba.ui.credito.CreditoPrincipalView;
 import com.Clover.prueba.ui.financiero.DashboardFinanciero;
 import com.Clover.prueba.R;
 import com.Clover.prueba.domain.configuracion.ConfiguracionControl;
-import com.Clover.prueba.domain.ventas.CorteCajaController;
+import com.Clover.prueba.domain.corteCaja.CorteCajaController;
 import com.Clover.prueba.data.dao.interfaces.IVentas;
 import com.Clover.prueba.data.dao.VentasDAO;
 import com.Clover.prueba.data.models.Configuracion;
@@ -32,6 +33,8 @@ import com.Clover.prueba.ui.historialventas.HistorialVentasView;
 import com.Clover.prueba.ui.productos.ProductosView;
 import com.Clover.prueba.ui.productos.ProductosActualizarStock;
 import com.Clover.prueba.ui.proveedores.ProveedorView;
+import com.Clover.prueba.ui.reparaciones.view.ReparacionRapidaDialog;
+import com.Clover.prueba.ui.reparaciones.view.reparcionesView;
 import com.Clover.prueba.ui.ventas.VentaView;
 
 import com.Clover.prueba.data.dao.ProductoDAO;
@@ -42,6 +45,7 @@ public class MenuPrincipal extends AppCompatActivity {
     private IVentas iVentas;
     private IProducto iProductos;
     private TextView co ;
+    private SyncManager sync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,8 @@ public class MenuPrincipal extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Callback FireBase
+        sync = new SyncManager(this);
         IProducto iProducto = new ProductoDAO(this);
         iVentas = new VentasDAO(this);
         iProductos = new ProductoDAO(this);
@@ -109,6 +115,16 @@ public class MenuPrincipal extends AppCompatActivity {
     public void onClickAgregarGasto(View v){
         GastoFormulario dialog = new GastoFormulario();
         dialog.show(getSupportFragmentManager(), "dialog");
+    }
+    //Accion ver reparaciones
+    public void onClickVerReparaciones(View v){
+        Intent intent = new Intent(MenuPrincipal.this, reparcionesView.class);
+        startActivity(intent);
+    }
+    //Accion boton Registrar Reparacion Rapida
+    public void onClickReparacionRapida(View v){
+        ReparacionRapidaDialog dialog = new ReparacionRapidaDialog();
+        dialog.show(getSupportFragmentManager(), "dialog_reparacion");
     }
     //Accion cerrar turno
     public void onClickCerrarTurno(View v){
@@ -172,5 +188,6 @@ public class MenuPrincipal extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         rellenarDatos();
+        sync.sincronizarTodo(null);
     }
 }

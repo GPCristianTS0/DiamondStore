@@ -125,6 +125,46 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="Ventas Transferencia"
+                android:textColor="#455A64"/>
+            <TextView
+                android:id="@+id/DC_txtVentasTransf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$ 0.00"
+                android:textStyle="bold"
+                android:textColor="#37474F"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reparaciones"
+                android:textColor="#455A64"/>
+            <TextView
+                android:id="@+id/DC_txtReparaciones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$ 0.00"
+                android:textStyle="bold"
+                android:textColor="#1565C0"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Abonos Recibidos"
                 android:textColor="#455A64"/>
             <TextView

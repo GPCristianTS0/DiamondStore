@@ -25,8 +25,10 @@ import com.Clover.prueba.R;
 import com.Clover.prueba.domain.configuracion.ConfiguracionControl;
 import com.Clover.prueba.data.dao.ConfiguracionDAO;
 import com.Clover.prueba.data.models.Abonos;
+import com.Clover.prueba.data.models.Clientes;
 import com.Clover.prueba.data.models.Configuracion;
 import com.Clover.prueba.data.models.DetalleVenta;
+import com.Clover.prueba.data.models.Reparaciones;
 import com.Clover.prueba.data.models.Ventas;
 
 import java.io.File;
@@ -38,11 +40,13 @@ import java.util.Locale;
 
 public class TicketUtils {
     private final ConfiguracionControl configuracionControl;
+    private Context context;
 
     public TicketUtils(Context context) {
+        this.context = context;
         configuracionControl = new ConfiguracionControl(context);
     }
-
+/*
     public void generarTicketVenta(Context context,String nombreCliente, Ventas venta, ArrayList<DetalleVenta>listaProductos, boolean waoOrGeneric){
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.ticket_virtual, null);
@@ -147,7 +151,7 @@ public class TicketUtils {
             txtCambio.setText(importes.concat("0.00"));
             txtImportePago.setText(importes.concat(String.valueOf(venta.getMonto())));
         }
-        generarYCompartirTicket(view, context, configuracion, waoOrGeneric);
+        generarYCompartirTicket(view, configuracion);
     }
     public void generarTicketAbono(Context context, Abonos abono, String nombreCliente, boolean waoOrGeneric){
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -181,10 +185,12 @@ public class TicketUtils {
         txtSaldoAnterior.setText(importes.concat(abono.getSaldoAnterior()+""));
         txtSaldoRestante.setText(importes.concat(abono.getSaldoActual()+""));
 
-        generarYCompartirTicket(view, context, configuracion, waoOrGeneric);
+        generarYCompartirTicket(view,  configuracion, waoOrGeneric);
 
     }
-    private void generarYCompartirTicket(View view, Context context, Configuracion configuracion, boolean waoOrGeneric) {
+
+/*
+    private Uri generarYCompartirTicket(View view, Configuracion configuracion) {
 
         //Medicion de la pantalla
         int widthSpec = View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY); // Ancho fijo
@@ -202,37 +208,37 @@ public class TicketUtils {
         view.layout(0, 0, view.getMeasuredWidth(), altoFinal);
 
         // 5. DIBUJAR (DRAW): Creamos el Bitmap y le decimos a la vista "dibújate aquí"
-        float escala = 2.0f;
-        CreacionImagen(view, context, configuracion,altoFinal, escala, waoOrGeneric);
+        float escala = 2.5f;
+        return CreacionImagen(view, configuracion, altoFinal, escala);
     }
-
-    private void CreacionImagen(View view, Context context, Configuracion configuracion,int altoFinal, float escala, boolean waoOrGeneric) {
+/*
+    private Uri CreacionImagen(View view, Configuracion configuracion,int altoFinal, float escala) {
         int anchoReal = (int) (view.getMeasuredWidth() * escala);
         int altoReal = (int) (altoFinal * escala);
 
         Bitmap bitmap = Bitmap.createBitmap(anchoReal, altoReal, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         try {
-            // Pintamos fondo blanco por si acaso
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(Color.parseColor("#0D111E"));
             canvas.scale(escala, escala);
             view.draw(canvas);
             // 6. COMPARTIR: Guardamos temporalmente y lanzamos WhatsApp
-            compartirBitmap(context, bitmap, configuracion, waoOrGeneric);
+            return compartirBitmap(bitmap, configuracion);
         } catch (OutOfMemoryError|Exception e) {
             Log.e("Clover_App", "Error al generar ticket: "+e.getMessage());
 
             if (escala <= 1.0f) {
                 Toast.makeText(context, "No hay memoria suficiente para generar el ticket", Toast.LENGTH_SHORT).show();
-                return;
+                return null;
             }
 
-            CreacionImagen(view, context, configuracion, altoReal, 1.0f, waoOrGeneric);
+            CreacionImagen(view, configuracion, altoReal, 1.0f);
         }
-
+        return null;
     }
-
-    private void compartirBitmap(Context context, Bitmap bitmap, Configuracion configuracion, boolean wapOrGeneric) {
+*/
+    private Uri compartirBitmap(Bitmap bitmap, Configuracion configuracion, boolean wapOrGeneric) {
+        Uri contentUri = null;
         try {
             //Busca la carpeta y si no existe la crea
             File cache = new File(context.getCacheDir(), "tickets");
@@ -250,50 +256,16 @@ public class TicketUtils {
             stream.close();
 
             //Se genera la Uri
-            Uri contentUri = FileProvider.getUriForFile(context, "com.Clover.prueba.fileprovider", newFile);
+            contentUri = FileProvider.getUriForFile(context, "com.Clover.prueba.fileprovider", newFile);
 
             if (contentUri == null) {
                 Log.e("Clover_App", "Error al generar la URI");
-                return;
+                return null;
             }
-            if (wapOrGeneric){
-                compartir(context, configuracion, contentUri);
-            }else
-                compartirWhatsapp(context, configuracion, contentUri);
         } catch (Exception e) {
             Log.e("Clover_App", "Error al compartir ticket"+e.getMessage());
         }
-    }
-    private void compartir(Context context, Configuracion configuracion, Uri contentUri) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-
-        intent.setDataAndType(contentUri, context.getContentResolver().getType(contentUri));
-        intent.putExtra(Intent.EXTRA_STREAM, contentUri);
-        intent.setType("image/png");
-        intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare());
-        context.startActivity(Intent.createChooser(intent, "Compartir Imagen Via...."));
-    }
-    private void compartirWhatsapp(Context context, Configuracion configuracion, Uri contentUri) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("image/jpeg");
-        intent.putExtra(Intent.EXTRA_STREAM, contentUri);
-        intent.putExtra(Intent.EXTRA_TEXT, configuracion.getMensajeShare());
-
-        // ESTA ES LA CLAVE: Forzamos a que solo use WhatsApp
-        intent.setPackage("com.whatsapp");
-
-        // Evitamos que crashee si no tiene WA instalado
-        try {
-            context.startActivity(intent);
-        } catch (android.content.ActivityNotFoundException ex) {
-            // Si tiene WhatsApp Business, el paquete cambia
-            try {
-                intent.setPackage("com.whatsapp.w4b");
-                context.startActivity(intent);
-            } catch (android.content.ActivityNotFoundException e2) {
-                Toast.makeText(context, "No tienes WhatsApp instalado", Toast.LENGTH_SHORT).show();
-            }
-        }
+        return contentUri;
     }
 
     private String getFecha(String fecha){

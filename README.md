@@ -1,59 +1,127 @@
-# DiamondStore - Sistema de Punto de Venta (POS) Android
+# Clover - Sistema POS y Gestión de Taller de Reparaciones
 
-> Aplicación nativa de gestión de inventarios y ventas diseñada para pequeños comercios, con enfoque en eficiencia y experiencia de usuario.
-
-![Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=flat&logo=android)
-![Java](https://img.shields.io/badge/Language-Java-ED8B00?style=flat&logo=java)
-![Architecture](https://img.shields.io/badge/Architecture-MVVM-blue)
-![Database](https://img.shields.io/badge/Database-SQLite-003B57?style=flat&logo=sqlite)
-
-##  Galería de Funcionalidades
-
-###  Punto de Venta (POS)
-El módulo principal permite una gestión fluida de la venta, con cálculo automático y validaciones en tiempo real.
-
-| Gestión del Carrito | Proceso de Cobro |
-|:---:|:---:|
-| <img src="screenshots/ventas_carrito_lleno.jpeg" width="300"> | <img src="screenshots/ventas_cobro.jpeg" width="300"> |
-| **Control de Stock y Errores** | **Búsqueda Rápida** |
-| <img src="screenshots/ventas_validacion_stock.jpeg" width="300"> | <img src="screenshots/ventas_busqueda.jpeg" width="300"> |
-*(El sistema valida existencias y notifica al usuario si un producto está agotado)*
-
-### Gestión de Inventario
-Visualización clara de productos con soporte para imágenes y filtros dinámicos.
-
-| Catálogo Visual | Filtrado y Búsqueda |
-|:---:|:---:|
-| <img src="screenshots/inventario_grid.jpeg" width="300"> | <img src="screenshots/inventario_filtro.jpeg" width="300"> |
-
-## Características Principales
-
-###  Módulo de Ventas
-* **Escáner Integrado:** Lectura de códigos de barras en tiempo real usando la cámara del dispositivo (Zxing Library).
-* **Carrito Dinámico:** Cálculo automático de totales, manejo de stock en tiempo real y validación de disponibilidad.
-* **Flujo de Caja:** Registro de ventas con fecha, hora y método de pago.
-
-###  Gestión de Inventario (CRUD)
-* **Alta de Productos:** Formulario inteligente con validación de datos.
-* **Gestión de Imágenes:** Algoritmo propio de compresión y redimensionamiento de Bitmaps para almacenamiento eficiente en memoria interna.
-* **Búsqueda Avanzada:** Filtrado por categorías y búsqueda predictiva en tiempo real.
-
-##  Ingeniería y Arquitectura
-
-Este proyecto fue construido siguiendo las mejores prácticas de desarrollo moderno en Android:
-
-* **Patrón MVVM (Model-View-ViewModel):** Desacoplamiento total entre la lógica de negocio y la interfaz de usuario.
-* **DAO Pattern:** Capa de acceso a datos abstracta para gestionar las operaciones CRUD en SQLite de forma segura.
-* **Clean Code:** Uso de clases de utilidad (`ImageUtils`, `Constants`) y separación de responsabilidades.
-* **Manejo de Ciclo de Vida:** Prevención de fugas de memoria y crashes mediante gestión correcta de Contextos y Fragments.
-
-##  Stack Tecnológico
-* **Lenguaje:** Java 11
-* **IDE:** Android Studio Ladybug
-* **Base de Datos:** SQLite (Nativa)
-* **UI:** XML Layouts, Material Design Components, RecyclerView optimizados.
-* **Librerías Externas:** ZXing (Barcode Scanner).
+Clover (DiamondStore) es una solución integral nativa para Android diseñada para la administración completa de negocios de tecnología, venta al por menor y talleres de reparación técnica. Combina un Punto de Venta (POS) de alta velocidad, Control de Inventarios, Gestión de Cuentas por Cobrar (Crédito) y un Módulo Especializado de Taller y Reparaciones con generación dinámica de comprobantes para WhatsApp.
 
 ---
-*Desarrollado por [Cristian Uriel Tobar Santillan]*
-*Técnico en Programación | Android Developer*
+
+## Capturas de Pantalla
+
+| Módulo de Taller | Ticket de Reparación | Punto de Venta |
+| :---: | :---: | :---: |
+| ![Taller](docs/images/taller.png) | ![Ticket](docs/images/ticket.png) | ![POS](docs/images/pos.png) |
+
+| Inventario y Productos | Dashboard Financiero | Corte de Caja |
+| :---: | :---: | :---: |
+| ![Inventario](docs/images/inventario.png) | ![Dashboard](docs/images/dashboard.png) | ![Corte](docs/images/corte.png) |
+
+---
+
+## Módulos Principales
+
+### 1. Punto de Venta (Ventas y Carrito)
+* **Caja Interactiva:** Búsqueda rápida de productos por nombre, sección o código de barras.
+* **Escáner Integrado:** Lectura acelerada mediante cámara (ZXing / MLKit).
+* **Ventas a Granel:** Calculadora interactiva de precio por peso (DialogCalculadoraPeso).
+* **Múltiples Métodos de Pago:** Efectivo, Tarjeta, Transferencia bancaria y Venta a Crédito / Fiado.
+* **Tickets Virtuales:** Generación e impresión de comprobantes de venta.
+
+### 2. Módulo de Taller y Servicio Técnico
+* **Tablero Kanban e Indicadores:** Clasificación en tiempo real (Pendientes, En Proceso, Listos).
+* **Búsqueda y Filtros:** Filtrado por modelo, cliente, falla, folio (#REP-xxx), estado y tipo de servicio (GENERAL, EXPRESS, TALLER, GARANTÍA, DOMICILIO).
+* **Diagnóstico y Refacciones:** Registro de costo de refacciones, anticipos y presupuesto dinámico.
+* **Envío de Tickets por WhatsApp:** Motor de renderizado en memoria para generar comprobantes digitales PNG/HD y compartirlos directamente con el cliente.
+
+### 3. Control de Inventario y Productos
+* **Catálogo Multimedia:** Gestión local de imágenes de productos renderizadas con Glide.
+* **Stock Bajo y Alertas:** Notificaciones visuales de reabastecimiento crítico.
+* **Generador de Etiquetas:** Creación e impresión automática de códigos de barras/QR por producto (GenerarEtiquetaProductoUseCase).
+
+### 4. Clientes y Cuentas por Cobrar
+* **Historial y Fidelización:** Registro de clientes con historial de compras, saldo pendiente y puntos acumulados.
+* **Tarjetas Digitales QR:** Generación de tarjetas de identificación de cliente en código QR (CardClientGenerator).
+* **Módulo de Crédito:** Administración de deudores, abonos parciales y recalculado automático de saldo.
+
+### 5. Proveedores
+* Directorio completo con contacto de vendedores, días de visita/pago y accesos directos a llamadas y mensajes de WhatsApp.
+
+### 6. Control de Caja y Cortes de Turno
+* Apertura y cierre de caja con cálculo de faltantes/sobrantes.
+* Desglose financiero detallado por tipo de ingreso (efectivo, tarjeta, transferencias, abonos y reparaciones).
+
+### 7. Registro de Gastos
+* Control de egresos clasificados por categoría y método de pago impactando directamente el corte de caja activo.
+
+### 8. Dashboard Financiero y Reportes
+* Métricas en tiempo real de ganancias netas, margen de utilidad, gastos acumulados e ingresos filtrables por rango de fechas.
+
+### 9. Configuración y Respaldo Cloud
+* Datos del negocio, cuentas bancarias para transferencias, notas de garantía e impresoras térmicas Bluetooth (dirección MAC / ancho de papel).
+* Sincronización y respaldo en segundo plano con Firebase.
+
+---
+
+## Arquitectura del Proyecto
+
+El proyecto está construido siguiendo los principios de Clean Architecture y el patrón MVVM (Model-View-ViewModel) para garantizar mantenibilidad, testabilidad y un bajo acoplamiento:
+
+```text
+com.Clover.prueba
+│
+├── data                 // Capa de Datos
+│   ├── dao              // Interfaces y Contratos DAO (IProducto, IReparaciones, etc.)
+│   ├── models           // Modelos de datos SQLite (Reparaciones, Clientes, Ventas)
+│   └── repositories     // Implementación de acceso a base de datos
+│
+├── domain               // Capa de Dominio (Reglas de Negocio Puras)
+│   ├── dtos             // Transferencia de datos (NotaReparacionDTO, CarritoDTO)
+│   ├── mappers          // Transformadores de modelos a DTOs de interfaz
+│   ├── validators       // Validaciones de negocio (TicketsValidator, StockValidator)
+│   └── usecases         // Casos de Uso (NotaReparacionUC, GenerarEtiquetaProductoUseCase)
+│
+├── services             // Capa de Servicios e Infraestructura
+│   ├── generators       // ImageGenerator, TicketReparacionGenerator, GeneradorQR
+│   ├── sharing          // ShareManager (Manejo de Intents y WhatsApp)
+│   └── sync             // SyncManager (Sincronización Cloud con Firebase)
+│
+└── ui                   // Capa de Presentación
+    ├── viewmodels       // Coordinadores de UI orientados a Lifecycle / LiveData
+    └── views            // Fragments, Activities y BottomSheetDialogs (Material Design 3)
+```
+
+---
+
+## Modelo de Base de Datos (SQLite - CloverBD)
+
+El sistema administra 11 tablas relacionales optimizadas mediante índices:
+
+| Tabla | Descripción |
+| :--- | :--- |
+| `ventas` | Encabezado de ventas, folios, totales y estado de cobro. |
+| `detalles_venta` | Desglose ítem por ítem de cada transacción realizada. |
+| `productos` | Catálogo, precios público/neto, stock, código de barras y categoría. |
+| `clientes` | Información personal, saldo a crédito activo y puntos acumulados. |
+| `proveedores` | Directorio comercial y días de atención/visita. |
+| `reparaciones` | Folios, equipo, falla reportada, diagnóstico, costos y estado del servicio. |
+| `abonos` | Historial de pagos parciales aplicados a deudas de clientes. |
+| `deudas` | Registro consolidado de saldos pendientes por cliente. |
+| `gastos` | Salidas operativas de efectivo o transferencia. |
+| `cortes_cajas` | Arqueos, saldos iniciales/finales y diferencias de turno. |
+| `configuracion` | Parámetros globales del taller, datos fiscales e impresoras Bluetooth. |
+
+---
+
+## Tecnologías y Librerías
+
+* **Lenguaje:** Java 11+
+* **Framework:** Android SDK (API 21+)
+* **UI Components:** Material Design 3, ConstraintLayout, NestedScrollView, CardView
+* **Async & Lifecycle:** LiveData, ViewModel, Custom Event Wrappers
+* **Imágenes & Rendering:** Glide, Canvas API, Android PdfDocument
+* **Escáner:** ZXing / Google MLKit Barcode Scanning
+* **Backend Cloud:** Firebase BOM (Authentication, Firestore/Realtime Database)
+
+---
+
+## Autor
+
+Desarrollado por **Cristian Uriel Tobar Santillan** - Técnico en Programación y Especialista en Reparación Hardware/Software Mobile.

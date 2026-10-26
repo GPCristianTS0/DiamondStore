@@ -1,5 +1,7 @@
 package com.Clover.prueba.data.models;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Clientes implements Serializable {
@@ -22,6 +24,11 @@ public class Clientes implements Serializable {
         this.nombre_cliente = nombre;
         this.apodo = apodo;
         this.saldo = saldo;
+    }
+
+    public Clientes(String id_cliente, String nombre_cliente) {
+        this.id_cliente = id_cliente;
+        this.nombre_cliente = nombre_cliente;
     }
 
     public String getFechaLimite() {
@@ -100,8 +107,13 @@ public class Clientes implements Serializable {
         return new String[]{"ID", "Nombre", "Apodo", "Saldo", "Puntos"};
     }
 
+    @NonNull
     @Override
     public String toString() {
+        return nombre_cliente +"( "+id_cliente+" )";
+    }
+
+    public String toStringB() {
         return "Clientes{" +
                 "id_cliente='" + id_cliente + '\'' +
                 ", nombre_cliente='" + nombre_cliente + '\'' +

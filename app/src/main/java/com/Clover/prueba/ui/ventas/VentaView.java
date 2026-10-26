@@ -28,7 +28,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Clover.prueba.R;
-import com.Clover.prueba.domain.ventas.CorteCajaController;
+import com.Clover.prueba.data.models.Productos;
+import com.Clover.prueba.domain.corteCaja.CorteCajaController;
 import com.Clover.prueba.data.dao.CorteCajaDAO;
 import com.Clover.prueba.data.dto.CarritoDTO;
 import com.Clover.prueba.data.models.Ventas;
@@ -38,7 +39,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import com.Clover.prueba.data.models.DetalleVenta;
-import com.Clover.prueba.data.models.Productos;
 import com.Clover.prueba.ui.scanner.EscanerCodeBar;
 
 public class VentaView extends AppCompatActivity {

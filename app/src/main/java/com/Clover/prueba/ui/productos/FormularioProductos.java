@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import com.Clover.prueba.domain.productos.usecase.UpdateProductUseCase;
 import com.Clover.prueba.domain.productos.viewmodel.FormularioProductosViewModel;
 import com.Clover.prueba.services.Helpers.BannerError;
 import com.Clover.prueba.services.storage.StorageImage;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -89,7 +91,18 @@ public class FormularioProductos extends AppCompatActivity {
         EscannerCamara();
         rellenarSpiner(); //rellenar el spiner de secciones
         addImage();//para agregar imagenes
-
+        //watcher para es taller o venta
+        binding.FPToggleTipo.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == R.id.FP_btnTipoRefaccion) {
+                    binding.FPLayCondEste.setVisibility(VISIBLE);
+                    binding.FPContainerDetallesRefaccion.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.FP_btnTipoVenta) {
+                    binding.FPContainerDetallesRefaccion.setVisibility(View.GONE);
+                    binding.FPLayCondEste.setVisibility(View.GONE);
+                }
+            }
+        });
 
         //para la modificacion de productos
         Productos producto = (Productos) getIntent().getSerializableExtra("producto");
@@ -115,12 +128,7 @@ public class FormularioProductos extends AppCompatActivity {
         //Boton Agregar
         binding.agregarBtn.setOnClickListener(v -> addProductView());
         //Boton Imagen
-        binding.imagenFP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirGaleria();
-            }
-        });
+        binding.imagenFP.setOnClickListener(v -> mostrarOpcionesImagen());
     }
 
     private void EscannerCamara() {
@@ -140,7 +148,7 @@ public class FormularioProductos extends AppCompatActivity {
 
     //Rellenar Espacios para modificar productos
     private void rellenarEspacios(Productos producto) {
-        binding.switchVentaGranelFP.setChecked(producto.isVentaxpeso());
+        binding.checkVentaGranelFP.setChecked(producto.isVentaxpeso());
         binding.spinnerSeccionFP.setSelection(producto.getId_seccion());
         binding.nombertxt.setText(producto.getNombre());
         binding.marcatxt.setText(producto.getMarca());
@@ -152,11 +160,21 @@ public class FormularioProductos extends AppCompatActivity {
         binding.vendidosInputFP.setVisibility(VISIBLE);
         binding.vendidosInputFP.setVisibility(VISIBLE);
         binding.FPLayoutVendidos.setVisibility(VISIBLE);
+        binding.checkVentaGranelFP.setChecked(producto.getVentaxpeso()!=1);
+        binding.modelotxt.setText(producto.getModelo());
 
         if (producto.getRutaImagen()!=null) {
             binding.imagenFP.setImageURI(Uri.parse(producto.getRutaImagen()));
         }else
             binding.imagenFP.setImageResource(R.drawable.agregar_imgaen);
+        if(producto.isRefaccion()){
+            binding.FPToggleTipo.check(binding.FPBtnTipoRefaccion.getId());
+            binding.calidadtxt.setText(producto.getCalidad());
+            binding.modelosCompatiblestxt.setText(producto.getModelosCompatible());
+            binding.condiciontxt.setText(producto.getCondicion());
+            binding.gradoEsteticotxt.setText(producto.getEstado());
+        }
+        binding.checkVisibleBusquedaFP.setChecked(producto.isVisible());
         binding.codeBartxt.setText(producto.getId());
         this.codigo = producto.getId();
 
@@ -199,22 +217,79 @@ public class FormularioProductos extends AppCompatActivity {
 
     //Funcion Boton agregar
     public void addProductView(){
-        Productos productos = getProductoOfInputs();
-        if (productos == null) {
-            return;
-        }
-        viewModel.addProduct(productos, selectedImageUri);
+        Productos producto = getProductoOfInputs();
+        if (producto == null) return;
+        viewModel.addProduct(producto, selectedImageUri);
     }
     private ActivityResultLauncher<Intent> launcherActivityGalery;
-    public void addImage(){
+    private ActivityResultLauncher<Uri> launcherCamera;
+    private ActivityResultLauncher<String> launcherPermisoCamara;
+    private Uri cameraTempUri;
+
+    public void addImage() {
         launcherActivityGalery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    selectedImageUri = result.getData().getData();
-                    binding.imagenFP.setImageURI(selectedImageUri);
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        selectedImageUri = result.getData().getData();
+                        binding.imagenFP.setImageURI(selectedImageUri);
+                    }
                 }
-            }
         );
+
+        launcherCamera = registerForActivityResult(new ActivityResultContracts.TakePicture(),
+                success -> {
+                    if (success && cameraTempUri != null) {
+                        selectedImageUri = cameraTempUri;
+                        binding.imagenFP.setImageURI(selectedImageUri);
+                    }
+                }
+        );
+
+        launcherPermisoCamara = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                isGranted -> {
+                    if (isGranted) {
+                        abrirCamara();
+                    } else {
+                        Toast.makeText(this, "Se requiere permiso de cámara para tomar fotos", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
+
+    private void mostrarOpcionesImagen() {
+        String[] opciones = {"Tomar Foto con Cámara", "Elegir de la Galería"};
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Seleccionar Imagen")
+                .setItems(opciones, (dialog, which) -> {
+                    if (which == 0) {
+                        comprobarPermisoYCamara();
+                    } else {
+                        abrirGaleria();
+                    }
+                })
+                .show();
+    }
+
+    private void comprobarPermisoYCamara() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            abrirCamara();
+        } else {
+            launcherPermisoCamara.launch(Manifest.permission.CAMERA);
+        }
+    }
+
+    private void abrirCamara() {
+        try {
+            java.io.File photoFile = new java.io.File(getCacheDir(), "foto_producto_" + System.currentTimeMillis() + ".jpg");
+            cameraTempUri = androidx.core.content.FileProvider.getUriForFile(
+                    this,
+                    "com.Clover.prueba.fileprovider",
+                    photoFile
+            );
+            launcherCamera.launch(cameraTempUri);
+        } catch (Exception e) {
+            Toast.makeText(this, "Error al abrir la cámara: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void abrirGaleria() {
@@ -232,6 +307,7 @@ public class FormularioProductos extends AppCompatActivity {
         if (isInvalidInputs(binding.pNetotxt, "Ingrese el precio neto del producto")) return null;
         if (isInvalidInputs(binding.descripciontxt, "Ingrese la descripcion del producto")) return null;
         if (isInvalidInputs(binding.unidadestxt, "Ingrese la cantidad del producto")) return null;
+        if (isInvalidInputs(binding.modelotxt, "Ingrese el modelo del producto")) return null;
         if (binding.vendidosInputFP.getVisibility() == VISIBLE)
             if (isInvalidInputs(binding.vendidosInputFP, "Ingrese la cantidad de productos vendidos")) return null;
         if (isInvalidInputs(binding.codeBartxt, "Ingrese el codigo del producto")) return null;
@@ -239,6 +315,13 @@ public class FormularioProductos extends AppCompatActivity {
             BannerError.mostrarError(binding.getRoot(), "Seleccione una seccion");
             return null;
         }
+        if (binding.FPToggleTipo.getCheckedButtonId()==binding.FPBtnTipoRefaccion.getId()){
+            productos.setRefaccion(true);
+            productos.setCalidad(binding.calidadtxt.getText()+"");
+            productos.setModelosCompatible(binding.modelosCompatiblestxt.getText()+"");
+            productos.setCondicion(binding.condiciontxt.getText()+"");
+            productos.setEstado(binding.gradoEsteticotxt.getText()+"");
+        }else productos.setRefaccion(false);
         //validaciones para numeros
         int stock;
         int vendidos = 0;
@@ -262,9 +345,12 @@ public class FormularioProductos extends AppCompatActivity {
         productos.setPrecioNeto(precioNeto);
         productos.setDescripcion(binding.descripciontxt.getText().toString().trim());
         productos.setStock(stock);
-        productos.setVentaxpeso(binding.switchVentaGranelFP.isChecked()?1:0);
+        productos.setVentaxpeso(binding.checkVentaGranelFP.isChecked()?1:0);
+        productos.setModelo(binding.modelotxt.getText().toString());
+        productos.setVisible(binding.checkVisibleBusquedaFP.isChecked());
         if (binding.vendidosInputFP.getVisibility() == VISIBLE)
             productos.setVendidos(vendidos);
+        //if (binding)
         return productos;
     }
     private boolean isInvalidInputs(TextInputEditText field, String mensaje){

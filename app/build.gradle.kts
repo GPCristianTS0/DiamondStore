@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -40,7 +41,9 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.8.0")
     implementation(libs.constraintlayout) // Asumo que libs.constraintlayout apunta a una versión estable
     implementation(libs.recyclerview)     // Asumo que libs.recyclerview apunta a una versión estable
-
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
+    implementation("com.google.firebase:firebase-firestore")
     // ---- Gráficos ----
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
